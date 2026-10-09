@@ -4,6 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GMS Front End Design</title>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://prod.spline.design" crossorigin>
+<link rel="preconnect" href="https://cdn.spline.design" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="modulepreload" href="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js" crossorigin>
+<link rel="preload" href="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" as="fetch" crossorigin>
+<link rel="preload" href="https://prod.spline.design/SGdEM3csBbrvxlhm/scene.splinecode" as="fetch" crossorigin>
+<style>html,body{background:#F4F5F7}</style>
+<!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,14 +23,15 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,medical_services,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
+<script type="module" async src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js"></script>
 <script src="./image-slot.js"></script>
 <style>
 @keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes gmsRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes gmsBreathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.9}}
 @keyframes gmsLive{0%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}100%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
+spline-viewer{opacity:0;transition:opacity .9s cubic-bezier(.2,.8,.2,1)}spline-viewer.gms-ready{opacity:1}
 body{margin:0;background:#F4F5F7;color:#0B0D12;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:#2F5BFF;text-decoration:none}a:hover{color:#1A3FD6}
 input{font:inherit}
@@ -265,7 +278,7 @@ html{scroll-behavior:smooth}
         <div style="position:absolute;left:50%;top:40%;width:0;height:0;transform-style:preserve-3d;transform:scale({{ ringScale }}) rotateX(-8deg) rotateY({{ ringRot }});will-change:transform">
           <sc-for list="{{ ringCards }}" as="r" hint-placeholder-count="12">
             <div onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.tap }}" style="position:absolute;left:-105px;top:-140px;width:210px;height:280px;transform:{{ r.tf }};transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)">
-              <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;box-sizing:border-box;border-radius:26px;background:{{ r.bg }};backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};opacity:{{ r.op }};transition:background .4s ease,box-shadow .4s ease,opacity .4s ease;backface-visibility:hidden">
+              <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;box-sizing:border-box;border-radius:26px;background:{{ r.bg }};border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};opacity:{{ r.op }};transition:background .4s ease,box-shadow .4s ease,opacity .4s ease;backface-visibility:hidden">
                 <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:50px;height:50px;border-radius:16px;background:{{ r.ib }};color:{{ r.ic }};display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;transition:background .4s ease,color .4s ease">{{ r.icon }}</span><span style="font-family:'JetBrains Mono';font-size:11px;color:#8A909C">{{ r.num }}</span></div>
                 <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ r.nfs }};letter-spacing:-.025em;line-height:1.1;margin-top:auto;overflow-wrap:anywhere">{{ r.displayName }}</span>
                 <span style="font-size:12.5px;line-height:1.45;color:#4A505C;max-height:{{ r.dh }};overflow:hidden;transition:max-height .45s ease">{{ r.desc }}</span>
@@ -602,7 +615,7 @@ html{scroll-behavior:smooth}
           <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em;padding:4px 6px 8px">Channels</span>
           <sc-for list="{{ streams }}" as="s" hint-placeholder-count="4">
             <button onClick="{{ s.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;padding:8px;border-radius:18px;background:{{ s.bg }};transition:background .3s ease" style-hover="background:rgba(47,91,255,.06)">
-              <span style="position:relative;width:96px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0B0D12"><img src="https://i.ytimg.com/vi/jT9C2wBHn6c/hqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.85"><span style="position:absolute;left:6px;bottom:5px;padding:2px 6px;border-radius:6px;background:{{ s.tagBg }};color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em">{{ s.tag }}</span></span>
+              <span style="position:relative;width:96px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0B0D12"><img src="https://i.ytimg.com/vi/jT9C2wBHn6c/hqdefault.jpg" loading="lazy" decoding="async" alt="" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.85"><span style="position:absolute;left:6px;bottom:5px;padding:2px 6px;border-radius:6px;background:{{ s.tagBg }};color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em">{{ s.tag }}</span></span>
               <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ s.title }}</span><span style="font-size:12px;color:#5B6270;line-height:1.35">{{ s.sub }}</span></span>
             </button>
           </sc-for>
@@ -730,6 +743,8 @@ const CARD_SKIN=[
 {bg:'linear-gradient(135deg,#0B1645 0%,#1A34B8 52%,#4C78FF 100%)',acc:'#A9BEFF'},
 {bg:'linear-gradient(135deg,#2E1B04 0%,#7E5410 50%,#D6A74C 100%)',acc:'#FFE1A0'},
 {bg:'linear-gradient(135deg,#05241A 0%,#17603F 52%,#3DA676 100%)',acc:'#A6F0CB'}];
+// Where the phone screen lands at the locked pose, as (x - W/2)/H, y/H of the phone viewer box (TL, TR, BR, BL).
+const PHONE_QUAD=[[-0.11143,0.17137],[0.1441,0.19991],[0.09996,0.76873],[-0.15557,0.74018]],PHONE_SCREEN_H=840;
 const PHONE_POSE={ry:-0.28,rx:0.05,rz:-0.08,camX:0,camY:45,camZ:900};
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -764,8 +779,9 @@ class Component extends DCLogic {
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.measure();
     const loop=()=>{this.raf=requestAnimationFrame(loop);this.frame();};loop();
-    this.splineT=setInterval(()=>this.patchSpline(),600);
+    this.splineT=setInterval(()=>this.patchSpline(),250);
     this.clockT=setInterval(()=>this.setState({now:Date.now()}),1000);
+    this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
     this.tickT=setInterval(()=>this.tick(),2800);
     this.botT=setTimeout(()=>this.setState({botReady:true}),2500);
     this.io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';this.io.unobserve(e.target);}}),{threshold:0.12});
@@ -807,7 +823,7 @@ class Component extends DCLogic {
       ringDown:e=>{const x0=e.clientX,d0=s.ringDrag||0;const mv=ev=>this.setState({ringDrag:d0+(ev.clientX-x0)*0.35});const up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);};window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);},
       ringCards:REG.map((r,i)=>{const isOpen=open===i,isFront=front===i;const ang=i*step;let rel=((ang+rot)%360+540)%360-180;const fade=Math.max(.25,1-Math.abs(rel)/150);
         return {...r,num:pad(i+1),displayName:r.name.split('/').join('/\u200B'),nfs:r.name.length>16?'17px':'21px',tf:'rotateY('+ang+'deg) translateZ('+R+'px)'+(isOpen?' translateZ(40px) translateY(-10px) scale(1.06)':isFront?' translateZ(24px)':''),
-          bg:isOpen||isFront?'rgba(255,255,255,.82)':'rgba(255,255,255,.5)',sh:isOpen?'0 40px 90px rgba(15,20,40,.22),inset 0 1px 0 #fff':'0 16px 40px rgba(15,20,40,.08),inset 0 1px 0 #fff',op:fade.toFixed(2),
+          bg:isOpen||isFront?'rgba(255,255,255,.9)':'rgba(255,255,255,.74)',sh:isOpen?'0 40px 90px rgba(15,20,40,.22),inset 0 1px 0 #fff':'0 16px 40px rgba(15,20,40,.08),inset 0 1px 0 #fff',op:fade.toFixed(2),
           ib:isOpen||isFront?'#2F5BFF':'rgba(47,91,255,.1)',ic:isOpen||isFront?'#fff':'#2F5BFF',dh:isOpen||isFront?'80px':'0px',
           enter:()=>{clearTimeout(this.ringT);this.ringT=setTimeout(()=>this.setState({ringOpen:i}),200);},leave:()=>{clearTimeout(this.ringT);this.setState({ringOpen:-1});},
           tap:()=>this.setState({ringOpen:i}),go:e=>{e.stopPropagation();this.startReg(r.id);}};})};}
@@ -815,7 +831,7 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
@@ -900,7 +916,9 @@ class Component extends DCLogic {
     const pts=fs>0?[q.pts[1],q.pts[0],q.pts[3],q.pts[2]]:q.pts;const m=this.homog(el.offsetWidth,el.offsetHeight,pts);if(!m){el.style.opacity='0';return;}el.style.transform=m;el.style.opacity='1';}
   worldOf(o){const chain=[];let x=o;while(x){chain.unshift(x);x=x.parent;}const M=o.matrixWorld.clone().identity();chain.forEach(n=>{n.updateMatrix();M.multiply(n.matrix);});return M;}
   onScreen(v){const r=v.getBoundingClientRect();return r.bottom>0&&r.top<window.innerHeight;}
-  project3D(){const sp=this.sp;if(!sp)return;const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
+  phoneFallback(){const el=document.querySelector('[data-proj="phone"]'),v=document.querySelector('spline-viewer[url*="SGdEM3csBbrvxlhm"]');if(!el||!v)return;const W=v.clientWidth,H=v.clientHeight;if(!W||!H)return;
+    if(!el.__ar){el.__ar=1;el.style.height=PHONE_SCREEN_H+'px';}const m=this.homog(el.offsetWidth,el.offsetHeight,PHONE_QUAD.map(([x,y])=>[W/2+x*H,y*H]));if(m){el.style.transform=m;el.style.opacity='1';}}
+  project3D(){const sp=this.sp;if(!sp)return;if(!sp.phone)this.phoneFallback();const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
     if(sp.phone&&sp.phone.v.isConnected&&this.onScreen(sp.phone.v)){const P=sp.phone,t=this.tilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;const K=PHONE_POSE,pc=this.phoneCam;if(pc){pc.cam.position.set(pc.p.x+K.camX,pc.p.y+K.camY,K.camZ);pc.cam.quaternion.copy(pc.q);if(pc.cam.zoom!==pc.z){pc.cam.zoom=pc.z;pc.cam.updateProjectionMatrix();}}if(P.pos)P.root.position.copy(P.pos);P.root.rotation.y=P.ry+K.ry+t.sx*0.22;P.root.rotation.x=P.rx+K.rx+t.sy*0.14;if(P.rz===undefined)P.rz=P.root.rotation.z;P.root.rotation.z=P.rz+K.rz;P.root.updateMatrix();P.root.updateMatrixWorld(true);
       let best=null,ba=0;const W=P.v.clientWidth,H=P.v.clientHeight;P.screens.forEach(m=>{let ok=true,o=m;while(o){if(o.visible===false){ok=false;break;}o=o.parent;}if(!ok)return;const q=this.faceQuad(P.app,m,W,H);if(q&&Math.abs(q.area)>ba){ba=Math.abs(q.area);best=m;}});
       if(!best&&(!this.__fs||now-this.__fs>1000)){this.__fs=now;this.findScreens&&this.findScreens();}
@@ -930,8 +948,17 @@ class Component extends DCLogic {
         const cam=app._camera;if(cam)this.phoneCam={cam,p:cam.position.clone(),q:cam.quaternion.clone(),z:cam.zoom};}
 
       try{app._scene&&app._scene.traverse(x=>{if(x.castShadow)x.castShadow=false;if(x.isLight&&x.shadow)x.castShadow=false;});}catch(e){}
+      this.tuneSpline(app,v,url);
       this.splineDone.add(app);});
   }
+  // Render each 3D scene at the resolution it is actually shown at, and stop scenes that are off-screen.
+  tuneSpline(app,v,url){const dpr=window.devicePixelRatio||1;
+    // the phone canvas is drawn 1.6x larger then scaled to 0.56, so it needs far fewer pixels than the screen's DPR
+    const pr=url.indexOf('SGdEM3csBbrvxlhm')>=0?Math.max(0.75,Math.min(dpr,2)*0.6):url.indexOf('wMuw2CRsxbceMWK0')>=0?Math.min(dpr,2):Math.min(dpr,1.25);
+    try{app._getPixelRatio=()=>pr;if(app._renderer&&app._renderer.getPixelRatio()!==pr){app._renderer.setPixelRatio(pr);app._resize&&app._resize();}}catch(e){}
+    const relock=()=>{try{const oc=app._controls&&app._controls.orbitControls;if(oc&&this.sp.phone&&this.sp.phone.app===app)oc.enabled=false;}catch(e){}};
+    try{const io=new IntersectionObserver(es=>es.forEach(e=>{try{if(e.isIntersecting){if(app.isStopped||app._isPaused){app.play();relock();}}else if(!app._isPaused)app.stop();}catch(err){}}),{rootMargin:'200px'});io.observe(v);(this.sios||(this.sios=[])).push(io);}catch(e){}
+    requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('gms-ready')));}
   torchOrbitEl(items){const h=React.createElement,dur='60s';
     return h('div',{style:{position:'absolute',left:'50%',top:'50%',width:'min(500px, calc(100vh - 240px), calc(100% - 150px))',aspectRatio:'1',zIndex:3,transform:'translate(-50%,-50%)',pointerEvents:'none'}},
       h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',border:'1.5px dashed rgba(11,13,18,.28)'}}),
@@ -957,7 +984,7 @@ class Component extends DCLogic {
                 h('span',{style:{fontFamily:'Instrument Sans',fontSize:11,fontWeight:600,textAlign:'center',lineHeight:1.2,color:'#0B0D12'}},r.name))));})));}
   photoLoopEl(){const h=React.createElement,imgs=['assets/stadium-football-sm.jpg','assets/stadium-tennis-sm.jpg'];
     const col=(order,anim)=>h('div',{style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
-      order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
+      order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
     return h('div',{style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
   sum(a){return a.reduce((t,v)=>t+(v==='X'?10:v),0);}
   setPts(ends){let A=0,B=0;ends.forEach(e=>{if(e.a.length<3||e.b.length<3)return;const sa=this.sum(e.a),sb=this.sum(e.b);if(sa>sb)A+=2;else if(sb>sa)B+=2;else{A++;B++;}});return [A,B];}
