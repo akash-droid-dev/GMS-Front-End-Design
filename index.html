@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GMS Front End Design</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gmsRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes gmsBreathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.9}}
+@keyframes gmsLive{0%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}100%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
+body{margin:0;background:#F4F5F7;color:#0B0D12;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#2F5BFF;text-decoration:none}a:hover{color:#1A3FD6}
+input{font:inherit}
+@keyframes gmsMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes gmsPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gmsSpinRev{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+@keyframes gmsUp{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 7px))}}
+@keyframes gmsDown{from{transform:translateY(calc(-50% - 7px))}to{transform:translateY(0)}}
+html{scroll-behavior:smooth}
+</style>
+</helmet>
+
+<nav style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
+  <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
+    <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
+    <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
+  </button>
+  <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
+    <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+      <button onClick="{{ n.go }}" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }}">{{ n.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
+    <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+  </div>
+</nav>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main data-screen-label="Home">
+
+  <section ref="{{ overviewRef }}" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(110% 80% at 75% 35%,#FFFFFF 0%,#EEF1F6 55%,#E6EAF1 100%)">
+    <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;top:0;bottom:0;left:0;width:60%;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 62%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 62%,transparent 100%)">
+        <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+      </div>
+    </sc-if>
+    <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:110px 32px 24px;display:grid;grid-template-columns:minmax(300px,.62fr) minmax(0,1.38fr);gap:24px;align-items:center;min-height:calc(100vh - 52px);box-sizing:border-box">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:420px;padding:24px;border-radius:26px;background:rgba(255,255,255,.4);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border:1px solid rgba(255,255,255,.85);box-shadow:0 24px 60px rgba(15,20,40,.07)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">
+          <span style="display:flex;align-items:center;gap:7px"><span style="width:6px;height:6px;border-radius:50%;background:#1FA463;animation:gmsPulse 1.8s infinite"></span>REGISTRATION OPERATIONAL</span>
+          <span>{{ clock }} IST</span>
+        </div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#2F5BFF;line-height:1.5">05 SEP — 09 SEP 2026 · AHMEDABAD</div>
+        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,3.3vw,50px);line-height:.98;letter-spacing:-.04em">Hyundai World Archery Para <span style="color:#2F5BFF;font-weight:400">Series</span></h1>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:#4A505C;text-wrap:pretty">World Para Archery championship. Register now to compete and be part of history. Experience the apex of human performance.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:12px 18px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:13px;transition:transform .3s ease,box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 10px 24px rgba(47,91,255,.3)">Register as Athlete</button>
+          <button onClick="{{ regStaff }}" style="all:unset;cursor:pointer;padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;transition:transform .3s ease" style-hover="transform:translateY(-2px)">Register as Support Staff</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-top:1px solid rgba(11,13,18,.08);padding-top:14px">
+          <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:3px;min-width:0;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8)">
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:17px;letter-spacing:-.02em">{{ s.v }}</span>
+              <span style="font-size:10px;font-weight:600;letter-spacing:.06em;color:#4A505C">{{ s.l }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div onMouseMove="{{ stageMove }}" onTouchMove="{{ stageMove }}" onMouseLeave="{{ stageOut }}" onTouchEnd="{{ stageOut }}" style="position:relative;justify-self:end;width:100%;max-width:520px;height:min(560px,calc(100vh - 170px));min-height:420px;transform:translateX(8%)">
+       <div style="position:absolute;left:-30%;top:-30%;width:160%;height:160%;transform:scale(.56);transform-origin:50% 50%">
+        <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;inset:0;pointer-events:none">
+            <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/SGdEM3csBbrvxlhm/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+          </div>
+        </sc-if>
+        <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+          <div data-proj="phone" style="position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;opacity:0;border-radius:56px;box-shadow:inset 0 0 0 11px #0B0D12;overflow:hidden;background:linear-gradient(180deg,#F8FAFD,#EAEFF7);display:flex;flex-direction:column;gap:18px;padding:84px 30px 40px;box-sizing:border-box;backface-visibility:hidden">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono';font-size:17px;letter-spacing:.06em;color:#5B6270"><span>GMS · REGISTER</span><span>{{ demoStepLabel }}</span></div>
+            <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:44px;letter-spacing:-.03em;line-height:1">Athlete</div>
+            <div style="height:8px;border-radius:8px;background:rgba(11,13,18,.08)"><div style="height:8px;border-radius:8px;background:#2F5BFF;width:{{ demoPct }};transition:width .6s ease"></div></div>
+            <sc-for list="{{ demoFields }}" as="f" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-radius:22px;background:#fff;border:3px solid {{ f.bd }};transition:border-color .3s ease">
+                <span style="font-size:16px;font-weight:600;letter-spacing:.04em;color:#8A909C">{{ f.label }}</span>
+                <span style="font-size:23px;font-weight:600;color:{{ f.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.value }}</span>
+              </div>
+            </sc-for>
+            <div style="margin-top:auto;padding:22px;border-radius:999px;background:#2F5BFF;color:#fff;text-align:center;font-size:24px;font-weight:600;transform:scale({{ demoBtnScale }});transition:transform .25s ease">{{ demoBtn }}</div>
+            <div style="position:absolute;inset:0;background:rgba(248,250,253,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:40px;text-align:center;opacity:{{ demoDoneOp }};transition:opacity .45s ease">
+              <span style="width:104px;height:104px;border-radius:50%;background:#E7F7EE;color:#1FA463;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:60px">check</span>
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.02em">Registration submitted</span>
+              <span style="font-family:'JetBrains Mono';font-size:20px;color:#5B6270">GMS-26-0413</span>
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:2;border-top:1px solid rgba(11,13,18,.06);background:rgba(255,255,255,.5);backdrop-filter:blur(10px);overflow:hidden;padding:14px 0">{{ ticker }}</div>
+  </section>
+
+  <section ref="{{ stepsRef }}" style="position:relative;height:320vh;background:#FFFFFF">
+    <div style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
+      <div style="position:relative;height:min(600px,74vh);border-radius:32px;background:#F1F3F7;overflow:hidden">
+        {{ photoLoop }}
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,0) 86%,rgba(255,255,255,.5) 100%);pointer-events:none"></div>
+        <div style="position:absolute;left:18px;bottom:18px;padding:10px 18px;border-radius:20px;background:rgba(255,255,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);font-family:'Bricolage Grotesque';font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1">{{ stepNum }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF;margin-bottom:18px">THE ROAD TO THE FINAL SHOT</div>
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div style="opacity:{{ s.op }};transition:opacity .6s ease;padding:10px 0;border-bottom:1px solid #EBEDF1">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+              <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.6vw,52px);letter-spacing:-.04em;line-height:1.05">{{ s.title }}</div>
+              <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ s.when }}</span>
+            </div>
+            <div style="max-height:{{ s.mh }};overflow:hidden;transition:max-height .7s cubic-bezier(.2,.8,.2,1)">
+              <p style="margin:10px 0 6px;max-width:440px;font-size:16px;line-height:1.55;color:#4A505C">{{ s.desc }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position:absolute;left:32px;right:32px;top:100px;bottom:40px;border-radius:32px;overflow:hidden;background:#0B0D12;transform:translateY({{ arenaY }});opacity:{{ arenaOp }};will-change:transform;box-shadow:0 -20px 60px rgba(15,20,40,.12)">{{ arenaVideo }}</div>
+    </div>
+  </section>
+
+  <section ref="{{ eventsRef }}" style="position:relative;height:320vh;background:radial-gradient(90% 70% at 60% 45%,#FFFFFF 0%,#EDF1F7 60%,#E3E9F2 100%)">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;max-width:1280px;margin:0 auto;padding:90px 32px 24px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(12px,2vw,32px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PROGRAMME · 2026</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,min(4.6vw,8vh),72px);letter-spacing:-.05em;line-height:.95">15 events. One arena.</h2>
+        <p style="margin:0;max-width:360px;font-size:16px;line-height:1.55;color:#4A505C">Medal events across the full championship programme — every sport, every category.</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+          <sc-for list="{{ evDots }}" as="d" hint-placeholder-count="3">
+            <span style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:{{ d.fg }};transition:color .4s ease"><span style="width:{{ d.w }};height:3px;border-radius:3px;background:{{ d.bar }};transition:width .5s ease,background .4s ease"></span>{{ d.name }}</span>
+          </sc-for>
+        </div>
+      </div>
+      <div onMouseMove="{{ cardMove }}" onTouchMove="{{ cardMove }}" onMouseLeave="{{ cardOut }}" onTouchEnd="{{ cardOut }}" style="position:relative;height:calc(100vh - 120px)">
+        <div style="position:absolute;left:50%;top:50%;width:min(92%,78vh);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none">
+          <div style="position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,rgba(47,91,255,.10) 0%,rgba(47,91,255,0) 62%);animation:gmsBreathe 6s ease-in-out infinite"></div>
+          <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(11,13,18,.07)"></div>
+          <div style="position:absolute;inset:12%;border-radius:50%;border:1px dashed rgba(47,91,255,.28);animation:gmsSpin 60s linear infinite"></div>
+          <div style="position:absolute;inset:26%;border-radius:50%;border:1px solid rgba(11,13,18,.06)"></div>
+          <div style="position:absolute;inset:40%;border-radius:50%;border:1px solid rgba(201,167,90,.35)"></div>
+          <div style="position:absolute;inset:0;animation:gmsSpin 40s linear infinite"><span style="position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#2F5BFF;box-shadow:0 0 14px rgba(47,91,255,.6)"></span></div>
+          <div style="position:absolute;inset:12%;animation:gmsSpin 28s linear infinite reverse"><span style="position:absolute;left:50%;bottom:-4px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#C9A75A"></span></div>
+          <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(11,13,18,.08),transparent)"></div>
+          <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(11,13,18,.08),transparent)"></div>
+        </div>
+        <sc-if value="{{ evNear }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;pointer-events:none"><x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/axlVcJsfoJAKHmrn/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import></div>
+        </sc-if>
+        <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+          <div data-proj="card" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden;border-radius:44px;overflow:hidden;isolation:isolate">
+            <div style="position:absolute;inset:0;z-index:-1;background:{{ cardF.bg }}"></div>
+            <div style="position:absolute;right:-170px;top:50%;width:600px;height:600px;margin-top:-300px;z-index:-1;border-radius:50%;opacity:.17;background:repeating-radial-gradient(circle,rgba(255,255,255,.95) 0 2px,transparent 2px 44px),radial-gradient(circle,rgba(255,255,255,.7) 0 30px,transparent 31px)"></div>
+            <div style="position:absolute;inset:-35%;z-index:-1;mix-blend-mode:screen;opacity:.7;background:linear-gradient(115deg,transparent 33%,rgba(255,110,210,.30) 42%,rgba(110,220,255,.42) 50%,rgba(255,236,140,.30) 58%,transparent 67%);transform:translateX(var(--sx,0%))"></div>
+            <div style="position:absolute;inset:0;z-index:-1;border-radius:inherit;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2),inset 0 2px 0 rgba(255,255,255,.45);background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 7px)"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:18px"><span style="width:66px;height:50px;border-radius:12px;background:linear-gradient(135deg,#F3E3B5,#C9A75A);display:grid;place-items:center;color:#5A4210;font-family:'Material Symbols Rounded';font-size:30px">{{ cardF.icon }}</span>
+                <span style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.03em;line-height:1">{{ cardF.name }}</span><span style="font-family:'JetBrains Mono';font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-top:6px">5 EVENTS · {{ cardF.sub }}</span></span></div>
+              <span style="font-family:'JetBrains Mono';font-size:18px;color:rgba(255,255,255,.65)">{{ cardF.num }}</span>
+            </div>
+            <sc-for list="{{ cardF.events }}" as="e" hint-placeholder-count="5">
+              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease,box-shadow .3s ease,transform .35s cubic-bezier(.2,.8,.2,1)" style-hover="background:rgba(255,255,255,.16);box-shadow:inset 4px 0 0 rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.18);transform:translateX(8px)">
+                <span style="font-family:'JetBrains Mono';font-size:17px;color:{{ cardF.acc }}">{{ e.n }}</span>
+                <span style="font-weight:600;font-size:24px">{{ e.name }}</span>
+                <span style="font-family:'JetBrains Mono';font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.6)">{{ e.meta }}</span>
+              </button>
+            </sc-for>
+            <div style="display:flex;justify-content:space-between;margin-top:auto;font-family:'JetBrains Mono';font-size:16px;letter-spacing:.14em;color:rgba(255,255,255,.55)"><span>GMS · PARA SERIES</span><span>05—09 SEP 2026</span></div>
+          </div>
+          <div data-proj="cardback" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden;border-radius:44px;overflow:hidden;isolation:isolate">
+            <div style="position:absolute;inset:0;z-index:-1;background:{{ cardB.bg }}"></div>
+            <div style="position:absolute;right:-170px;top:50%;width:600px;height:600px;margin-top:-300px;z-index:-1;border-radius:50%;opacity:.17;background:repeating-radial-gradient(circle,rgba(255,255,255,.95) 0 2px,transparent 2px 44px),radial-gradient(circle,rgba(255,255,255,.7) 0 30px,transparent 31px)"></div>
+            <div style="position:absolute;inset:-35%;z-index:-1;mix-blend-mode:screen;opacity:.7;background:linear-gradient(115deg,transparent 33%,rgba(255,110,210,.30) 42%,rgba(110,220,255,.42) 50%,rgba(255,236,140,.30) 58%,transparent 67%);transform:translateX(var(--sx,0%))"></div>
+            <div style="position:absolute;inset:0;z-index:-1;border-radius:inherit;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2),inset 0 2px 0 rgba(255,255,255,.45);background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 7px)"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:18px"><span style="width:66px;height:50px;border-radius:12px;background:linear-gradient(135deg,#F3E3B5,#C9A75A);display:grid;place-items:center;color:#5A4210;font-family:'Material Symbols Rounded';font-size:30px">{{ cardB.icon }}</span>
+                <span style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.03em;line-height:1">{{ cardB.name }}</span><span style="font-family:'JetBrains Mono';font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-top:6px">5 EVENTS · {{ cardB.sub }}</span></span></div>
+              <span style="font-family:'JetBrains Mono';font-size:18px;color:rgba(255,255,255,.65)">{{ cardB.num }}</span>
+            </div>
+            <sc-for list="{{ cardB.events }}" as="e" hint-placeholder-count="5">
+              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease,box-shadow .3s ease,transform .35s cubic-bezier(.2,.8,.2,1)" style-hover="background:rgba(255,255,255,.16);box-shadow:inset 4px 0 0 rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.18);transform:translateX(8px)">
+                <span style="font-family:'JetBrains Mono';font-size:17px;color:{{ cardB.acc }}">{{ e.n }}</span>
+                <span style="font-weight:600;font-size:24px">{{ e.name }}</span>
+                <span style="font-family:'JetBrains Mono';font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.6)">{{ e.meta }}</span>
+              </button>
+            </sc-for>
+            <div style="display:flex;justify-content:space-between;margin-top:auto;font-family:'JetBrains Mono';font-size:16px;letter-spacing:.14em;color:rgba(255,255,255,.55)"><span>GMS · PARA SERIES</span><span>05—09 SEP 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ scheduleRef }}" style="background:#FFFFFF;padding:120px 32px">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,1.6fr);gap:56px;align-items:start">
+      <div style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PROGRAMME OF EVENTS</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.2vw,62px);letter-spacing:-.045em;line-height:.98">The schedule. To the second.</h2>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">Dawn-to-dusk competition across every day. Tap a row for full details.</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+            <button onClick="{{ d.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:16px;background:{{ d.bg }};color:{{ d.fg }};transition:background .3s ease,color .3s ease">
+              <span style="display:flex;align-items:baseline;gap:12px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;opacity:.7">DAY {{ d.n }}</span><span style="font-weight:600;font-size:15px">{{ d.dow }} {{ d.date }}</span></span>
+              <span style="font-family:'Material Symbols Rounded';font-size:18px;opacity:.6">arrow_forward</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px">
+              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:#8A909C">MORNING</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid #E8EAEE;padding-left:14px">
+                <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;border-radius:16px;background:{{ r.bg }};transition:background .3s ease">
+                    <button onClick="{{ r.toggle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:16px" style-hover="background:#F6F7F9">
+                      <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#8A909C">ARCHERY · {{ r.code }}</span></span>
+                      <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8A909C;transform:{{ r.rot }};transition:transform .3s ease">expand_more</span></span>
+                    </button>
+                    <div style="max-height:{{ r.mh }};overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1)">
+                      <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 14px">
+                        <sc-for list="{{ r.details }}" as="x" hint-placeholder-count="4">
+                          <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C">{{ x.k }}</span>{{ x.v }}</span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:48px 28px;border-radius:24px;background:#F6F7F9;color:#5B6270;font-size:15px">Session timings for this day will be published after the draw.</div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ regRef }}" style="position:relative;height:300vh;background:radial-gradient(80% 60% at 50% 55%,#FFFFFF 0%,#EEF1F7 60%,#E4E9F2 100%)">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box;background:radial-gradient(80% 60% at 50% 55%,rgba(255,255,255,.84) 0%,rgba(238,241,247,.85) 60%,rgba(228,233,242,.86) 100%),url('assets/brick-wall.jpg') center/cover no-repeat">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 24px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTER AS · {{ ringLabel }}</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(4vw,6.5vh),58px);letter-spacing:-.045em;line-height:1">Pick how you're taking part.</h2>
+        <p style="margin:0;font-size:15px;color:#4A505C">Scroll or drag to turn the ring. Hover or tap a card to open it.</p>
+      </div>
+      <div onPointerDown="{{ ringDown }}" style="position:relative;flex:1;width:100%;perspective:2200px;perspective-origin:50% 40%;touch-action:pan-y;cursor:grab">
+        <div style="position:absolute;left:50%;top:40%;width:0;height:0;transform-style:preserve-3d;transform:scale({{ ringScale }}) rotateX(-8deg) rotateY({{ ringRot }});will-change:transform">
+          <sc-for list="{{ ringCards }}" as="r" hint-placeholder-count="12">
+            <div onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.tap }}" style="position:absolute;left:-105px;top:-140px;width:210px;height:280px;transform:{{ r.tf }};transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)">
+              <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;box-sizing:border-box;border-radius:26px;background:{{ r.bg }};backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};opacity:{{ r.op }};transition:background .4s ease,box-shadow .4s ease,opacity .4s ease;backface-visibility:hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:50px;height:50px;border-radius:16px;background:{{ r.ib }};color:{{ r.ic }};display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;transition:background .4s ease,color .4s ease">{{ r.icon }}</span><span style="font-family:'JetBrains Mono';font-size:11px;color:#8A909C">{{ r.num }}</span></div>
+                <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ r.nfs }};letter-spacing:-.025em;line-height:1.1;margin-top:auto;overflow-wrap:anywhere">{{ r.displayName }}</span>
+                <span style="font-size:12.5px;line-height:1.45;color:#4A505C;max-height:{{ r.dh }};overflow:hidden;transition:max-height .45s ease">{{ r.desc }}</span>
+                <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;text-align:center;padding:11px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:13px;transition:background .3s ease" style-hover="background:#2F5BFF">Register</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;left:50%;bottom:6vh;width:min(720px,80vw);height:60px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(15,20,40,.12),rgba(15,20,40,0));pointer-events:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#F4F5F7;padding:20px 32px 110px">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px">
+      <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:22px;padding:32px;border-radius:28px;background:#fff;border:1px solid #E3E6EB">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>LIVE NOW</span>
+          <span style="font-family:'Material Symbols Rounded';font-size:24px">arrow_outward</span>
+        </div>
+        <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.04em">Live scores</div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ liveTop }}" as="m" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #EEF0F3">
+              <span style="font-family:'Material Symbols Rounded';font-size:22px;color:#5B6270">{{ m.icon }}</span>
+              <span style="font-weight:500;font-size:15px">{{ m.a }} <span style="color:#8A909C">vs</span> {{ m.b }}</span>
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ m.scoreLine }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </button>
+      <button onClick="{{ goTv }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:32px;border-radius:28px;background:#0B0D12;color:#fff;min-height:340px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#FF7A7E">STREAMING ON YOUTUBE</span>
+          <span style="font-family:'Material Symbols Rounded';font-size:24px">arrow_outward</span>
+        </div>
+        <div style="width:84px;height:84px;border-radius:50%;background:#E5484D;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:44px;align-self:center">play_arrow</div>
+        <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.04em">Live TV</div>
+      </button>
+    </div>
+  </section>
+
+  <section ref="{{ tilesRef }}" style="position:relative;height:380vh;background:#FFFFFF">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,3vh,36px);padding:clamp(76px,10vh,100px) 32px clamp(16px,3vh,40px);box-sizing:border-box">
+      <div style="max-width:1240px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">A COMPLETE GAMES ECOSYSTEM</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(4.8vw,7vh),68px);letter-spacing:-.045em;line-height:1">Built for every team behind the Games.</h2></div>
+        <span style="max-width:340px;font-size:15px;line-height:1.5;color:#5B6270">Purpose-built modules share workflows and data, giving every team the clarity they need without adding operational complexity.</span>
+      </div>
+      <div style="max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+        <sc-for list="{{ tiles }}" as="c" hint-placeholder-count="6">
+          <div data-tile style="grid-column:{{ c.gc }};transform:{{ c.tf }};opacity:{{ c.op }};display:flex;flex-direction:column;gap:clamp(6px,1.1vh,12px);padding:clamp(16px,2.2vh,26px);border-radius:{{ c.br }};background:{{ c.bg }};min-height:{{ c.mh }};box-sizing:border-box;will-change:transform">
+            <sc-if value="{{ c.narrow }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="width:44px;height:44px;border-radius:14px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:24px">{{ c.icon }}</span>
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
+              </div>
+              <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
+              <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+            </sc-if>
+            <sc-if value="{{ c.wide }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:clamp(14px,2vw,28px);flex-wrap:wrap;margin:auto 0">
+                <span style="width:52px;height:52px;flex:none;border-radius:16px;background:#2F5BFF;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;box-shadow:0 10px 24px rgba(47,91,255,.28)">{{ c.icon }}</span>
+                <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
+                  <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1">{{ c.title }}</div>
+                  <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1 1 300px;justify-content:flex-end">
+                  <sc-for list="{{ c.chips }}" as="k" hint-placeholder-count="5">
+                    <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(47,91,255,.15);font-size:12px;font-weight:600;color:#1A3FD6"><span style="width:6px;height:6px;border-radius:50%;background:#2F5BFF;animation:gmsPulse 1.8s infinite"></span>{{ k.t }}</span>
+                  </sc-for>
+                </div>
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div data-paper-layer style="position:absolute;inset:0;pointer-events:none;z-index:5;display:none">
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ carRef }}" style="position:relative;height:200vh;background:#FFFFFF">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center">
+      <div style="position:absolute;inset:0">{{ momentVideo }}<div style="position:absolute;inset:0;background:rgba(255,255,255,.5)"></div></div>
+      <div style="position:relative;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(64px,11vw,190px);letter-spacing:-.06em;line-height:.88;text-align:center;color:#0B0D12;opacity:{{ carTextOp }}">The moment<br>before impact.</div>
+      
+      <div style="position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);max-width:560px;text-align:center;font-size:17px;line-height:1.55;color:#4A505C;padding:0 24px;color:#0B0D12;font-weight:500;opacity:{{ carTextOp }}">Experience the intensity of Para Archery at the Hyundai World Para Archery Series, Ahmedabad.</div>
+    </div>
+  </section>
+
+  <section ref="{{ closeRef }}" style="position:relative;height:220vh;background:#FFFFFF">
+    <div style="position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden">
+      <div style="position:relative;width:{{ winW }};height:{{ winH }};border-radius:{{ winR }};background:{{ winBg }};color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;box-sizing:border-box;border:1px solid rgba(11,13,18,.08);overflow:hidden">
+        <div style="position:absolute;inset:0;opacity:{{ videoOp }};pointer-events:none">{{ closingVideo }}<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.75) 100%)"></div></div>
+        <div style="position:relative;opacity:{{ winContentOp }};display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;max-width:960px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8FA6FF">THE RANGE · AWAITS</div>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(48px,7vw,112px);letter-spacing:-.05em;line-height:.95">Every arrow has a moment.</h2>
+          <p style="margin:0;max-width:620px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.7)">Prepare for the World Para Archery stage — from classification and equipment checks to qualification, eliminations and the final shot. <b style="color:#fff">One range. One target. One moment to make it count.</b></p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+            <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">Begin registration</button>
+            <button onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;background:#fff;color:#0B0D12;font-weight:600;font-size:15px">Admin login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#000;color:#fff;padding:44px 32px 52px">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
+      <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px">GMS</span>
+      <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">Sanctioned by World Archery Federation (Lausanne, Switzerland), Archery Association of India (AAI) and the Gujarat State Archery Association (GSAA), with the Sports Authority of Gujarat (SAG), World Archery partners(Errea, Turkish Airlines, Herbelin), Series title sponsor - Hyundai.</p>
+      <div style="display:flex;gap:22px;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.6)">
+        <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">SCHEDULE</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">EVENTS</button><span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+</main>
+</sc-if>
+
+<sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Registration" style="position:relative;min-height:100vh;overflow:hidden;background:#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
+  <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;inset:0;pointer-events:none">
+      <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+    </div>
+  </sc-if>
+  <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:32px;background:rgba(255,255,255,.6);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
+    <sc-if value="{{ regFormOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <span style="width:56px;height:56px;border-radius:18px;background:rgba(47,91,255,.1);color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:30px">{{ rt.icon }}</span>
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTER AS</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em;line-height:1.05">{{ rt.name }}</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
+            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">{{ f.label }}
+              <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" style="padding:13px 15px;border-radius:14px;border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;color:#0B0D12;outline:none">
+            </label>
+          </sc-for>
+        </div>
+        <sc-if value="{{ isAthleteForm }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:13px;font-weight:600;color:#4A505C">Events · {{ selCount }} selected</span>
+            <sc-for list="{{ eventPicker }}" as="cat" hint-placeholder-count="3">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                <span style="width:110px;font-size:12px;font-weight:700;color:{{ cat.color }}">{{ cat.name }}</span>
+                <sc-for list="{{ cat.events }}" as="e" hint-placeholder-count="5">
+                  <button onClick="{{ e.toggle }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:600;background:{{ e.bg }};color:{{ e.fg }};border:1px solid {{ e.bd }}">{{ e.name }}</button>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:600;color:#4A505C">Documents</span>
+          <sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
+            <button onClick="{{ d.toggle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px dashed {{ d.bd }};background:{{ d.bg }}">
+              <span style="font-family:'Material Symbols Rounded';font-size:22px;color:{{ d.ic }}">{{ d.icon }}</span>
+              <span style="flex:1;font-weight:600;font-size:14px">{{ d.name }}</span>
+              <span style="font-size:12px;font-weight:600;color:{{ d.ic }}">{{ d.status }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <span style="font-size:13px;color:#E5484D;min-height:16px">{{ regError }}</span>
+        <div style="display:flex;gap:10px;justify-content:space-between">
+          <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;padding:15px 22px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-weight:600;font-size:14px">Cancel</button>
+          <button onClick="{{ submitReg }}" style="all:unset;cursor:pointer;padding:15px 26px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:14px">Submit registration</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ regDone }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:20px 0">
+        <span style="width:72px;height:72px;border-radius:50%;background:#E7F7EE;color:#1FA463;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:40px">check</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.03em">Registration submitted</h2>
+        <span style="font-size:15px;color:#4A505C;max-width:400px">Your application is with the verification team. Log in with this email to track it.</span>
+        <span style="font-family:'JetBrains Mono';font-size:17px;padding:12px 18px;border-radius:14px;background:rgba(255,255,255,.85)">{{ lastRegId }}</span>
+        <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:15px 26px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px">Go to login</button>
+      </div>
+    </sc-if>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Login" style="position:relative;min-height:100vh;overflow:hidden;background:#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
+  <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;inset:0;pointer-events:none">
+      <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+    </div>
+  </sc-if>
+  <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:32px;background:rgba(255,255,255,.6);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
+      <div style="display:flex;padding:4px;border-radius:999px;background:rgba(11,13,18,.06)">
+        <sc-for list="{{ loginTabs }}" as="t" hint-placeholder-count="2">
+          <button type="button" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:999px;font-size:14px;font-weight:600;background:{{ t.bg }};box-shadow:{{ t.sh }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.035em">{{ loginTitle }}</h1>
+      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">Email
+        <input type="email" value="{{ loginEmail }}" onChange="{{ onLoginEmail }}" placeholder="you@example.com" style="padding:13px 15px;border-radius:14px;border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;outline:none">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">Password
+        <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" placeholder="••••••••" style="padding:13px 15px;border-radius:14px;border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;outline:none">
+      </label>
+      <span style="font-size:13px;color:#E5484D;min-height:16px">{{ loginError }}</span>
+      <button type="submit" style="all:unset;cursor:pointer;text-align:center;padding:15px;border-radius:999px;background:{{ loginBtnBg }};color:#fff;font-weight:600;font-size:15px">Sign in</button>
+    </form>
+  </sc-if>
+  <sc-if value="{{ isParticipant }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:32px;background:rgba(255,255,255,.62);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">MY REGISTRATION</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:#5B6270">{{ me.type }} · {{ me.id }}</span></div>
+      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+        <sc-for list="{{ me.timeline }}" as="t" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="height:6px;border-radius:6px;background:{{ t.bar }}"></div><span style="font-weight:600;font-size:14px;color:{{ t.fg }}">{{ t.label }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isAdminSession }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:32px;background:rgba(255,255,255,.66);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">ADMIN · VERIFICATION</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
+      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+        <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:18px;background:rgba(255,255,255,.8)"><span style="font-size:12px;color:#5B6270">{{ k.label }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;border-radius:20px;background:rgba(255,255,255,.85);overflow:hidden">
+        <sc-for list="{{ adminRows }}" as="r" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px 160px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ r.id }}</span>
+            <span style="font-weight:600;font-size:14px">{{ r.name }}</span>
+            <span style="font-size:13px;color:#4A505C">{{ r.type }}</span>
+            <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:{{ r.sBg }};color:{{ r.sFg }}">{{ r.status }}</span>
+            <div style="display:flex;gap:6px;opacity:{{ r.actOp }}">
+              <button onClick="{{ r.approve }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600">Approve</button>
+              <button onClick="{{ r.reject }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;border:1px solid #E3E6EB;font-size:12px;font-weight:600">Reject</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{ isScores }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Live Scores" style="position:relative;min-height:100vh;background:radial-gradient(90% 60% at 80% 0%,#FFFFFF 0%,#F1F3F7 55%,#E9EDF4 100%);padding:116px 32px 80px;box-sizing:border-box;overflow:hidden">
+  <div style="position:absolute;right:-12vw;top:-14vw;width:46vw;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(47,91,255,.18);animation:gmsSpin 90s linear infinite;pointer-events:none"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;color:#E5484D"><span style="width:9px;height:9px;border-radius:50%;background:#E5484D;animation:gmsLive 1.4s infinite"></span>{{ liveCount }} MATCHES LIVE · {{ clock }} IST</span>
+        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(44px,5.5vw,80px);letter-spacing:-.045em;line-height:1">Live scores</h1>
+      </div>
+      <button onClick="{{ goTv }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px;transition:transform .3s ease" style-hover="transform:translateY(-2px)"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#FF7A7E">play_circle</span>Watch on Live TV</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border-radius:26px;background:rgba(255,255,255,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.9);animation:gmsRise .7s .08s cubic-bezier(.2,.8,.2,1) both">
+      <sc-for list="{{ sportFilters }}" as="f" hint-placeholder-count="8">
+        <button onClick="{{ f.pick }}" style="all:unset;cursor:pointer;flex:none;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }};transition:background .3s ease,color .3s ease"><span style="font-family:'Material Symbols Rounded';font-size:18px">{{ f.icon }}</span>{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start">
+      <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:22px;padding:30px;border-radius:30px;background:linear-gradient(160deg,#0B0D12 0%,#151B2E 100%);color:#fff;box-shadow:0 30px 80px rgba(15,20,40,.18);animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+          <span style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.7)"><span style="padding:5px 10px;border-radius:999px;background:#E5484D;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em">LIVE</span>Recurve Open Men Individual · Gold medal match</span>
+          <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.55)">FINALS FIELD · 70M · SET SYSTEM</span>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:center;padding:8px 0">
+          <div style="display:flex;align-items:center;gap:14px"><span style="width:52px;height:52px;border-radius:50%;background:rgba(143,166,255,.16);color:#8FA6FF;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">IND</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:22px">Rahul Verma</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 2</span></span></div>
+          <div style="display:flex;align-items:center;gap:16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(64px,8vw,108px);letter-spacing:-.04em;line-height:1"><span>{{ arch.setA }}</span><span style="font-size:.35em;color:rgba(255,255,255,.3)">:</span><span>{{ arch.setB }}</span></div>
+          <div style="display:flex;align-items:center;gap:14px;justify-content:flex-end;text-align:right"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:22px">Kim Min-jun</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 1</span></span><span style="width:52px;height:52px;border-radius:50%;background:rgba(255,184,107,.16);color:#FFB86B;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">KOR</span></div>
+        </div>
+        <div style="align-self:center;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.07);font-family:'JetBrains Mono';font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.75)">{{ arch.status }}</div>
+        <div style="border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);overflow:hidden">
+          <div style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;padding:12px 18px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45)"><span>END</span><span>ARROW 1</span><span>ARROW 2</span><span>ARROW 3</span><span>TOTAL</span><span>SP</span></div>
+          <sc-for list="{{ arch.rows }}" as="r" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;align-items:center;padding:8px 18px;border-top:1px solid rgba(255,255,255,.05);background:{{ r.bg }};transition:background .5s ease">
+              <span style="font-family:'JetBrains Mono';font-size:12px;color:{{ r.who }}">{{ r.label }}</span>
+              <sc-for list="{{ r.arrows }}" as="x" hint-placeholder-count="3">
+                <span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:{{ x.bg }};color:{{ x.fg }};transition:background .4s ease,transform .4s ease">{{ x.v }}</span>
+              </sc-for>
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ r.sum }}</span>
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;color:#8FA6FF">{{ r.sp }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="min-width:0;display:flex;flex-direction:column;gap:12px;animation:gmsRise .8s .2s cubic-bezier(.2,.8,.2,1) both">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 6px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:22px;letter-spacing:-.02em">All live</span><span style="font-size:13px;color:#5B6270">Updates every few seconds</span></div>
+        <sc-for list="{{ matchCards }}" as="m" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 30px rgba(15,20,40,.05);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px rgba(15,20,40,.10)">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px"><span style="display:flex;align-items:center;gap:8px;color:#4A505C;font-weight:600"><span style="width:28px;height:28px;border-radius:9px;background:#EEF2FF;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:17px">{{ m.icon }}</span>{{ m.sport }} · {{ m.venue }}</span><span style="display:flex;align-items:center;gap:6px;color:#E5484D;font-weight:700"><span style="width:6px;height:6px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>{{ m.clock }}</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center">
+              <span style="font-weight:600;font-size:15px">{{ m.a }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;padding:0 8px;border-radius:8px;background:{{ m.flashA }};transition:background .6s ease">{{ m.sa }}</span>
+              <span style="font-weight:600;font-size:15px">{{ m.b }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;padding:0 8px;border-radius:8px;background:{{ m.flashB }};transition:background .6s ease">{{ m.sb }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTv }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Live TV" style="position:relative;min-height:100vh;background:radial-gradient(90% 60% at 20% 0%,#FFFFFF 0%,#F1F3F7 55%,#E9EDF4 100%);padding:116px 32px 80px;box-sizing:border-box;overflow:hidden">
+  <div style="position:relative;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;color:#E5484D"><span style="width:9px;height:9px;border-radius:50%;background:#E5484D;animation:gmsLive 1.4s infinite"></span>STREAMING NOW ON YOUTUBE</span>
+        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(44px,5.5vw,80px);letter-spacing:-.045em;line-height:1">Live TV</h1>
+      </div>
+      <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px;border-radius:999px;background:rgba(255,255,255,.75);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);font-weight:600;font-size:14px;transition:transform .3s ease" style-hover="transform:translateY(-2px)">IND {{ arch.setA }} : {{ arch.setB }} KOR<span style="padding:8px 14px;border-radius:999px;background:#0B0D12;color:#fff;font-size:13px">Scorecard</span></button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;align-items:start">
+      <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:16px;animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both">
+        <div style="position:relative;padding:10px;border-radius:34px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14)">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#0B0D12">
+            <iframe src="{{ ytSrc }}" title="Hyundai World Archery Para Series live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            <div style="position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(11,13,18,.7);backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;pointer-events:none"><span style="width:7px;height:7px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ curStream.title }}</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;padding:4px 8px">
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.03em">{{ curStream.title }}</span><span style="font-size:14px;color:#5B6270">{{ curStream.sub }}</span></div>
+          <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.06em;color:#5B6270">AHMEDABAD · {{ clock }} IST</span>
+        </div>
+      </div>
+      <div style="min-width:0;display:flex;flex-direction:column;gap:14px;animation:gmsRise .8s .2s cubic-bezier(.2,.8,.2,1) both">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:28px;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95)">
+          <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em;padding:4px 6px 8px">Channels</span>
+          <sc-for list="{{ streams }}" as="s" hint-placeholder-count="4">
+            <button onClick="{{ s.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;padding:8px;border-radius:18px;background:{{ s.bg }};transition:background .3s ease" style-hover="background:rgba(47,91,255,.06)">
+              <span style="position:relative;width:96px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0B0D12"><img src="https://i.ytimg.com/vi/jT9C2wBHn6c/hqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.85"><span style="position:absolute;left:6px;bottom:5px;padding:2px 6px;border-radius:6px;background:{{ s.tagBg }};color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em">{{ s.tag }}</span></span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ s.title }}</span><span style="font-size:12px;color:#5B6270;line-height:1.35">{{ s.sub }}</span></span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:18px;border-radius:28px;background:#0B0D12;color:#fff">
+          <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em;padding:4px 6px 8px">Up next today</span>
+          <sc-for list="{{ upNext }}" as="u" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:center;padding:10px 6px;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ u.time }}</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:14px">{{ u.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.5)">{{ u.code }}</span></span></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:80;background:rgba(230,234,241,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;padding:24px">
+    <div onClick="{{ stop }}" style="position:relative;width:min(480px,100%);display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:32px;background:rgba(255,255,255,.55);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.16),inset 0 1px 0 rgba(255,255,255,.9);box-sizing:border-box">
+      <button onClick="{{ closeModal }}" style="all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:22px">close</button>
+      <span style="width:66px;height:66px;border-radius:22px;background:rgba(255,255,255,.85);border:1px solid #fff;box-shadow:0 10px 30px rgba(15,20,40,.10);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:34px;color:#2F5BFF">{{ modal.icon }}</span>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTER AS</span>
+        <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:36px;letter-spacing:-.04em;line-height:1.02">{{ modal.name }}</h3>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#4A505C">{{ modal.desc }}</p>
+      </div>
+      <button onClick="{{ startFlow }}" style="all:unset;cursor:pointer;text-align:center;padding:16px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:15px">Register</button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showChat }}" hint-placeholder-val="{{ true }}">
+  <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.78);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.18)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(11,13,18,.06)">
+        <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">GMS Assistant</span><span style="font-size:12px;color:#5B6270">Events, schedule, registration and scores</span></div>
+        <button onClick="{{ toggleChat }}" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px">close</button>
+      </div>
+      <div ref="{{ chatScrollRef }}" style="flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ messages }}" as="m" hint-placeholder-count="1">
+          <div style="align-self:{{ m.align }};max-width:82%;padding:11px 14px;border-radius:18px;font-size:14px;line-height:1.45;background:{{ m.bg }};color:{{ m.fg }}">{{ m.text }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px">
+        <sc-for list="{{ quick }}" as="q" hint-placeholder-count="3">
+          <button onClick="{{ q.send }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #E3E6EB;font-size:13px">{{ q.label }}</button>
+        </sc-for>
+      </div>
+      <form onSubmit="{{ submitChat }}" style="display:flex;gap:8px;padding:12px;border-top:1px solid rgba(11,13,18,.06)">
+        <input value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Ask a question…" style="flex:1;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid #E3E6EB;background:#fff;font-size:14px;outline:none">
+        <button type="submit" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:#0B0D12;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px">arrow_upward</button>
+      </form>
+    </div>
+  </sc-if>
+  <div style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px">
+    <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;pointer-events:none">
+        <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/wMuw2CRsxbceMWK0/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="120px,120px"></x-import>
+      </div>
+    </sc-if>
+    <button onClick="{{ toggleChat }}" title="Chat with GMS Assistant" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
+    <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none">{{ chatLabel }}</span>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;jT9C2wBHn6c&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
+const BLUE='#2F5BFF';
+const CATS=[
+{name:'Recurve Open',icon:'target',color:BLUE,tint:'#E8EEFF',outdoor:true,events:[['Recurve Open Mixed','MIXED','RXTEAM'],['Recurve Open Men Team','MEN','RMTEAM'],['Recurve Open Women Team','WOMEN','RWTEAM'],['Recurve Open Men Individual','MEN','RMIND'],['Recurve Open Woman Individual','WOMEN','RWIND']]},
+{name:'Compound Open',icon:'adjust',color:'#A9741E',tint:'#FBF1DF',outdoor:true,events:[['Compound Open Men Individual','MEN','PCMIND'],['Compound Open Women Individual','WOMEN','PCWIND'],['Compound Open Mixed','MIXED','PCXTEAM'],['Compound Open Men Team','MEN','PCMTEAM'],['Compound Open Women Team','WOMEN','PCWTEAM']]},
+{name:'W1',icon:'accessible_forward',color:'#2F7A57',tint:'#E4F3EB',outdoor:false,events:[['W1 Men Individual','MEN','W1MIND'],['W1 Men Team','MEN','W1MTEAM'],['W1 Women Individual','WOMEN','W1WIND'],['W1 Women Team','WOMEN','W1WTEAM'],['W1 Mixed Team','MIXED','W1XTEAM']]}];
+const ALL_EVENTS=CATS.flatMap(c=>c.events.map(e=>({name:e[0],gender:e[1],code:e[2],cat:c})));
+const REG=[
+{id:'athlete',name:'Athlete',icon:'accessible_forward',desc:'Para archers entering Recurve Open, Compound Open or W1 events.'},
+{id:'staff',name:'Support Staff',icon:'groups',desc:'Coaches, team managers, physios and technicians travelling with a delegation.'},
+{id:'official',name:'Technical Official',icon:'sports',desc:'Judges, classifiers and field officials appointed to run the competition.'},
+{id:'entity',name:'Entity/Organisation/CDM',icon:'corporate_fare',desc:'National federations and Chefs de Mission registering and managing their delegation.'},
+{id:'medical',name:'Medical',icon:'medical_services',desc:'Doctors, paramedics and medical staff on duty at the venue.'},
+{id:'nada',name:'NADA/WADA',icon:'science',desc:'Anti-doping officers and chaperones working under NADA and WADA protocols.'},
+{id:'gov',name:'Government Officials',icon:'account_balance',desc:'Ministry, state and civic officials attending in an official capacity.'},
+{id:'media',name:'Media & Broadcasting',icon:'videocam',desc:'Press, photographers and broadcast crews covering the Series.'},
+{id:'volunteer',name:'Volunteer',icon:'volunteer_activism',desc:'Help run the range, logistics, hospitality and spectator services.'},
+{id:'service',name:'Service Provider',icon:'handyman',desc:'Vendors delivering catering, transport, equipment and venue services.'},
+{id:'ema',name:'EMA',icon:'event_available',desc:'Event management agency staff responsible for operations and production.'},
+{id:'lo',name:'Liaison Officer',icon:'connect_without_contact',desc:'Officers assigned to a delegation as their point of contact throughout the event.'}];
+const DOCS={athlete:['Passport / National ID','Para classification card','Passport-size photo'],entity:['Federation authorisation letter','Delegation list'],media:['Press card','Organisation letter'],_:['Photo ID','Authorisation letter']};
+const STEPS=[
+{title:'Registration',when:'Now',desc:'Athletes, staff, officials and every accredited role register online through one verified identity.'},
+{title:'Classification',when:'TBA',desc:'Para classification and equipment checks confirm each athlete’s eligibility for their division.'},
+{title:'Qualification Round',when:'TBA',desc:'Ranking rounds across Recurve Open, Compound Open and W1 set the seeding for eliminations.'},
+{title:'Elimination Rounds',when:'TBA',desc:'Head-to-head matches decided end by end, scored live from the field.'},
+{title:'Finals',when:'TBA',desc:'Medal matches on the finals field, streamed live and published to results instantly.'}];
+const MODULES=[
+{icon:'assignment',title:'Registration',desc:'One registration. One source of truth.',bg:'#EEF2FF'},
+{icon:'verified',title:'Verification',desc:'Every entry, verified and ready.',bg:'#F2F4F7'},
+{icon:'badge',title:'Accreditation',desc:'The right access, for the right people.',bg:'#EAF7F0'},
+{icon:'bed',title:'Accommodation',desc:'Every stay, organised.',bg:'#FFF5E6'},
+{icon:'directions_bus',title:'Transportation',desc:'Move the Games without the guesswork.',bg:'#EEF2FF'},
+{icon:'restaurant',title:'Catering',desc:'Every meal. Every delegation. Accounted for.',bg:'#F2F4F7'},
+{icon:'sports_score',title:'Competition Management System',desc:'Draws, brackets, live scoring, results and rankings. Every match on every range, run from one console.',bg:'linear-gradient(115deg,#EEF2FF 0%,#E4EBFF 45%,#F3EEFF 100%)',wide:true,chips:['Draws & brackets','Live scoring','Results','Rankings','Records']}];
+const SCATTER=[[-360,-260,-12],[0,-340,8],[360,-260,-9],[-380,260,11],[0,320,-7],[380,260,12],[0,420,5]];
+// Paper-fall timing for the ecosystem tiles (fractions of the section's scroll progress).
+const PAPER={start:0.5,stagger:0.022,crumple:0.1,fall:0.2};
+const tileCrumple=(p,i)=>ease(clamp((p-PAPER.start-i*PAPER.stagger)/PAPER.crumple));
+const DAY1=[['08:00','PCMTEAM'],['08:00','PCWTEAM'],['08:00','W1MIND'],['08:00','W1MTEAM'],['08:00','W1WIND'],['08:00','W1WTEAM'],['10:00','W1XTEAM'],['10:27','RMIND'],['10:27','RWIND']];
+const DAYS=[['01','05 Sept','Sat'],['02','06 Sept','Sun'],['03','07 Sept','Mon'],['04','08 Sept','Tue'],['05','09 Sept','Wed']];
+const SPORT_ICON={Archery:'target',Cricket:'sports_cricket',Football:'sports_soccer',Basketball:'sports_basketball',Athletics:'directions_run',Kabaddi:'sports_kabaddi',Volleyball:'sports_volleyball',Badminton:'sports_tennis','Table Tennis':'sports_tennis',Hockey:'sports_hockey',Swimming:'pool'};
+const STREAMS=[
+{title:'Finals Field',sub:'Recurve Open Men Individual · Gold medal match',icon:'target',tag:'LIVE'},
+{title:'Compound Range',sub:'Compound Open Women Team · Semi-finals',icon:'adjust',tag:'LIVE'},
+{title:'W1 Range',sub:'W1 Men Individual · Quarter-finals',icon:'accessible_forward',tag:'LIVE'},
+{title:'Ceremony Stage',sub:'Medal ceremony · 17:30 IST',icon:'emoji_events',tag:'LATER'}];
+const SEED=[
+{id:'GMS-26-0412',name:'Harvinder Kaur',type:'Athlete',status:'Pending'},
+{id:'GMS-26-0409',name:'Lee Seo-yeon',type:'Athlete',status:'Pending'},
+{id:'GMS-26-0398',name:'Marco Bianchi',type:'Support Staff',status:'Verified'},
+{id:'GMS-26-0391',name:'Anita Desai',type:'Technical Official',status:'Accredited'},
+{id:'GMS-26-0385',name:'James Carter',type:'Media & Broadcasting',status:'Pending'},
+{id:'GMS-26-0362',name:'Dr. Meera Shah',type:'Medical',status:'Rejected'}];
+const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E8EEFF','#2F5BFF'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
+const EVENT_START=new Date('2026-09-05T08:00:00+05:30').getTime();
+// Locked hero-phone pose (radians / scene units). Hover tilt is added on top and eases back to this.
+// Programme card skins, one per category (Recurve Open, Compound Open, W1).
+const CARD_SKIN=[
+{bg:'linear-gradient(135deg,#0B1645 0%,#1A34B8 52%,#4C78FF 100%)',acc:'#A9BEFF'},
+{bg:'linear-gradient(135deg,#2E1B04 0%,#7E5410 50%,#D6A74C 100%)',acc:'#FFE1A0'},
+{bg:'linear-gradient(135deg,#05241A 0%,#17603F 52%,#3DA676 100%)',acc:'#A6F0CB'}];
+const PHONE_POSE={ry:-0.28,rx:0.05,rz:-0.08,camX:0,camY:45,camZ:900};
+const clamp=v=>Math.max(0,Math.min(1,v));
+const ease=t=>1-Math.pow(1-t,3);
+const pad=n=>String(n).padStart(2,'0');
+const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',events:[],docs:{}});
+
+class Component extends DCLogic {
+  state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
+    day:0,openRow:null,p:{steps:0,tiles:0,car:0,close:0,ev:0,reg:0},evNear:false,regNear:false,now:Date.now(),
+    loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
+    chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
+    filter:'All',stream:0,flash:{},
+    ends:[{a:[10,9,9],b:[9,9,8]},{a:[9,10,9],b:[10,10,9]},{a:[10,10,9],b:[10,9,9]},{a:[10],b:[]}],turn:'b',
+    matches:[
+      {id:1,sport:'Archery',a:'Lee S. (KOR)',b:'Kaur H. (IND)',sa:146,sb:144,clock:'End 5',venue:'Compound Range'},
+      {id:2,sport:'Archery',a:'Rossi M. (ITA)',b:'Tanaka K. (JPN)',sa:4,sb:2,clock:'Set 4',venue:'W1 Range'},
+      {id:3,sport:'Cricket',a:'Mavericks',b:'Strikers',sa:168,sb:0,clock:'17.2 ov',venue:'Ground A'},
+      {id:4,sport:'Football',a:'Rangers FC',b:'City United',sa:2,sb:1,clock:"67'",venue:'Field 2'},
+      {id:5,sport:'Basketball',a:'Hawks',b:'Titans',sa:78,sb:74,clock:'Q4 05:12',venue:'Arena 1'},
+      {id:6,sport:'Kabaddi',a:'Panthers',b:'Warriors',sa:31,sb:28,clock:'2nd half',venue:'Hall A'},
+      {id:7,sport:'Volleyball',a:'Spikers',b:'Blockers',sa:2,sb:1,clock:'Set 4',venue:'Court 3'},
+      {id:8,sport:'Badminton',a:'A. Rao',b:'K. Mehta',sa:21,sb:17,clock:'Game 2',venue:'Hall B'},
+      {id:9,sport:'Table Tennis',a:'S. Kumar',b:'L. Wong',sa:9,sb:7,clock:'Game 3',venue:'Hall C'},
+      {id:10,sport:'Hockey',a:'Strikers HC',b:'Royals HC',sa:3,sb:3,clock:"52'",venue:'Turf 1'},
+      {id:11,sport:'Athletics',a:'100m T54 · Patel R.',b:'Okoro D.',sa:1,sb:2,clock:'Final',venue:'Track'},
+      {id:12,sport:'Swimming',a:'50m Free S9 · Sato Y.',b:'Brown L.',sa:1,sb:2,clock:'Final',venue:'Aquatics'}]};
+  refs={};
+  ref(k){return this.refs[k]||(this.refs[k]=React.createRef());}
+  componentDidMount(){
+    this.target={steps:0,tiles:0,car:0,close:0,ev:0,reg:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
+    this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
+    window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
+    this.measure();
+    const loop=()=>{this.raf=requestAnimationFrame(loop);this.frame();};loop();
+    this.splineT=setInterval(()=>this.patchSpline(),600);
+    this.clockT=setInterval(()=>this.setState({now:Date.now()}),1000);
+    this.tickT=setInterval(()=>this.tick(),2800);
+    this.botT=setTimeout(()=>this.setState({botReady:true}),2500);
+    this.io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';this.io.unobserve(e.target);}}),{threshold:0.12});
+    this.revealT=setInterval(()=>{document.querySelectorAll('main section h2, main section > div > div, main footer > div').forEach(el=>{if(el.__rv)return;const cs=getComputedStyle(el);if(cs.position==='sticky'||el.closest('[style*="sticky"]'))return;el.__rv=1;
+      if(el.getBoundingClientRect().top<window.innerHeight*0.9)return;el.style.opacity='0';el.style.transform='translateY(36px)';el.style.transition=(el.style.transition?el.style.transition+',':'')+'opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)';this.io.observe(el);});},700);
+  }
+  newVals(){const s=this.state,W=typeof window!=='undefined'?window.innerWidth:1200;
+    const demo=Math.floor(s.now/1000)%9;const DF=[['FULL NAME','Harvinder Kaur'],['COUNTRY / NPC','India'],['EVENT','Recurve Open Woman Individual'],['CLASSIFICATION','Open · Senior']];
+    const ep=s.p.ev*3.1;const DIV=[['linear-gradient(150deg,#14215C 0%,#2F5BFF 100%)'],['linear-gradient(150deg,#4A3008 0%,#B8862B 100%)'],['linear-gradient(150deg,#0F3324 0%,#2F7A57 100%)']];
+    const rp=s.p.reg*4,gap=Math.min(300,W*0.31);
+    const ci=s.cardF||0,cc=CATS[ci],rg=s.regShown||0;const mkCard=k=>{const c=CATS[k];return {bg:CARD_SKIN[k].bg,acc:CARD_SKIN[k].acc,name:c.name,icon:c.icon,num:pad(k+1)+' / 03',sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(c.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))};};
+    return {heroTiltRef:this.ref('heroTilt'),
+      stageMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.tilt.x=((t.clientX-r.left)/r.width-.5)*2;this.tilt.y=((t.clientY-r.top)/r.height-.5)*2;},stageOut:()=>{this.tilt.x=0;this.tilt.y=0;},
+      cardMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.ctilt.x=((t.clientX-r.left)/r.width-.5)*2;this.ctilt.y=((t.clientY-r.top)/r.height-.5)*2;},cardOut:()=>{this.ctilt.x=0;this.ctilt.y=0;},
+      card:{name:cc.name,icon:cc.icon,num:pad(ci+1)+' / 03',sub:cc.outdoor?'OUTDOOR':'INDOOR',events:cc.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(cc.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))},
+      cardF:mkCard(s.cardF||0),cardB:mkCard(s.cardB??1),
+      ...this.ringVals(),
+      _discCards:REG.slice(rg*6,rg*6+6).map((r,i)=>({...r,key:'disc'+i,fs:r.name.length>16?'30px':r.name.length>11?'36px':'42px',go:()=>this.startReg(r.id),enter:()=>{this.discHover=i;},leave:()=>{this.discHover=-1;}})),discMove:()=>{},discOut:()=>{this.discHover=-1;},
+      arenaY:((1-ease(clamp((s.p.steps-0.74)/0.22)))*110).toFixed(2)+'%',arenaOp:s.p.steps>0.7?'1':'0',
+      tiltMove:e=>{const el=this.refs.heroTilt.current;if(!el)return;const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();const x=(t.clientX-r.left)/r.width-.5,y=(t.clientY-r.top)/r.height-.5;el.style.transform='translate(-50%,-50%) rotateY('+(x*26).toFixed(1)+'deg) rotateX('+(-y*18).toFixed(1)+'deg) scale(1.03)';},
+      tiltLeave:()=>{const el=this.refs.heroTilt.current;if(el)el.style.transform='translate(-50%,-50%)';},
+      demoStepLabel:demo<5?'STEP '+Math.min(4,demo+1)+'/4':'DONE',demoPct:Math.min(100,demo*25)+'%',
+      demoFields:DF.map(([label,v],i)=>({label,value:demo>i?v:(demo===i?v.slice(0,Math.ceil(v.length/2))+'|':'—'),fg:demo>=i?'#0B0D12':'#B0B5BF',bd:demo===i?'#2F5BFF':'rgba(11,13,18,.06)'})),
+      demoBtn:demo===4?'Submitting…':'Submit registration',demoBtnScale:demo===4?'0.95':'1',demoDoneOp:demo>=5?'1':'0',
+      evDots:CATS.map((c,i)=>{const on=Math.min(2,Math.floor((s.p.ev||0)*3))===i;return {name:c.name,fg:on?'#0B0D12':'#8A909C',bar:on?'#2F5BFF':'rgba(11,13,18,.15)',w:on?'36px':'14px'};}),
+      evCards:CATS.map((c,i)=>{const ein=i===0?1:ease(clamp(ep-i+0.6));const nxt=i<2?ease(clamp(ep-i-0.4)):0;
+        return {name:c.name,icon:c.icon,num:pad(i+1)+' / 03',bg:DIV[i][0],z:String(i+1),pe:ein>0.9&&nxt<0.5?'auto':'none',op:(ein*(1-0.55*nxt)).toFixed(3),
+          tf:'translateY('+((1-ein)*70).toFixed(2)+'vh) rotateX('+((1-ein)*28).toFixed(2)+'deg) translateY('+(-nxt*26).toFixed(1)+'px) scale('+(1-0.07*nxt).toFixed(4)+')',
+          events:c.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(c.name+' ',''),meta:e[1]+' · SENIOR'+(c.outdoor?' · OUTDOOR':''),pick:()=>this.startReg('athlete',e[2])}))};}),
+      regGroupLabel:pad(rg+1)+' / 02',
+      regCards:REG.map((r,i)=>{const g=Math.floor(i/3),slot=i%3-1;const gp=rp-g;const pin=ease(clamp(gp*2.4));const pout=g<3?ease(clamp((gp-0.8)*5)):0;
+        const x=slot*gap*pin,y=(1-pin)*34-pout*18,sc=0.35+0.65*pin-0.12*pout;const op=pin*(1-pout);
+        return {...r,go:()=>this.startReg(r.id),op:op.toFixed(3),pe:op>0.6?'auto':'none',tf:'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(2)+'vh)) scale('+sc.toFixed(4)+') rotate('+(slot*(1-pin)*-14).toFixed(2)+'deg)'};}),
+      evNear:s.evNear&&(this.props.enable3D??true),regNear:s.regNear&&(this.props.enable3D??true)};}
+  ringVals(){const s=this.state,n=REG.length,step=360/n,R=Math.max(300,Math.min(460,(typeof window!=='undefined'?window.innerWidth:1200)*0.34));
+    const rot=-(s.p.reg||0)*360+(s.ringDrag||0);const front=((Math.round(-rot/step)%n)+n)%n;const open=s.ringOpen??-1;
+    const vh=typeof window!=='undefined'?window.innerHeight:800;
+    return {ringRot:rot.toFixed(2)+'deg',ringScale:Math.min(1,Math.max(.55,(vh-260)/400)).toFixed(3),ringLabel:pad(front+1)+' / '+n,
+      ringDown:e=>{const x0=e.clientX,d0=s.ringDrag||0;const mv=ev=>this.setState({ringDrag:d0+(ev.clientX-x0)*0.35});const up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);};window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);},
+      ringCards:REG.map((r,i)=>{const isOpen=open===i,isFront=front===i;const ang=i*step;let rel=((ang+rot)%360+540)%360-180;const fade=Math.max(.25,1-Math.abs(rel)/150);
+        return {...r,num:pad(i+1),displayName:r.name.split('/').join('/\u200B'),nfs:r.name.length>16?'17px':'21px',tf:'rotateY('+ang+'deg) translateZ('+R+'px)'+(isOpen?' translateZ(40px) translateY(-10px) scale(1.06)':isFront?' translateZ(24px)':''),
+          bg:isOpen||isFront?'rgba(255,255,255,.82)':'rgba(255,255,255,.5)',sh:isOpen?'0 40px 90px rgba(15,20,40,.22),inset 0 1px 0 #fff':'0 16px 40px rgba(15,20,40,.08),inset 0 1px 0 #fff',op:fade.toFixed(2),
+          ib:isOpen||isFront?'#2F5BFF':'rgba(47,91,255,.1)',ic:isOpen||isFront?'#fff':'#2F5BFF',dh:isOpen||isFront?'80px':'0px',
+          enter:()=>{clearTimeout(this.ringT);this.ringT=setTimeout(()=>this.setState({ringOpen:i}),200);},leave:()=>{clearTimeout(this.ringT);this.setState({ringOpen:-1});},
+          tap:()=>this.setState({ringOpen:i}),go:e=>{e.stopPropagation();this.startReg(r.id);}};})};}
+  closingVideoEl(){return this.lazyVideo('cv','assets/closing.webm');}
+  lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none',
+    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
+    style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
+  componentWillUnmount(){window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
+  prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
+  vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
+  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg')};
+    const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
+    if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+  frame(){
+    const o=this.state.p,t=this.target||o,n={};let moved=false;
+    for(const k in t){const cur=o[k]??0;const v=cur+(t[k]-cur)*0.16;n[k]=Math.abs(t[k]-v)<0.001?t[k]:v;if(Math.abs(n[k]-cur)>0.0015)moved=true;}
+    if(moved)this.setState({p:n});
+    if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
+      this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
+    this.project3D();this.paperFall();
+    if(this.ball){this.smx+=(this.mx-this.smx)*0.07;this.ball.obj.position.x=this.ball.x+this.smx*this.ball.amp*1.5;}
+  }
+  // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
+  // Everything is a pure function of scroll progress, so scrolling back up rebuilds the cards.
+  paperFall(){const L=this.paperL||(this.paperL=document.querySelector('[data-paper-layer]'));if(!L||!L.isConnected){this.paperL=null;return;}
+    const p=this.state.p.tiles||0;
+    if(p<PAPER.start-0.02){if(L.__on){L.__on=0;L.style.display='none';}return;}
+    const host=L.parentElement,W=host.clientWidth,H=host.clientHeight;
+    if(!L.__on){L.__on=1;L.style.display='block';}
+    if(L.__w!==W||L.__h!==H||!L.__pcs){this.buildPaper(L,host,W,H);L.__lp=-1;}
+    if(Math.abs(L.__lp-p)<1e-4)return;L.__lp=p;
+    const fallEase=t=>t<0.82?Math.pow(t/0.82,2):1-0.07*Math.sin((t-0.82)/0.18*Math.PI);
+    L.__pcs.forEach(q=>{const c=tileCrumple(p,q.card);const vis=clamp((c-0.35)/0.25);
+      if(vis<=0){if(q.shown){q.el.style.opacity='0';q.shown=0;}return;}
+      const t=clamp((p-PAPER.start-q.card*PAPER.stagger-PAPER.crumple*0.7-q.delay)/PAPER.fall);
+      const burst=ease(clamp((c-0.35)/0.65));
+      const sx=q.cx+(q.x0-q.cx)*burst*0.55,sy=q.cy+(q.y0-q.cy)*burst*0.55;
+      const fe=fallEase(t),xe=ease(t);
+      const x=sx+(q.xe-sx)*xe+Math.sin(t*Math.PI*2+q.ph)*q.drift*(1-t);
+      const y=sy+(q.ye-sy)*fe;
+      const rot=q.r0+q.spin*Math.min(1,t*1.15);
+      q.el.style.transform='translate3d('+(x-q.w/2).toFixed(1)+'px,'+(y-q.h/2).toFixed(1)+'px,0) rotate('+rot.toFixed(1)+'deg) scale('+(0.4+0.6*burst).toFixed(3)+')';
+      q.el.style.opacity=vis.toFixed(3);q.shown=1;});}
+  buildPaper(L,host,W,H){L.innerHTML='';L.__w=W;L.__h=H;
+    let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+    const tiles=[...host.querySelectorAll('[data-tile]')];
+    const BW=14,bins=new Array(Math.ceil(W/BW)+2).fill(0),pcs=[];
+    const crumples=['42% 58% 63% 37% / 41% 44% 56% 59%','58% 42% 38% 62% / 52% 61% 39% 48%','47% 53% 55% 45% / 62% 38% 62% 38%','61% 39% 52% 48% / 44% 57% 43% 56%'];
+    const scraps=['polygon(0 8%,92% 0,100% 74%,12% 100%)','polygon(6% 0,100% 14%,86% 100%,0 82%)','polygon(0 0,100% 22%,78% 100%,8% 70%)','polygon(14% 0,100% 0,90% 88%,0 100%)'];
+    tiles.forEach((el,ci)=>{
+      // offset* ignores the live crumple transform, so pieces always start from the card's resting box
+      let ox=0,oy=0,n=el;while(n&&n!==host){ox+=n.offsetLeft;oy+=n.offsetTop;n=n.offsetParent;}
+      const cw=el.offsetWidth,ch=el.offsetHeight,cx=ox+cw/2,cy=oy+ch/2;
+      const tint=MODULES[ci]&&MODULES[ci].wide?'#E4EBFF':((MODULES[ci]&&MODULES[ci].bg)||'#F2F4F7');
+      const count=Math.round(Math.max(22,Math.min(46,cw*ch/2600)));
+      for(let j=0;j<count;j++){
+        const kind=rnd();const ink=rnd()<0.12;
+        const size=12+rnd()*20;let w=size,h=size,css;
+        if(kind<0.58){css='border-radius:'+crumples[j%4]+';background:radial-gradient(circle at 32% 28%,#fff 0%,'+(ink?'#7D97FF':tint)+' 45%,'+(ink?'#2F5BFF':'#A9B3C4')+' 100%);box-shadow:0 3px 6px rgba(15,20,40,.22),inset -3px -4px 5px rgba(15,20,40,.18),inset 2px 2px 3px rgba(255,255,255,.9)';}
+        else if(kind<0.88){w=size*1.4;h=size*0.9;css='clip-path:'+scraps[j%4]+';background:linear-gradient(160deg,#fff 0%,'+tint+' 55%,#B9C2D1 100%);filter:drop-shadow(0 2px 2px rgba(15,20,40,.22))'+(ink?';background-image:repeating-linear-gradient(0deg,transparent 0 4px,rgba(47,91,255,.35) 4px 5px),linear-gradient(160deg,#fff,'+tint+')':'');}
+        else{w=size*1.9;h=size*0.62;css='border-radius:999px;background:repeating-linear-gradient(90deg,#fff 0 3px,'+tint+' 3px 6px,#C9D0DC 6px 7px);box-shadow:0 2px 3px rgba(15,20,40,.18),inset 0 -2px 3px rgba(15,20,40,.12)';}
+        const d=document.createElement('div');d.style.cssText='position:absolute;left:0;top:0;width:'+w.toFixed(1)+'px;height:'+h.toFixed(1)+'px;opacity:0;will-change:transform,opacity;'+css;L.appendChild(d);
+        // landing spot: drift around the card's column, then stack into a mound using height bins
+        let xe=W*0.5+(cx-W*0.5)*0.85+(rnd()+rnd()+rnd()-1.5)*cw*0.55;xe=Math.max(w,Math.min(W-w,xe));
+        const b=Math.round(xe/BW);const top=Math.max(bins[b-1]||0,bins[b],bins[b+1]||0);
+        const ye=H-top-h*0.45-6;bins[b]=top+h*0.3;for(let k=1;k<4;k++){const f=h*0.3*(1-k/4);if(b-k>=0)bins[b-k]=Math.max(bins[b-k],top+f);if(b+k<bins.length)bins[b+k]=Math.max(bins[b+k],top+f);}
+        pcs.push({el:d,card:ci,w,h,cx,cy,x0:ox+rnd()*cw,y0:oy+rnd()*ch,xe,ye,r0:rnd()*360,spin:(rnd()-0.5)*540,drift:10+rnd()*30,ph:rnd()*6.28,delay:j/count*0.05,shown:0});}});
+    L.__pcs=pcs;}
+  homog(w,h,p){const src=[[0,0],[w,0],[w,h],[0,h]],A=[],b=[];
+    for(let i=0;i<4;i++){const x=src[i][0],y=src[i][1],u=p[i][0],v=p[i][1];A.push([x,y,1,0,0,0,-u*x,-u*y]);b.push(u);A.push([0,0,0,x,y,1,-v*x,-v*y]);b.push(v);}
+    for(let i=0;i<8;i++){let m=i;for(let r=i+1;r<8;r++)if(Math.abs(A[r][i])>Math.abs(A[m][i]))m=r;let t=A[i];A[i]=A[m];A[m]=t;t=b[i];b[i]=b[m];b[m]=t;if(Math.abs(A[i][i])<1e-9)return null;
+      for(let r=i+1;r<8;r++){const f=A[r][i]/A[i][i];for(let c=i;c<8;c++)A[r][c]-=f*A[i][c];b[r]-=f*b[i];}}
+    const x=new Array(8);for(let i=7;i>=0;i--){let q=b[i];for(let c=i+1;c<8;c++)q-=A[i][c]*x[c];x[i]=q/A[i][i];}
+    return 'matrix3d('+[x[0],x[3],0,x[6],x[1],x[4],0,x[7],0,0,1,0,x[2],x[5],0,1].map(n=>n.toFixed(6)).join(',')+')';}
+  faceQuad(app,mesh,W,H){const g=mesh.geometry;if(!g)return null;const MW=this.recompose===mesh?this.worldOf(mesh):mesh.matrixWorld;if(!g.boundingBox)g.computeBoundingBox();const bb=g.boundingBox,V=mesh.position.constructor;
+    const mn=[bb.min.x,bb.min.y,bb.min.z],mx=[bb.max.x,bb.max.y,bb.max.z],d=[0,1,2].map(i=>mx[i]-mn[i]);const th=d.indexOf(Math.min(...d)),ax=[0,1,2].filter(i=>i!==th);
+    const cor=(u,w)=>{const p=[0,0,0];p[th]=mx[th];p[ax[0]]=u?mx[ax[0]]:mn[ax[0]];p[ax[1]]=w?mx[ax[1]]:mn[ax[1]];const q=new V(p[0],p[1],p[2]).applyMatrix4(MW).project(app._camera);return [(q.x+1)/2*W,(1-q.y)/2*H];};
+    const pts=[cor(0,1),cor(1,1),cor(1,0),cor(0,0)];let a=0;for(let i=0;i<4;i++){const j=(i+1)%4;a+=pts[i][0]*pts[j][1]-pts[j][0]*pts[i][1];}return {pts,area:a/2,dims:[d[ax[0]],d[ax[1]]]};}
+  place(el,app,mesh,v){if(!el)return;const W=v.clientWidth,H=v.clientHeight;if(!W)return;let vis=true,o=mesh;while(o){if(o.visible===false){vis=false;break;}o=o.parent;}
+    const q=vis&&this.faceQuad(app,mesh,W,H);if(!q||Math.abs(q.area)<=40){el.style.opacity='0';return;}const sg=q.area>0?1:-1;if(!el.__sg)el.__sg=sg;if(sg!==el.__sg){el.style.opacity='0';return;}
+    if(!el.__ar&&q.dims[0]>0){el.__ar=1;el.style.height=Math.round(el.offsetWidth*q.dims[1]/q.dims[0])+'px';}
+    const pts=sg>0?q.pts:[q.pts[1],q.pts[0],q.pts[3],q.pts[2]];const m=this.homog(el.offsetWidth,el.offsetHeight,pts);if(!m){el.style.opacity='0';return;}el.style.transform=m;el.style.opacity='1';}
+  camZoom(app,z){try{const c=app._camera;if(c){c.zoom=(c.zoom||1)*z;c.updateProjectionMatrix();app.__z=c.zoom;}}catch(e){}}
+  keepZoom(app){const c=app&&app._camera;if(c&&app.__z&&Math.abs(c.zoom-app.__z)>1e-4){c.zoom=app.__z;c.updateProjectionMatrix();}}
+  rr(app){}
+  placeBack(el,app,mesh,v){if(!el)return;const W=v.clientWidth,H=v.clientHeight;if(!W)return;const q=this.faceQuad(app,mesh,W,H);if(!q||Math.abs(q.area)<=40){el.style.opacity='0';return;}
+    const front=document.querySelector('[data-proj="card"]');const fs=front&&front.__sg;if(!fs||(q.area>0?1:-1)===fs){el.style.opacity='0';return;}
+    if(!el.__ar&&q.dims[0]>0){el.__ar=1;el.style.height=Math.round(el.offsetWidth*q.dims[1]/q.dims[0])+'px';}
+    const pts=fs>0?[q.pts[1],q.pts[0],q.pts[3],q.pts[2]]:q.pts;const m=this.homog(el.offsetWidth,el.offsetHeight,pts);if(!m){el.style.opacity='0';return;}el.style.transform=m;el.style.opacity='1';}
+  worldOf(o){const chain=[];let x=o;while(x){chain.unshift(x);x=x.parent;}const M=o.matrixWorld.clone().identity();chain.forEach(n=>{n.updateMatrix();M.multiply(n.matrix);});return M;}
+  onScreen(v){const r=v.getBoundingClientRect();return r.bottom>0&&r.top<window.innerHeight;}
+  project3D(){const sp=this.sp;if(!sp)return;const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
+    if(sp.phone&&sp.phone.v.isConnected&&this.onScreen(sp.phone.v)){const P=sp.phone,t=this.tilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;const K=PHONE_POSE,pc=this.phoneCam;if(pc){pc.cam.position.set(pc.p.x+K.camX,pc.p.y+K.camY,K.camZ);pc.cam.quaternion.copy(pc.q);if(pc.cam.zoom!==pc.z){pc.cam.zoom=pc.z;pc.cam.updateProjectionMatrix();}}if(P.pos)P.root.position.copy(P.pos);P.root.rotation.y=P.ry+K.ry+t.sx*0.22;P.root.rotation.x=P.rx+K.rx+t.sy*0.14;if(P.rz===undefined)P.rz=P.root.rotation.z;P.root.rotation.z=P.rz+K.rz;P.root.updateMatrix();P.root.updateMatrixWorld(true);
+      let best=null,ba=0;const W=P.v.clientWidth,H=P.v.clientHeight;P.screens.forEach(m=>{let ok=true,o=m;while(o){if(o.visible===false){ok=false;break;}o=o.parent;}if(!ok)return;const q=this.faceQuad(P.app,m,W,H);if(q&&Math.abs(q.area)>ba){ba=Math.abs(q.area);best=m;}});
+      if(!best&&(!this.__fs||now-this.__fs>1000)){this.__fs=now;this.findScreens&&this.findScreens();}
+      if(best)this.place(document.querySelector('[data-proj="phone"]'),P.app,best,P.v);this.rr(P.app);}
+    if(sp.card&&sp.card.v.isConnected&&this.onScreen(sp.card.v)){const C=sp.card,t=this.ctilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;
+      const ep=Math.min(2.999,(this.state.p.ev||0)*3),i=Math.floor(ep),f=ep-i;
+      const grow=ease(clamp(f/0.2)),fl=i<2?ease(clamp((f-0.5)/0.3)):0,shr=i<2?ease(clamp((f-0.82)/0.18)):0;
+      const sc=(0.8+0.8*grow)*(1-0.5*shr),ang=Math.PI*(i+fl);
+      const fd=Math.min(2,i%2===0?i:i+1),bd=Math.min(2,i%2===1?i:i+1);if(this.cardF!==fd||this.cardB!==bd){this.cardF=fd;this.cardB=bd;this.setState({cardF:fd,cardB:bd});}
+      C.grp.scale.setScalar(C.s*sc);C.grp.rotation.y=C.ry+ang+t.sx*0.3;C.grp.rotation.x=C.rx+t.sy*0.22;C.grp.updateMatrixWorld(true);
+      this.recompose=C.face;this.place(document.querySelector('[data-proj="card"]'),C.app,C.face,C.v);this.placeBack(document.querySelector('[data-proj="cardback"]'),C.app,C.face,C.v);const shx=(t.sx*30+Math.sin(ang)*38).toFixed(1)+'%';document.querySelectorAll('[data-proj="card"],[data-proj="cardback"]').forEach(e=>e.style.setProperty('--sx',shx));this.recompose=null;this.rr(C.app);}
+
+  }
+  patchSpline(){
+    document.querySelectorAll('spline-viewer').forEach(v=>{const app=v._spline;if(!app||this.splineDone.has(app))return;let objs;try{objs=app.getAllObjects();}catch(e){return;}if(!objs||!objs.length)return;
+      const url=v.getAttribute('url')||'';
+      if(url.indexOf('aTR80zhalKaWgXye')>=0){objs.forEach(o=>{if(/^Text/.test(o.name)||o.name==='R'||o.name==='designgabor')o.visible=false;});
+        const s=objs.find(o=>o.name==='Sphere');if(s)this.ball={obj:s,x:s.position.x,amp:Math.max(120,Math.abs(s.scale.x*(s.geometry&&s.geometry.parameters?1:0))||220)};}
+      if(url.indexOf('axlVcJsfoJAKHmrn')>=0){objs.forEach(o=>{if(['Ellipse','Ellipse 2','Text 4','Text 2','Group 3'].includes(o.name))o.visible=false;});
+        const sc=app._scene;let grp=null,face=null;sc.traverse(x=>{if(x.name==='Group 4')grp=x;});if(grp)grp.traverse(x=>{if(x.isMesh&&x.name==='Rectangle'&&x.parent===grp)face=x;});
+        this.camZoom(app,0.5);if(grp&&face){if(!face.geometry.boundingBox)face.geometry.computeBoundingBox();const fb=face.geometry.boundingBox;const fw=fb.max.x-fb.min.x,fh=fb.max.y-fb.min.y;
+          const sph=[];sc.traverse(x=>{if(x.name==='Sphere 3'||x.name==='Sphere 4')sph.push(x);});sph.forEach((x,i)=>{try{grp.attach(x);const k=Math.min(fw,fh)*0.2/Math.max(1,(x.geometry&&x.geometry.boundingSphere?x.geometry.boundingSphere.radius*2:300)*x.scale.x);x.scale.multiplyScalar(k);x.position.set(face.position.x+(i?-.22:.24)*fw,face.position.y+(i?.18:-.16)*fh,face.position.z-30);}catch(e){}});
+          this.sp.card={app,v,grp,face,ry:grp.rotation.y,rx:grp.rotation.x,s:grp.scale.x};}}
+      if(url.indexOf('SGdEM3csBbrvxlhm')>=0){const sc=app._scene;let root=null,scr=null;sc.traverse(x=>{if(x.name==='Notes'||x.name==='Floor')x.visible=false;if(x.name==='iPhone 14 Pro'&&!root)root=x;if(x.isMesh&&x.name==='Screen'&&!scr)scr=x;});
+        if(root&&scr)this.sp.phone={app,v,root,screens:[scr],ry:root.rotation.y,rx:root.rotation.x,pos:root.position.clone()};
+        v.style.pointerEvents='none';try{const oc=app._controls&&app._controls.orbitControls;if(oc){oc.enabled=false;oc.enableRotate=false;oc.enablePan=false;oc.enableZoom=false;oc.autoRotate=false;}}catch(e){}
+        const cam=app._camera;if(cam)this.phoneCam={cam,p:cam.position.clone(),q:cam.quaternion.clone(),z:cam.zoom};}
+
+      try{app._scene&&app._scene.traverse(x=>{if(x.castShadow)x.castShadow=false;if(x.isLight&&x.shadow)x.castShadow=false;});}catch(e){}
+      this.splineDone.add(app);});
+  }
+  torchOrbitEl(items){const h=React.createElement,dur='60s';
+    return h('div',{style:{position:'absolute',left:'50%',top:'50%',width:'min(500px, calc(100vh - 240px), calc(100% - 150px))',aspectRatio:'1',zIndex:3,transform:'translate(-50%,-50%)',pointerEvents:'none'}},
+      h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',border:'1.5px dashed rgba(11,13,18,.28)'}}),
+      h('div',{style:{position:'absolute',inset:'14%',borderRadius:'50%',border:'1px solid rgba(47,91,255,.18)'}}),
+      h('div',{style:{position:'absolute',inset:0,animation:'gmsSpin '+dur+' linear infinite',willChange:'transform'}},
+        items.map((t,i)=>{const a=i/items.length*Math.PI*2-Math.PI/2;
+          return h('div',{key:t.label,style:{position:'absolute',left:(50+Math.cos(a)*50)+'%',top:(50+Math.sin(a)*50)+'%',width:0,height:0}},
+            h('div',{style:{animation:'gmsSpinRev '+dur+' linear infinite'}},
+              h('button',{onClick:t.go,style:{all:'unset',pointerEvents:'auto',cursor:'pointer',position:'absolute',transform:'translate(-50%,-50%)',display:'flex',alignItems:'center',gap:8,padding:'7px 15px 7px 7px',borderRadius:999,background:'rgba(255,255,255,.62)',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',border:'1px solid rgba(255,255,255,.95)',boxShadow:'0 10px 30px rgba(15,20,40,.10)',fontFamily:'Instrument Sans',fontWeight:600,fontSize:14,whiteSpace:'nowrap',color:'#0B0D12'}},
+                h('span',{style:{width:28,height:28,borderRadius:'50%',background:'#0B0D12',color:'#fff',display:'grid',placeItems:'center',fontFamily:'Material Symbols Rounded',fontSize:16}},t.icon),t.label)));})));}
+  regOrbitEl(){const h=React.createElement,dur='140s',paused=this.state.peek?'paused':'running';
+    return h('div',{style:{position:'absolute',left:'50%',top:'50%',width:'min(540px, calc(82vh - 80px), 84vw)',aspectRatio:'1',transform:'translate(-50%,-50%)',pointerEvents:'none'}},
+      h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',border:'1px dashed rgba(11,13,18,.12)'}}),
+      h('div',{style:{position:'absolute',inset:0,animation:'gmsSpin '+dur+' linear infinite',animationPlayState:paused}},
+        REG.map((r,i)=>{const a=i/REG.length*Math.PI*2-Math.PI/2;const on=this.state.peek===r.id;
+          return h('div',{key:r.id,style:{position:'absolute',left:(50+Math.cos(a)*50)+'%',top:(50+Math.sin(a)*50)+'%',width:0,height:0}},
+            h('div',{style:{animation:'gmsSpinRev '+dur+' linear infinite',animationPlayState:paused}},
+              h('button',{onClick:()=>{clearTimeout(this.hoverT);this.setState({peek:r.id});},
+                onMouseEnter:()=>{clearTimeout(this.hoverT);this.hoverT=setTimeout(()=>this.setState({peek:r.id}),200);},
+                onMouseLeave:()=>clearTimeout(this.hoverT),
+                style:{all:'unset',pointerEvents:'auto',cursor:'pointer',position:'absolute',transform:'translate(-50%,-24px)',width:96,display:'flex',flexDirection:'column',alignItems:'center',gap:6}},
+                h('span',{style:{width:48,height:48,borderRadius:16,display:'grid',placeItems:'center',background:on?'rgba(47,91,255,.9)':'rgba(255,255,255,.55)',color:on?'#fff':'#2F5BFF',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',border:'1px solid rgba(255,255,255,.95)',boxShadow:'0 12px 30px rgba(15,20,40,.12), inset 0 1px 0 rgba(255,255,255,.9)',fontFamily:'Material Symbols Rounded',fontSize:23,transition:'background .3s ease, color .3s ease, transform .35s cubic-bezier(.2,.8,.2,1)',transform:on?'scale(1.12)':'none'}},r.icon),
+                h('span',{style:{fontFamily:'Instrument Sans',fontSize:11,fontWeight:600,textAlign:'center',lineHeight:1.2,color:'#0B0D12'}},r.name))));})));}
+  photoLoopEl(){const h=React.createElement,imgs=['assets/stadium-football-sm.jpg','assets/stadium-tennis-sm.jpg'];
+    const col=(order,anim)=>h('div',{style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
+      order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
+    return h('div',{style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
+  sum(a){return a.reduce((t,v)=>t+(v==='X'?10:v),0);}
+  setPts(ends){let A=0,B=0;ends.forEach(e=>{if(e.a.length<3||e.b.length<3)return;const sa=this.sum(e.a),sb=this.sum(e.b);if(sa>sb)A+=2;else if(sb>sa)B+=2;else{A++;B++;}});return [A,B];}
+  tick(){
+    this.setState(s=>{
+      let ends=s.ends.map(e=>({a:e.a.slice(),b:e.b.slice()})),turn=s.turn;const [A,B]=this.setPts(ends);
+      if(A>=6||B>=6){ends=[{a:[],b:[]}];turn='a';}
+      else{let cur=ends[ends.length-1];if(cur.a.length>=3&&cur.b.length>=3){cur={a:[],b:[]};ends.push(cur);turn='a';}
+        const r=Math.random();cur[turn].push(r<.12?'X':r<.5?10:r<.85?9:r<.97?8:7);turn=turn==='a'?'b':'a';}
+      const ms=s.matches.slice();const i=Math.floor(Math.random()*ms.length);const m={...ms[i]};const side=Math.random()<.5?'sa':'sb';
+      const inc={Basketball:2,Cricket:Math.ceil(Math.random()*4),Archery:m.id===1?9:0,Kabaddi:1,Badminton:1,'Table Tennis':1}[m.sport]||0;
+      let flash={};if(inc){m[side]+=inc;ms[i]=m;flash={[m.id+side]:1};}
+      return {ends,turn,matches:ms,flash};
+    });
+    setTimeout(()=>this.setState({flash:{}}),900);
+  }
+  go(screen,after){this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
+  scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
+    if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
+  startReg(type,ev){this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
+  setF(k,v){this.setState(s=>({form:{...s.form,[k]:v},regError:''}));}
+  docList(){return DOCS[this.state.regType]||DOCS._;}
+  submitReg(){const s=this.state,f=s.form;
+    let err='';if(!f.name.trim()||!/^\S+@\S+\.\S+$/.test(f.email)||!f.phone.trim()||!f.country.trim())err='Fill in name, a valid email, mobile and country.';
+    else if(s.regType==='athlete'&&!f.events.length)err='Select at least one event.';
+    else if(this.docList().some(d=>!f.docs[d]))err='Attach all required documents.';
+    if(err){this.setState({regError:err});return;}
+    const id='GMS-26-'+pad(413+s.admin.length-SEED.length).padStart(4,'0');const rt=REG.find(r=>r.id===s.regType);
+    this.setState(x=>({regDone:true,lastRegId:id,loginEmail:f.email,admin:[{id,name:f.name,type:rt.name,status:'Pending',email:f.email},...x.admin]}));window.scrollTo(0,0);}
+  reply(q){const t=q.toLowerCase();
+    if(/regist|sign|athlete|staff|entry/.test(t))return 'Registration is open for 12 types, including Athlete, Support Staff, Technical Official, Media & Broadcasting and Volunteer. Pick one in the Register As section.';
+    if(/when|date|schedule|time/.test(t))return 'The Series runs 05 Sep 2026 to 09 Sep 2026 in Ahmedabad. Day 1 competition starts at 08:00 IST.';
+    if(/event|categor|recurve|compound|w1/.test(t))return 'There are 15 medal events across Recurve Open, Compound Open and W1, five in each.';
+    if(/score|live|result/.test(t))return 'The Recurve Open Men Individual gold medal match is live. Open Live Scores for the scorecard.';
+    if(/watch|stream|youtube|tv/.test(t))return 'Open Live TV to watch the YouTube stream.';
+    if(/where|venue|city|ahmedabad/.test(t))return 'The host city is Ahmedabad.';
+    return 'I can help with events, the schedule, registration, live scores and streams.';}
+  send(text){if(!text||!text.trim())return;const q=text.trim();
+    this.setState(s=>({draft:'',messages:s.messages.concat({from:'me',text:q})}));
+    setTimeout(()=>this.setState(s=>({messages:s.messages.concat({from:'bot',text:this.reply(q)})})),450);}
+  tickerEl(A,B){
+    const h=React.createElement;const items=[`ARCHERY · Recurve Open Men Individual · Gold medal match · IND ${A}–${B} KOR`].concat(this.state.matches.map(m=>`${m.sport.toUpperCase()} · ${m.a} ${m.sa}–${m.sb} ${m.b} · ${m.clock}`));
+    const row=items.concat(items);
+    return h('div',{style:{display:'flex',gap:56,width:'max-content',animation:'gmsMarquee 80s linear infinite',fontSize:14,fontWeight:500,color:'#2A2F3A',whiteSpace:'nowrap'}},
+      row.map((t,i)=>h('span',{key:i,style:{display:'flex',alignItems:'center',gap:10}},h('span',{style:{width:6,height:6,borderRadius:'50%',background:'#E5484D'}}),t)));
+  }
+  renderVals(){
+    const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=P.enable3D??true;
+    const rt=REG.find(r=>r.id===s.regType)||REG[0];const mr=REG.find(r=>r.id===s.modal);const f=s.form;
+    const [A,B]=this.setPts(s.ends);
+    const ab=v=>v===undefined?{v:'·',bg:'rgba(255,255,255,.06)',fg:'rgba(255,255,255,.3)'}:{v:String(v),bg:v==='X'||v===10?'#FFD43B':v===9?'#FFE580':v>=7?'#E5484D':'#3FA9F5',fg:'#0B0D12'};
+    const rows=[];s.ends.forEach((e,i)=>{const done=e.a.length===3&&e.b.length===3;const sa=this.sum(e.a),sb=this.sum(e.b);const live=i===s.ends.length-1;
+      rows.push({label:`E${i+1} IND`,who:'#8FA6FF',arrows:[0,1,2].map(j=>ab(e.a[j])),sum:e.a.length?String(sa):'–',sp:done?String(sa>sb?2:sa===sb?1:0):'',bg:live?'rgba(47,91,255,.12)':'transparent'});
+      rows.push({label:`E${i+1} KOR`,who:'#FFB86B',arrows:[0,1,2].map(j=>ab(e.b[j])),sum:e.b.length?String(sb):'–',sp:done?String(sb>sa?2:sa===sb?1:0):'',bg:live?'rgba(47,91,255,.12)':'transparent'});});
+    const arch={setA:String(A),setB:String(B),rows,status:A>=6?'VERMA WINS GOLD':B>=6?'KIM WINS GOLD':`END ${s.ends.length} · ${s.turn==='a'?'VERMA':'KIM'} TO SHOOT`};
+    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000);const left=Math.max(0,EVENT_START-s.now);
+    const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,s.p.steps/0.72)*STEPS.length));
+    const tp=ease(clamp(s.p.tiles*2.4));const cp=ease(clamp(s.p.close*1.25));const lerp=(a,b)=>Math.round(a+(b-a)*cp);
+    const fmt=m=>({...m,icon:SPORT_ICON[m.sport],sa:String(m.sa),sb:String(m.sb),scoreLine:`${m.sa} – ${m.sb}`,flashA:s.flash[m.id+'sa']?'#FFE9A8':'transparent',flashB:s.flash[m.id+'sb']?'#FFE9A8':'transparent'});
+    const allM=s.matches.map(fmt);const sports=['All',...new Set(s.matches.map(m=>m.sport))];
+    const isAth=s.regType==='athlete';const docs=this.docList();
+    const fld=(k,label,ph,type)=>({label,ph,type:type||'text',value:f[k],on:e=>this.setF(k,e.target.value)});
+    const mine=s.session&&s.admin.find(r=>r.email&&r.email===s.session.email);
+    const meStatus=mine?mine.status:'Pending';const stIdx={Pending:1,Verified:2,Accredited:3,Rejected:1}[meStatus];
+    const setStatus=(id,status)=>this.setState(x=>({admin:x.admin.map(r=>r.id===id?{...r,status}:r)}));
+    const regBtn=r=>({...r,open:()=>this.setState({modal:r.id})});
+    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live Scores',()=>this.go('scores'),'scores'],['Live TV',()=>this.go('tv'),'tv']];
+    return {
+      isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
+      overviewRef:this.ref('overview'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
+      navItems:nav.map(([label,go,k])=>({label,go,bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
+      goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>this.go('tv'),
+      goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
+      goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
+      toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
+      regAthlete:()=>this.startReg('athlete'),regStaff:()=>this.startReg('staff'),
+      clock:`${pad(ist.getHours())}:${pad(ist.getMinutes())}:${pad(ist.getSeconds())}`,
+      heroStats:[[String(Math.floor(left/864e5)),'DAYS TO NEXT EVENT'],[String(Math.floor(left/36e5)%24),'HOURS'],['1','SPORTS OPEN'],['Ahmedabad','HOST CITY']].map(([v,l],i)=>({v,l,bl:i?'1px solid rgba(11,13,18,.1)':'none'})),
+      torchTags:[['Overview','dashboard','8%','4%',()=>this.scrollTo('steps')],['Schedule','calendar_month','22%','58%',()=>this.scrollTo('schedule')],['Events','target','40%','0%',()=>this.scrollTo('events')],['Registration','how_to_reg','56%','60%',()=>this.scrollTo('reg')],['Login','login','74%','6%',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings','84%','34%',()=>{this.setState({loginTab:'admin'});this.go('login');}]]
+        .map(([label,icon,top,l,go])=>({label,icon,top,left:l,go})),
+      ticker:this.tickerEl(A,B),
+      stepNum:pad(stepIdx+1),steps:STEPS.map((x,i)=>({...x,op:i===stepIdx?1:.22,mh:i===stepIdx?'120px':'0px'})),
+      categories:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,events:c.events.map((e,i)=>({n:pad(i+1),name:e[0],meta:`${e[1]} · SENIOR${c.outdoor?' · OUTDOOR':''}`,pick:()=>this.startReg('athlete',e[2])}))})),
+      days:DAYS.map((d,i)=>({n:d[0],date:d[1],dow:d[2],pick:()=>this.setState({day:i,openRow:null}),bg:s.day===i?'#0B0D12':'#F6F7F9',fg:s.day===i?'#fff':'#0B0D12',bd:'transparent'})),
+      hasRows:s.day===0,noRows:s.day!==0,
+      rows:DAY1.map(([time,code],i)=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===i;
+        return {time,session:'MORNING',code,name:ev.name,cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',open,rot:open?'rotate(90deg)':'none',toggle:()=>this.setState({openRow:open?null:i}),
+          details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:time==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};}),
+      regLeft:REG.slice(0,6).map(regBtn),regRight:REG.slice(6).map(regBtn),
+      _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
+      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.webm'),momentVideo:this.lazyVideo('mv','assets/moment.webm'),
+      ...this.newVals(),
+      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&show3D,
+      vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
+        return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
+          tf:'rotateY('+(-ang).toFixed(2)+'deg) translateZ('+(side===0?(-120*k).toFixed(1):(-40-160*k).toFixed(1))+'px) translateY('+(60*k).toFixed(1)+'px)',op:(1-0.8*k).toFixed(3),
+          events:c.events.map((e,j)=>({n:pad(j+1),name:e[0],meta:e[1]+' · SENIOR'+(c.outdoor?' · OUTDOOR':''),pick:()=>this.startReg('athlete',e[2])}))};}),
+      groups:['08:00','10:00','10:27'].map(time=>({time,items:DAY1.filter(d=>d[0]===time).map(([tm,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;
+        return {name:ev.name,code,cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'80px':'0px',
+          toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:tm==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};})})),
+      peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
+      closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
+      liveTop:[{icon:'target',a:'Verma',b:'Kim',scoreLine:`${A} – ${B}`}].concat(allM.slice(0,3)),
+      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),br:(24+c*120).toFixed(0)+'px',tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)+c*40).toFixed(1)}px) rotate(${(r*(1-tp)+c*dir*32).toFixed(2)}deg) scale(${(1-0.82*c).toFixed(4)})`,op:((0.15+0.85*tp)*(1-clamp((c-0.45)/0.4))).toFixed(3)};}),
+      carTf:`translate(${(-80+s.p.car*190).toFixed(2)}vw,-50%)`,carTextOp:(0.08+0.92*clamp(s.p.car*2.2)).toFixed(3),
+      winW:`${(52+48*cp).toFixed(2)}vw`,winH:`${(46+54*cp).toFixed(2)}vh`,winR:`${(40*(1-cp)).toFixed(1)}px`,
+      winBg:`rgb(${lerp(244,0)},${lerp(245,0)},${lerp(247,0)})`,winContentOp:clamp((cp-0.55)/0.45).toFixed(3),
+      modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
+      rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
+      fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
+      isAthleteForm:isAth,selCount:String(f.events.length),
+      eventPicker:CATS.map(c=>({name:c.name,color:c.color,events:c.events.map(e=>{const on=f.events.includes(e[2]);return {name:e[0].replace(c.name+' ',''),bg:on?c.color:'rgba(255,255,255,.8)',fg:on?'#fff':'#0B0D12',bd:on?c.color:'rgba(11,13,18,.1)',toggle:()=>this.setF('events',on?f.events.filter(x=>x!==e[2]):f.events.concat(e[2]))};})})),
+      docs:docs.map(d=>{const on=!!f.docs[d];return {name:d,icon:on?'task':'upload_file',ic:on?'#1FA463':'#5B6270',status:on?'Attached':'Attach',bd:on?'#9ED9B8':'rgba(11,13,18,.15)',bg:on?'rgba(231,247,238,.8)':'rgba(255,255,255,.6)',toggle:()=>this.setF('docs',{...f.docs,[d]:!on})};}),
+      loggedOut:!s.session,isParticipant:!!s.session&&s.session.role==='participant',isAdminSession:!!s.session&&s.session.role==='admin',
+      loginTabs:[['participant','Login'],['admin','Admin Login']].map(([k,label])=>({label,pick:()=>this.setState({loginTab:k,loginError:''}),bg:s.loginTab===k?'#fff':'transparent',sh:s.loginTab===k?'0 2px 10px rgba(15,20,40,.08)':'none'})),
+      loginTitle:s.loginTab==='admin'?'Admin Login':'Login',loginEmail:s.loginEmail,loginPass:s.loginPass,loginError:s.loginError,loginBtnBg:s.loginTab==='admin'?'#0B0D12':BLUE,
+      onLoginEmail:e=>this.setState({loginEmail:e.target.value,loginError:''}),onLoginPass:e=>this.setState({loginPass:e.target.value,loginError:''}),
+      submitLogin:e=>{e.preventDefault();if(!/^\S+@\S+\.\S+$/.test(s.loginEmail)||s.loginPass.length<4){this.setState({loginError:'Enter a valid email and a password of at least 4 characters.'});return;}this.setState({session:{role:s.loginTab,email:s.loginEmail}});},
+      logout:()=>this.setState({session:null,loginPass:''}),
+      me:{name:mine?mine.name:s.loginEmail.split('@')[0],type:mine?mine.type:'Participant',id:mine?mine.id:'No registration on this email yet',
+        timeline:['Submitted','Verified','Accredited','On field'].map((label,i)=>{const rej=meStatus==='Rejected'&&i===1;return {label:rej?'Rejected':label,bar:rej?'#E5484D':i<stIdx?'#1FA463':'rgba(11,13,18,.1)',fg:rej?'#C2383D':i<stIdx?'#0B0D12':'#8A909C'};})},
+      kpis:[['Total',s.admin.length,'#0B0D12'],['Pending',s.admin.filter(r=>r.status==='Pending').length,'#9A6B00'],['Verified',s.admin.filter(r=>r.status==='Verified').length,BLUE],['Accredited',s.admin.filter(r=>r.status==='Accredited').length,'#1C8A53']].map(([label,v,c])=>({label,v:String(v),c})),
+      adminRows:s.admin.map(r=>{const done=r.status==='Accredited'||r.status==='Rejected';return {...r,sBg:ST[r.status][0],sFg:ST[r.status][1],actOp:done?'0.3':'1',
+        approve:()=>!done&&setStatus(r.id,r.status==='Pending'?'Verified':'Accredited'),reject:()=>!done&&setStatus(r.id,'Rejected')};}),
+      arch,liveCount:String(allM.length+1),
+      sportFilters:sports.map(k=>({label:k,icon:k==='All'?'apps':SPORT_ICON[k],pick:()=>this.setState({filter:k}),bg:s.filter===k?'#0B0D12':'#fff',fg:s.filter===k?'#fff':'#0B0D12'})),
+      matchCards:s.filter==='All'?allM:allM.filter(m=>m.sport===s.filter),
+      ytSrc:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,curStream:STREAMS[s.stream],
+      ytThumb:'https://i.ytimg.com/vi/'+(P.youtubeVideoId||'jT9C2wBHn6c').trim()+'/hqdefault.jpg',upNext:DAY1.slice(-4).map(([time,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);return {time,code,name:ev.name};}),
+      streams:STREAMS.map((x,i)=>({...x,tagBg:x.tag==='LIVE'?'#E5484D':'rgba(11,13,18,.7)',pick:()=>this.setState({stream:i}),bg:s.stream===i?'#F4F5F7':'transparent',tagColor:x.tag==='LIVE'?'#E5484D':'#8A909C'})),
+      chatOpen:s.chatOpen,toggleChat:()=>this.setState(x=>({chatOpen:!x.chatOpen})),chatLabel:s.chatOpen?'Close chat':'Ask GMS',
+      messages:s.messages.map(m=>({text:m.text,align:m.from==='me'?'flex-end':'flex-start',bg:m.from==='me'?'#0B0D12':'#fff',fg:m.from==='me'?'#fff':'#0B0D12'})),
+      quick:['How do I register?','When is it?','Live scores'].map(l=>({label:l,send:()=>this.send(l)})),
+      draft:s.draft,onDraft:e=>this.setState({draft:e.target.value}),submitChat:e=>{e.preventDefault();this.send(s.draft);}
+    };
+  }
+}
+</script>
+</body>
+</html>

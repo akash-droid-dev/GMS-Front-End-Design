@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GMS Front End Design</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -81,7 +82,7 @@ html{scroll-behavior:smooth}
       <div onMouseMove="{{ stageMove }}" onTouchMove="{{ stageMove }}" onMouseLeave="{{ stageOut }}" onTouchEnd="{{ stageOut }}" style="position:relative;justify-self:end;width:100%;max-width:520px;height:min(560px,calc(100vh - 170px));min-height:420px;transform:translateX(8%)">
        <div style="position:absolute;left:-30%;top:-30%;width:160%;height:160%;transform:scale(.56);transform-origin:50% 50%">
         <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
-          <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;pointer-events:none">
             <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/SGdEM3csBbrvxlhm/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
           </div>
         </sc-if>
@@ -163,30 +164,38 @@ html{scroll-behavior:smooth}
           <div style="position:absolute;inset:0;pointer-events:none"><x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/axlVcJsfoJAKHmrn/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import></div>
         </sc-if>
         <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
-          <div data-proj="card" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden">
+          <div data-proj="card" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden;border-radius:44px;overflow:hidden;isolation:isolate">
+            <div style="position:absolute;inset:0;z-index:-1;background:{{ cardF.bg }}"></div>
+            <div style="position:absolute;right:-170px;top:50%;width:600px;height:600px;margin-top:-300px;z-index:-1;border-radius:50%;opacity:.17;background:repeating-radial-gradient(circle,rgba(255,255,255,.95) 0 2px,transparent 2px 44px),radial-gradient(circle,rgba(255,255,255,.7) 0 30px,transparent 31px)"></div>
+            <div style="position:absolute;inset:-35%;z-index:-1;mix-blend-mode:screen;opacity:.7;background:linear-gradient(115deg,transparent 33%,rgba(255,110,210,.30) 42%,rgba(110,220,255,.42) 50%,rgba(255,236,140,.30) 58%,transparent 67%);transform:translateX(var(--sx,0%))"></div>
+            <div style="position:absolute;inset:0;z-index:-1;border-radius:inherit;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2),inset 0 2px 0 rgba(255,255,255,.45);background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 7px)"></div>
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
               <div style="display:flex;align-items:center;gap:18px"><span style="width:66px;height:50px;border-radius:12px;background:linear-gradient(135deg,#F3E3B5,#C9A75A);display:grid;place-items:center;color:#5A4210;font-family:'Material Symbols Rounded';font-size:30px">{{ cardF.icon }}</span>
                 <span style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.03em;line-height:1">{{ cardF.name }}</span><span style="font-family:'JetBrains Mono';font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-top:6px">5 EVENTS · {{ cardF.sub }}</span></span></div>
               <span style="font-family:'JetBrains Mono';font-size:18px;color:rgba(255,255,255,.65)">{{ cardF.num }}</span>
             </div>
             <sc-for list="{{ cardF.events }}" as="e" hint-placeholder-count="5">
-              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease" style-hover="background:rgba(255,255,255,.12)">
-                <span style="font-family:'JetBrains Mono';font-size:17px;color:#8FA6FF">{{ e.n }}</span>
+              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease,box-shadow .3s ease,transform .35s cubic-bezier(.2,.8,.2,1)" style-hover="background:rgba(255,255,255,.16);box-shadow:inset 4px 0 0 rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.18);transform:translateX(8px)">
+                <span style="font-family:'JetBrains Mono';font-size:17px;color:{{ cardF.acc }}">{{ e.n }}</span>
                 <span style="font-weight:600;font-size:24px">{{ e.name }}</span>
                 <span style="font-family:'JetBrains Mono';font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.6)">{{ e.meta }}</span>
               </button>
             </sc-for>
             <div style="display:flex;justify-content:space-between;margin-top:auto;font-family:'JetBrains Mono';font-size:16px;letter-spacing:.14em;color:rgba(255,255,255,.55)"><span>GMS · PARA SERIES</span><span>05—09 SEP 2026</span></div>
           </div>
-          <div data-proj="cardback" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden">
+          <div data-proj="cardback" style="position:absolute;left:0;top:0;width:856px;height:540px;transform-origin:0 0;opacity:0;pointer-events:auto;display:flex;flex-direction:column;padding:44px 52px 36px;box-sizing:border-box;color:#fff;backface-visibility:hidden;border-radius:44px;overflow:hidden;isolation:isolate">
+            <div style="position:absolute;inset:0;z-index:-1;background:{{ cardB.bg }}"></div>
+            <div style="position:absolute;right:-170px;top:50%;width:600px;height:600px;margin-top:-300px;z-index:-1;border-radius:50%;opacity:.17;background:repeating-radial-gradient(circle,rgba(255,255,255,.95) 0 2px,transparent 2px 44px),radial-gradient(circle,rgba(255,255,255,.7) 0 30px,transparent 31px)"></div>
+            <div style="position:absolute;inset:-35%;z-index:-1;mix-blend-mode:screen;opacity:.7;background:linear-gradient(115deg,transparent 33%,rgba(255,110,210,.30) 42%,rgba(110,220,255,.42) 50%,rgba(255,236,140,.30) 58%,transparent 67%);transform:translateX(var(--sx,0%))"></div>
+            <div style="position:absolute;inset:0;z-index:-1;border-radius:inherit;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2),inset 0 2px 0 rgba(255,255,255,.45);background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 7px)"></div>
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
               <div style="display:flex;align-items:center;gap:18px"><span style="width:66px;height:50px;border-radius:12px;background:linear-gradient(135deg,#F3E3B5,#C9A75A);display:grid;place-items:center;color:#5A4210;font-family:'Material Symbols Rounded';font-size:30px">{{ cardB.icon }}</span>
                 <span style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.03em;line-height:1">{{ cardB.name }}</span><span style="font-family:'JetBrains Mono';font-size:15px;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-top:6px">5 EVENTS · {{ cardB.sub }}</span></span></div>
               <span style="font-family:'JetBrains Mono';font-size:18px;color:rgba(255,255,255,.65)">{{ cardB.num }}</span>
             </div>
             <sc-for list="{{ cardB.events }}" as="e" hint-placeholder-count="5">
-              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease" style-hover="background:rgba(255,255,255,.12)">
-                <span style="font-family:'JetBrains Mono';font-size:17px;color:#8FA6FF">{{ e.n }}</span>
+              <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 16px;border-radius:18px;transition:background .3s ease,box-shadow .3s ease,transform .35s cubic-bezier(.2,.8,.2,1)" style-hover="background:rgba(255,255,255,.16);box-shadow:inset 4px 0 0 rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.18);transform:translateX(8px)">
+                <span style="font-family:'JetBrains Mono';font-size:17px;color:{{ cardB.acc }}">{{ e.n }}</span>
                 <span style="font-weight:600;font-size:24px">{{ e.name }}</span>
                 <span style="font-family:'JetBrains Mono';font-size:14px;letter-spacing:.06em;color:rgba(255,255,255,.6)">{{ e.meta }}</span>
               </button>
@@ -246,7 +255,7 @@ html{scroll-behavior:smooth}
   </section>
 
   <section ref="{{ regRef }}" style="position:relative;height:300vh;background:radial-gradient(80% 60% at 50% 55%,#FFFFFF 0%,#EEF1F7 60%,#E4E9F2 100%)">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box;background:radial-gradient(80% 60% at 50% 55%,rgba(255,255,255,.84) 0%,rgba(238,241,247,.85) 60%,rgba(228,233,242,.86) 100%),url('assets/brick-wall.jpg') center/cover no-repeat">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 24px">
         <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTER AS · {{ ringLabel }}</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(4vw,6.5vh),58px);letter-spacing:-.045em;line-height:1">Pick how you're taking part.</h2>
@@ -299,7 +308,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section ref="{{ tilesRef }}" style="position:relative;height:240vh;background:#FFFFFF">
+  <section ref="{{ tilesRef }}" style="position:relative;height:380vh;background:#FFFFFF">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,3vh,36px);padding:clamp(76px,10vh,100px) 32px clamp(16px,3vh,40px);box-sizing:border-box">
       <div style="max-width:1240px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">A COMPLETE GAMES ECOSYSTEM</span>
@@ -308,15 +317,34 @@ html{scroll-behavior:smooth}
       </div>
       <div style="max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
         <sc-for list="{{ tiles }}" as="c" hint-placeholder-count="6">
-          <div style="transform:{{ c.tf }};opacity:{{ c.op }};display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px);padding:clamp(18px,2.6vh,28px);border-radius:24px;background:{{ c.bg }};min-height:clamp(100px,18vh,210px);box-sizing:border-box;will-change:transform">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <span style="width:46px;height:46px;border-radius:14px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:24px">{{ c.icon }}</span>
-              <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
-            </div>
-            <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
-            <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+          <div data-tile style="grid-column:{{ c.gc }};transform:{{ c.tf }};opacity:{{ c.op }};display:flex;flex-direction:column;gap:clamp(6px,1.1vh,12px);padding:clamp(16px,2.2vh,26px);border-radius:{{ c.br }};background:{{ c.bg }};min-height:{{ c.mh }};box-sizing:border-box;will-change:transform">
+            <sc-if value="{{ c.narrow }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="width:44px;height:44px;border-radius:14px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:24px">{{ c.icon }}</span>
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
+              </div>
+              <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
+              <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+            </sc-if>
+            <sc-if value="{{ c.wide }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:clamp(14px,2vw,28px);flex-wrap:wrap;margin:auto 0">
+                <span style="width:52px;height:52px;flex:none;border-radius:16px;background:#2F5BFF;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;box-shadow:0 10px 24px rgba(47,91,255,.28)">{{ c.icon }}</span>
+                <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
+                  <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1">{{ c.title }}</div>
+                  <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1 1 300px;justify-content:flex-end">
+                  <sc-for list="{{ c.chips }}" as="k" hint-placeholder-count="5">
+                    <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(47,91,255,.15);font-size:12px;font-weight:600;color:#1A3FD6"><span style="width:6px;height:6px;border-radius:50%;background:#2F5BFF;animation:gmsPulse 1.8s infinite"></span>{{ k.t }}</span>
+                  </sc-for>
+                </div>
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
+              </div>
+            </sc-if>
           </div>
         </sc-for>
+      </div>
+      <div data-paper-layer style="position:absolute;inset:0;pointer-events:none;z-index:5;display:none">
       </div>
     </div>
   </section>
@@ -673,8 +701,12 @@ const MODULES=[
 {icon:'badge',title:'Accreditation',desc:'The right access, for the right people.',bg:'#EAF7F0'},
 {icon:'bed',title:'Accommodation',desc:'Every stay, organised.',bg:'#FFF5E6'},
 {icon:'directions_bus',title:'Transportation',desc:'Move the Games without the guesswork.',bg:'#EEF2FF'},
-{icon:'restaurant',title:'Catering',desc:'Every meal. Every delegation. Accounted for.',bg:'#F2F4F7'}];
-const SCATTER=[[-360,-260,-12],[0,-340,8],[360,-260,-9],[-380,260,11],[0,320,-7],[380,260,12]];
+{icon:'restaurant',title:'Catering',desc:'Every meal. Every delegation. Accounted for.',bg:'#F2F4F7'},
+{icon:'sports_score',title:'Competition Management System',desc:'Draws, brackets, live scoring, results and rankings. Every match on every range, run from one console.',bg:'linear-gradient(115deg,#EEF2FF 0%,#E4EBFF 45%,#F3EEFF 100%)',wide:true,chips:['Draws & brackets','Live scoring','Results','Rankings','Records']}];
+const SCATTER=[[-360,-260,-12],[0,-340,8],[360,-260,-9],[-380,260,11],[0,320,-7],[380,260,12],[0,420,5]];
+// Paper-fall timing for the ecosystem tiles (fractions of the section's scroll progress).
+const PAPER={start:0.5,stagger:0.022,crumple:0.1,fall:0.2};
+const tileCrumple=(p,i)=>ease(clamp((p-PAPER.start-i*PAPER.stagger)/PAPER.crumple));
 const DAY1=[['08:00','PCMTEAM'],['08:00','PCWTEAM'],['08:00','W1MIND'],['08:00','W1MTEAM'],['08:00','W1WIND'],['08:00','W1WTEAM'],['10:00','W1XTEAM'],['10:27','RMIND'],['10:27','RWIND']];
 const DAYS=[['01','05 Sept','Sat'],['02','06 Sept','Sun'],['03','07 Sept','Mon'],['04','08 Sept','Tue'],['05','09 Sept','Wed']];
 const SPORT_ICON={Archery:'target',Cricket:'sports_cricket',Football:'sports_soccer',Basketball:'sports_basketball',Athletics:'directions_run',Kabaddi:'sports_kabaddi',Volleyball:'sports_volleyball',Badminton:'sports_tennis','Table Tennis':'sports_tennis',Hockey:'sports_hockey',Swimming:'pool'};
@@ -692,6 +724,13 @@ const SEED=[
 {id:'GMS-26-0362',name:'Dr. Meera Shah',type:'Medical',status:'Rejected'}];
 const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E8EEFF','#2F5BFF'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
 const EVENT_START=new Date('2026-09-05T08:00:00+05:30').getTime();
+// Locked hero-phone pose (radians / scene units). Hover tilt is added on top and eases back to this.
+// Programme card skins, one per category (Recurve Open, Compound Open, W1).
+const CARD_SKIN=[
+{bg:'linear-gradient(135deg,#0B1645 0%,#1A34B8 52%,#4C78FF 100%)',acc:'#A9BEFF'},
+{bg:'linear-gradient(135deg,#2E1B04 0%,#7E5410 50%,#D6A74C 100%)',acc:'#FFE1A0'},
+{bg:'linear-gradient(135deg,#05241A 0%,#17603F 52%,#3DA676 100%)',acc:'#A6F0CB'}];
+const PHONE_POSE={ry:-0.28,rx:0.05,rz:-0.08,camX:0,camY:45,camZ:900};
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
 const pad=n=>String(n).padStart(2,'0');
@@ -737,7 +776,7 @@ class Component extends DCLogic {
     const demo=Math.floor(s.now/1000)%9;const DF=[['FULL NAME','Harvinder Kaur'],['COUNTRY / NPC','India'],['EVENT','Recurve Open Woman Individual'],['CLASSIFICATION','Open · Senior']];
     const ep=s.p.ev*3.1;const DIV=[['linear-gradient(150deg,#14215C 0%,#2F5BFF 100%)'],['linear-gradient(150deg,#4A3008 0%,#B8862B 100%)'],['linear-gradient(150deg,#0F3324 0%,#2F7A57 100%)']];
     const rp=s.p.reg*4,gap=Math.min(300,W*0.31);
-    const ci=s.cardF||0,cc=CATS[ci],rg=s.regShown||0;const mkCard=k=>{const c=CATS[k];return {name:c.name,icon:c.icon,num:pad(k+1)+' / 03',sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(c.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))};};
+    const ci=s.cardF||0,cc=CATS[ci],rg=s.regShown||0;const mkCard=k=>{const c=CATS[k];return {bg:CARD_SKIN[k].bg,acc:CARD_SKIN[k].acc,name:c.name,icon:c.icon,num:pad(k+1)+' / 03',sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(c.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))};};
     return {heroTiltRef:this.ref('heroTilt'),
       stageMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.tilt.x=((t.clientX-r.left)/r.width-.5)*2;this.tilt.y=((t.clientY-r.top)/r.height-.5)*2;},stageOut:()=>{this.tilt.x=0;this.tilt.y=0;},
       cardMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.ctilt.x=((t.clientX-r.left)/r.width-.5)*2;this.ctilt.y=((t.clientY-r.top)/r.height-.5)*2;},cardOut:()=>{this.ctilt.x=0;this.ctilt.y=0;},
@@ -789,9 +828,55 @@ class Component extends DCLogic {
     if(moved)this.setState({p:n});
     if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
       this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
-    this.project3D();
-    if(this.ball){this.smx+=(this.mx-this.smx)*0.05;const tt=(performance.now()-this.t0)/1000;this.ball.obj.position.x=this.ball.x+Math.sin(tt*0.7)*this.ball.amp+this.smx*this.ball.amp*0.6;}
+    this.project3D();this.paperFall();
+    if(this.ball){this.smx+=(this.mx-this.smx)*0.07;this.ball.obj.position.x=this.ball.x+this.smx*this.ball.amp*1.5;}
   }
+  // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
+  // Everything is a pure function of scroll progress, so scrolling back up rebuilds the cards.
+  paperFall(){const L=this.paperL||(this.paperL=document.querySelector('[data-paper-layer]'));if(!L||!L.isConnected){this.paperL=null;return;}
+    const p=this.state.p.tiles||0;
+    if(p<PAPER.start-0.02){if(L.__on){L.__on=0;L.style.display='none';}return;}
+    const host=L.parentElement,W=host.clientWidth,H=host.clientHeight;
+    if(!L.__on){L.__on=1;L.style.display='block';}
+    if(L.__w!==W||L.__h!==H||!L.__pcs){this.buildPaper(L,host,W,H);L.__lp=-1;}
+    if(Math.abs(L.__lp-p)<1e-4)return;L.__lp=p;
+    const fallEase=t=>t<0.82?Math.pow(t/0.82,2):1-0.07*Math.sin((t-0.82)/0.18*Math.PI);
+    L.__pcs.forEach(q=>{const c=tileCrumple(p,q.card);const vis=clamp((c-0.35)/0.25);
+      if(vis<=0){if(q.shown){q.el.style.opacity='0';q.shown=0;}return;}
+      const t=clamp((p-PAPER.start-q.card*PAPER.stagger-PAPER.crumple*0.7-q.delay)/PAPER.fall);
+      const burst=ease(clamp((c-0.35)/0.65));
+      const sx=q.cx+(q.x0-q.cx)*burst*0.55,sy=q.cy+(q.y0-q.cy)*burst*0.55;
+      const fe=fallEase(t),xe=ease(t);
+      const x=sx+(q.xe-sx)*xe+Math.sin(t*Math.PI*2+q.ph)*q.drift*(1-t);
+      const y=sy+(q.ye-sy)*fe;
+      const rot=q.r0+q.spin*Math.min(1,t*1.15);
+      q.el.style.transform='translate3d('+(x-q.w/2).toFixed(1)+'px,'+(y-q.h/2).toFixed(1)+'px,0) rotate('+rot.toFixed(1)+'deg) scale('+(0.4+0.6*burst).toFixed(3)+')';
+      q.el.style.opacity=vis.toFixed(3);q.shown=1;});}
+  buildPaper(L,host,W,H){L.innerHTML='';L.__w=W;L.__h=H;
+    let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+    const tiles=[...host.querySelectorAll('[data-tile]')];
+    const BW=14,bins=new Array(Math.ceil(W/BW)+2).fill(0),pcs=[];
+    const crumples=['42% 58% 63% 37% / 41% 44% 56% 59%','58% 42% 38% 62% / 52% 61% 39% 48%','47% 53% 55% 45% / 62% 38% 62% 38%','61% 39% 52% 48% / 44% 57% 43% 56%'];
+    const scraps=['polygon(0 8%,92% 0,100% 74%,12% 100%)','polygon(6% 0,100% 14%,86% 100%,0 82%)','polygon(0 0,100% 22%,78% 100%,8% 70%)','polygon(14% 0,100% 0,90% 88%,0 100%)'];
+    tiles.forEach((el,ci)=>{
+      // offset* ignores the live crumple transform, so pieces always start from the card's resting box
+      let ox=0,oy=0,n=el;while(n&&n!==host){ox+=n.offsetLeft;oy+=n.offsetTop;n=n.offsetParent;}
+      const cw=el.offsetWidth,ch=el.offsetHeight,cx=ox+cw/2,cy=oy+ch/2;
+      const tint=MODULES[ci]&&MODULES[ci].wide?'#E4EBFF':((MODULES[ci]&&MODULES[ci].bg)||'#F2F4F7');
+      const count=Math.round(Math.max(22,Math.min(46,cw*ch/2600)));
+      for(let j=0;j<count;j++){
+        const kind=rnd();const ink=rnd()<0.12;
+        const size=12+rnd()*20;let w=size,h=size,css;
+        if(kind<0.58){css='border-radius:'+crumples[j%4]+';background:radial-gradient(circle at 32% 28%,#fff 0%,'+(ink?'#7D97FF':tint)+' 45%,'+(ink?'#2F5BFF':'#A9B3C4')+' 100%);box-shadow:0 3px 6px rgba(15,20,40,.22),inset -3px -4px 5px rgba(15,20,40,.18),inset 2px 2px 3px rgba(255,255,255,.9)';}
+        else if(kind<0.88){w=size*1.4;h=size*0.9;css='clip-path:'+scraps[j%4]+';background:linear-gradient(160deg,#fff 0%,'+tint+' 55%,#B9C2D1 100%);filter:drop-shadow(0 2px 2px rgba(15,20,40,.22))'+(ink?';background-image:repeating-linear-gradient(0deg,transparent 0 4px,rgba(47,91,255,.35) 4px 5px),linear-gradient(160deg,#fff,'+tint+')':'');}
+        else{w=size*1.9;h=size*0.62;css='border-radius:999px;background:repeating-linear-gradient(90deg,#fff 0 3px,'+tint+' 3px 6px,#C9D0DC 6px 7px);box-shadow:0 2px 3px rgba(15,20,40,.18),inset 0 -2px 3px rgba(15,20,40,.12)';}
+        const d=document.createElement('div');d.style.cssText='position:absolute;left:0;top:0;width:'+w.toFixed(1)+'px;height:'+h.toFixed(1)+'px;opacity:0;will-change:transform,opacity;'+css;L.appendChild(d);
+        // landing spot: drift around the card's column, then stack into a mound using height bins
+        let xe=W*0.5+(cx-W*0.5)*0.85+(rnd()+rnd()+rnd()-1.5)*cw*0.55;xe=Math.max(w,Math.min(W-w,xe));
+        const b=Math.round(xe/BW);const top=Math.max(bins[b-1]||0,bins[b],bins[b+1]||0);
+        const ye=H-top-h*0.45-6;bins[b]=top+h*0.3;for(let k=1;k<4;k++){const f=h*0.3*(1-k/4);if(b-k>=0)bins[b-k]=Math.max(bins[b-k],top+f);if(b+k<bins.length)bins[b+k]=Math.max(bins[b+k],top+f);}
+        pcs.push({el:d,card:ci,w,h,cx,cy,x0:ox+rnd()*cw,y0:oy+rnd()*ch,xe,ye,r0:rnd()*360,spin:(rnd()-0.5)*540,drift:10+rnd()*30,ph:rnd()*6.28,delay:j/count*0.05,shown:0});}});
+    L.__pcs=pcs;}
   homog(w,h,p){const src=[[0,0],[w,0],[w,h],[0,h]],A=[],b=[];
     for(let i=0;i<4;i++){const x=src[i][0],y=src[i][1],u=p[i][0],v=p[i][1];A.push([x,y,1,0,0,0,-u*x,-u*y]);b.push(u);A.push([0,0,0,x,y,1,-v*x,-v*y]);b.push(v);}
     for(let i=0;i<8;i++){let m=i;for(let r=i+1;r<8;r++)if(Math.abs(A[r][i])>Math.abs(A[m][i]))m=r;let t=A[i];A[i]=A[m];A[m]=t;t=b[i];b[i]=b[m];b[m]=t;if(Math.abs(A[i][i])<1e-9)return null;
@@ -816,7 +901,7 @@ class Component extends DCLogic {
   worldOf(o){const chain=[];let x=o;while(x){chain.unshift(x);x=x.parent;}const M=o.matrixWorld.clone().identity();chain.forEach(n=>{n.updateMatrix();M.multiply(n.matrix);});return M;}
   onScreen(v){const r=v.getBoundingClientRect();return r.bottom>0&&r.top<window.innerHeight;}
   project3D(){const sp=this.sp;if(!sp)return;const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
-    if(sp.phone&&sp.phone.v.isConnected&&this.onScreen(sp.phone.v)){const P=sp.phone,t=this.tilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;P.root.rotation.y=P.ry+0.42+t.sx*0.3;P.root.rotation.x=P.rx+0.06+t.sy*0.18;if(P.rz===undefined)P.rz=P.root.rotation.z;P.root.rotation.z=P.rz-0.07;P.root.updateMatrixWorld(true);
+    if(sp.phone&&sp.phone.v.isConnected&&this.onScreen(sp.phone.v)){const P=sp.phone,t=this.tilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;const K=PHONE_POSE,pc=this.phoneCam;if(pc){pc.cam.position.set(pc.p.x+K.camX,pc.p.y+K.camY,K.camZ);pc.cam.quaternion.copy(pc.q);if(pc.cam.zoom!==pc.z){pc.cam.zoom=pc.z;pc.cam.updateProjectionMatrix();}}if(P.pos)P.root.position.copy(P.pos);P.root.rotation.y=P.ry+K.ry+t.sx*0.22;P.root.rotation.x=P.rx+K.rx+t.sy*0.14;if(P.rz===undefined)P.rz=P.root.rotation.z;P.root.rotation.z=P.rz+K.rz;P.root.updateMatrix();P.root.updateMatrixWorld(true);
       let best=null,ba=0;const W=P.v.clientWidth,H=P.v.clientHeight;P.screens.forEach(m=>{let ok=true,o=m;while(o){if(o.visible===false){ok=false;break;}o=o.parent;}if(!ok)return;const q=this.faceQuad(P.app,m,W,H);if(q&&Math.abs(q.area)>ba){ba=Math.abs(q.area);best=m;}});
       if(!best&&(!this.__fs||now-this.__fs>1000)){this.__fs=now;this.findScreens&&this.findScreens();}
       if(best)this.place(document.querySelector('[data-proj="phone"]'),P.app,best,P.v);this.rr(P.app);}
@@ -826,7 +911,7 @@ class Component extends DCLogic {
       const sc=(0.8+0.8*grow)*(1-0.5*shr),ang=Math.PI*(i+fl);
       const fd=Math.min(2,i%2===0?i:i+1),bd=Math.min(2,i%2===1?i:i+1);if(this.cardF!==fd||this.cardB!==bd){this.cardF=fd;this.cardB=bd;this.setState({cardF:fd,cardB:bd});}
       C.grp.scale.setScalar(C.s*sc);C.grp.rotation.y=C.ry+ang+t.sx*0.3;C.grp.rotation.x=C.rx+t.sy*0.22;C.grp.updateMatrixWorld(true);
-      this.recompose=C.face;this.place(document.querySelector('[data-proj="card"]'),C.app,C.face,C.v);this.placeBack(document.querySelector('[data-proj="cardback"]'),C.app,C.face,C.v);this.recompose=null;this.rr(C.app);}
+      this.recompose=C.face;this.place(document.querySelector('[data-proj="card"]'),C.app,C.face,C.v);this.placeBack(document.querySelector('[data-proj="cardback"]'),C.app,C.face,C.v);const shx=(t.sx*30+Math.sin(ang)*38).toFixed(1)+'%';document.querySelectorAll('[data-proj="card"],[data-proj="cardback"]').forEach(e=>e.style.setProperty('--sx',shx));this.recompose=null;this.rr(C.app);}
 
   }
   patchSpline(){
@@ -840,7 +925,9 @@ class Component extends DCLogic {
           const sph=[];sc.traverse(x=>{if(x.name==='Sphere 3'||x.name==='Sphere 4')sph.push(x);});sph.forEach((x,i)=>{try{grp.attach(x);const k=Math.min(fw,fh)*0.2/Math.max(1,(x.geometry&&x.geometry.boundingSphere?x.geometry.boundingSphere.radius*2:300)*x.scale.x);x.scale.multiplyScalar(k);x.position.set(face.position.x+(i?-.22:.24)*fw,face.position.y+(i?.18:-.16)*fh,face.position.z-30);}catch(e){}});
           this.sp.card={app,v,grp,face,ry:grp.rotation.y,rx:grp.rotation.x,s:grp.scale.x};}}
       if(url.indexOf('SGdEM3csBbrvxlhm')>=0){const sc=app._scene;let root=null,scr=null;sc.traverse(x=>{if(x.name==='Notes'||x.name==='Floor')x.visible=false;if(x.name==='iPhone 14 Pro'&&!root)root=x;if(x.isMesh&&x.name==='Screen'&&!scr)scr=x;});
-        if(root&&scr)this.sp.phone={app,v,root,screens:[scr],ry:root.rotation.y,rx:root.rotation.x};}
+        if(root&&scr)this.sp.phone={app,v,root,screens:[scr],ry:root.rotation.y,rx:root.rotation.x,pos:root.position.clone()};
+        v.style.pointerEvents='none';try{const oc=app._controls&&app._controls.orbitControls;if(oc){oc.enabled=false;oc.enableRotate=false;oc.enablePan=false;oc.enableZoom=false;oc.autoRotate=false;}}catch(e){}
+        const cam=app._camera;if(cam)this.phoneCam={cam,p:cam.position.clone(),q:cam.quaternion.clone(),z:cam.zoom};}
 
       try{app._scene&&app._scene.traverse(x=>{if(x.castShadow)x.castShadow=false;if(x.isLight&&x.shadow)x.castShadow=false;});}catch(e){}
       this.splineDone.add(app);});
@@ -928,7 +1015,7 @@ class Component extends DCLogic {
     const arch={setA:String(A),setB:String(B),rows,status:A>=6?'VERMA WINS GOLD':B>=6?'KIM WINS GOLD':`END ${s.ends.length} · ${s.turn==='a'?'VERMA':'KIM'} TO SHOOT`};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000);const left=Math.max(0,EVENT_START-s.now);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,s.p.steps/0.72)*STEPS.length));
-    const tp=ease(clamp(s.p.tiles*1.6));const cp=ease(clamp(s.p.close*1.25));const lerp=(a,b)=>Math.round(a+(b-a)*cp);
+    const tp=ease(clamp(s.p.tiles*2.4));const cp=ease(clamp(s.p.close*1.25));const lerp=(a,b)=>Math.round(a+(b-a)*cp);
     const fmt=m=>({...m,icon:SPORT_ICON[m.sport],sa:String(m.sa),sb:String(m.sb),scoreLine:`${m.sa} – ${m.sb}`,flashA:s.flash[m.id+'sa']?'#FFE9A8':'transparent',flashB:s.flash[m.id+'sb']?'#FFE9A8':'transparent'});
     const allM=s.matches.map(fmt);const sports=['All',...new Set(s.matches.map(m=>m.sport))];
     const isAth=s.regType==='athlete';const docs=this.docList();
@@ -974,7 +1061,7 @@ class Component extends DCLogic {
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
       liveTop:[{icon:'target',a:'Verma',b:'Kim',scoreLine:`${A} – ${B}`}].concat(allM.slice(0,3)),
-      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];return {...m,num:pad(i+1),tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)).toFixed(1)}px) rotate(${(r*(1-tp)).toFixed(2)}deg)`,op:(0.15+0.85*tp).toFixed(3)};}),
+      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),br:(24+c*120).toFixed(0)+'px',tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)+c*40).toFixed(1)}px) rotate(${(r*(1-tp)+c*dir*32).toFixed(2)}deg) scale(${(1-0.82*c).toFixed(4)})`,op:((0.15+0.85*tp)*(1-clamp((c-0.45)/0.4))).toFixed(3)};}),
       carTf:`translate(${(-80+s.p.car*190).toFixed(2)}vw,-50%)`,carTextOp:(0.08+0.92*clamp(s.p.car*2.2)).toFixed(3),
       winW:`${(52+48*cp).toFixed(2)}vw`,winH:`${(46+54*cp).toFixed(2)}vh`,winR:`${(40*(1-cp)).toFixed(1)}px`,
       winBg:`rgb(${lerp(244,0)},${lerp(245,0)},${lerp(247,0)})`,winContentOp:clamp((cp-0.55)/0.45).toFixed(3),
