@@ -9,10 +9,62 @@
 <link rel="preconnect" href="https://cdn.spline.design" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="modulepreload" href="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js" crossorigin>
-<link rel="preload" href="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" as="fetch" crossorigin>
-<link rel="preload" href="https://prod.spline.design/SGdEM3csBbrvxlhm/scene.splinecode" as="fetch" crossorigin>
-<style>html,body{background:#F4F5F7}</style>
+<script>
+/* Lite mode: phones, tablets and touch-first devices get CSS versions of the 3D scenes (instant + smooth).
+   Desktop loads the Spline 3D library and preloads the two hero scenes. */
+(function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
+if(lite){document.documentElement.classList.add('gms-lite');return;}
+var V="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js",h=document.head;
+[['modulepreload',V],['preload','https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode','fetch'],['preload','https://prod.spline.design/SGdEM3csBbrvxlhm/scene.splinecode','fetch']].forEach(function(a){var l=document.createElement('link');l.rel=a[0];l.href=a[1];if(a[2])l.as=a[2];l.crossOrigin='anonymous';h.appendChild(l);});
+var sc=document.createElement('script');sc.type='module';sc.src=V;h.appendChild(sc);})();
+</script>
+<style>
+html,body{background:#F4F5F7}
+[data-lite-only]{display:none}
+html.gms-lite [data-lite-only]{display:block}
+html.gms-lite [data-proj="phone"]{box-shadow:0 50px 90px rgba(15,20,40,.22)!important}
+html.gms-lite [data-proj="phone"]::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 12px #0B0D12,inset 0 0 0 14px #3A3F4C;pointer-events:none;z-index:3}
+html.gms-lite [data-proj="phone"]::before{content:"";position:absolute;top:26px;left:50%;width:118px;height:34px;margin-left:-59px;border-radius:20px;background:#0B0D12;z-index:4}
+html.gms-lite [data-r=hero-stage]>div{transform:scale(.74)!important}
+@keyframes gmsOrb{0%{transform:translate3d(-14%,4%,0)}100%{transform:translate3d(42%,-8%,0)}}
+@media (max-width:900px){
+ [data-r=navlinks]{display:none!important;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;align-items:stretch!important;gap:2px!important;padding:8px;border-radius:24px;background:rgba(255,255,255,.97);box-shadow:0 24px 60px rgba(15,20,40,.16)}
+ [data-r=navlinks][data-open="1"]{display:flex!important}
+ [data-r=navlinks] button{padding:13px 16px!important;font-size:15px!important}
+ [data-r=navburger]{display:grid!important}
+ [data-r=hero-grid]{padding:96px 18px 28px!important;gap:8px!important}
+ [data-r=hero-stage]{transform:none!important;min-height:360px!important}
+ [data-r=steps-grid]{grid-template-columns:minmax(0,1fr)!important;align-content:center;gap:16px!important;padding:84px 18px 22px!important}
+ [data-r=steps-photo]{height:24vh!important;border-radius:24px!important}
+ [data-r=steps-arena]{left:18px!important;right:18px!important;top:84px!important;bottom:22px!important;border-radius:24px!important}
+ [data-r=ev-grid]{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr);align-items:stretch!important;padding:84px 18px 16px!important;gap:6px!important}
+ [data-r=ev-stage]{height:auto!important;min-height:0}
+ [data-r=sch-section]{padding:80px 18px!important}
+ [data-r=sch-grid]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+ [data-r=sch-left]{position:static!important}
+ [data-r=live-section]{padding:16px 18px 72px!important}
+ [data-r=live-grid]{grid-template-columns:minmax(0,1fr)!important}
+ [data-r=tiles-sticky]{padding:80px 16px 18px!important}
+ [data-r=tiles-grid]{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ [data-r=foot-grid]{grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
+ [data-r=form-grid]{grid-template-columns:minmax(0,1fr)!important}
+ [data-r=grid4]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ [data-r=admin-row]{grid-template-columns:minmax(0,1fr) auto!important;row-gap:6px!important}
+}
+@media (max-width:700px){
+ [data-r=hero-grid]{grid-template-columns:minmax(0,1fr)!important;min-height:0!important}
+ [data-r=hero-card]{max-width:none!important}
+ [data-r=hero-stage]{justify-self:center!important;height:min(470px,60vh)!important;max-width:460px!important}
+}
+@media (max-width:600px){
+ [data-r=nav]{padding:6px 6px 6px 14px!important}
+ [data-r=admin-btn],[data-r=login-btn]{padding:10px 13px!important;font-size:13px!important}
+ [data-r=tile-desc],[data-r=tiles-p],[data-r=cms-chips]{display:none!important}
+ [data-r=ev-p]{display:none!important}
+ [data-r=tile-title]{font-size:clamp(14px,4.1vw,17px)!important;letter-spacing:-.03em!important}
+ [data-r=bot]{transform:scale(.78);transform-origin:100% 100%;right:6px!important}
+}
+</style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
@@ -23,8 +75,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,medical_services,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
-<script type="module" async src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,medical_services,menu,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
 <script src="./image-slot.js"></script>
 <style>
 @keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -45,19 +96,20 @@ html{scroll-behavior:smooth}
 </style>
 </helmet>
 
-<nav style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
+<nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
   <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
     <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
     <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
-  <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
+  <div data-r="navlinks" data-open="{{ menuOpen }}" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
       <button onClick="{{ n.go }}" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }}">{{ n.label }}</button>
     </sc-for>
   </div>
-  <div style="display:flex;gap:6px">
-    <button onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
-    <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+  <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
+    <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px">{{ menuIcon }}</button>
+    <button data-r="admin-btn" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
+    <button data-r="login-btn" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
 </nav>
 
@@ -65,13 +117,17 @@ html{scroll-behavior:smooth}
 <main data-screen-label="Home">
 
   <section ref="{{ overviewRef }}" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(110% 80% at 75% 35%,#FFFFFF 0%,#EEF1F6 55%,#E6EAF1 100%)">
+    <div data-lite-only style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+      <div style="position:absolute;left:2%;top:30%;width:min(62vw,440px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 32%,#FFFBD6 0%,#FFE65C 26%,#F8C400 50%,rgba(248,196,0,.35) 64%,rgba(248,196,0,0) 71%);animation:gmsOrb 9s ease-in-out infinite alternate;will-change:transform"></div>
+      <div style="position:absolute;left:-8%;top:-6%;width:74%;height:112%;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:14px;transform:perspective(900px) rotateY(16deg);transform-origin:0 50%;-webkit-mask-image:linear-gradient(90deg,#000 55%,transparent);mask-image:linear-gradient(90deg,#000 55%,transparent)"><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span><span style="border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.72),rgba(226,231,239,.42));box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 22px rgba(15,20,40,.05),0 18px 40px rgba(15,20,40,.05)"></span></div>
+    </div>
     <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
       <div style="position:absolute;top:0;bottom:0;left:0;width:60%;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 62%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 62%,transparent 100%)">
         <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/aTR80zhalKaWgXye/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
       </div>
     </sc-if>
-    <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:110px 32px 24px;display:grid;grid-template-columns:minmax(300px,.62fr) minmax(0,1.38fr);gap:24px;align-items:center;min-height:calc(100vh - 52px);box-sizing:border-box">
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:420px;padding:24px;border-radius:26px;background:rgba(255,255,255,.4);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border:1px solid rgba(255,255,255,.85);box-shadow:0 24px 60px rgba(15,20,40,.07)">
+    <div data-r="hero-grid" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:110px 32px 24px;display:grid;grid-template-columns:minmax(300px,.62fr) minmax(0,1.38fr);gap:24px;align-items:center;min-height:calc(100vh - 52px);box-sizing:border-box">
+      <div data-r="hero-card" style="display:flex;flex-direction:column;gap:16px;max-width:420px;padding:24px;border-radius:26px;background:rgba(255,255,255,.4);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border:1px solid rgba(255,255,255,.85);box-shadow:0 24px 60px rgba(15,20,40,.07)">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">
           <span style="display:flex;align-items:center;gap:7px"><span style="width:6px;height:6px;border-radius:50%;background:#1FA463;animation:gmsPulse 1.8s infinite"></span>REGISTRATION OPERATIONAL</span>
           <span>{{ clock }} IST</span>
@@ -92,7 +148,7 @@ html{scroll-behavior:smooth}
           </sc-for>
         </div>
       </div>
-      <div onMouseMove="{{ stageMove }}" onTouchMove="{{ stageMove }}" onMouseLeave="{{ stageOut }}" onTouchEnd="{{ stageOut }}" style="position:relative;justify-self:end;width:100%;max-width:520px;height:min(560px,calc(100vh - 170px));min-height:420px;transform:translateX(8%)">
+      <div data-r="hero-stage" onMouseMove="{{ stageMove }}" onTouchMove="{{ stageMove }}" onMouseLeave="{{ stageOut }}" onTouchEnd="{{ stageOut }}" style="position:relative;justify-self:end;width:100%;max-width:520px;height:min(560px,calc(100vh - 170px));min-height:420px;transform:translateX(8%)">
        <div style="position:absolute;left:-30%;top:-30%;width:160%;height:160%;transform:scale(.56);transform-origin:50% 50%">
         <sc-if value="{{ show3D }}" hint-placeholder-val="{{ true }}">
           <div style="position:absolute;inset:0;pointer-events:none">
@@ -125,8 +181,8 @@ html{scroll-behavior:smooth}
   </section>
 
   <section ref="{{ stepsRef }}" style="position:relative;height:320vh;background:#FFFFFF">
-    <div style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
-      <div style="position:relative;height:min(600px,74vh);border-radius:32px;background:#F1F3F7;overflow:hidden">
+    <div data-r="steps-grid" style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
+      <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:32px;background:#F1F3F7;overflow:hidden">
         {{ photoLoop }}
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,0) 86%,rgba(255,255,255,.5) 100%);pointer-events:none"></div>
         <div style="position:absolute;left:18px;bottom:18px;padding:10px 18px;border-radius:20px;background:rgba(255,255,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);font-family:'Bricolage Grotesque';font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1">{{ stepNum }}</div>
@@ -145,23 +201,23 @@ html{scroll-behavior:smooth}
           </div>
         </sc-for>
       </div>
-      <div style="position:absolute;left:32px;right:32px;top:100px;bottom:40px;border-radius:32px;overflow:hidden;background:#0B0D12;transform:translateY({{ arenaY }});opacity:{{ arenaOp }};will-change:transform;box-shadow:0 -20px 60px rgba(15,20,40,.12)">{{ arenaVideo }}</div>
+      <div data-r="steps-arena" style="position:absolute;left:32px;right:32px;top:100px;bottom:40px;border-radius:32px;overflow:hidden;background:#0B0D12;transform:translateY({{ arenaY }});opacity:{{ arenaOp }};will-change:transform;box-shadow:0 -20px 60px rgba(15,20,40,.12)">{{ arenaVideo }}</div>
     </div>
   </section>
 
   <section ref="{{ eventsRef }}" style="position:relative;height:320vh;background:radial-gradient(90% 70% at 60% 45%,#FFFFFF 0%,#EDF1F7 60%,#E3E9F2 100%)">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;max-width:1280px;margin:0 auto;padding:90px 32px 24px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(12px,2vw,32px);align-items:center">
+    <div data-r="ev-grid" style="position:sticky;top:0;height:100vh;overflow:hidden;max-width:1280px;margin:0 auto;padding:90px 32px 24px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(12px,2vw,32px);align-items:center">
       <div style="display:flex;flex-direction:column;gap:16px">
         <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PROGRAMME · 2026</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,min(4.6vw,8vh),72px);letter-spacing:-.05em;line-height:.95">15 events. One arena.</h2>
-        <p style="margin:0;max-width:360px;font-size:16px;line-height:1.55;color:#4A505C">Medal events across the full championship programme — every sport, every category.</p>
+        <p data-r="ev-p" style="margin:0;max-width:360px;font-size:16px;line-height:1.55;color:#4A505C">Medal events across the full championship programme — every sport, every category.</p>
         <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
           <sc-for list="{{ evDots }}" as="d" hint-placeholder-count="3">
             <span style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:{{ d.fg }};transition:color .4s ease"><span style="width:{{ d.w }};height:3px;border-radius:3px;background:{{ d.bar }};transition:width .5s ease,background .4s ease"></span>{{ d.name }}</span>
           </sc-for>
         </div>
       </div>
-      <div onMouseMove="{{ cardMove }}" onTouchMove="{{ cardMove }}" onMouseLeave="{{ cardOut }}" onTouchEnd="{{ cardOut }}" style="position:relative;height:calc(100vh - 120px)">
+      <div data-r="ev-stage" onMouseMove="{{ cardMove }}" onTouchMove="{{ cardMove }}" onMouseLeave="{{ cardOut }}" onTouchEnd="{{ cardOut }}" style="position:relative;height:calc(100vh - 120px)">
         <div style="position:absolute;left:50%;top:50%;width:min(92%,78vh);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none">
           <div style="position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,rgba(47,91,255,.10) 0%,rgba(47,91,255,0) 62%);animation:gmsBreathe 6s ease-in-out infinite"></div>
           <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(11,13,18,.07)"></div>
@@ -220,9 +276,9 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section ref="{{ scheduleRef }}" style="background:#FFFFFF;padding:120px 32px">
-    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,1.6fr);gap:56px;align-items:start">
-      <div style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
+  <section data-r="sch-section" ref="{{ scheduleRef }}" style="background:#FFFFFF;padding:120px 32px">
+    <div data-r="sch-grid" style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,1.6fr);gap:56px;align-items:start">
+      <div data-r="sch-left" style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
         <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PROGRAMME OF EVENTS</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.2vw,62px);letter-spacing:-.045em;line-height:.98">The schedule. To the second.</h2>
         <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">Dawn-to-dusk competition across every day. Tap a row for full details.</p>
@@ -292,8 +348,8 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section style="background:#F4F5F7;padding:20px 32px 110px">
-    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px">
+  <section data-r="live-section" style="background:#F4F5F7;padding:20px 32px 110px">
+    <div data-r="live-grid" style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px">
       <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:22px;padding:32px;border-radius:28px;background:#fff;border:1px solid #E3E6EB">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>LIVE NOW</span>
@@ -322,13 +378,13 @@ html{scroll-behavior:smooth}
   </section>
 
   <section ref="{{ tilesRef }}" style="position:relative;height:380vh;background:#FFFFFF">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,3vh,36px);padding:clamp(76px,10vh,100px) 32px clamp(16px,3vh,40px);box-sizing:border-box">
+    <div data-r="tiles-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,3vh,36px);padding:clamp(76px,10vh,100px) 32px clamp(16px,3vh,40px);box-sizing:border-box">
       <div style="max-width:1240px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">A COMPLETE GAMES ECOSYSTEM</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(4.8vw,7vh),68px);letter-spacing:-.045em;line-height:1">Built for every team behind the Games.</h2></div>
-        <span style="max-width:340px;font-size:15px;line-height:1.5;color:#5B6270">Purpose-built modules share workflows and data, giving every team the clarity they need without adding operational complexity.</span>
+        <span data-r="tiles-p" style="max-width:340px;font-size:15px;line-height:1.5;color:#5B6270">Purpose-built modules share workflows and data, giving every team the clarity they need without adding operational complexity.</span>
       </div>
-      <div style="max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <div data-r="tiles-grid" style="max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
         <sc-for list="{{ tiles }}" as="c" hint-placeholder-count="6">
           <div data-tile style="grid-column:{{ c.gc }};transform:{{ c.tf }};opacity:{{ c.op }};display:flex;flex-direction:column;gap:clamp(6px,1.1vh,12px);padding:clamp(16px,2.2vh,26px);border-radius:{{ c.br }};background:{{ c.bg }};min-height:{{ c.mh }};box-sizing:border-box;will-change:transform">
             <sc-if value="{{ c.narrow }}" hint-placeholder-val="{{ true }}">
@@ -336,17 +392,17 @@ html{scroll-behavior:smooth}
                 <span style="width:44px;height:44px;border-radius:14px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:24px">{{ c.icon }}</span>
                 <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
               </div>
-              <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
-              <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+              <div data-r="tile-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
+              <div data-r="tile-desc" style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
             </sc-if>
             <sc-if value="{{ c.wide }}" hint-placeholder-val="{{ false }}">
               <div style="display:flex;align-items:center;gap:clamp(14px,2vw,28px);flex-wrap:wrap;margin:auto 0">
                 <span style="width:52px;height:52px;flex:none;border-radius:16px;background:#2F5BFF;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;box-shadow:0 10px 24px rgba(47,91,255,.28)">{{ c.icon }}</span>
                 <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
-                  <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1">{{ c.title }}</div>
-                  <div style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
+                  <div data-r="tile-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1">{{ c.title }}</div>
+                  <div data-r="tile-desc" style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
                 </div>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;flex:1 1 300px;justify-content:flex-end">
+                <div data-r="cms-chips" style="display:flex;flex-wrap:wrap;gap:8px;flex:1 1 300px;justify-content:flex-end">
                   <sc-for list="{{ c.chips }}" as="k" hint-placeholder-count="5">
                     <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(47,91,255,.15);font-size:12px;font-weight:600;color:#1A3FD6"><span style="width:6px;height:6px;border-radius:50%;background:#2F5BFF;animation:gmsPulse 1.8s infinite"></span>{{ k.t }}</span>
                   </sc-for>
@@ -389,7 +445,7 @@ html{scroll-behavior:smooth}
   </section>
 
   <footer style="background:#000;color:#fff;padding:44px 32px 52px">
-    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
+    <div data-r="foot-grid" style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
       <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px">GMS</span>
       <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">Sanctioned by World Archery Federation (Lausanne, Switzerland), Archery Association of India (AAI) and the Gujarat State Archery Association (GSAA), with the Sports Authority of Gujarat (SAG), World Archery partners(Errea, Turkish Airlines, Herbelin), Series title sponsor - Hyundai.</p>
       <div style="display:flex;gap:22px;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.6)">
@@ -414,7 +470,7 @@ html{scroll-behavior:smooth}
           <span style="width:56px;height:56px;border-radius:18px;background:rgba(47,91,255,.1);color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:30px">{{ rt.icon }}</span>
           <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTER AS</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em;line-height:1.05">{{ rt.name }}</span></div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+        <div data-r="form-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
           <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
             <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">{{ f.label }}
               <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" style="padding:13px 15px;border-radius:14px;border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;color:#0B0D12;outline:none">
@@ -493,7 +549,7 @@ html{scroll-behavior:smooth}
     <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:32px;background:rgba(255,255,255,.62);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">MY REGISTRATION</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:#5B6270">{{ me.type }} · {{ me.id }}</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
-      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+      <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ me.timeline }}" as="t" hint-placeholder-count="4">
           <div style="display:flex;flex-direction:column;gap:8px"><div style="height:6px;border-radius:6px;background:{{ t.bar }}"></div><span style="font-weight:600;font-size:14px;color:{{ t.fg }}">{{ t.label }}</span></div>
         </sc-for>
@@ -504,14 +560,14 @@ html{scroll-behavior:smooth}
     <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:32px;background:rgba(255,255,255,.66);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14);box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">ADMIN · VERIFICATION</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
-      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+      <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
           <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:18px;background:rgba(255,255,255,.8)"><span style="font-size:12px;color:#5B6270">{{ k.label }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
         </sc-for>
       </div>
       <div style="display:flex;flex-direction:column;border-radius:20px;background:rgba(255,255,255,.85);overflow:hidden">
         <sc-for list="{{ adminRows }}" as="r" hint-placeholder-count="6">
-          <div style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px 160px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
+          <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px 160px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
             <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ r.id }}</span>
             <span style="font-weight:600;font-size:14px">{{ r.name }}</span>
             <span style="font-size:13px;color:#4A505C">{{ r.type }}</span>
@@ -670,10 +726,17 @@ html{scroll-behavior:smooth}
       </form>
     </div>
   </sc-if>
-  <div style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px">
+  <div data-r="bot" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px">
     <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;pointer-events:none">
         <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/wMuw2CRsxbceMWK0/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="120px,120px"></x-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{ botLite }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:50%;top:14px;width:62px;height:56px;margin-left:-31px;border-radius:22px;background:radial-gradient(circle at 35% 25%,#3A3F4C,#0B0D12 70%);box-shadow:0 14px 30px rgba(15,20,40,.28),inset 0 2px 0 rgba(255,255,255,.18);pointer-events:none">
+        <span style="position:absolute;left:10px;right:10px;top:15px;height:20px;border-radius:12px;background:#151924;box-shadow:inset 0 0 0 1px rgba(143,166,255,.25)"></span>
+        <span style="position:absolute;left:19px;top:21px;width:8px;height:8px;border-radius:50%;background:#8FA6FF;box-shadow:0 0 10px #5B7CFF;animation:gmsPulse 2.4s infinite"></span>
+        <span style="position:absolute;right:19px;top:21px;width:8px;height:8px;border-radius:50%;background:#8FA6FF;box-shadow:0 0 10px #5B7CFF;animation:gmsPulse 2.4s infinite"></span>
       </div>
     </sc-if>
     <button onClick="{{ toggleChat }}" title="Chat with GMS Assistant" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
@@ -683,6 +746,8 @@ html{scroll-behavior:smooth}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;jT9C2wBHn6c&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
 const BLUE='#2F5BFF';
+// Set in <head> before render: phones, tablets and touch-first devices use CSS stand-ins for the Spline scenes.
+const LITE=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-lite');
 const CATS=[
 {name:'Recurve Open',icon:'target',color:BLUE,tint:'#E8EEFF',outdoor:true,events:[['Recurve Open Mixed','MIXED','RXTEAM'],['Recurve Open Men Team','MEN','RMTEAM'],['Recurve Open Women Team','WOMEN','RWTEAM'],['Recurve Open Men Individual','MEN','RMIND'],['Recurve Open Woman Individual','WOMEN','RWIND']]},
 {name:'Compound Open',icon:'adjust',color:'#A9741E',tint:'#FBF1DF',outdoor:true,events:[['Compound Open Men Individual','MEN','PCMIND'],['Compound Open Women Individual','WOMEN','PCWIND'],['Compound Open Mixed','MIXED','PCXTEAM'],['Compound Open Men Team','MEN','PCMTEAM'],['Compound Open Women Team','WOMEN','PCWTEAM']]},
@@ -815,11 +880,11 @@ class Component extends DCLogic {
       regCards:REG.map((r,i)=>{const g=Math.floor(i/3),slot=i%3-1;const gp=rp-g;const pin=ease(clamp(gp*2.4));const pout=g<3?ease(clamp((gp-0.8)*5)):0;
         const x=slot*gap*pin,y=(1-pin)*34-pout*18,sc=0.35+0.65*pin-0.12*pout;const op=pin*(1-pout);
         return {...r,go:()=>this.startReg(r.id),op:op.toFixed(3),pe:op>0.6?'auto':'none',tf:'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(2)+'vh)) scale('+sc.toFixed(4)+') rotate('+(slot*(1-pin)*-14).toFixed(2)+'deg)'};}),
-      evNear:s.evNear&&(this.props.enable3D??true),regNear:s.regNear&&(this.props.enable3D??true)};}
+      evNear:s.evNear&&(this.props.enable3D??true)&&!LITE,regNear:s.regNear&&(this.props.enable3D??true)};}
   ringVals(){const s=this.state,n=REG.length,step=360/n,R=Math.max(300,Math.min(460,(typeof window!=='undefined'?window.innerWidth:1200)*0.34));
     const rot=-(s.p.reg||0)*360+(s.ringDrag||0);const front=((Math.round(-rot/step)%n)+n)%n;const open=s.ringOpen??-1;
     const vh=typeof window!=='undefined'?window.innerHeight:800;
-    return {ringRot:rot.toFixed(2)+'deg',ringScale:Math.min(1,Math.max(.55,(vh-260)/400)).toFixed(3),ringLabel:pad(front+1)+' / '+n,
+    return {ringRot:rot.toFixed(2)+'deg',ringScale:Math.min(1,Math.max(.55,(vh-260)/400),Math.max(.5,(typeof window!=='undefined'?window.innerWidth:1200)/680)).toFixed(3),ringLabel:pad(front+1)+' / '+n,
       ringDown:e=>{const x0=e.clientX,d0=s.ringDrag||0;const mv=ev=>this.setState({ringDrag:d0+(ev.clientX-x0)*0.35});const up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);};window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);},
       ringCards:REG.map((r,i)=>{const isOpen=open===i,isFront=front===i;const ang=i*step;let rel=((ang+rot)%360+540)%360-180;const fade=Math.max(.25,1-Math.abs(rel)/150);
         return {...r,num:pad(i+1),displayName:r.name.split('/').join('/\u200B'),nfs:r.name.length>16?'17px':'21px',tf:'rotateY('+ang+'deg) translateZ('+R+'px)'+(isOpen?' translateZ(40px) translateY(-10px) scale(1.06)':isFront?' translateZ(24px)':''),
@@ -829,7 +894,7 @@ class Component extends DCLogic {
           tap:()=>this.setState({ringOpen:i}),go:e=>{e.stopPropagation();this.startReg(r.id);}};})};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.webm');}
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none',
-    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
+    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=el.canPlayType('video/webm')?src:src.replace(/\.webm$/,'.mp4');const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
   componentWillUnmount(){(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
@@ -879,14 +944,14 @@ class Component extends DCLogic {
       let ox=0,oy=0,n=el;while(n&&n!==host){ox+=n.offsetLeft;oy+=n.offsetTop;n=n.offsetParent;}
       const cw=el.offsetWidth,ch=el.offsetHeight,cx=ox+cw/2,cy=oy+ch/2;
       const tint=MODULES[ci]&&MODULES[ci].wide?'#E4EBFF':((MODULES[ci]&&MODULES[ci].bg)||'#F2F4F7');
-      const count=Math.round(Math.max(22,Math.min(46,cw*ch/2600)));
+      const count=Math.round(Math.max(22,Math.min(46,cw*ch/2600))*(LITE?0.5:1));
       for(let j=0;j<count;j++){
         const kind=rnd();const ink=rnd()<0.12;
         const size=12+rnd()*20;let w=size,h=size,css;
         if(kind<0.58){css='border-radius:'+crumples[j%4]+';background:radial-gradient(circle at 32% 28%,#fff 0%,'+(ink?'#7D97FF':tint)+' 45%,'+(ink?'#2F5BFF':'#A9B3C4')+' 100%);box-shadow:0 3px 6px rgba(15,20,40,.22),inset -3px -4px 5px rgba(15,20,40,.18),inset 2px 2px 3px rgba(255,255,255,.9)';}
         else if(kind<0.88){w=size*1.4;h=size*0.9;css='clip-path:'+scraps[j%4]+';background:linear-gradient(160deg,#fff 0%,'+tint+' 55%,#B9C2D1 100%);filter:drop-shadow(0 2px 2px rgba(15,20,40,.22))'+(ink?';background-image:repeating-linear-gradient(0deg,transparent 0 4px,rgba(47,91,255,.35) 4px 5px),linear-gradient(160deg,#fff,'+tint+')':'');}
         else{w=size*1.9;h=size*0.62;css='border-radius:999px;background:repeating-linear-gradient(90deg,#fff 0 3px,'+tint+' 3px 6px,#C9D0DC 6px 7px);box-shadow:0 2px 3px rgba(15,20,40,.18),inset 0 -2px 3px rgba(15,20,40,.12)';}
-        const d=document.createElement('div');d.style.cssText='position:absolute;left:0;top:0;width:'+w.toFixed(1)+'px;height:'+h.toFixed(1)+'px;opacity:0;will-change:transform,opacity;'+css;L.appendChild(d);
+        if(LITE)css=css.replace(/;?(box-shadow|filter):[^;]*/g,'');const d=document.createElement('div');d.style.cssText='position:absolute;left:0;top:0;width:'+w.toFixed(1)+'px;height:'+h.toFixed(1)+'px;opacity:0;will-change:transform,opacity;'+css;L.appendChild(d);
         // landing spot: drift around the card's column, then stack into a mound using height bins
         let xe=W*0.5+(cx-W*0.5)*0.85+(rnd()+rnd()+rnd()-1.5)*cw*0.55;xe=Math.max(w,Math.min(W-w,xe));
         const b=Math.round(xe/BW);const top=Math.max(bins[b-1]||0,bins[b],bins[b+1]||0);
@@ -916,9 +981,21 @@ class Component extends DCLogic {
     const pts=fs>0?[q.pts[1],q.pts[0],q.pts[3],q.pts[2]]:q.pts;const m=this.homog(el.offsetWidth,el.offsetHeight,pts);if(!m){el.style.opacity='0';return;}el.style.transform=m;el.style.opacity='1';}
   worldOf(o){const chain=[];let x=o;while(x){chain.unshift(x);x=x.parent;}const M=o.matrixWorld.clone().identity();chain.forEach(n=>{n.updateMatrix();M.multiply(n.matrix);});return M;}
   onScreen(v){const r=v.getBoundingClientRect();return r.bottom>0&&r.top<window.innerHeight;}
-  phoneFallback(){const el=document.querySelector('[data-proj="phone"]'),v=document.querySelector('spline-viewer[url*="SGdEM3csBbrvxlhm"]');if(!el||!v)return;const W=v.clientWidth,H=v.clientHeight;if(!W||!H)return;
+  // Lite mode: the programme card flips with plain CSS 3D, driven by the same scroll maths as the Spline card.
+  cardLite(){const F=document.querySelector('[data-proj="card"]'),B=document.querySelector('[data-proj="cardback"]');if(!F||!B)return;
+    const box=F.parentElement,W=box.clientWidth,H=box.clientHeight;if(!W||!H)return;const r=box.getBoundingClientRect();if(r.bottom<-60||r.top>window.innerHeight+60)return;
+    const t=this.ctilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;
+    const ep=Math.min(2.999,(this.state.p.ev||0)*3),i=Math.floor(ep),f=ep-i;
+    const grow=ease(clamp(f/0.2)),fl=i<2?ease(clamp((f-0.5)/0.3)):0,shr=i<2?ease(clamp((f-0.82)/0.18)):0;
+    const fd=Math.min(2,i%2===0?i:i+1),bd=Math.min(2,i%2===1?i:i+1);if(this.cardF!==fd||this.cardB!==bd){this.cardF=fd;this.cardB=bd;this.setState({cardF:fd,cardB:bd});}
+    const sc=Math.min(W*0.94/856,H*0.86/540)*(0.86+0.14*grow)*(1-0.12*shr),deg=180*(i+fl)+t.sx*14,rx=-t.sy*10;
+    const key=[W,H,deg.toFixed(2),sc.toFixed(4),rx.toFixed(2)].join();if(this.__cl===key)return;this.__cl=key;
+    const tf=a=>'translate('+((W-856)/2).toFixed(1)+'px,'+((H-540)/2).toFixed(1)+'px) perspective(1800px) rotateX('+rx.toFixed(2)+'deg) rotateY('+a.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
+    F.style.transformOrigin=B.style.transformOrigin='50% 50%';F.style.transform=tf(deg);B.style.transform=tf(deg+180);F.style.opacity=B.style.opacity='1';
+    const shx=(t.sx*30+Math.sin(deg*Math.PI/180)*38).toFixed(1)+'%';F.style.setProperty('--sx',shx);B.style.setProperty('--sx',shx);}
+  phoneFallback(){const el=document.querySelector('[data-proj="phone"]'),v=el&&el.parentElement;if(!el||!v)return;const W=v.clientWidth,H=v.clientHeight;if(!W||!H)return;const fk=W+'x'+H;if(el.__fk===fk)return;el.__fk=fk;
     if(!el.__ar){el.__ar=1;el.style.height=PHONE_SCREEN_H+'px';}const m=this.homog(el.offsetWidth,el.offsetHeight,PHONE_QUAD.map(([x,y])=>[W/2+x*H,y*H]));if(m){el.style.transform=m;el.style.opacity='1';}}
-  project3D(){const sp=this.sp;if(!sp)return;if(!sp.phone)this.phoneFallback();const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
+  project3D(){const sp=this.sp;if(!sp)return;if(!sp.phone)this.phoneFallback();if(LITE)this.cardLite();const now=performance.now();['phone','card','post'].forEach(k=>sp[k]&&this.keepZoom(sp[k].app));(this.phoneCams||[]).forEach(c=>{if(c.__gz&&Math.abs(c.zoom-c.__gz)>1e-4){c.zoom=c.__gz;c.updateProjectionMatrix();}});
     if(sp.phone&&sp.phone.v.isConnected&&this.onScreen(sp.phone.v)){const P=sp.phone,t=this.tilt;t.sx+=(t.x-t.sx)*0.08;t.sy+=(t.y-t.sy)*0.08;const K=PHONE_POSE,pc=this.phoneCam;if(pc){pc.cam.position.set(pc.p.x+K.camX,pc.p.y+K.camY,K.camZ);pc.cam.quaternion.copy(pc.q);if(pc.cam.zoom!==pc.z){pc.cam.zoom=pc.z;pc.cam.updateProjectionMatrix();}}if(P.pos)P.root.position.copy(P.pos);P.root.rotation.y=P.ry+K.ry+t.sx*0.22;P.root.rotation.x=P.rx+K.rx+t.sy*0.14;if(P.rz===undefined)P.rz=P.root.rotation.z;P.root.rotation.z=P.rz+K.rz;P.root.updateMatrix();P.root.updateMatrixWorld(true);
       let best=null,ba=0;const W=P.v.clientWidth,H=P.v.clientHeight;P.screens.forEach(m=>{let ok=true,o=m;while(o){if(o.visible===false){ok=false;break;}o=o.parent;}if(!ok)return;const q=this.faceQuad(P.app,m,W,H);if(q&&Math.abs(q.area)>ba){ba=Math.abs(q.area);best=m;}});
       if(!best&&(!this.__fs||now-this.__fs>1000)){this.__fs=now;this.findScreens&&this.findScreens();}
@@ -1032,7 +1109,7 @@ class Component extends DCLogic {
       row.map((t,i)=>h('span',{key:i,style:{display:'flex',alignItems:'center',gap:10}},h('span',{style:{width:6,height:6,borderRadius:'50%',background:'#E5484D'}}),t)));
   }
   renderVals(){
-    const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=P.enable3D??true;
+    const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=(P.enable3D??true)&&!LITE;
     const rt=REG.find(r=>r.id===s.regType)||REG[0];const mr=REG.find(r=>r.id===s.modal);const f=s.form;
     const [A,B]=this.setPts(s.ends);
     const ab=v=>v===undefined?{v:'·',bg:'rgba(255,255,255,.06)',fg:'rgba(255,255,255,.3)'}:{v:String(v),bg:v==='X'||v===10?'#FFD43B':v===9?'#FFE580':v>=7?'#E5484D':'#3FA9F5',fg:'#0B0D12'};
@@ -1055,7 +1132,8 @@ class Component extends DCLogic {
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
       overviewRef:this.ref('overview'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
-      navItems:nav.map(([label,go,k])=>({label,go,bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
+      menuOpen:s.menuOpen?'1':'0',menuIcon:s.menuOpen?'close':'menu',toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
+      navItems:nav.map(([label,go,k])=>({label,go:(...a)=>{this.setState({menuOpen:false});return go(...a);},bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
       goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>this.go('tv'),
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
@@ -1077,7 +1155,7 @@ class Component extends DCLogic {
       _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
       photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.webm'),momentVideo:this.lazyVideo('mv','assets/moment.webm'),
       ...this.newVals(),
-      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&show3D,
+      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&show3D,botLite:!show3D&&(P.showChatbot??true),
       vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
         return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
           tf:'rotateY('+(-ang).toFixed(2)+'deg) translateZ('+(side===0?(-120*k).toFixed(1):(-40-160*k).toFixed(1))+'px) translateY('+(60*k).toFixed(1)+'px)',op:(1-0.8*k).toFixed(3),
