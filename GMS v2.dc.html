@@ -19,11 +19,16 @@ var sc=document.createElement('script');sc.type='module';sc.src=V;h.appendChild(
 </script>
 <style>
 html,body{background:#F4F5F7}
-@keyframes gmsSway{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.4deg)}}
 @keyframes gmsCloud{0%{transform:translate3d(-3%,1%,0) scale(1)}100%{transform:translate3d(3%,-2%,0) scale(1.08)}}
+@keyframes gmsLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes gmsCue{0%{transform:scaleY(0);opacity:1}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+@keyframes gmsMenuIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+[data-regmenu]{opacity:0;visibility:hidden;transform:translateY(-8px) scale(.985);transform-origin:50% 0;pointer-events:none;transition:opacity .2s ease,transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s linear .32s}
+[data-regmenu][data-open="1"]{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
+[data-regmenu][data-open="1"] [data-rg]{animation:gmsMenuIn .42s cubic-bezier(.2,.8,.2,1) both}
+[data-regmenu][data-open="1"] [data-rg]:nth-child(2){animation-delay:.05s}[data-regmenu][data-open="1"] [data-rg]:nth-child(3){animation-delay:.1s}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 @media (max-width:900px){
- [data-r=brief-grid]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;padding:84px 18px 28px!important}
  [data-r=navlinks]{display:none!important;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;align-items:stretch!important;gap:2px!important;padding:8px;border-radius:24px;background:rgba(255,255,255,.97);box-shadow:0 24px 60px rgba(15,20,40,.16)}
  [data-r=navlinks][data-open="1"]{display:flex!important}
  [data-r=navlinks] button{padding:13px 16px!important;font-size:15px!important}
@@ -41,25 +46,29 @@ html,body{background:#F4F5F7}
  [data-r=tiles-sticky]{padding:80px 16px 18px!important}
  [data-r=tiles-grid]{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
  [data-r=foot-grid]{grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
+ [data-r=about-section]{padding:80px 18px 72px!important}
+ [data-r=about-head]{grid-template-columns:minmax(0,1fr)!important;gap:16px!important}
+ [data-r=about-grid]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+ [data-r=about-grid]>div:last-child{grid-column:1 / -1}
+ [data-r=regmenu-grid]{grid-template-columns:minmax(0,1fr)!important}
+ [data-regmenu]{padding:16px!important;border-radius:24px!important}
  [data-r=form-grid]{grid-template-columns:minmax(0,1fr)!important}
  [data-r=grid4]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  [data-r=admin-row]{grid-template-columns:minmax(0,1fr) auto!important;row-gap:6px!important}
 }
-/* portrait screens (matches heroFrame's W/H < 1.1): keycap panel up top, pass hangs bottom-centre */
+/* portrait screens (matches heroFrame's W/H < 1.1): keycap scene on top, editorial copy below */
 @media (max-aspect-ratio:11/10){
- [data-r=hero]{height:460vh!important}
- [data-pass-wrap]{left:50%!important;top:auto!important;bottom:62px!important;transform:translateX(-50%)!important;width:min(372px,calc(100vw - 28px))!important}
-}
-@media (max-width:700px){
- [data-pass] h1{font-size:26px!important}
- [data-r=pass-code],[data-r=pass-hint]{display:none!important}
- [data-r=brief-grid]{grid-template-columns:minmax(0,1fr)!important;padding:80px 16px 24px!important;gap:12px!important}
+ [data-r=hero]{height:auto!important;min-height:100svh!important}
+ [data-hero-scene]{bottom:auto!important;height:50svh!important}
+ [data-r=hero-copy]{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:auto!important;max-width:640px;margin:0 auto;padding:calc(50svh + 8px) 20px 104px!important;gap:18px!important}
+ [data-r=hero-cue]{display:none!important}
 }
 @media (max-width:600px){
  [data-r=nav]{padding:6px 6px 6px 14px!important}
  [data-r=admin-btn],[data-r=login-btn]{padding:10px 13px!important;font-size:13px!important}
  [data-r=tile-desc],[data-r=tiles-p],[data-r=cms-chips]{display:none!important}
  [data-r=ev-p]{display:none!important}
+ [data-r=about-grid]{grid-template-columns:minmax(0,1fr)!important}
  [data-r=tile-title]{font-size:clamp(14px,4.1vw,17px)!important;letter-spacing:-.03em!important}
  [data-r=bot]{transform:scale(.78);transform-origin:100% 100%;right:6px!important}
 }
@@ -74,7 +83,7 @@ html,body{background:#F4F5F7}
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,location_on,medical_services,menu,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_downward,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,location_on,medical_services,menu,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
 <script src="./image-slot.js"></script>
 <style>
 @keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -102,7 +111,7 @@ html{scroll-behavior:smooth}
   </button>
   <div data-r="navlinks" data-open="{{ menuOpen }}" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-      <button onClick="{{ n.go }}" style="all:unset;cursor:pointer;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }}">{{ n.label }}</button>
+      <button onClick="{{ n.go }}" onMouseEnter="{{ n.enter }}" onMouseLeave="{{ n.leave }}" aria-expanded="{{ n.exp }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }};transition:background .2s ease,color .2s ease">{{ n.label }}<span style="font-family:'Material Symbols Rounded';font-size:18px;width:{{ n.cw }};overflow:hidden;transition:transform .3s ease;transform:rotate({{ n.rot }})">expand_more</span></button>
     </sc-for>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
@@ -110,133 +119,107 @@ html{scroll-behavior:smooth}
     <button data-r="admin-btn" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
     <button data-r="login-btn" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
+  <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:28px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid #E6E9EF;box-shadow:0 30px 80px rgba(15,20,40,.16);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#2F5BFF">REGISTRATION · 12 WAYS TO TAKE PART</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Series.</span></div>
+      <button onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.1);font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:#F3F5F9">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_downward</span></button>
+    </div>
+    <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+      <sc-for list="{{ regGroups }}" as="g" hint-placeholder-count="3">
+        <div data-rg style="display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:20px;background:#F5F7FA">
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C;padding:6px 8px 6px">{{ g.title }}</span>
+          <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:10px;border-radius:14px;transition:background .2s ease,box-shadow .2s ease" style-hover="background:#fff;box-shadow:0 8px 22px rgba(15,20,40,.08)">
+              <span style="width:40px;height:40px;border-radius:12px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:21px;box-shadow:inset 0 0 0 1px #E6E9EF">{{ r.icon }}</span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:#0B0D12">{{ r.name }}</span><span style="font-size:12px;color:#5B6270;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
+              <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#8A909C">arrow_forward</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
 </nav>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <main data-screen-label="Home">
 
-  <section ref="{{ overviewRef }}" data-r="hero" style="position:relative;height:360vh;background:#ECECEE">
-    <div data-hero-sticky style="position:sticky;top:0;height:100vh;overflow:hidden">
-      <div style="position:absolute;inset:0">
-        <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/z-WVPAZqtr1PGKNv/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+  <section ref="{{ overviewRef }}" data-r="hero" style="position:relative;height:100vh;min-height:640px;overflow:hidden;background:#ECECEE">
+    <div data-hero-scene style="position:absolute;inset:0;will-change:transform">
+      <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/z-WVPAZqtr1PGKNv/scene.splinecode" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import>
+    </div>
+    <div data-hero-copy data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);top:50%;transform:translateY(-44%);z-index:3;width:min(560px,42vw);display:flex;flex-direction:column;gap:22px;will-change:transform,opacity">
+      <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#4A505C;animation:gmsRise .8s cubic-bezier(.2,.8,.2,1) both"><span style="display:flex;align-items:center;gap:8px;color:#1C8A53"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>REGISTRATION OPEN</span><span style="opacity:.4">/</span><span>{{ clock }} IST</span><span style="opacity:.4">/</span><span>GUJARAT, INDIA</span></span>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,5.4vw,92px);line-height:.9;letter-spacing:-.055em;color:#0B0D12;animation:gmsRise .9s .08s cubic-bezier(.2,.8,.2,1) both">Hyundai World Archery Para <span style="color:#2F5BFF;font-weight:400">Series</span></h1>
+      <div style="height:1px;max-width:520px;background:linear-gradient(90deg,rgba(11,13,18,.22),rgba(11,13,18,0));transform-origin:0 50%;animation:gmsLine 1.1s .25s cubic-bezier(.2,.8,.2,1) both"></div>
+      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise .9s .3s cubic-bezier(.2,.8,.2,1) both">
+        <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#8A909C">{{ f.k }}</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#0B0D12">{{ f.v }}</span></div>
+        </sc-for>
       </div>
-      <div data-pass-wrap style="position:absolute;left:clamp(18px,7vw,120px);top:52%;z-index:3;width:min(372px,calc(100vw - 36px));transform:translateY(-50%);pointer-events:none">
-        <div data-lanyard style="position:absolute;left:50%;bottom:calc(100% - 22px);width:24px;height:70vh;margin-left:-12px;border-radius:4px;background:linear-gradient(90deg,#1A3FD6,#2F5BFF 45%,#5B7CFF 55%,#1A3FD6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);overflow:hidden">
-          <div style="position:absolute;left:0;right:0;bottom:30px;top:0;background:repeating-linear-gradient(180deg,transparent 0 46px,rgba(255,255,255,.85) 46px 47px,transparent 47px 74px);opacity:.35"></div>
-          <span style="position:absolute;left:50%;bottom:-2px;width:34px;height:30px;margin-left:-17px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#C9CED8,#8E95A3);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)"></span>
-        </div>
-        <div data-pass-sway style="animation:gmsSway 7s ease-in-out infinite;transform-origin:50% -60px">
-          <div data-pass style="position:relative;pointer-events:auto;border-radius:28px;background:linear-gradient(180deg,#FFFFFF 0%,#FAFBFD 100%);border:1px solid #E3E6EB;box-shadow:inset 0 1px 0 #fff,0 2px 6px rgba(15,20,40,.06),0 36px 80px rgba(15,20,40,.18);overflow:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1)" style-hover="transform:rotate(-1deg) translateY(-4px)">
-            <span style="position:absolute;left:50%;top:12px;width:62px;height:10px;margin-left:-31px;border-radius:10px;background:rgba(11,13,18,.13);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)"></span>
-            <div style="padding:34px 24px 18px;display:flex;flex-direction:column;gap:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:#4A505C">
-                <span>ACCREDITATION · 2026</span>
-                <span style="display:flex;align-items:center;gap:6px;color:#1C8A53"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>OPEN</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:12px">
-                <span style="width:46px;height:46px;flex:none;border-radius:14px;background:#0B0D12;display:grid;place-items:center;box-shadow:0 8px 18px rgba(11,13,18,.25)"><span style="width:26px;height:26px;border-radius:50%;border:3px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:8px;height:8px;border-radius:50%;background:#2F5BFF"></span></span></span>
-                <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:10px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PARA ARCHERY · WORLD SERIES</span><span style="font-family:'JetBrains Mono';font-size:11px;color:#5B6270">{{ clock }} IST</span></div>
-              </div>
-              <h1 style="margin:2px 0 0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,2.7vw,38px);line-height:.98;letter-spacing:-.045em">Hyundai World Archery Para <span style="color:#2F5BFF;font-weight:400">Series</span></h1>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                <div style="display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:#F4F6F9;border:1px solid #EBEEF2"><span style="font-size:9.5px;font-weight:700;letter-spacing:.1em;color:#8A909C">DATES</span><span style="font-weight:700;font-size:14px">05 — 09 Sep 2026</span></div>
-                <div style="display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:#F4F6F9;border:1px solid #EBEEF2"><span style="font-size:9.5px;font-weight:700;letter-spacing:.1em;color:#8A909C">VENUE</span><span style="display:flex;align-items:center;gap:4px;font-weight:700;font-size:14px"><span style="font-family:'Material Symbols Rounded';font-size:16px;color:#2F5BFF">location_on</span>Ahmedabad</span></div>
-              </div>
-              <div data-r="pass-meta" style="display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:#5B6270"><span>GUJARAT · INDIA</span><span>3 DIVISIONS · 15 EVENTS</span></div>
-              <div data-r="pass-code" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
-                <span style="display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:12px;background:#EEF2FF;color:#1A3FD6"><span style="font-family:'Material Symbols Rounded';font-size:16px">target</span><span style="font-size:11px;font-weight:700">Recurve</span></span>
-                <span style="display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:12px;background:#FBF1DF;color:#8A5C12"><span style="font-family:'Material Symbols Rounded';font-size:16px">adjust</span><span style="font-size:11px;font-weight:700">Compound</span></span>
-                <span style="display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:12px;background:#E4F3EB;color:#1F6B4A"><span style="font-family:'Material Symbols Rounded';font-size:16px">accessible_forward</span><span style="font-size:11px;font-weight:700">W1</span></span>
-              </div>
-            </div>
-            <div style="position:relative;height:0;border-top:2px dashed rgba(11,13,18,.14);margin:0 18px"><span style="position:absolute;left:-30px;top:-11px;width:20px;height:20px;border-radius:50%;background:rgba(11,13,18,.07)"></span><span style="position:absolute;right:-30px;top:-11px;width:20px;height:20px;border-radius:50%;background:rgba(11,13,18,.07)"></span></div>
-            <div style="padding:16px 24px 20px;display:flex;flex-direction:column;gap:12px;background:#F5F7FA">
-              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
-                <sc-for list="{{ passCd }}" as="u" hint-placeholder-count="4">
-                  <div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;flex:1"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.03em;line-height:1">{{ u.v }}</span><span style="font-size:9px;font-weight:700;letter-spacing:.12em;color:#8A909C">{{ u.l }}</span></div>
-                </sc-for>
-              </div>
-              <div style="display:flex;gap:8px">
-                <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:12px 10px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:13px;box-shadow:0 10px 22px rgba(47,91,255,.28);transition:transform .3s ease" style-hover="transform:translateY(-2px)">Register as Athlete</button>
-                <button onClick="{{ regStaff }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:12px 10px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:13px;transition:transform .3s ease" style-hover="transform:translateY(-2px)">Support Staff</button>
-              </div>
-              <span data-r="pass-hint" style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;font-weight:600;color:#5B6270"><span style="font-family:'Material Symbols Rounded';font-size:16px;animation:gmsBob 1.6s ease-in-out infinite">expand_more</span>Scroll to open the full brief</span>
-            </div>
-          </div>
-        </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise .9s .42s cubic-bezier(.2,.8,.2,1) both">
+        <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 30px rgba(47,91,255,.28);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 36px rgba(47,91,255,.34)">Register as Athlete</button>
+        <button onClick="{{ regStaff }}" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:#fff;color:#0B0D12;border:1px solid rgba(11,13,18,.1);font-weight:600;font-size:15px;transition:transform .3s cubic-bezier(.2,.8,.2,1)" style-hover="transform:translateY(-2px)">Support Staff</button>
+        <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:#2F5BFF">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
-      <div data-brief style="position:absolute;inset:0;z-index:4;visibility:hidden;pointer-events:none;background:linear-gradient(180deg,#FFFFFF 0%,#F4F6FA 100%);will-change:clip-path">
-        <div data-brief-inner data-r="brief-grid" style="position:relative;max-width:1260px;margin:0 auto;padding:92px 32px 36px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr) minmax(0,1.1fr);gap:16px;align-items:start">
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div data-rv style="display:flex;flex-direction:column;gap:10px">
-              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#2F5BFF">ACCREDITATION BRIEF · 2026</span>
-              <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.2vw,46px);line-height:.98;letter-spacing:-.045em">Hyundai World Archery Para Series</h2>
-              <p style="margin:0;font-size:14.5px;line-height:1.6;color:#4A505C">The world's para archers come to Ahmedabad for five days of Recurve Open, Compound Open and W1 competition: ranking rounds, head-to-head eliminations and medal finals, scored live from the field and streamed to fans everywhere.</p>
+    </div>
+    <div data-r="hero-cue" aria-hidden="true" style="position:absolute;left:50%;bottom:74px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;transform:translateX(-50%);font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:#8A909C;pointer-events:none"><span>SCROLL</span><span style="width:1px;height:28px;background:linear-gradient(180deg,rgba(11,13,18,.35),rgba(11,13,18,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(11,13,18,.06);background:rgba(255,255,255,.82);overflow:hidden;padding:14px 0">{{ ticker }}</div>
+  </section>
+
+  <section data-r="about-section" style="position:relative;background:#FFFFFF;padding:120px 32px 100px">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:36px">
+      <div data-r="about-head" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:end">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">ABOUT THE EVENT</span>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(36px,4.4vw,64px);letter-spacing:-.05em;line-height:.98">Five days. Three divisions. One range in Ahmedabad.</h2>
+        </div>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#4A505C">The world's para archers come to Ahmedabad for five days of Recurve Open, Compound Open and W1 competition: ranking rounds, head-to-head eliminations and medal finals, scored live from the field and streamed to fans everywhere.</p>
+      </div>
+      <div data-r="about-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:stretch">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:26px;background:#F6F7FA;border:1px solid #ECEEF2">
+            <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C">VENUE</span>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;color:#8A909C">City</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;letter-spacing:-.02em">Ahmedabad</span></div>
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;color:#8A909C">State</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;letter-spacing:-.02em">Gujarat</span></div>
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;color:#8A909C">Country</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;letter-spacing:-.02em">India</span></div>
             </div>
-            <div data-rv style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:#fff;border:1px solid #E6E9EF">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C">VENUE</span>
-              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
-                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:10px;color:#8A909C">City</span><span style="font-weight:700;font-size:15px">Ahmedabad</span></div>
-                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:10px;color:#8A909C">State</span><span style="font-weight:700;font-size:15px">Gujarat</span></div>
-                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:10px;color:#8A909C">Country</span><span style="font-weight:700;font-size:15px">India</span></div>
-              </div>
-              <p style="margin:0;font-size:12.5px;line-height:1.55;color:#5B6270">Gujarat's largest city hosts the Series with the Gujarat State Archery Association and the Sports Authority of Gujarat, sanctioned by World Archery and the Archery Association of India.</p>
-            </div>
-            <div data-rv style="display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:22px;background:#0B0D12;color:#fff">
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.55)"><span>05 — 09 SEPTEMBER 2026</span><span style="display:flex;align-items:center;gap:6px;color:#7BE0A6"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>REGISTRATION OPEN</span></div>
-              <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
-                <sc-for list="{{ passCd }}" as="u" hint-placeholder-count="4">
-                  <div style="display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:14px;background:rgba(255,255,255,.07)"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:28px;letter-spacing:-.03em;line-height:1">{{ u.v }}</span><span style="font-size:9px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.5)">{{ u.l }}</span></div>
-                </sc-for>
-              </div>
-              <span style="font-family:'JetBrains Mono';font-size:11px;color:rgba(255,255,255,.55)">Ahmedabad time · {{ clock }} IST</span>
-            </div>
+            <p style="margin:0;font-size:13px;line-height:1.6;color:#5B6270">Gujarat's largest city hosts the Series with the Gujarat State Archery Association and the Sports Authority of Gujarat, sanctioned by World Archery and the Archery Association of India.</p>
           </div>
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div data-rv style="display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:22px;background:#fff;border:1px solid #E6E9EF">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C;margin-bottom:4px">FIVE DAYS OF COMPETITION</span>
-              <sc-for list="{{ briefDays }}" as="d" hint-placeholder-count="5">
-                <div style="display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;align-items:center;padding:9px 0;border-top:1px solid #F0F2F5">
-                  <span style="display:flex;flex-direction:column;align-items:center;padding:6px 0;border-radius:12px;background:{{ d.bg }};color:{{ d.fg }}"><span style="font-family:'JetBrains Mono';font-size:9px;letter-spacing:.08em;opacity:.75">DAY</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;line-height:1">{{ d.n }}</span></span>
-                  <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:700;font-size:14px">{{ d.date }}</span><span style="font-size:12px;color:#5B6270;line-height:1.4">{{ d.note }}</span></span>
-                </div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:26px;background:#0B0D12;color:#fff;flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:10.5px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.55)"><span>05 — 09 SEPTEMBER 2026</span><span style="display:flex;align-items:center;gap:6px;color:#7BE0A6"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>OPEN</span></div>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ passCd }}" as="u" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:2px;padding:12px 10px;border-radius:16px;background:rgba(255,255,255,.07)"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;letter-spacing:-.03em;line-height:1">{{ u.v }}</span><span style="font-size:9px;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.5)">{{ u.l }}</span></div>
               </sc-for>
             </div>
-            <div data-rv style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:#fff;border:1px solid #E6E9EF">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C">THE ROAD TO THE FINAL SHOT</span>
-              <div style="display:flex;flex-wrap:wrap;gap:6px">
-                <sc-for list="{{ briefSteps }}" as="t" hint-placeholder-count="5">
-                  <span style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:{{ t.bg }};color:{{ t.fg }};font-size:12px;font-weight:600"><span style="font-family:'JetBrains Mono';font-size:10px;opacity:.7">{{ t.n }}</span>{{ t.title }}<span style="font-family:'JetBrains Mono';font-size:10px;opacity:.6">{{ t.when }}</span></span>
-                </sc-for>
-              </div>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div data-rv style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:#fff;border:1px solid #E6E9EF">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C">3 DIVISIONS · 15 MEDAL EVENTS</span>
-              <sc-for list="{{ briefCats }}" as="c" hint-placeholder-count="3">
-                <div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:16px;background:{{ c.tint }}">
-                  <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:{{ c.color }}"><span style="font-family:'Material Symbols Rounded';font-size:18px">{{ c.icon }}</span>{{ c.name }}<span style="margin-left:auto;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;opacity:.8">{{ c.sub }}</span></span>
-                  <div style="display:flex;flex-wrap:wrap;gap:5px">
-                    <sc-for list="{{ c.events }}" as="e" hint-placeholder-count="5">
-                      <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.85);font-size:11.5px;font-weight:600;color:#0B0D12;transition:background .25s ease" style-hover="background:#fff">{{ e.name }}</button>
-                    </sc-for>
-                  </div>
-                </div>
-              </sc-for>
-            </div>
-            <div data-rv style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:#fff;border:1px solid #E6E9EF">
-              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C">WHO CAN REGISTER</span>
-              <div style="display:flex;flex-wrap:wrap;gap:6px">
-                <sc-for list="{{ briefRoles }}" as="r" hint-placeholder-count="12">
-                  <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:7px 11px 7px 8px;border-radius:999px;background:#F3F5F9;font-size:12px;font-weight:600;transition:background .25s ease,color .25s ease" style-hover="background:#2F5BFF;color:#fff"><span style="font-family:'Material Symbols Rounded';font-size:16px">{{ r.icon }}</span>{{ r.name }}</button>
-                </sc-for>
-              </div>
-            </div>
+            <span style="margin-top:auto;font-family:'JetBrains Mono';font-size:11px;color:rgba(255,255,255,.55)">Ahmedabad time · {{ clock }} IST</span>
           </div>
         </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:26px;background:#F6F7FA;border:1px solid #ECEEF2">
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C;margin-bottom:6px">FIVE DAYS OF COMPETITION</span>
+          <sc-for list="{{ briefDays }}" as="d" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:center;padding:11px 0;border-top:1px solid #E6E9EF">
+              <span style="display:flex;flex-direction:column;align-items:center;padding:7px 0;border-radius:14px;background:{{ d.bg }};color:{{ d.fg }}"><span style="font-family:'JetBrains Mono';font-size:9px;letter-spacing:.08em;opacity:.75">DAY</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;line-height:1">{{ d.n }}</span></span>
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-weight:700;font-size:15px">{{ d.date }}</span><span style="font-size:12.5px;color:#5B6270;line-height:1.45">{{ d.note }}</span></span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:26px;background:#F6F7FA;border:1px solid #ECEEF2">
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C;margin-bottom:4px">3 DIVISIONS · 15 MEDAL EVENTS</span>
+          <sc-for list="{{ briefCats }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:{{ c.tint }}">
+              <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:{{ c.color }}"><span style="font-family:'Material Symbols Rounded';font-size:19px">{{ c.icon }}</span>{{ c.name }}<span style="margin-left:auto;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;opacity:.8">{{ c.sub }}</span></span>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ c.events }}" as="e" hint-placeholder-count="5">
+                  <button onClick="{{ e.pick }}" style="all:unset;cursor:pointer;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.88);font-size:12px;font-weight:600;color:#0B0D12;transition:background .25s ease,transform .25s ease" style-hover="background:#fff;transform:translateY(-1px)">{{ e.name }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
       </div>
-      <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(11,13,18,.06);background:rgba(255,255,255,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:hidden;padding:14px 0">{{ ticker }}</div>
     </div>
   </section>
 
@@ -776,7 +759,7 @@ html{scroll-behavior:smooth}
       </form>
     </div>
   </sc-if>
-  <div data-r="bot" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px">
+  <div data-r="bot" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;transition:opacity .25s ease;opacity:{{ botOp }};pointer-events:{{ botPe }}">
     <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
       <div style="position:absolute;inset:0;pointer-events:none">
         <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/wMuw2CRsxbceMWK0/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="120px,120px"></x-import>
@@ -852,10 +835,11 @@ const SEED=[
 {id:'GMS-26-0362',name:'Dr. Meera Shah',type:'Medical',status:'Rejected'}];
 const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E8EEFF','#2F5BFF'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
 const EVENT_START=new Date('2026-09-05T08:00:00+05:30').getTime();
-// Hero accreditation pass: grows to the full-screen brief, holds, then shrinks back (fractions of the hero's scroll).
-const HERO_T={open0:0.06,openDur:0.24,holdScroll0:0.37,close0:0.76,closeDur:0.18};
 // Programme cubes: category a (0-2) x event b (0-4); grouping by a+b gives rows of 1-2-3-3-3-2-1 cubes;
 // they lock into that diamond one by one, top row first.
+// Registration mega-menu groups (role ids from REG).
+const REG_GROUPS=[['COMPETITORS & TEAMS',['athlete','staff','entity','lo']],['OFFICIALS & MEDICAL',['official','medical','nada','gov']],['MEDIA & SERVICES',['media','volunteer','service','ema']]];
+const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const CUBE_SKIN=[{side:'linear-gradient(145deg,#5B84FF,#1A34B8)',top:'linear-gradient(145deg,#A9BEFF,#4C78FF)'},
 {side:'linear-gradient(145deg,#E8BE6A,#9C6B17)',top:'linear-gradient(145deg,#F6DFA8,#D6A74C)'},
 {side:'linear-gradient(145deg,#52C792,#17603F)',top:'linear-gradient(145deg,#B2F2D2,#3DA676)'}];
@@ -894,6 +878,9 @@ class Component extends DCLogic {
   ref(k){return this.refs[k]||(this.refs[k]=React.createRef());}
   componentDidMount(){
     this.target={hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
+    this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
+    this.onDown=e=>{if(this.state.regOpen&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false});};
+    window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
     this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.measure();
@@ -920,9 +907,12 @@ class Component extends DCLogic {
       card:{name:cc.name,icon:cc.icon,num:pad(ci+1)+' / 03',sub:cc.outdoor?'OUTDOOR':'INDOOR',events:cc.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(cc.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))},
       passCd:[[Math.floor(cdl/864e5),'DAYS'],[Math.floor(cdl/36e5)%24,'HRS'],[Math.floor(cdl/6e4)%60,'MIN'],[Math.floor(cdl/1e3)%60,'SEC']].map(([v,l])=>({v:pad(v),l})),
       briefDays:DAYS.map(([n,date,dow],i)=>({n,date:dow+' '+date,note:i===0?DAY1.length+' sessions from '+DAY1[0][0]+' IST: Compound Open, W1 and Recurve Open':'Session timings published after the draw',bg:i===0?'#2F5BFF':'#F1F3F7',fg:i===0?'#fff':'#0B0D12'})),
-      briefSteps:STEPS.map((t,i)=>({n:pad(i+1),title:t.title,when:t.when,bg:i===0?'#E7F7EE':'#F3F5F9',fg:i===0?'#1C8A53':'#0B0D12'})),
       briefCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[0].replace(c.name+' ',''),pick:()=>this.startReg('athlete',e[2])}))})),
-      briefRoles:REG.map(r=>({name:r.name,icon:r.icon,go:()=>this.startReg(r.id)})),
+      heroFacts:[['DATES','05 — 09 Sep 2026'],['HOST CITY','Ahmedabad'],['DIVISIONS','3'],['MEDAL EVENTS','15']].map(([k,v])=>({k,v})),
+      heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
+      regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen?'0':'1',botPe:s.regOpen||s.menuOpen?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
+      regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},
+      regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
       evStage:pe<CUBE_T.split0?'THE DIAMOND · 15 EVENTS':pe<CUBE_T.split0+0.3?'SPLITTING INTO A 4 × 4':pe<CUBE_T.cloud0?(LITE?'EVERY EVENT · TAP TO REGISTER':'EVERY EVENT · HOVER TO FLIP'):'SEE YOU IN AHMEDABAD',
       cubes:CUBES.map((q,k)=>({num:pad(q.b+1),name:q.ev[0].replace(q.cat.name+' ',''),full:q.ev[0],cat:q.cat.name.toUpperCase(),color:q.cat.color,gender:q.ev[1],code:q.ev[2],side:CUBE_SKIN[q.a].side,top:CUBE_SKIN[q.a].top,
         enter:()=>{this.cubeHover=k;},leave:()=>{if(this.cubeHover===k)this.cubeHover=-1;},go:()=>this.startReg('athlete',q.ev[2])})),
@@ -959,11 +949,11 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=el.canPlayType('video/webm')?src:src.replace(/\.webm$/,'.mp4');const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.revealT);this.io&&this.io.disconnect();clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
-  measure(){this.target={hero:this.prog('overview'),steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg')};
+  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   frame(){
@@ -972,7 +962,7 @@ class Component extends DCLogic {
     if(moved)this.setState({p:n});
     if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
       this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
-    this.heroFrame();this.heroAnim();this.cubesAnim();this.paperFall();
+    this.heroFrame();this.heroParallax();this.cubesAnim();this.paperFall();
     if(this.ball){this.smx+=(this.mx-this.smx)*0.07;this.ball.obj.position.x=this.ball.x+this.smx*this.ball.amp*1.5;}
   }
   // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
@@ -1028,27 +1018,19 @@ class Component extends DCLogic {
       h.boxes=ms.map(m=>{m.updateMatrixWorld(true);const g=m.geometry;if(!g.boundingBox)g.computeBoundingBox();return {name:m.name,b:g.boundingBox.clone().applyMatrix4(m.matrixWorld)};});}
     const key=W+'x'+H;if(h.key!==key){h.key=key;const all=h.boxes.reduce((a,x)=>a?a.union(x.b):x.b.clone(),null),right=(h.boxes.find(x=>x.name==='Rectangle 2')||h.boxes[0]).b;
       const bh=all.max.y-all.min.y;let z,cx,tx=W/2,ty=H/2;
-      if(W/H>=1.1){const pw=document.querySelector('[data-pass-wrap]'),vr=v.getBoundingClientRect(),pr=pw&&pw.getBoundingClientRect();
-        const left=pr?Math.min(W*0.45,pr.right-vr.left+28):W*0.06,room=W-left-Math.max(24,W*0.03);
-        z=Math.min(room/(all.max.x-all.min.x),H*0.78/bh);cx=(all.min.x+all.max.x)/2;tx=left+room/2;ty=H*0.52;}
-      else{z=Math.min(W*0.96/(right.max.x-right.min.x),H*0.4/bh);cx=(right.min.x+right.max.x)/2;ty=H*0.25;}
+      const cp=document.querySelector('[data-hero-copy]'),vr=v.getBoundingClientRect(),pr=cp&&cp.getBoundingClientRect(),beside=pr&&pr.top<vr.bottom-40&&pr.right<vr.right-120;
+      if(W/H>=1.1){const left=beside?Math.min(W*0.5,pr.right-vr.left+24):W*0.04,room=W-left-Math.max(24,W*0.03);
+        z=Math.min(room/(all.max.x-all.min.x),H*0.8/bh);cx=(all.min.x+all.max.x)/2;tx=left+room/2;ty=H*0.5;}
+      else{z=Math.min(W*0.8/(right.max.x-right.min.x),H*0.74/bh);cx=(right.min.x+right.max.x)/2;ty=H*0.54;}
       const cy=(all.min.y+all.max.y)/2;h.pose={x:cx-(tx-W/2)/z,y:cy+(ty-H/2)/z,z};}
     // the scene's orbit controls keep aiming the camera at their target, so pan the target with the camera
     const P=h.pose,oc=app._controls&&app._controls.orbitControls,tg=oc&&oc.target;
     if(cam.zoom!==P.z||cam.position.x!==P.x||cam.position.y!==P.y||(tg&&(tg.x!==P.x||tg.y!==P.y))){cam.zoom=P.z;cam.position.x=P.x;cam.position.y=P.y;if(tg){tg.x=P.x;tg.y=P.y;}cam.updateProjectionMatrix();cam.updateMatrixWorld();}}
-  // Hero: the accreditation pass grows into the full-screen brief (clip-path from the pass's box), holds, then shrinks back.
-  heroAnim(){const box=document.querySelector('[data-hero-sticky]');if(!box)return;const B=box.querySelector('[data-brief]'),P=box.querySelector('[data-pass]'),Y=box.querySelector('[data-lanyard]'),I=box.querySelector('[data-brief-inner]');if(!B||!P)return;
-    const p=this.state.p.hero||0,o=ease(clamp((p-HERO_T.open0)/HERO_T.openDur))*(1-ease(clamp((p-HERO_T.close0)/HERO_T.closeDur)));
-    const W=box.clientWidth,H=box.clientHeight,key=o.toFixed(4)+'|'+p.toFixed(4)+'|'+W+'x'+H;if(this.__hk===key)return;this.__hk=key;
-    if(o<=0.0005){if(B.style.visibility!=='hidden'){B.style.visibility='hidden';B.style.pointerEvents='none';P.style.opacity='1';if(Y)Y.style.opacity='1';}this.heroPause(false);return;}
-    const br=box.getBoundingClientRect(),pr=P.getBoundingClientRect(),k=1-o;
-    B.style.visibility='visible';B.style.clipPath='inset('+((pr.top-br.top)*k).toFixed(1)+'px '+((br.right-pr.right)*k).toFixed(1)+'px '+((br.bottom-pr.bottom)*k).toFixed(1)+'px '+((pr.left-br.left)*k).toFixed(1)+'px round '+(28*k).toFixed(1)+'px)';
-    B.style.pointerEvents=o>0.96?'auto':'none';P.style.opacity=o>0.002?'0':'1';if(Y)Y.style.opacity=(1-clamp(o*4)).toFixed(3);
-    B.querySelectorAll('[data-rv]').forEach((el,i)=>{const r=ease(clamp((o-0.66-i*0.035)/0.18));el.style.opacity=r.toFixed(3);el.style.transform='translateY('+((1-r)*18).toFixed(1)+'px)';});
-    if(I){const over=Math.max(0,I.scrollHeight-H),h=ease(clamp((p-HERO_T.holdScroll0)/(HERO_T.close0-HERO_T.holdScroll0-0.02)));I.style.transform=over?'translateY('+(-over*h).toFixed(1)+'px)':'';}
-    this.heroPause(o>0.995);}
-  // While the brief covers the screen, pause the hero scene's render loop.
-  heroPause(on){const a=this.sp&&this.sp.hero&&this.sp.hero.app;if(!a)return;try{if(on&&!a._isPaused){a.stop();this.__hp=true;}else if(!on&&this.__hp){this.__hp=false;if(a._isPaused)a.play();this.relockHero&&this.relockHero();}}catch(e){}}
+  // Hero: calm parallax - copy drifts up and fades, the 3D scene eases back. Compositor-only transforms.
+  heroParallax(){const y=window.scrollY;if(this.__py===y)return;this.__py=y;const vh=window.innerHeight;if(y>vh*1.6&&this.__pdone)return;this.__pdone=y>vh*1.6;
+    const c=document.querySelector('[data-hero-copy]'),sc=document.querySelector('[data-hero-scene]');const k=Math.min(1,y/vh);
+    if(sc)sc.style.transform='translate3d(0,'+(y*0.32).toFixed(1)+'px,0) scale('+(1-k*0.05).toFixed(4)+')';
+    if(c){c.style.translate='0 '+(-y*0.14).toFixed(1)+'px';c.style.opacity=Math.max(0,1-y/(vh*0.75)).toFixed(3);}}
   // Programme cubes: fly in from the right into a diamond as the section enters, split into a 4x4 grid, then dissolve into a cloud.
   cubesAnim(){const box=document.querySelector('[data-cubes]');if(!box)return;const r=box.getBoundingClientRect(),vh=window.innerHeight;if(r.bottom<-50||r.top>vh+50)return;
     const W=box.clientWidth,H=box.clientHeight;if(!W||!H)return;
@@ -1139,6 +1121,7 @@ class Component extends DCLogic {
   go(screen,after){this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
+  closeRegSoon(){clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:false}),220);}
   startReg(type,ev){this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
   setF(k,v){this.setState(s=>({form:{...s.form,[k]:v},regError:''}));}
   docList(){return DOCS[this.state.regType]||DOCS._;}
@@ -1191,7 +1174,10 @@ class Component extends DCLogic {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
       overviewRef:this.ref('overview'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
       menuOpen:s.menuOpen?'1':'0',menuIcon:s.menuOpen?'close':'menu',toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
-      navItems:nav.map(([label,go,k])=>({label,go:(...a)=>{this.setState({menuOpen:false});return go(...a);},bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
+      navItems:nav.map(([label,go,k])=>({label,...(label==='Registration'?{
+        go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
+        enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
+        :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
       goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>this.go('tv'),
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
