@@ -15,7 +15,7 @@
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
 var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.jpg';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
-addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?2200:1200);});})();
+addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?1400:600);});})();
 </script>
 <style>
 html,body{background:#F4F5F7}
@@ -775,7 +775,7 @@ html{scroll-behavior:smooth}
       </div>
     </sc-if>
     <button onClick="{{ toggleChat }}" title="Chat with GMS Assistant" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
-    <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none">{{ chatLabel }}</span>
+    <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
   </div>
 </sc-if>
 </x-dc>
@@ -914,7 +914,8 @@ class Component extends DCLogic {
     this.clockT=setInterval(()=>this.setState({now:Date.now()}),1000);
     this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
     this.tickT=setInterval(()=>this.tick(),2800);
-    this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?3000:2500);
+    this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?1800:1200);
+    this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);
     this.onResize=()=>{this.kickDirty=true;};window.addEventListener('resize',this.onResize);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
@@ -1023,7 +1024,7 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
@@ -1222,7 +1223,7 @@ class Component extends DCLogic {
       // the only 3D scene left is the chat robot: no shadows, capped resolution, paused while off-screen
       try{app._scene&&app._scene.traverse(x=>{if(x.castShadow)x.castShadow=false;if(x.isLight&&x.shadow)x.castShadow=false;});}catch(e){}
       this.tuneSpline(app,v,url);
-      if(url.indexOf('wMuw2CRsxbceMWK0')>=0)setTimeout(()=>this.setState({botLoaded:true}),400);
+      if(url.indexOf('wMuw2CRsxbceMWK0')>=0)setTimeout(()=>this.setState({botLoaded:true}),250);
       this.splineDone.add(app);});
   }
   // Render each 3D scene at the resolution it is actually shown at, and stop scenes that are off-screen.
@@ -1354,7 +1355,7 @@ class Component extends DCLogic {
       _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
       photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),momentVideo:this.lazyVideo('mv','assets/moment.mp4'),
       ...this.newVals(),
-      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&!s.botLoaded,
+      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:s.botLoaded||s.botFallback||!(P.enable3D??true)?'1':'0',
       vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
         return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
           tf:'rotateY('+(-ang).toFixed(2)+'deg) translateZ('+(side===0?(-120*k).toFixed(1):(-40-160*k).toFixed(1))+'px) translateY('+(60*k).toFixed(1)+'px)',op:(1-0.8*k).toFixed(3),
