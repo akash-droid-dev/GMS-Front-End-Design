@@ -11,12 +11,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script>
 /* Lite mode (phones, tablets, touch-first): lighter effects. The hero is a video, so its poster is preloaded first;
-   the Spline viewer is only used by the desktop chat robot and loads after the page has finished. */
+   the Spline viewer is only used by the chat robot and loads after the page has finished (later on lite devices). */
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
 var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.jpg';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
-if(lite)return;
-addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},1200);});})();
+addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?2200:1200);});})();
 </script>
 <style>
 html,body{background:#F4F5F7}
@@ -28,6 +27,14 @@ html,body{background:#F4F5F7}
 [data-regmenu][data-open="1"]{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
 [data-regmenu][data-open="1"] [data-rg]{animation:gmsMenuIn .42s cubic-bezier(.2,.8,.2,1) both}
 [data-regmenu][data-open="1"] [data-rg]:nth-child(2){animation-delay:.05s}[data-regmenu][data-open="1"] [data-rg]:nth-child(3){animation-delay:.1s}
+/* nav backdrop: tablets and phones only, tap anywhere to close the menus */
+[data-navback]{display:none}
+@media (max-width:900px){
+ [data-navback]{display:block;position:fixed;inset:0;z-index:49;background:rgba(11,13,18,.32);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
+ [data-navback][data-open="1"]{opacity:1;visibility:visible;transition:opacity .25s ease}
+ [data-regmenu]{max-height:calc(100svh - 96px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ [data-r=regmenu-head]{position:sticky;top:-16px;z-index:2;margin:-16px -16px 12px!important;padding:16px!important;background:rgba(255,255,255,.98);border-bottom:1px solid #EEF0F4;align-items:center!important}
+}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
@@ -120,6 +127,17 @@ html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
  [data-r=ev-p]{display:none!important}
  [data-r=tile-title]{font-size:clamp(14px,4.1vw,17px)!important;letter-spacing:-.03em!important}
  [data-r=bot]{transform:scale(.78);transform-origin:100% 100%;right:6px!important}
+ [data-r=chat]{left:10px!important;right:10px!important;width:auto!important;bottom:100px!important;height:min(560px,calc(100svh - 190px))!important;border-radius:24px!important}
+ [data-r=chat] input,main input,main select,main textarea{font-size:16px!important}
+ [data-r=score-card]{padding:20px 16px!important;gap:16px!important}
+ [data-r=score-vs]{gap:8px!important;align-items:start!important}
+ [data-r=score-pl],[data-r=score-pr]{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;gap:8px!important}
+ [data-r=score-pr]{flex-direction:column-reverse!important}
+ [data-r=score-name]{font-size:15px!important;line-height:1.15}
+ [data-r=score-big]{font-size:clamp(44px,13vw,64px)!important;gap:6px!important;margin-top:4px}
+ [data-r=score-row]{grid-template-columns:50px repeat(3,minmax(0,1fr)) 40px 30px!important;padding:8px 12px!important;gap:4px!important}
+ [data-r=regmenu-head] [data-r=regmenu-all]{display:none!important}
+ [data-r=regmenu-desc]{display:none!important}
 }
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
@@ -153,6 +171,7 @@ html{scroll-behavior:smooth}
 </style>
 </helmet>
 
+<div data-navback data-open="{{ navBack }}" onClick="{{ closeNavMenus }}" aria-hidden="true"></div>
 <nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
   <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
     <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
@@ -169,9 +188,9 @@ html{scroll-behavior:smooth}
     <button data-r="login-btn" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:28px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid #E6E9EF;box-shadow:0 30px 80px rgba(15,20,40,.16);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px;flex-wrap:wrap">
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#2F5BFF">REGISTRATION · 12 WAYS TO TAKE PART</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Series.</span></div>
-      <button onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.1);font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:#F3F5F9">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_downward</span></button>
+    <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#2F5BFF">REGISTRATION · 12 WAYS TO TAKE PART</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Series.</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><button data-r="regmenu-all" onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.1);font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:#F3F5F9">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_downward</span></button><button data-r="regmenu-close" onClick="{{ regClose }}" aria-label="Close registration menu" style="all:unset;cursor:pointer;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:#F1F3F7;font-family:'Material Symbols Rounded';font-size:21px;transition:background .2s ease" style-hover="background:#E4E8EF">close</button></div>
     </div>
     <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
       <sc-for list="{{ regGroups }}" as="g" hint-placeholder-count="3">
@@ -180,7 +199,7 @@ html{scroll-behavior:smooth}
           <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="4">
             <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:10px;border-radius:14px;transition:background .2s ease,box-shadow .2s ease" style-hover="background:#fff;box-shadow:0 8px 22px rgba(15,20,40,.08)">
               <span style="width:40px;height:40px;border-radius:12px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:21px;box-shadow:inset 0 0 0 1px #E6E9EF">{{ r.icon }}</span>
-              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:#0B0D12">{{ r.name }}</span><span style="font-size:12px;color:#5B6270;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:#0B0D12">{{ r.name }}</span><span data-r="regmenu-desc" style="font-size:12px;color:#5B6270;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
               <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#8A909C">arrow_forward</span>
             </button>
           </sc-for>
@@ -601,21 +620,21 @@ html{scroll-behavior:smooth}
       </sc-for>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start">
-      <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:22px;padding:30px;border-radius:30px;background:linear-gradient(160deg,#0B0D12 0%,#151B2E 100%);color:#fff;box-shadow:0 30px 80px rgba(15,20,40,.18);animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
+      <div data-r="score-card" style="grid-column:1 / -1;min-width:0;display:flex;flex-direction:column;gap:22px;padding:30px;border-radius:30px;background:linear-gradient(160deg,#0B0D12 0%,#151B2E 100%);color:#fff;box-shadow:0 30px 80px rgba(15,20,40,.18);animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
         <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
           <span style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.7)"><span style="padding:5px 10px;border-radius:999px;background:#E5484D;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em">LIVE</span>Recurve Open Men Individual · Gold medal match</span>
           <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.55)">FINALS FIELD · 70M · SET SYSTEM</span>
         </div>
-        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:center;padding:8px 0">
-          <div style="display:flex;align-items:center;gap:14px"><span style="width:52px;height:52px;border-radius:50%;background:rgba(143,166,255,.16);color:#8FA6FF;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">IND</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:22px">Rahul Verma</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 2</span></span></div>
-          <div style="display:flex;align-items:center;gap:16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(64px,8vw,108px);letter-spacing:-.04em;line-height:1"><span>{{ arch.setA }}</span><span style="font-size:.35em;color:rgba(255,255,255,.3)">:</span><span>{{ arch.setB }}</span></div>
-          <div style="display:flex;align-items:center;gap:14px;justify-content:flex-end;text-align:right"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:22px">Kim Min-jun</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 1</span></span><span style="width:52px;height:52px;border-radius:50%;background:rgba(255,184,107,.16);color:#FFB86B;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">KOR</span></div>
+        <div data-r="score-vs" style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:center;padding:8px 0">
+          <div data-r="score-pl" style="display:flex;align-items:center;gap:14px"><span style="width:52px;height:52px;border-radius:50%;background:rgba(143,166,255,.16);color:#8FA6FF;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">IND</span><span style="display:flex;flex-direction:column;gap:2px"><span data-r="score-name" style="font-weight:700;font-size:22px">Rahul Verma</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 2</span></span></div>
+          <div data-r="score-big" style="display:flex;align-items:center;gap:16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(64px,8vw,108px);letter-spacing:-.04em;line-height:1"><span>{{ arch.setA }}</span><span style="font-size:.35em;color:rgba(255,255,255,.3)">:</span><span>{{ arch.setB }}</span></div>
+          <div data-r="score-pr" style="display:flex;align-items:center;gap:14px;justify-content:flex-end;text-align:right"><span style="display:flex;flex-direction:column;gap:2px"><span data-r="score-name" style="font-weight:700;font-size:22px">Kim Min-jun</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 1</span></span><span style="width:52px;height:52px;border-radius:50%;background:rgba(255,184,107,.16);color:#FFB86B;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">KOR</span></div>
         </div>
         <div style="align-self:center;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.07);font-family:'JetBrains Mono';font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.75)">{{ arch.status }}</div>
         <div style="border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);overflow:hidden">
-          <div style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;padding:12px 18px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45)"><span>END</span><span>ARROW 1</span><span>ARROW 2</span><span>ARROW 3</span><span>TOTAL</span><span>SP</span></div>
+          <div data-r="score-row" style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;padding:12px 18px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45)"><span>END</span><span>ARROW 1</span><span>ARROW 2</span><span>ARROW 3</span><span>TOTAL</span><span>SP</span></div>
           <sc-for list="{{ arch.rows }}" as="r" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;align-items:center;padding:8px 18px;border-top:1px solid rgba(255,255,255,.05);background:{{ r.bg }};transition:background .5s ease">
+            <div data-r="score-row" style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;align-items:center;padding:8px 18px;border-top:1px solid rgba(255,255,255,.05);background:{{ r.bg }};transition:background .5s ease">
               <span style="font-family:'JetBrains Mono';font-size:12px;color:{{ r.who }}">{{ r.label }}</span>
               <sc-for list="{{ r.arrows }}" as="x" hint-placeholder-count="3">
                 <span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:{{ x.bg }};color:{{ x.fg }};transition:background .4s ease,transform .4s ease">{{ x.v }}</span>
@@ -654,7 +673,7 @@ html{scroll-behavior:smooth}
       <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px;border-radius:999px;background:rgba(255,255,255,.75);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);font-weight:600;font-size:14px;transition:transform .3s ease" style-hover="transform:translateY(-2px)">IND {{ arch.setA }} : {{ arch.setB }} KOR<span style="padding:8px 14px;border-radius:999px;background:#0B0D12;color:#fff;font-size:13px">Scorecard</span></button>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;align-items:start">
-      <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:16px;animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both">
+      <div style="grid-column:1 / -1;min-width:0;display:flex;flex-direction:column;gap:16px;animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both">
         <div style="position:relative;padding:10px;border-radius:34px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14)">
           <div style="position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#0B0D12">
             <iframe src="{{ ytSrc }}" title="Hyundai World Archery Para Series live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
@@ -705,7 +724,7 @@ html{scroll-behavior:smooth}
 
 <sc-if value="{{ showChat }}" hint-placeholder-val="{{ true }}">
   <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.78);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.18)">
+    <div data-r="chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.78);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.18)">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(11,13,18,.06)">
         <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">GMS Assistant</span><span style="font-size:12px;color:#5B6270">Events, schedule, registration and scores</span></div>
         <button onClick="{{ toggleChat }}" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px">close</button>
@@ -869,7 +888,7 @@ class Component extends DCLogic {
   componentDidMount(){
     this.target={hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
     this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
-    this.onDown=e=>{if(this.state.regOpen&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false});};
+    this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
     this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
@@ -879,7 +898,7 @@ class Component extends DCLogic {
     this.clockT=setInterval(()=>this.setState({now:Date.now()}),1000);
     this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
     this.tickT=setInterval(()=>this.tick(),2800);
-    this.botT=setTimeout(()=>this.setState({botReady:true}),2500);
+    this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?3000:2500);
     this.onResize=()=>{this.kickDirty=true;};window.addEventListener('resize',this.onResize);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
@@ -899,7 +918,8 @@ class Component extends DCLogic {
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
       regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'0':'1',botPe:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
-      regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},
+      regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
+      navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
       evStage:pe<KICK.run0+0.01?'SCROLL TO KICK OFF':pe<KICK.strike?'THE RUN-UP':pe<KICK.board0?'THE STRIKE':(HOVER?'HOVER AN EVENT · CLICK TO REGISTER':'TAP AN EVENT TO REGISTER'),
       goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
@@ -1186,11 +1206,12 @@ class Component extends DCLogic {
       // the only 3D scene left is the chat robot: no shadows, capped resolution, paused while off-screen
       try{app._scene&&app._scene.traverse(x=>{if(x.castShadow)x.castShadow=false;if(x.isLight&&x.shadow)x.castShadow=false;});}catch(e){}
       this.tuneSpline(app,v,url);
+      if(url.indexOf('wMuw2CRsxbceMWK0')>=0)setTimeout(()=>this.setState({botLoaded:true}),400);
       this.splineDone.add(app);});
   }
   // Render each 3D scene at the resolution it is actually shown at, and stop scenes that are off-screen.
   tuneSpline(app,v,url){const dpr=window.devicePixelRatio||1;
-    const pr=url.indexOf('wMuw2CRsxbceMWK0')>=0?Math.min(dpr,2):Math.min(dpr,1.25);
+    const pr=url.indexOf('wMuw2CRsxbceMWK0')>=0?Math.min(dpr,LITE?1.5:2):Math.min(dpr,1.25);
     try{app._getPixelRatio=()=>pr;if(app._renderer&&app._renderer.getPixelRatio()!==pr){app._renderer.setPixelRatio(pr);app._resize&&app._resize();}}catch(e){}
     try{const io=new IntersectionObserver(es=>es.forEach(e=>{try{if(e.isIntersecting){if(app.isStopped||app._isPaused)app.play();}else if(!app._isPaused)app.stop();}catch(err){}}),{rootMargin:'200px'});io.observe(v);(this.sios||(this.sios=[])).push(io);}catch(e){}
     requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('gms-ready')));}
@@ -1317,7 +1338,7 @@ class Component extends DCLogic {
       _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
       photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.webm'),momentVideo:this.lazyVideo('mv','assets/moment.webm'),
       ...this.newVals(),
-      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&show3D,botLite:!show3D&&(P.showChatbot??true),
+      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&!s.botLoaded,
       vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
         return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
           tf:'rotateY('+(-ang).toFixed(2)+'deg) translateZ('+(side===0?(-120*k).toFixed(1):(-40-160*k).toFixed(1))+'px) translateY('+(60*k).toFixed(1)+'px)',op:(1-0.8*k).toFixed(3),
