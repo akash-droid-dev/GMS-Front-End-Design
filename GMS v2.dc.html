@@ -31,21 +31,24 @@ html,body{background:#F4F5F7}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
-/* Registration 3x3 (dealt cards): hover lifts the glass tile, fills the icon and swaps the group line for what the role needs */
-[data-reg-tile]:hover [data-tile-in],[data-reg-tile]:focus-visible [data-tile-in]{box-shadow:0 22px 50px rgba(15,20,40,.15),inset 0 1px 0 #fff!important}
-[data-reg-tile]:focus-visible [data-tile-in]{outline:2px solid #2F5BFF;outline-offset:3px;transform:translateY(-5px)}
+/* Registration tickets: glass tickets with perforation notches; hover lifts, fills the icon and swaps in what the role needs */
+[data-ticket]{-webkit-mask:radial-gradient(circle at var(--nx) 0,#0000 7px,#000 7.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--nx) 100%,#0000 7px,#000 7.5px) bottom/100% 51% no-repeat;mask:radial-gradient(circle at var(--nx) 0,#0000 7px,#000 7.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--nx) 100%,#0000 7px,#000 7.5px) bottom/100% 51% no-repeat}
+[data-reg-tile]{filter:drop-shadow(0 10px 18px rgba(15,20,40,.09)) drop-shadow(0 1px 1px rgba(15,20,40,.06));transition:filter .35s ease}
+html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
+[data-reg-tile]:hover,[data-reg-tile]:focus-visible{filter:drop-shadow(0 18px 28px rgba(15,20,40,.15)) drop-shadow(0 1px 1px rgba(15,20,40,.06))}
+[data-reg-tile]:focus-visible [data-tile-in]{transform:translateY(-4px)}
+[data-reg-tile]:focus-visible{outline:2px solid #2F5BFF;outline-offset:4px;border-radius:16px}
 [data-reg-tile]:hover [data-tile-ic],[data-reg-tile]:focus-visible [data-tile-ic]{background:#2F5BFF!important;color:#fff!important}
 [data-reg-tile]:hover [data-tile-grp],[data-reg-tile]:focus-visible [data-tile-grp]{opacity:0;transform:translateY(-12px)}
 [data-reg-tile]:hover [data-tile-needs],[data-reg-tile]:focus-visible [data-tile-needs]{opacity:1!important;transform:none!important}
 [data-reg-tile]:hover [data-tile-go]{transform:translateX(3px)}
 [data-reg-tile][data-landed="1"] [data-pop]{animation:gmsPopRing .9s cubic-bezier(.2,.8,.2,1) both}
-@keyframes gmsPopRing{0%{opacity:.55;transform:scale(1)}100%{opacity:0;transform:scale(1.1,1.3)}}
-[data-reg-layer][data-compact="1"] [data-tile-in]{flex-direction:column;justify-content:center;gap:8px!important;padding:10px 6px!important;text-align:center;border-radius:18px!important}
-[data-reg-layer][data-compact="1"] [data-tile-ic]{width:36px!important;height:36px!important;font-size:19px!important;border-radius:12px!important}
-[data-reg-layer][data-compact="1"] [data-tile-txt]{flex:none!important;width:100%}
+@keyframes gmsPopRing{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.06,1.3)}}
+[data-reg-layer][data-compact="1"] [data-ticket]{flex-direction:column;-webkit-mask:radial-gradient(circle at 0 var(--nx),#0000 6px,#000 6.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% var(--nx),#0000 6px,#000 6.5px) right/51% 100% no-repeat;mask:radial-gradient(circle at 0 var(--nx),#0000 6px,#000 6.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% var(--nx),#0000 6px,#000 6.5px) right/51% 100% no-repeat}
+[data-reg-layer][data-compact="1"] [data-tk-stub]{width:auto!important;height:var(--nx);border-right:0!important;border-bottom:1.5px dashed rgba(11,13,18,.16)}
+[data-reg-layer][data-compact="1"] [data-tile-ic]{width:28px!important;height:28px!important;font-size:16px!important;border-radius:9px!important}
+[data-reg-layer][data-compact="1"] [data-tile-txt]{padding:0 6px!important;align-items:center;text-align:center}
 [data-reg-layer][data-compact="1"] [data-tile-sub],[data-reg-layer][data-compact="1"] [data-tile-go]{display:none!important}
-[data-reg-layer][data-compact="1"] [data-tile-bar]{top:0!important;bottom:auto!important;left:calc(50% - 14px)!important;width:28px!important;height:3px!important;border-radius:0 0 3px 3px!important}
-[data-reg-layer][data-compact="1"] [data-reg-tile],[data-reg-layer][data-compact="1"] [data-pop],[data-reg-layer][data-compact="1"] [data-tile-back]{border-radius:18px!important}
 @keyframes gmsWordUp{from{transform:translateY(108%)}to{transform:none}}
 .gms-hl,.gms-w{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em 0 .14em;margin:-.04em 0 -.14em}
 .gms-hl>span{display:inline-block;animation:gmsWordUp 1.1s var(--gms-ease) both}
@@ -312,62 +315,41 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section ref="{{ regRef }}" data-r="reg-section" style="position:relative;height:440vh;background:#EEF1F6">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box">
-      <div aria-hidden="true" style="position:absolute;left:0;right:0;top:-8%;height:116%;background:url('assets/brick-wall.jpg') center/cover no-repeat;transform:translate3d(0,{{ brickY }},0);will-change:transform;pointer-events:none"></div>
-      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 55%,rgba(255,255,255,.88) 0%,rgba(238,241,247,.87) 60%,rgba(228,233,242,.88) 100%);pointer-events:none"></div>
+  <section ref="{{ regRef }}" data-r="reg-section" style="position:relative;height:440vh;background:#F6F7F9">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box;background:radial-gradient(70% 60% at 50% 60%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
+      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(47,91,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(47,91,255,.055) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(75% 70% at 50% 58%,#000 25%,transparent 100%);mask-image:radial-gradient(75% 70% at 50% 58%,#000 25%,transparent 100%)"></div>
       <div data-r="reg-head" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 24px">
-        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTRATION · 12 ROLES</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTRATION · 12 ROLES · 3 GATES</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,min(4vw,6.5vh),58px);letter-spacing:-.045em;line-height:1">Pick how you're taking part.</h2>
-        <p data-r="reg-p" style="margin:0;font-size:15px;color:#4A505C">Keep scrolling: the wheel deals out every role. Hover or tap one to register.</p>
+        <p data-r="reg-p" style="margin:0;font-size:15px;color:#4A505C">Keep scrolling: the gates open and print a ticket for every role. Hover or tap one to register.</p>
         <div data-r="reg-progress" style="display:flex;align-items:center;justify-content:center;gap:10px 14px;flex-wrap:wrap;margin-top:4px">
-          <span data-reg-hub aria-hidden="true" style="position:relative;width:46px;height:46px;flex:none">
-            <span style="position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(47,91,255,.22);background:rgba(255,255,255,.7)"></span>
+          <span aria-live="polite" style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#5B6270">{{ regShownLabel }}</span>
+          <span aria-hidden="true" style="display:flex;gap:4px;align-items:center">
             <sc-for list="{{ regDots }}" as="d" hint-placeholder-count="12">
-              <span style="position:absolute;left:{{ d.x }};top:{{ d.y }};width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;box-sizing:border-box;background:{{ d.bg }};border:1.5px solid {{ d.bd }};transition:background .3s ease,border-color .3s ease"></span>
+              <span style="width:11px;height:7px;border-radius:2px;background:{{ d.bg }};transition:background .3s ease"></span>
             </sc-for>
           </span>
-          <span aria-live="polite" style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#5B6270">{{ regShownLabel }}</span>
-          <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.85);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;color:#0B0D12;transition:background .25s ease,color .25s ease" style-hover="background:#0B0D12;color:#fff">See all 12 roles<span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span></button>
+          <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;color:#0B0D12;transition:background .25s ease,color .25s ease" style-hover="background:#0B0D12;color:#fff">See all 12 roles<span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span></button>
         </div>
       </div>
       <div ref="{{ regStageRef }}" style="position:relative;flex:1;width:100%;z-index:1">
-        <div data-wheel-wrap style="position:absolute;left:50%;top:50%;width:0;height:0;transform:{{ wheelWrapTf }};opacity:{{ wheelOp }};pointer-events:{{ wheelPe }}">
-          <div aria-hidden="true" style="position:absolute;left:{{ wheelShL }};top:{{ wheelShT }};width:{{ wheelShW }};height:44px;border-radius:50%;background:radial-gradient(closest-side,rgba(15,20,40,.13),rgba(15,20,40,0));pointer-events:none"></div>
-          <div onPointerDown="{{ ringDown }}" style="position:absolute;left:0;top:0;width:0;height:0;perspective:{{ wheelPersp }};touch-action:pan-y;cursor:grab">
-            <div style="position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;transform:{{ wheelTf }}">
-              <sc-for list="{{ ringCards }}" as="r" hint-placeholder-count="12">
-                <div style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};transform:{{ r.tf }};opacity:{{ r.op }};visibility:{{ r.vis }};backface-visibility:hidden;-webkit-backface-visibility:hidden">
-                  <button onClick="{{ r.tap }}" aria-label="{{ r.name }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:{{ r.pad }};border-radius:20px;background:{{ r.bg }};border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};transition:transform .35s cubic-bezier(.2,.8,.2,1),background .35s ease,box-shadow .35s ease" style-hover="transform:translateY(-6px)">
-                    <span style="display:flex;justify-content:space-between;align-items:flex-start"><span style="width:{{ r.is }};height:{{ r.is }};border-radius:12px;display:grid;place-items:center;background:{{ r.ib }};color:{{ r.ic }};font-family:'Material Symbols Rounded';font-size:{{ r.ifs }};transition:background .35s ease,color .35s ease">{{ r.icon }}</span><span style="font-family:'JetBrains Mono';font-size:10px;color:#8A909C">{{ r.num }}</span></span>
-                    <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ r.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ r.displayName }}</span>
-                  </button>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </div>
-        <div data-reg-layer data-compact="{{ regCompact }}" role="group" aria-label="Registration roles. Use the arrow keys to move between them." onKeyDown="{{ regKey }}" style="position:absolute;left:50%;top:50%;width:0;height:0;z-index:3">
+        <div data-reg-layer data-compact="{{ regCompact }}" role="group" aria-label="Registration tickets, three gates of four. Use the arrow keys to move between them." onKeyDown="{{ regKey }}" style="position:absolute;left:50%;top:50%;width:0;height:0">
+          {{ regGates }}
           <sc-for list="{{ regTiles }}" as="t" hint-placeholder-count="12">
-            <button data-reg-tile data-landed="{{ t.landed }}" onClick="{{ t.go }}" onMouseMove="{{ t.move }}" onMouseLeave="{{ t.leave }}" aria-label="{{ t.aria }}" title="{{ t.title }}" style="all:unset;box-sizing:border-box;cursor:pointer;position:absolute;left:{{ t.l }};top:{{ t.t }};width:{{ t.w }};height:{{ t.h }};transform:{{ t.tf }};opacity:{{ t.op }};visibility:{{ t.vis }};pointer-events:{{ t.pe }};border-radius:20px">
-              <span data-pop aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;border:2px solid {{ t.gc }};opacity:0;pointer-events:none"></span>
-              <span data-flip style="position:absolute;inset:0;transform-style:preserve-3d;transform:{{ t.flip }}">
-                <span data-tile-in style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;gap:12px;padding:0 14px 0 18px;border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(248,250,255,.9) 100%);border:1px solid rgba(255,255,255,.95);box-shadow:0 14px 34px rgba(15,20,40,.09),inset 0 1px 0 #fff;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;overflow:hidden">
-                  <span data-tile-bar aria-hidden="true" style="position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 3px 3px 0;background:{{ t.gc }}"></span>
-                  <span data-tile-ic style="width:42px;height:42px;flex:none;border-radius:13px;display:grid;place-items:center;background:{{ t.gt }};color:{{ t.gc }};font-family:'Material Symbols Rounded';font-size:22px;transition:background .3s ease,color .3s ease">{{ t.icon }}</span>
-                  <span data-tile-txt style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
-                    <span data-tile-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ t.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ t.name }}</span>
-                    <span data-tile-sub style="position:relative;height:15px;overflow:hidden;font-size:11.5px;line-height:15px">
-                      <span data-tile-grp style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;color:{{ t.gc }};transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">{{ t.group }} · {{ t.num }}</span>
-                      <span data-tile-needs style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#5B6270;opacity:0;transform:translateY(12px);transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">Needs · {{ t.needs }}</span>
-                    </span>
+            <button data-reg-tile data-g="{{ t.g }}" data-j="{{ t.j }}" data-landed="{{ t.landed }}" onClick="{{ t.go }}" onMouseMove="{{ t.move }}" onMouseLeave="{{ t.leave }}" aria-label="{{ t.aria }}" title="{{ t.title }}" style="all:unset;box-sizing:border-box;cursor:pointer;position:absolute;left:{{ t.l }};top:{{ t.t }};width:{{ t.w }};height:{{ t.h }};transform:{{ t.tf }};clip-path:{{ t.clip }};visibility:{{ t.vis }};pointer-events:{{ t.pe }};z-index:2">
+              <span data-pop aria-hidden="true" style="position:absolute;inset:0;border-radius:16px;border:2px solid {{ t.gc }};opacity:0;pointer-events:none"></span>
+              <span data-tile-in data-ticket style="position:absolute;inset:0;display:flex;align-items:stretch;border-radius:16px;background:linear-gradient(160deg,#FFFFFF 0%,#F7F9FF 100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);--nx:{{ t.nx }}">
+                <span data-tk-stub style="width:{{ t.nx }};flex:none;display:grid;place-items:center;border-right:1.5px dashed rgba(11,13,18,.16);box-sizing:border-box">
+                  <span data-tile-ic style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:{{ t.gt }};color:{{ t.gc }};font-family:'Material Symbols Rounded';font-size:21px;transition:background .3s ease,color .3s ease">{{ t.icon }}</span>
+                </span>
+                <span data-tile-txt style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 6px 0 14px">
+                  <span data-tile-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ t.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ t.name }}</span>
+                  <span data-tile-sub style="position:relative;height:15px;overflow:hidden;font-size:11.5px;line-height:15px">
+                    <span data-tile-grp style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:{{ t.gc }};transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">ADMIT ONE · GATE {{ t.gate }} · {{ t.num }}</span>
+                    <span data-tile-needs style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#5B6270;opacity:0;transform:translateY(12px);transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">Needs · {{ t.needs }}</span>
                   </span>
-                  <span data-tile-go aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px;color:#2F5BFF;flex:none;transition:transform .3s cubic-bezier(.2,.8,.2,1)">arrow_forward</span>
                 </span>
-                <span data-tile-back aria-hidden="true" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);border-radius:20px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(120% 90% at 20% 10%,#5B84FF 0%,#2F5BFF 45%,#1A34B8 100%);box-shadow:0 14px 34px rgba(26,52,184,.25),inset 0 1px 0 rgba(255,255,255,.35)">
-                  <span style="position:absolute;inset:7px;border-radius:14px;border:1px solid rgba(255,255,255,.28)"></span>
-                  <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.24em;color:rgba(255,255,255,.92)"><span style="width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-sizing:border-box"></span>GMS</span>
-                </span>
+                <span data-tile-go aria-hidden="true" style="align-self:center;padding-right:12px;font-family:'Material Symbols Rounded';font-size:20px;color:#2F5BFF;flex:none;transition:transform .3s cubic-bezier(.2,.8,.2,1)">arrow_forward</span>
               </span>
             </button>
           </sc-for>
@@ -826,7 +808,7 @@ const REG_GROUPS=[['COMPETITORS & TEAMS',['athlete','staff','entity','lo']],['OF
 const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_OF[id]=g));
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
 const REG_GC=[['#2F5BFF','#E8EEFF'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
-const REG_T={shrink0:0.07,shrinkDur:0.1,a0:0.16,step:0.018,dur:0.09,back0:0.52,b0:0.6};
+const REG_T={open0:0.05,openDur:0.07,t0:0.12,step:0.052,dur:0.11};
 const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -916,7 +898,7 @@ class Component extends DCLogic {
       heroFacts:[['DATES','05 — 09 Sep 2026',''],['HOST CITY','Ahmedabad',''],['DIVISIONS','3','3'],['MEDAL EVENTS','15','15']].map(([k,v,n])=>({k,v,n})),
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
-      regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen?'0':'1',botPe:s.regOpen||s.menuOpen?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
+      regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'0':'1',botPe:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
       evStage:pe<KICK.run0+0.01?'SCROLL TO KICK OFF':pe<KICK.strike?'THE RUN-UP':pe<KICK.board0?'THE STRIKE':(HOVER?'HOVER AN EVENT · CLICK TO REGISTER':'TAP AN EVENT TO REGISTER'),
@@ -938,57 +920,64 @@ class Component extends DCLogic {
         const x=slot*gap*pin,y=(1-pin)*34-pout*18,sc=0.35+0.65*pin-0.12*pout;const op=pin*(1-pout);
         return {...r,go:()=>this.startReg(r.id),op:op.toFixed(3),pe:op>0.6?'auto':'none',tf:'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(2)+'vh)) scale('+sc.toFixed(4)+') rotate('+(slot*(1-pin)*-14).toFixed(2)+'deg)'};}),
       evNear:s.evNear&&(this.props.enable3D??true)&&!LITE,regNear:s.regNear&&(this.props.enable3D??true)};}
-  // Registration: a slim 3D ring of roles turns, shrinks into the progress hub, and the hub deals the roles out
-  // like cards (face-down, flipping face-up as they land) into a 3x3; the last 3 follow as the first 9 are collected.
-  // Pure function of the pinned scroll (s.p.reg), so scrolling up plays it backwards.
-  ringVals(){const s=this.state,n=REG.length,step=360/n,W=typeof window!=='undefined'?window.innerWidth:1200,vh=typeof window!=='undefined'?window.innerHeight:800;
-    const p=REDUCED?0.42:(s.p.reg||0),compact=W<=600,sh=this.regStageH||vh*0.6,hub=this.regHub||{x:0,y:-sh*0.55};
-    // ring geometry: the ring is pushed back by its radius so the front card renders at 1:1 (sharp text)
-    const cw=compact?94:Math.min(142,W*0.11+36),ch=Math.min(compact?120:176,sh*0.46),R=(cw+(compact?12:20))*n/(2*Math.PI);
-    const rot=-p*430+(s.ringDrag||0),front=((Math.round(-rot/step)%n)+n)%n,open=s.ringOpen??-1;
-    const shrink=ease(clamp((p-REG_T.shrink0)/REG_T.shrinkDur)),endScale=46/(2*R+cw),wsc=1-(1-endScale)*shrink;
-    // grid geometry
-    const gap=compact?8:14,maxW=compact?W-36:Math.min(W-64,980),tw=Math.min(compact?999:304,(maxW-gap*2)/3),th=compact?Math.min(tw*0.98,(sh-40-gap*2)/3):Math.max(74,Math.min(98,(sh-60-gap*2)/3));
-    const T=REG_ORDER.map((ri,k)=>{let out,back=0;
-      if(k<9){out=clamp((p-REG_T.a0-k*REG_T.step)/REG_T.dur);back=clamp((p-REG_T.back0-k*0.01)/0.08);}
-      else out=clamp((p-REG_T.b0-(k-9)*0.025)/REG_T.dur);
-      return {out,back,t:back>0?1-back:out};});
-    const kOf={};REG_ORDER.forEach((ri,k)=>kOf[ri]=k);
-    const shown=T.filter(x=>x.out>0.5).length;
-    return {wheelTf:'translateZ('+(-R).toFixed(1)+'px) rotateX(-4deg) rotateY('+rot.toFixed(2)+'deg)',wheelPersp:(compact?1100:1500)+'px',ringLabel:pad(front+1)+' / '+n,regStageRef:this.ref('regStage'),
-      wheelWrapTf:shrink<0.001?'none':'translate('+(hub.x*shrink).toFixed(1)+'px,'+(hub.y*shrink).toFixed(1)+'px) scale('+wsc.toFixed(4)+')',
-      wheelOp:(1-clamp((shrink-0.7)/0.3)).toFixed(3),wheelPe:shrink>0.15?'none':'auto',
-      wheelShL:(-R*0.9).toFixed(1)+'px',wheelShT:(ch*0.62).toFixed(1)+'px',wheelShW:(R*1.8).toFixed(1)+'px',
-      regCompact:compact?'1':'0',brickY:(LITE||REDUCED)?'0px':((0.5-p)*60).toFixed(1)+'px',
-      regShownLabel:shown?pad(shown)+' OF 12 ROLES DEALT':'SCROLL TO DEAL THE ROLES',
-      regDots:REG_ORDER.map((ri,k)=>{const a=k/n*Math.PI*2,out=T[k].t>0.5,gc=REG_GC[REG_GROUP_OF[REG[ri].id]][0];
-        return {x:(23+19*Math.sin(a)).toFixed(2)+'px',y:(23-19*Math.cos(a)).toFixed(2)+'px',bg:out?'transparent':(T[k].out>0.5?gc:'#C9CFDA'),bd:out?gc:(T[k].out>0.5?gc:'#C9CFDA')};}),
-      regKey:e=>{const dir={ArrowRight:1,ArrowLeft:-1,ArrowDown:3,ArrowUp:-3}[e.key];if(!dir)return;const L=e.currentTarget,t=[...L.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.visibility!=='hidden'&&x.style.pointerEvents!=='none');
-        const i=t.indexOf(document.activeElement);if(i<0){t[0]&&t[0].focus();e.preventDefault();return;}const j=i+dir;if(j>=0&&j<t.length){t[j].focus();e.preventDefault();}},
-      regTiles:REG_ORDER.map((ri,k)=>{const r=REG[ri],x=T[k],g=REG_GROUP_OF[r.id],gc=REG_GC[g];
-        const col=k<9?k%3:k-9,row=k<9?Math.floor(k/3):1,cx=(col-1)*(tw+gap),cy=(row-1)*(th+gap);
-        // dealt from the hub: a quick arc out, a little spin, then the card flips face-up as it settles
-        const e=ease(x.t),flipT=smooth(clamp((e-0.5)/0.5)),landed=x.t>=1;
-        const px=hub.x+(cx-hub.x)*e,py=hub.y+(cy-hub.y)*e-Math.sin(e*Math.PI)*(compact?40:70),sc=0.22+0.78*e,rz=(1-e)*(-22+col*14);
-        const needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · '),op=clamp(x.t*8);
-        return {name:r.name.split('/').join('/​'),icon:r.icon,num:pad(ri+1),group:REG_GROUPS[g][0].split(' & ')[0],gc:gc[0],gt:gc[1],needs,nfs:compact?'12.5px':(r.name.length>18?'15px':'17px'),
-          aria:'Register as '+r.name+'. Needs '+needs,title:r.name+' · Needs '+needs,l:(-tw/2).toFixed(1)+'px',t:(-th/2).toFixed(1)+'px',w:tw.toFixed(1)+'px',h:th.toFixed(1)+'px',
-          tf:landed?'translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)':'translate3d('+px.toFixed(1)+'px,'+py.toFixed(1)+'px,0) scale('+sc.toFixed(4)+') rotate('+rz.toFixed(2)+'deg)',
-          flip:landed?'none':'perspective(900px) rotateY('+(180*(1-flipT)).toFixed(1)+'deg)',
-          op:op.toFixed(3),vis:op>0.01?'visible':'hidden',pe:x.t>0.95?'auto':'none',landed:landed&&x.back===0?'1':'0',
+  // Registration: three ink-drawn speed gates (one per role group) draw in, open, and each prints its four
+  // glass tickets: a ticket slides out of the slot under its gate and drops into the gate's column.
+  // Pure function of scroll (s.p.reg pinned progress, s.p.regIn entry), so scrolling up reverses it.
+  regLayout(){const W=typeof window!=='undefined'?window.innerWidth:1200,vh=typeof window!=='undefined'?window.innerHeight:800,compact=W<=600,sh=this.regStageH||vh*0.6;
+    const gapX=compact?10:28,maxW=compact?W-28:Math.min(W-64,1020),tw=Math.min(compact?999:300,(maxW-2*gapX)/3),gy=compact?8:12;
+    const gh=compact?Math.max(64,Math.min(80,sh*0.15)):Math.max(84,Math.min(118,sh*0.21));
+    const th=compact?Math.max(70,Math.min(96,(sh-gh-22-3*gy-24)/4)):Math.max(56,Math.min(76,(sh-gh-22-3*gy-24)/4));
+    const total=gh+22+4*th+3*gy,top=-total/2,floorY=top+gh;
+    return {W,compact,tw,th,gh,gy,gapX,top,floorY,rowsTop:floorY+22,cx:g=>(g-1)*(tw+gapX)};}
+  regGatesEl(L,draw,opens){const h=React.createElement,INK='#14161C',BL=BLUE,f=v=>v.toFixed(1);
+    const rr=(x,y,w,hh,r)=>'M'+f(x+r)+' '+f(y)+'H'+f(x+w-r)+'Q'+f(x+w)+' '+f(y)+' '+f(x+w)+' '+f(y+r)+'V'+f(y+hh-r)+'Q'+f(x+w)+' '+f(y+hh)+' '+f(x+w-r)+' '+f(y+hh)+'H'+f(x+r)+'Q'+f(x)+' '+f(y+hh)+' '+f(x)+' '+f(y+hh-r)+'V'+f(y+r)+'Q'+f(x)+' '+f(y)+' '+f(x+r)+' '+f(y)+'Z';
+    const ink=(d,extra)=>h('path',Object.assign({d,fill:'none',stroke:INK,strokeWidth:1.5,strokeLinecap:'round',strokeLinejoin:'round',pathLength:1,strokeDasharray:1,strokeDashoffset:(1-draw).toFixed(3)},extra||{}));
+    const span=L.tw*3+L.gapX*2+80,w=L.tw,gh=L.gh,bh=Math.round(gh*0.3),pw=Math.max(14,w*0.1),py=bh+8,ph=gh-py;
+    return h('div',{'aria-hidden':'true',style:{position:'absolute',left:0,top:0,width:0,height:0,pointerEvents:'none'}},
+      h('svg',{width:span,height:12,viewBox:'0 0 '+span+' 12',style:{position:'absolute',left:-span/2,top:L.floorY-6,overflow:'visible'}},
+        ink('M0 6H'+span,{opacity:.45}),
+        [0,1,2].map(g=>h('path',{key:g,d:'M'+f(span/2+L.cx(g)-w*0.22)+' 6H'+f(span/2+L.cx(g)+w*0.22),stroke:BL,strokeWidth:3,strokeLinecap:'round',opacity:(0.35+0.65*opens[g]).toFixed(3)}))),
+      [0,1,2].map(g=>{const o=opens[g],x0=L.cx(g)-w/2,flapW=w/2-2-(6+pw),fy=py+ph*0.22,fh=ph*0.5,lf=flapW*(1-o);
+        return h('div',{key:g,style:{position:'absolute',left:x0,top:L.top,width:w,height:gh}},
+          h('svg',{width:w,height:gh,viewBox:'0 0 '+f(w)+' '+f(gh),style:{position:'absolute',inset:0,overflow:'visible'}},
+            h('path',{d:rr(0.75,0.75,w-1.5,bh,10),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(0.75,0.75,w-1.5,bh,10)),
+            h('path',{d:rr(6,py,pw,ph,6),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(6,py,pw,ph,6)),
+            h('path',{d:rr(w-6-pw,py,pw,ph,6),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(w-6-pw,py,pw,ph,6)),
+            ink('M'+f(6+pw*0.3)+' '+f(py+ph*0.62)+'H'+f(6+pw*0.7)+'M'+f(w-6-pw*0.7)+' '+f(py+ph*0.62)+'H'+f(w-6-pw*0.3),{opacity:.6}),
+            lf>0.5?h('path',{d:rr(6+pw,fy,lf,fh,4),fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:draw.toFixed(3)}):null,
+            lf>0.5?h('path',{d:rr(w-6-pw-lf,fy,lf,fh,4),fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:draw.toFixed(3)}):null,
+            h('circle',{cx:f(6+pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)}),
+            h('circle',{cx:f(w-6-pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)})),
+          h('div',{style:{position:'absolute',left:0,top:0,width:w,height:bh,display:'flex',alignItems:'center',justifyContent:L.compact?'center':'space-between',gap:8,padding:L.compact?'0 6px':'0 14px',boxSizing:'border-box',opacity:clamp(draw*1.4-0.4)}},
+            h('span',{style:{fontFamily:'JetBrains Mono',fontSize:L.compact?9:10,letterSpacing:'.16em',color:BL,whiteSpace:'nowrap'}},'GATE '+'ABC'[g]),
+            L.compact?null:h('span',{style:{fontFamily:'Bricolage Grotesque',fontWeight:700,fontSize:13,letterSpacing:'-.01em',color:'#0B0D12',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}},REG_GROUPS[g][0].replace(' & ',' & ').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))));}));}
+  ringVals(){const s=this.state,p=REDUCED?1:(s.p.reg||0),L=this.regLayout(),compact=L.compact,draw=REDUCED?1:ease(clamp(((s.p.regIn||0)-0.2)/0.6));
+    const opens=[0,1,2].map(g=>ease(clamp((p-REG_T.open0-g*0.015)/REG_T.openDur)));
+    // printer feed: each gate prints its last role first; every new ticket comes out on top and pushes the earlier ones down a row
+    const T=REG_ORDER.map((ri,k)=>{const g=Math.floor(k/4),j=k%4,n=3-j,o=n*3+g;return {g,j,n,lt:clamp((p-REG_T.t0-o*REG_T.step)/REG_T.dur)};});
+    const printed=T.filter(x=>x.lt>=0.5).length;
+    return {regStageRef:this.ref('regStage'),regCompact:compact?'1':'0',regGates:this.regGatesEl(L,draw,opens),
+      regShownLabel:printed?pad(printed)+' OF 12 TICKETS PRINTED':'SCROLL TO OPEN THE GATES',
+      regDots:REG_ORDER.map((ri,k)=>({bg:T[k].lt>=0.5?REG_GC[T[k].g][0]:'#D5DAE3'})),
+      regKey:e=>{const d={ArrowRight:[1,0],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowUp:[0,-1]}[e.key];if(!d)return;const a=document.activeElement,Ly=e.currentTarget;
+        const vis=[...Ly.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.pointerEvents!=='none');
+        if(!a||!a.hasAttribute('data-reg-tile')){vis[0]&&vis[0].focus();e.preventDefault();return;}
+        const g=+a.dataset.g+d[0],j=+a.dataset.j+d[1],n=vis.find(x=>+x.dataset.g===g&&+x.dataset.j===j);if(n){n.focus();e.preventDefault();}},
+      regTiles:REG_ORDER.map((ri,k)=>{const r=REG[ri],x=T[k],g=x.g,j=x.j,gc=REG_GC[g],lt=x.lt;
+        const cx=L.cx(g),slotY=L.floorY,later=T.filter(y=>y.g===g&&y.n>x.n),push=later.reduce((a,y)=>a+ease(y.lt),0);
+        // print: slide out of the slot under the gate (clipped at the slot line) into the top row, then get pushed down by later tickets
+        const e=ease(lt),landed=lt>=1&&later.every(y=>y.lt<=0||y.lt>=1);
+        const top=slotY-L.th+(L.rowsTop-slotY+L.th)*e+(L.th+L.gy)*push,clip=Math.max(0,slotY-top),rz=(1-e)*(g-1||0.6)*-1.5,rowTop=top;
+        const needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · ');
+        return {g:String(g),j:String(j),name:r.name.split('/').join('/​'),icon:r.icon,num:pad(ri+1),gate:'ABC'[g],gc:gc[0],gt:gc[1],needs,nx:compact?'40px':'64px',
+          nfs:compact?'12px':(r.name.length>18?'14.5px':'16px'),aria:'Register as '+r.name+'. Gate '+'ABC'[g]+'. Needs '+needs,title:r.name+' · Needs '+needs,
+          l:(-L.tw/2).toFixed(1)+'px',t:'0px',w:L.tw.toFixed(1)+'px',h:L.th.toFixed(1)+'px',
+          tf:landed?'translate('+cx.toFixed(1)+'px,'+rowTop.toFixed(1)+'px)':'translate3d('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px,0) rotate('+rz.toFixed(2)+'deg)',
+          clip:landed||clip<=0?'none':'inset('+clip.toFixed(1)+'px 0 0 0)',vis:lt>0?'visible':'hidden',pe:lt>0.95?'auto':'none',landed:landed?'1':'0',
           go:()=>{if(compact)this.setState({modal:r.id});else this.startReg(r.id);},
           move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
-            el.style.transform='perspective(800px) translateY(-5px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*7).toFixed(2)+'deg)';},
-          leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};}),
-      ringDown:e=>{const x0=e.clientX,d0=s.ringDrag||0;const mv=ev=>this.setState({ringDrag:d0+(ev.clientX-x0)*0.35});const up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);};window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);},
-      ringCards:REG.map((r,i)=>{const isFront=front===i||open===i,ang=i*step;const rel=((ang+rot)%360+540)%360-180,a=Math.abs(rel);
-        const op=a<=62?1:Math.max(0,1-(a-62)/48),gc=REG_GC[REG_GROUP_OF[r.id]];
-        return {...r,num:pad(i+1),displayName:r.name.split('/').join('/​'),nfs:compact?'12.5px':(r.name.length>16?'14px':'16px'),
-          l:(-cw/2).toFixed(1)+'px',t:(-ch/2).toFixed(1)+'px',w:cw.toFixed(1)+'px',h:ch.toFixed(1)+'px',pad:compact?'11px':'14px',is:compact?'34px':'40px',ifs:compact?'18px':'21px',
-          tf:'rotateY('+ang+'deg) translateZ('+R.toFixed(1)+'px)',op:op.toFixed(3),vis:op>0.01?'visible':'hidden',
-          bg:isFront?'rgba(255,255,255,.98)':'rgba(255,255,255,.86)',sh:isFront?'0 22px 50px rgba(15,20,40,.16),inset 0 1px 0 #fff':'0 10px 26px rgba(15,20,40,.07),inset 0 1px 0 #fff',
-          ib:isFront?gc[0]:gc[1],ic:isFront?'#fff':gc[0],
-          tap:()=>this.setState({modal:r.id})};})};}
+            el.style.transform='perspective(800px) translateY(-4px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*6).toFixed(2)+'deg)';},
+          leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};})};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.webm');}
   heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);
     return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:small?'assets/hero-720.mp4':'assets/hero-1080.mp4','aria-hidden':'true',
@@ -1002,7 +991,7 @@ class Component extends DCLogic {
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
-  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg')};
+  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg'),regIn:this.vis('reg')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     const rs=this.refs.regStage&&this.refs.regStage.current,hb=document.querySelector('[data-reg-hub]');if(rs)this.regStageH=rs.clientHeight;
     if(rs&&hb){const a=rs.getBoundingClientRect(),b=hb.getBoundingClientRect();this.regHub={x:b.left+b.width/2-(a.left+a.width/2),y:b.top+b.height/2-(a.top+a.height/2)};}
