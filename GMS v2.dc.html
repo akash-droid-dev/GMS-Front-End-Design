@@ -35,6 +35,22 @@ html,body{background:#F4F5F7}
  [data-regmenu]{max-height:calc(100svh - 96px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
  [data-r=regmenu-head]{position:sticky;top:-16px;z-index:2;margin:-16px -16px 12px!important;padding:16px!important;background:rgba(255,255,255,.98);border-bottom:1px solid #EEF0F4;align-items:center!important}
 }
+/* Live liquid buttons: two slow waves of liquid drift inside the pill (opposite directions), hover raises the level.
+   Transform-only animation, so it stays on the compositor. */
+.gms-liquid{position:relative!important;overflow:hidden!important;isolation:isolate!important;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.gms-liquid::before,.gms-liquid::after{content:'';position:absolute;left:0;top:-6%;width:200%;height:150%;z-index:-1;pointer-events:none;background-repeat:repeat-x;background-size:50% 100%;will-change:transform;transition:translate .8s cubic-bezier(.2,.8,.2,1);animation:gmsLiquid 7s linear infinite}
+.gms-liquid::after{top:6%;animation-duration:4.6s;animation-direction:reverse}
+.gms-liquid:hover::before,.gms-liquid:hover::after,.gms-liquid:focus-visible::before,.gms-liquid:focus-visible::after{translate:0 -24%}
+@keyframes gmsLiquid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gms-liquid--blue{background:linear-gradient(180deg,#4F78FF 0%,#2F5BFF 52%,#2448E6 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -8px 16px rgba(14,30,120,.28),0 12px 28px rgba(47,91,255,.32)!important}
+.gms-liquid--blue::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(150,180,255,.42)'/%3E%3C/svg%3E")}
+.gms-liquid--blue::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(20,46,190,.5)'/%3E%3C/svg%3E")}
+.gms-liquid--dark{background:linear-gradient(180deg,#2A3044 0%,#11141C 55%,#0B0D12 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -8px 16px rgba(0,0,0,.35)!important}
+.gms-liquid--dark::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(91,132,255,.30)'/%3E%3C/svg%3E")}
+.gms-liquid--dark::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.07)'/%3E%3C/svg%3E")}
+.gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
+.gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
+.gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
@@ -184,8 +200,8 @@ html{scroll-behavior:smooth}
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px">{{ menuIcon }}</button>
-    <button data-r="admin-btn" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+    <button data-r="admin-btn" class="gms-liquid gms-liquid--dark" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--blue" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:28px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid #E6E9EF;box-shadow:0 30px 80px rgba(15,20,40,.16);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
@@ -226,8 +242,8 @@ html{scroll-behavior:smooth}
         </sc-for>
       </div>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
-        <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px rgba(47,91,255,.55)">Register as Athlete</button>
-        <button onClick="{{ toEvents }}" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.2)">Explore the programme</button>
+        <button class="gms-liquid gms-liquid--blue" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px rgba(47,91,255,.55)">Register as Athlete</button>
+        <button class="gms-liquid gms-liquid--glass" onClick="{{ toEvents }}" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.2)">Explore the programme</button>
         <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
     </div>
@@ -977,7 +993,7 @@ class Component extends DCLogic {
     const T=REG_ORDER.map((ri,k)=>{const g=Math.floor(k/4),j=k%4,n=3-j,o=n*3+g;return {g,j,n,lt:clamp((p-REG_T.t0-o*REG_T.step)/REG_T.dur)};});
     const printed=T.filter(x=>x.lt>=0.5).length;
     return {regStageRef:this.ref('regStage'),regCompact:compact?'1':'0',regGates:this.regGatesEl(L,draw,opens),
-      regShownLabel:printed?pad(printed)+' OF 12 TICKETS PRINTED':'SCROLL TO OPEN THE GATES',
+      regShownLabel:pad(printed)+' OF 12 REGISTRATION TYPES',
       regDots:REG_ORDER.map((ri,k)=>({bg:T[k].lt>=0.5?REG_GC[T[k].g][0]:'#D5DAE3'})),
       regKey:e=>{const d={ArrowRight:[1,0],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowUp:[0,-1]}[e.key];if(!d)return;const a=document.activeElement,Ly=e.currentTarget;
         const vis=[...Ly.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.pointerEvents!=='none');
@@ -998,14 +1014,14 @@ class Component extends DCLogic {
           move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
             el.style.transform='perspective(800px) translateY(-4px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*6).toFixed(2)+'deg)';},
           leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};})};}
-  closingVideoEl(){return this.lazyVideo('cv','assets/closing.webm');}
-  heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);
-    return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:small?'assets/hero-720.mp4':'assets/hero-1080.mp4','aria-hidden':'true',
+  closingVideoEl(){return this.lazyVideo('cv','assets/closing.mp4');}
+  heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
+    return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});io.observe(el);(this.vios||(this.vios=[])).push(io);},
       style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'0% 42%',display:'block'}});}
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
-    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=el.canPlayType('video/webm')?src:src.replace(/\.webm$/,'.mp4');const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
+    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
   componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
@@ -1336,7 +1352,7 @@ class Component extends DCLogic {
           details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:time==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};}),
       regLeft:REG.slice(0,6).map(regBtn),regRight:REG.slice(6).map(regBtn),
       _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
-      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.webm'),momentVideo:this.lazyVideo('mv','assets/moment.webm'),
+      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),momentVideo:this.lazyVideo('mv','assets/moment.mp4'),
       ...this.newVals(),
       showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&!s.botLoaded,
       vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
