@@ -4,11 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GMS Front End Design</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230B0D12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23fff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%232F5BFF'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preconnect" href="https://prod.spline.design" crossorigin>
 <link rel="preconnect" href="https://cdn.spline.design" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/material-symbols-rounded-subset.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 /* Lite mode (phones, tablets, touch-first): lighter effects. The hero is a video, so its poster is preloaded first;
    the Spline viewer is only used by the chat robot and loads after the page has finished (later on lite devices). */
@@ -18,6 +21,208 @@ var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='im
 addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?1400:600);});})();
 </script>
 <style>
+/* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/instrument-sans-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/jetbrains-mono-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/jetbrains-mono-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/jetbrains-mono-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/jetbrains-mono-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("assets/fonts/material-symbols-rounded-subset.woff2") format('woff2');
+}
+
+x-dc{display:none!important}
+@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gmsRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes gmsBreathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.9}}
+@keyframes gmsLive{0%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}100%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
+spline-viewer{opacity:0;transition:opacity .9s cubic-bezier(.2,.8,.2,1)}spline-viewer.gms-ready{opacity:1}
+body{margin:0;background:#F4F5F7;color:#0B0D12;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#2F5BFF;text-decoration:none}a:hover{color:#1A3FD6}
+input{font:inherit}
+@keyframes gmsMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes gmsPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gmsSpinRev{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+@keyframes gmsUp{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 7px))}}
+@keyframes gmsDown{from{transform:translateY(calc(-50% - 7px))}to{transform:translateY(0)}}
+html{scroll-behavior:smooth}
+
 html,body{background:#F4F5F7}
 @keyframes gmsCloud{0%{transform:translate3d(-3%,1%,0) scale(1)}100%{transform:translate3d(3%,-2%,0) scale(1.08)}}
 @keyframes gmsLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -84,6 +289,10 @@ html,body{background:#F4F5F7}
  [data-ct-window]{padding:20px!important;border-radius:24px!important}
  [data-ct-plane] .ct-planesvg{offset-path:path('M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300')}
 }
+/* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
+html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
+#gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg') 0% 42%/cover no-repeat}
+@media (max-aspect-ratio:11/10){#gms-shell [data-r=hero-media]{background-position:57% 50%}}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
@@ -190,35 +399,51 @@ html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
 }
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
-<script src="./vendor/react.production.min.js"></script>
-<script src="./vendor/react-dom.production.min.js"></script>
-<script src="./support.js"></script>
+<script defer src="./vendor/react.production.min.js"></script>
+<script defer src="./vendor/react-dom.production.min.js"></script>
+<script defer src="./support.js"></script>
 </head>
 <body>
+<!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
+<div id="gms-shell" aria-hidden="true" style="position:fixed;inset:0;z-index:90;overflow:hidden;background:#0B0D12">
+<div data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
+  <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
+    <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
+    <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
+  </button>
+  <div data-r="navlinks" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
+    <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Overview<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Schedule<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Events<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Registration<span style="font-family:'Material Symbols Rounded';font-size:18px;width:18px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Live Scores<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Live TV<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)">expand_more</span></button>
+  </div>
+  <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
+    <button data-r="navburger" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px">menu</button>
+    <button data-r="admin-btn" class="gms-liquid gms-liquid--dark" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+  </div>
+  </div>
+<div data-r="hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
+    <div data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform"></div>
+    <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,10,16,.9) 0%,rgba(8,10,16,.72) 30%,rgba(8,10,16,.28) 56%,rgba(8,10,16,0) 74%),linear-gradient(180deg,rgba(8,10,16,.5) 0%,rgba(8,10,16,0) 22%,rgba(8,10,16,0) 62%,rgba(8,10,16,.66) 100%)"></div>
+    <div data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
+      <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.72);animation:gmsRise .8s .15s cubic-bezier(.2,.8,.2,1) both"><span style="display:flex;align-items:center;gap:8px;color:#7BE0A6"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>REGISTRATION OPEN</span><span style="opacity:.45">/</span><span><span data-shell-clock>--:--:--</span> IST</span><span style="opacity:.45">/</span><span>GMS · 2026</span></span>
+      <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.22s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.3s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.38s">System<b style="color:#5B84FF;font-weight:700">.</b></span></span></h1>
+      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .5s cubic-bezier(.2,.8,.2,1) both">Powering the <b style="color:#fff;font-weight:600">Hyundai World Archery Para Series</b> · 05–09 Sep 2026 · Ahmedabad</p>
+      <div style="height:1px;max-width:560px;background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0));transform-origin:0 50%;animation:gmsLine 1.2s .6s cubic-bezier(.2,.8,.2,1) both"></div>
+      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise 1s .66s cubic-bezier(.2,.8,.2,1) both">
+        <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">DATES</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">05 — 09 Sep 2026</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">HOST CITY</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">Ahmedabad</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">DIVISIONS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">3</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">MEDAL EVENTS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">15</span></div>
+      </div>
+      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
+        <button class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Athlete</button>
+        <button class="gms-liquid gms-liquid--glass" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease">Explore the programme</button>
+        <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
+      </div>
+    </div>
+    <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0"></div>
+  </div>
+</div>
+<script>window.__gmsShellT0=performance.now();document.documentElement.classList.add('gms-shelled');(function(){try{var d=new Date(Date.now()+(330+new Date().getTimezoneOffset())*60000),p=function(n){return(n<10?'0':'')+n},e=document.querySelector('[data-shell-clock]');if(e)e.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}catch(x){}})();</script>
 <x-dc>
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_downward,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,forum,groups,handyman,how_to_reg,location_on,medical_services,menu,play_arrow,play_circle,pool,restaurant,schedule,science,send,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,support_agent,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
-<script src="./image-slot.js"></script>
-<style>
-@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes gmsRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@keyframes gmsBreathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.55}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.9}}
-@keyframes gmsLive{0%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}100%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
-spline-viewer{opacity:0;transition:opacity .9s cubic-bezier(.2,.8,.2,1)}spline-viewer.gms-ready{opacity:1}
-body{margin:0;background:#F4F5F7;color:#0B0D12;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:#2F5BFF;text-decoration:none}a:hover{color:#1A3FD6}
-input{font:inherit}
-@keyframes gmsMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes gmsPulse{0%,100%{opacity:1}50%{opacity:.35}}
-@keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes gmsSpinRev{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
-@keyframes gmsUp{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 7px))}}
-@keyframes gmsDown{from{transform:translateY(calc(-50% - 7px))}to{transform:translateY(0)}}
-html{scroll-behavior:smooth}
-</style>
-</helmet>
+<helmet></helmet>
 
 <div data-navback data-open="{{ navBack }}" onClick="{{ closeNavMenus }}" aria-hidden="true"></div>
 <nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:0 8px 30px rgba(15,20,40,.06);box-sizing:border-box">
@@ -499,9 +724,9 @@ html{scroll-behavior:smooth}
   <section ref="{{ carRef }}" style="position:relative;height:200vh;background:#FFFFFF">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center">
       <div style="position:absolute;inset:0">{{ momentVideo }}<div style="position:absolute;inset:0;background:rgba(255,255,255,.5)"></div></div>
-      <div style="position:relative;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(64px,11vw,190px);letter-spacing:-.06em;line-height:.88;text-align:center;color:#0B0D12;opacity:{{ carTextOp }}">The moment<br>before impact.</div>
+      <div style="position:relative;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(64px,11vw,190px);letter-spacing:-.06em;line-height:.88;text-align:center;color:#0B0D12;opacity:{{ carTextOp }}" data-car-text>The moment<br>before impact.</div>
       
-      <div style="position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);max-width:560px;text-align:center;font-size:17px;line-height:1.55;color:#4A505C;padding:0 24px;color:#0B0D12;font-weight:500;opacity:{{ carTextOp }}">Experience the intensity of Para Archery at the Hyundai World Para Archery Series, Ahmedabad.</div>
+      <div style="position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);max-width:560px;text-align:center;font-size:17px;line-height:1.55;color:#4A505C;padding:0 24px;color:#0B0D12;font-weight:500;opacity:{{ carTextOp }}" data-car-text>Experience the intensity of Para Archery at the Hyundai World Para Archery Series, Ahmedabad.</div>
     </div>
   </section>
 
@@ -562,7 +787,7 @@ html{scroll-behavior:smooth}
           </div>
         </form>
         <div data-ct-plane aria-hidden="true">
-          <svg class="ct-trail" width="1" height="1" style="position:absolute;left:0;top:0;overflow:visible"><path d="{{ ctTrail }}" fill="none" stroke="#8FA6FF" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 9"></path></svg>
+          {{ ctTrailEl }}
           <svg class="ct-planesvg" viewBox="0 0 48 36" width="48" height="36"><path d="M2 17 L46 2 L30 34 L22 21 Z" fill="#FFFFFF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path><path d="M46 2 L22 21 L20 31 L26 24" fill="#DCE4FF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path></svg>
         </div>
         <div data-ct-ticket role="status" aria-live="polite">
@@ -584,9 +809,9 @@ html{scroll-behavior:smooth}
 
   <section ref="{{ closeRef }}" style="position:relative;height:220vh;background:#FFFFFF">
     <div style="position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden">
-      <div style="position:relative;width:{{ winW }};height:{{ winH }};border-radius:{{ winR }};background:{{ winBg }};color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;box-sizing:border-box;border:1px solid rgba(11,13,18,.08);overflow:hidden">
-        <div style="position:absolute;inset:0;opacity:{{ videoOp }};pointer-events:none">{{ closingVideo }}<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.75) 100%)"></div></div>
-        <div style="position:relative;opacity:{{ winContentOp }};display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;max-width:960px">
+      <div data-close-win style="position:relative;width:{{ winW }};height:{{ winH }};border-radius:{{ winR }};background:{{ winBg }};color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;box-sizing:border-box;border:1px solid rgba(11,13,18,.08);overflow:hidden">
+        <div data-close-vid style="position:absolute;inset:0;opacity:{{ videoOp }};pointer-events:none">{{ closingVideo }}<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.75) 100%)"></div></div>
+        <div data-close-txt style="position:relative;opacity:{{ winContentOp }};display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;max-width:960px">
           <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8FA6FF">THE RANGE · AWAITS</div>
           <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(48px,7vw,112px);letter-spacing:-.05em;line-height:.95">Every arrow has a moment.</h2>
           <p style="margin:0;max-width:620px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.7)">Prepare for the World Para Archery stage — from classification and equipment checks to qualification, eliminations and the final shot. <b style="color:#fff">One range. One target. One moment to make it count.</b></p>
@@ -1016,7 +1241,7 @@ const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',ev
 
 class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
-    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0},evNear:false,regNear:false,now:Date.now(),
+    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0},now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
@@ -1044,6 +1269,7 @@ class Component extends DCLogic {
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
     this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
+    this.fxForce=true;this.fxDirty=true;this.shellHandoff();
     this.measure();
     const loop=()=>{this.raf=requestAnimationFrame(loop);this.frame();};loop();
     this.splineT=setInterval(()=>this.patchSpline(),250);
@@ -1052,7 +1278,7 @@ class Component extends DCLogic {
     this.tickT=setInterval(()=>this.tick(),2800);
     this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?1800:1200);
     this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);
-    this.onResize=()=>{this.kickDirty=true;};window.addEventListener('resize',this.onResize);
+    this.onResize=()=>{this.kickDirty=true;this.fxDirty=true;this.fxC=null;this.setState({p:{...(this.P||this.state.p)}});};window.addEventListener('resize',this.onResize);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
   }
@@ -1063,10 +1289,10 @@ class Component extends DCLogic {
     const ci=s.cardF||0,cc=CATS[ci],rg=s.regShown||0;
     const pe=REDUCED?1:(s.p.ev||0);
     const cdl=Math.max(0,EVENT_START-s.now);
-    return {heroTiltRef:this.ref('heroTilt'),
-      stageMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.tilt.x=((t.clientX-r.left)/r.width-.5)*2;this.tilt.y=((t.clientY-r.top)/r.height-.5)*2;},stageOut:()=>{this.tilt.x=0;this.tilt.y=0;},
-      cardMove:e=>{const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();this.ctilt.x=((t.clientX-r.left)/r.width-.5)*2;this.ctilt.y=((t.clientY-r.top)/r.height-.5)*2;},cardOut:()=>{this.ctilt.x=0;this.ctilt.y=0;},
-      card:{name:cc.name,icon:cc.icon,num:pad(ci+1)+' / 03',sub:cc.outdoor?'OUTDOOR':'INDOOR',events:cc.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(cc.name+' ',''),meta:e[1],pick:()=>this.startReg('athlete',e[2])}))},
+    return {
+      
+      
+      
       heroFacts:[['DATES','05 — 09 Sep 2026',''],['HOST CITY','Ahmedabad',''],['DIVISIONS','3','3'],['MEDAL EVENTS','15','15']].map(([k,v,n])=>({k,v,n})),
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
@@ -1077,21 +1303,16 @@ class Component extends DCLogic {
       evStage:pe<KICK.run0+0.01?'SCROLL TO KICK OFF':pe<KICK.strike?'THE RUN-UP':pe<KICK.board0?'THE STRIKE':(HOVER?'HOVER AN EVENT · CLICK TO REGISTER':'TAP AN EVENT TO REGISTER'),
       goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.ringVals(),
-      _discCards:REG.slice(rg*6,rg*6+6).map((r,i)=>({...r,key:'disc'+i,fs:r.name.length>16?'30px':r.name.length>11?'36px':'42px',go:()=>this.startReg(r.id),enter:()=>{this.discHover=i;},leave:()=>{this.discHover=-1;}})),discMove:()=>{},discOut:()=>{this.discHover=-1;},
-      arenaY:((1-ease(clamp((s.p.steps-0.74)/0.22)))*110).toFixed(2)+'%',arenaOp:s.p.steps>0.7?'1':'0',
-      tiltMove:e=>{const el=this.refs.heroTilt.current;if(!el)return;const t=e.touches?e.touches[0]:e;const r=e.currentTarget.getBoundingClientRect();const x=(t.clientX-r.left)/r.width-.5,y=(t.clientY-r.top)/r.height-.5;el.style.transform='translate(-50%,-50%) rotateY('+(x*26).toFixed(1)+'deg) rotateX('+(-y*18).toFixed(1)+'deg) scale(1.03)';},
-      tiltLeave:()=>{const el=this.refs.heroTilt.current;if(el)el.style.transform='translate(-50%,-50%)';},
-      demoStepLabel:demo<5?'STEP '+Math.min(4,demo+1)+'/4':'DONE',demoPct:Math.min(100,demo*25)+'%',
-      demoFields:DF.map(([label,v],i)=>({label,value:demo>i?v:(demo===i?v.slice(0,Math.ceil(v.length/2))+'|':'—'),fg:demo>=i?'#0B0D12':'#B0B5BF',bd:demo===i?'#2F5BFF':'rgba(11,13,18,.06)'})),
-      demoBtn:demo===4?'Submitting…':'Submit registration',demoBtnScale:demo===4?'0.95':'1',demoDoneOp:demo>=5?'1':'0',
-      evCards:CATS.map((c,i)=>{const ein=i===0?1:ease(clamp(ep-i+0.6));const nxt=i<2?ease(clamp(ep-i-0.4)):0;
-        return {name:c.name,icon:c.icon,num:pad(i+1)+' / 03',bg:DIV[i][0],z:String(i+1),pe:ein>0.9&&nxt<0.5?'auto':'none',op:(ein*(1-0.55*nxt)).toFixed(3),
-          tf:'translateY('+((1-ein)*70).toFixed(2)+'vh) rotateX('+((1-ein)*28).toFixed(2)+'deg) translateY('+(-nxt*26).toFixed(1)+'px) scale('+(1-0.07*nxt).toFixed(4)+')',
-          events:c.events.map((e,j)=>({n:pad(j+1),name:e[0].replace(c.name+' ',''),meta:e[1]+' · SENIOR'+(c.outdoor?' · OUTDOOR':''),pick:()=>this.startReg('athlete',e[2])}))};}),
-      regGroupLabel:pad(rg+1)+' / 02',
-      regCards:REG.map((r,i)=>{const g=Math.floor(i/3),slot=i%3-1;const gp=rp-g;const pin=ease(clamp(gp*2.4));const pout=g<3?ease(clamp((gp-0.8)*5)):0;
-        const x=slot*gap*pin,y=(1-pin)*34-pout*18,sc=0.35+0.65*pin-0.12*pout;const op=pin*(1-pout);
-        return {...r,go:()=>this.startReg(r.id),op:op.toFixed(3),pe:op>0.6?'auto':'none',tf:'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(2)+'vh)) scale('+sc.toFixed(4)+') rotate('+(slot*(1-pin)*-14).toFixed(2)+'deg)'};}),
+      
+      arenaY:this.fxArena(s.p.steps).y,arenaOp:this.fxArena(s.p.steps).op,
+      
+      
+      
+      
+      
+      
+      
+      
       evNear:s.evNear&&(this.props.enable3D??true)&&!LITE,regNear:s.regNear&&(this.props.enable3D??true)};}
   // Registration: three ink-drawn speed gates (one per role group) draw in, open, and each prints its four
   // glass tickets: a ticket slides out of the slot under its gate and drops into the gate's column.
@@ -1102,51 +1323,68 @@ class Component extends DCLogic {
     const th=compact?Math.max(70,Math.min(96,(sh-gh-22-3*gy-24)/4)):Math.max(56,Math.min(76,(sh-gh-22-3*gy-24)/4));
     const total=gh+22+4*th+3*gy,top=-total/2,floorY=top+gh;
     return {W,compact,tw,th,gh,gy,gapX,top,floorY,rowsTop:floorY+22,cx:g=>(g-1)*(tw+gapX)};}
-  regGatesEl(L,draw,opens){const h=React.createElement,INK='#14161C',BL=BLUE,f=v=>v.toFixed(1);
-    const rr=(x,y,w,hh,r)=>'M'+f(x+r)+' '+f(y)+'H'+f(x+w-r)+'Q'+f(x+w)+' '+f(y)+' '+f(x+w)+' '+f(y+r)+'V'+f(y+hh-r)+'Q'+f(x+w)+' '+f(y+hh)+' '+f(x+w-r)+' '+f(y+hh)+'H'+f(x+r)+'Q'+f(x)+' '+f(y+hh)+' '+f(x)+' '+f(y+hh-r)+'V'+f(y+r)+'Q'+f(x)+' '+f(y)+' '+f(x+r)+' '+f(y)+'Z';
-    const ink=(d,extra)=>h('path',Object.assign({d,fill:'none',stroke:INK,strokeWidth:1.5,strokeLinecap:'round',strokeLinejoin:'round',pathLength:1,strokeDasharray:1,strokeDashoffset:(1-draw).toFixed(3)},extra||{}));
+  // the scroll-dependent state of the gates and tickets; used for the render and for the direct per-frame updates
+  regModel(pr,pin){const L=this.regLayout(),p=REDUCED?1:(pr||0),draw=REDUCED?1:ease(clamp(((pin||0)-0.2)/0.6));
+    const opens=[0,1,2].map(g=>ease(clamp((p-REG_T.open0-g*0.015)/REG_T.openDur)));
+    // printer feed: each gate prints its last role first; every new ticket comes out on top and pushes the earlier ones down a row
+    const T=REG_ORDER.map((ri,k)=>{const g=Math.floor(k/4),j=k%4,n=3-j,o=n*3+g;return {ri,g,j,n,lt:clamp((p-REG_T.t0-o*REG_T.step)/REG_T.dur)};});
+    T.forEach(x=>{const cx=L.cx(x.g),slotY=L.floorY,later=T.filter(y=>y.g===x.g&&y.n>x.n),push=later.reduce((a,y)=>a+ease(y.lt),0);
+      // print: slide out of the slot under the gate (clipped at the slot line) into the top row, then get pushed down by later tickets
+      const e=ease(x.lt),landed=x.lt>=1&&later.every(y=>y.lt<=0||y.lt>=1);
+      const top=slotY-L.th+(L.rowsTop-slotY+L.th)*e+(L.th+L.gy)*push,clip=Math.max(0,slotY-top),rz=(1-e)*(x.g-1||0.6)*-1.5;
+      x.tf=landed?'translate('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px)':'translate3d('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px,0) rotate('+rz.toFixed(2)+'deg)';
+      x.clip=landed||clip<=0?'none':'inset('+clip.toFixed(1)+'px 0 0 0)';x.vis=x.lt>0?'visible':'hidden';x.pe=x.lt>0.95?'auto':'none';x.landed=landed?'1':'0';});
+    return {L,draw,opens,T,printed:T.filter(x=>x.lt>=0.5).length};}
+  rrPath(x,y,w,hh,r){const f=v=>v.toFixed(1);r=Math.min(r,w/2,hh/2);return 'M'+f(x+r)+' '+f(y)+'H'+f(x+w-r)+'Q'+f(x+w)+' '+f(y)+' '+f(x+w)+' '+f(y+r)+'V'+f(y+hh-r)+'Q'+f(x+w)+' '+f(y+hh)+' '+f(x+w-r)+' '+f(y+hh)+'H'+f(x+r)+'Q'+f(x)+' '+f(y+hh)+' '+f(x)+' '+f(y+hh-r)+'V'+f(y+r)+'Q'+f(x)+' '+f(y)+' '+f(x+r)+' '+f(y)+'Z';}
+  gateFlaps(L,o){const w=L.tw,gh=L.gh,bh=Math.round(gh*0.3),pw=Math.max(14,w*0.1),py=bh+8,ph=gh-py,flapW=w/2-2-(6+pw),fy=py+ph*0.22,fh=ph*0.5,lf=Math.max(0.6,flapW*(1-o));
+    return {lf:flapW*(1-o),l:this.rrPath(6+pw,fy,lf,fh,4),r:this.rrPath(w-6-pw-lf,fy,lf,fh,4)};}
+  regGatesEl(M){const h=React.createElement,INK='#14161C',BL=BLUE,f=v=>v.toFixed(1),L=M.L,draw=M.draw,opens=M.opens,rr=(...a)=>this.rrPath(...a);
+    const ink=(d,extra)=>h('path',Object.assign({d,'data-gink':'1',fill:'none',stroke:INK,strokeWidth:1.5,strokeLinecap:'round',strokeLinejoin:'round',pathLength:1,strokeDasharray:1,strokeDashoffset:(1-draw).toFixed(3)},extra||{}));
+    const fill=d=>h('path',{d,'data-gfill':'1',fill:'#FFFFFF',opacity:draw.toFixed(3)});
     const span=L.tw*3+L.gapX*2+80,w=L.tw,gh=L.gh,bh=Math.round(gh*0.3),pw=Math.max(14,w*0.1),py=bh+8,ph=gh-py;
     return h('div',{'aria-hidden':'true',style:{position:'absolute',left:0,top:0,width:0,height:0,pointerEvents:'none'}},
       h('svg',{width:span,height:12,viewBox:'0 0 '+span+' 12',style:{position:'absolute',left:-span/2,top:L.floorY-6,overflow:'visible'}},
         ink('M0 6H'+span,{opacity:.45}),
-        [0,1,2].map(g=>h('path',{key:g,d:'M'+f(span/2+L.cx(g)-w*0.22)+' 6H'+f(span/2+L.cx(g)+w*0.22),stroke:BL,strokeWidth:3,strokeLinecap:'round',opacity:(0.35+0.65*opens[g]).toFixed(3)}))),
-      [0,1,2].map(g=>{const o=opens[g],x0=L.cx(g)-w/2,flapW=w/2-2-(6+pw),fy=py+ph*0.22,fh=ph*0.5,lf=flapW*(1-o);
+        [0,1,2].map(g=>h('path',{key:g,'data-gslot':String(g),d:'M'+f(span/2+L.cx(g)-w*0.22)+' 6H'+f(span/2+L.cx(g)+w*0.22),stroke:BL,strokeWidth:3,strokeLinecap:'round',opacity:(0.35+0.65*opens[g]).toFixed(3)}))),
+      [0,1,2].map(g=>{const o=opens[g],x0=L.cx(g)-w/2,FL=this.gateFlaps(L,o),fop=(FL.lf>0.5?draw:0).toFixed(3);
         return h('div',{key:g,style:{position:'absolute',left:x0,top:L.top,width:w,height:gh}},
           h('svg',{width:w,height:gh,viewBox:'0 0 '+f(w)+' '+f(gh),style:{position:'absolute',inset:0,overflow:'visible'}},
-            h('path',{d:rr(0.75,0.75,w-1.5,bh,10),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(0.75,0.75,w-1.5,bh,10)),
-            h('path',{d:rr(6,py,pw,ph,6),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(6,py,pw,ph,6)),
-            h('path',{d:rr(w-6-pw,py,pw,ph,6),fill:'#FFFFFF',opacity:draw.toFixed(3)}),ink(rr(w-6-pw,py,pw,ph,6)),
+            fill(rr(0.75,0.75,w-1.5,bh,10)),ink(rr(0.75,0.75,w-1.5,bh,10)),
+            fill(rr(6,py,pw,ph,6)),ink(rr(6,py,pw,ph,6)),
+            fill(rr(w-6-pw,py,pw,ph,6)),ink(rr(w-6-pw,py,pw,ph,6)),
             ink('M'+f(6+pw*0.3)+' '+f(py+ph*0.62)+'H'+f(6+pw*0.7)+'M'+f(w-6-pw*0.7)+' '+f(py+ph*0.62)+'H'+f(w-6-pw*0.3),{opacity:.6}),
-            lf>0.5?h('path',{d:rr(6+pw,fy,lf,fh,4),fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:draw.toFixed(3)}):null,
-            lf>0.5?h('path',{d:rr(w-6-pw-lf,fy,lf,fh,4),fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:draw.toFixed(3)}):null,
-            h('circle',{cx:f(6+pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)}),
-            h('circle',{cx:f(w-6-pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)})),
-          h('div',{style:{position:'absolute',left:0,top:0,width:w,height:bh,display:'flex',alignItems:'center',justifyContent:L.compact?'center':'space-between',gap:8,padding:L.compact?'0 6px':'0 14px',boxSizing:'border-box',opacity:clamp(draw*1.4-0.4)}},
+            h('path',{'data-flap':String(g),d:FL.l,fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:fop}),
+            h('path',{'data-flap':String(g),d:FL.r,fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:fop}),
+            h('circle',{'data-led':String(g),cx:f(6+pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)}),
+            h('circle',{'data-led':String(g),cx:f(w-6-pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)})),
+          h('div',{'data-glab':'1',style:{position:'absolute',left:0,top:0,width:w,height:bh,display:'flex',alignItems:'center',justifyContent:L.compact?'center':'space-between',gap:8,padding:L.compact?'0 6px':'0 14px',boxSizing:'border-box',opacity:clamp(draw*1.4-0.4)}},
             h('span',{style:{fontFamily:'JetBrains Mono',fontSize:L.compact?9:10,letterSpacing:'.16em',color:BL,whiteSpace:'nowrap'}},'GATE '+'ABC'[g]),
-            L.compact?null:h('span',{style:{fontFamily:'Bricolage Grotesque',fontWeight:700,fontSize:13,letterSpacing:'-.01em',color:'#0B0D12',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}},REG_GROUPS[g][0].replace(' & ',' & ').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))));}));}
-  ringVals(){const s=this.state,p=REDUCED?1:(s.p.reg||0),L=this.regLayout(),compact=L.compact,draw=REDUCED?1:ease(clamp(((s.p.regIn||0)-0.2)/0.6));
-    const opens=[0,1,2].map(g=>ease(clamp((p-REG_T.open0-g*0.015)/REG_T.openDur)));
-    // printer feed: each gate prints its last role first; every new ticket comes out on top and pushes the earlier ones down a row
-    const T=REG_ORDER.map((ri,k)=>{const g=Math.floor(k/4),j=k%4,n=3-j,o=n*3+g;return {g,j,n,lt:clamp((p-REG_T.t0-o*REG_T.step)/REG_T.dur)};});
-    const printed=T.filter(x=>x.lt>=0.5).length;
-    return {regStageRef:this.ref('regStage'),regCompact:compact?'1':'0',regGates:this.regGatesEl(L,draw,opens),
-      regShownLabel:pad(printed)+' OF 12 REGISTRATION TYPES',
-      regDots:REG_ORDER.map((ri,k)=>({bg:T[k].lt>=0.5?REG_GC[T[k].g][0]:'#D5DAE3'})),
+            L.compact?null:h('span',{style:{fontFamily:'Bricolage Grotesque',fontWeight:700,fontSize:13,letterSpacing:'-.01em',color:'#0B0D12',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}},REG_GROUPS[g][0].toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))));}));}
+  // per-frame: write the gates and tickets straight to the DOM (no page re-render)
+  regFx(M){const q=sel=>this.fxQ(sel),d=M.draw;if(!q('[data-reg-layer]').length)return;
+    const ds=(1-d).toFixed(3),dop=d.toFixed(3);
+    q('[data-reg-layer] [data-gink]').forEach(el=>el.setAttribute('stroke-dashoffset',ds));
+    q('[data-reg-layer] [data-gfill]').forEach(el=>el.setAttribute('opacity',dop));
+    q('[data-reg-layer] [data-glab]').forEach(el=>{el.style.opacity=String(clamp(d*1.4-0.4));});
+    const flaps=q('[data-reg-layer] [data-flap]'),leds=q('[data-reg-layer] [data-led]'),slots=q('[data-reg-layer] [data-gslot]');
+    [0,1,2].forEach(g=>{const o=M.opens[g],FL=this.gateFlaps(M.L,o),fop=(FL.lf>0.5?d:0).toFixed(3);
+      const fl=flaps.filter(el=>el.getAttribute('data-flap')===String(g));if(fl[0]){fl[0].setAttribute('d',FL.l);fl[0].setAttribute('opacity',fop);}if(fl[1]){fl[1].setAttribute('d',FL.r);fl[1].setAttribute('opacity',fop);}
+      leds.forEach(el=>{if(el.getAttribute('data-led')===String(g)){el.setAttribute('fill',o>0.5?'#1FA463':'#E5484D');el.setAttribute('opacity',dop);}});
+      const sl=slots.find(el=>el.getAttribute('data-gslot')===String(g));if(sl)sl.setAttribute('opacity',(0.35+0.65*o).toFixed(3));});
+    const tiles=q('[data-reg-layer] [data-reg-tile]');
+    M.T.forEach((x,k)=>{const el=tiles[k];if(!el)return;const st=el.style;st.transform=x.tf;st.clipPath=x.clip;st.visibility=x.vis;st.pointerEvents=x.pe;if(el.getAttribute('data-landed')!==x.landed)el.setAttribute('data-landed',x.landed);});}
+  ringVals(){const s=this.state,M=this.regModel(s.p.reg,s.p.regIn),L=M.L,T=M.T,compact=L.compact;
+    return {regStageRef:this.ref('regStage'),regCompact:compact?'1':'0',regGates:this.regGatesEl(M),
+      regShownLabel:pad(M.printed)+' OF 12 REGISTRATION TYPES',
+      regDots:T.map(x=>({bg:x.lt>=0.5?REG_GC[x.g][0]:'#D5DAE3'})),
       regKey:e=>{const d={ArrowRight:[1,0],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowUp:[0,-1]}[e.key];if(!d)return;const a=document.activeElement,Ly=e.currentTarget;
         const vis=[...Ly.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.pointerEvents!=='none');
         if(!a||!a.hasAttribute('data-reg-tile')){vis[0]&&vis[0].focus();e.preventDefault();return;}
         const g=+a.dataset.g+d[0],j=+a.dataset.j+d[1],n=vis.find(x=>+x.dataset.g===g&&+x.dataset.j===j);if(n){n.focus();e.preventDefault();}},
-      regTiles:REG_ORDER.map((ri,k)=>{const r=REG[ri],x=T[k],g=x.g,j=x.j,gc=REG_GC[g],lt=x.lt;
-        const cx=L.cx(g),slotY=L.floorY,later=T.filter(y=>y.g===g&&y.n>x.n),push=later.reduce((a,y)=>a+ease(y.lt),0);
-        // print: slide out of the slot under the gate (clipped at the slot line) into the top row, then get pushed down by later tickets
-        const e=ease(lt),landed=lt>=1&&later.every(y=>y.lt<=0||y.lt>=1);
-        const top=slotY-L.th+(L.rowsTop-slotY+L.th)*e+(L.th+L.gy)*push,clip=Math.max(0,slotY-top),rz=(1-e)*(g-1||0.6)*-1.5,rowTop=top;
-        const needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · ');
-        return {g:String(g),j:String(j),name:r.name.split('/').join('/​'),icon:r.icon,num:pad(ri+1),gate:'ABC'[g],gc:gc[0],gt:gc[1],needs,nx:compact?'40px':'64px',
+      regTiles:T.map(x=>{const r=REG[x.ri],g=x.g,gc=REG_GC[g],needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · ');
+        return {g:String(g),j:String(x.j),name:r.name.split('/').join('/​'),icon:r.icon,num:pad(x.ri+1),gate:'ABC'[g],gc:gc[0],gt:gc[1],needs,nx:compact?'40px':'64px',
           nfs:compact?'12px':(r.name.length>18?'14.5px':'16px'),aria:'Register as '+r.name+'. Gate '+'ABC'[g]+'. Needs '+needs,title:r.name+' · Needs '+needs,
-          l:(-L.tw/2).toFixed(1)+'px',t:'0px',w:L.tw.toFixed(1)+'px',h:L.th.toFixed(1)+'px',
-          tf:landed?'translate('+cx.toFixed(1)+'px,'+rowTop.toFixed(1)+'px)':'translate3d('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px,0) rotate('+rz.toFixed(2)+'deg)',
-          clip:landed||clip<=0?'none':'inset('+clip.toFixed(1)+'px 0 0 0)',vis:lt>0?'visible':'hidden',pe:lt>0.95?'auto':'none',landed:landed?'1':'0',
+          l:(-L.tw/2).toFixed(1)+'px',t:'0px',w:L.tw.toFixed(1)+'px',h:L.th.toFixed(1)+'px',tf:x.tf,clip:x.clip,vis:x.vis,pe:x.pe,landed:x.landed,
           go:()=>{if(compact)this.setState({modal:r.id});else this.startReg(r.id);},
           move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
             el.style.transform='perspective(800px) translateY(-4px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*6).toFixed(2)+'deg)';},
@@ -1170,6 +1408,7 @@ class Component extends DCLogic {
       ctCount:c.msg.length+' / 600',ctCountFg:c.msg.length>600?'#D93D42':'#8A909C',
       ctPhase:c.phase,ctRef:c.ref||'',ctSentDesk:sent.desk||'',ctSentEmail:sent.email||'',ctSentTime:sent.time||'',ctSentReply:sent.reply||'',
       ctTrail:(typeof window!=='undefined'&&window.innerWidth<=600)?'M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300':'M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360',
+      ctTrailEl:React.createElement('svg',{className:'ct-trail',width:1,height:1,style:{position:'absolute',left:0,top:0,overflow:'visible'}},React.createElement('path',{d:(typeof window!=='undefined'&&window.innerWidth<=600)?'M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300':'M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360',fill:'none',stroke:'#8FA6FF',strokeWidth:2,strokeLinecap:'round',strokeDasharray:'0.1 9'})),
       ctAskBot:()=>this.setState({chatOpen:true}),
       ctReset:()=>{clearTimeout(this.ctT1);clearTimeout(this.ctT2);this.setState(x=>({contact:{...x.contact,msg:'',errors:{},phase:'form'}}));},
       ctSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
@@ -1196,7 +1435,7 @@ class Component extends DCLogic {
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
   componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
-  componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
+  componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
   measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg'),regIn:this.vis('reg')};
@@ -1204,18 +1443,46 @@ class Component extends DCLogic {
     const rs=this.refs.regStage&&this.refs.regStage.current,hb=document.querySelector('[data-reg-hub]');if(rs)this.regStageH=rs.clientHeight;
     if(rs&&hb){const a=rs.getBoundingClientRect(),b=hb.getBoundingClientRect();this.regHub={x:b.left+b.width/2-(a.left+a.width/2),y:b.top+b.height/2-(a.top+a.height/2)};}
     if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+  // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
+  // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
+  // (a step number, the programme caption, the ticket counter, the closing video mounting...).
   frame(){
-    const o=this.state.p,t=this.target||o,n={};let moved=false;
-    for(const k in t){const cur=o[k]??0;const v=cur+(t[k]-cur)*0.16;n[k]=Math.abs(t[k]-v)<0.001?t[k]:v;if(Math.abs(n[k]-cur)>0.0015)moved=true;}
-    if(moved)this.setState({p:n});
+    const P=this.P||(this.P={...this.state.p}),t=this.target||P;let moved=false;
+    for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*0.16,nv=Math.abs(t[k]-v)<0.001?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
+    if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.setState({p:{...P}});}}
     if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
       this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
     this.heroParallax();this.kickAnim();this.paperFall();this.mediaDolly();
   }
+  fxQ(sel){const c=this.fxC||(this.fxC={});let a=c[sel];if(!a||!a.length||!a[0].isConnected){a=[...document.querySelectorAll(sel)];c[sel]=a;}return a;}
+  fxArena(p){return {y:((1-ease(clamp((p-0.74)/0.22)))*110).toFixed(2)+'%',op:p>0.7?'1':'0'};}
+  fxTile(p,i){const [x,y,r]=SCATTER[i],tp=ease(clamp(p*2.4)),c=tileCrumple(p,i),dir=i%2?-1:1;
+    return {br:(24+c*120).toFixed(0)+'px',tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)+c*40).toFixed(1)}px) rotate(${(r*(1-tp)+c*dir*32).toFixed(2)}deg) scale(${(1-0.82*c).toFixed(4)})`,op:((0.15+0.85*tp)*(1-clamp((c-0.45)/0.4))).toFixed(3)};}
+  fxCarOp(p){return (0.08+0.92*clamp(p*2.2)).toFixed(3);}
+  fxClose(p){const cp=ease(clamp(p*1.25)),lerp=(a,b)=>Math.round(a+(b-a)*cp);
+    return {w:`${(52+48*cp).toFixed(2)}vw`,h:`${(46+54*cp).toFixed(2)}vh`,r:`${(40*(1-cp)).toFixed(1)}px`,bg:`rgb(${lerp(244,0)},${lerp(245,0)},${lerp(247,0)})`,cop:clamp((cp-0.55)/0.45).toFixed(3),vop:clamp(p*2).toFixed(3)};}
+  // discrete state: when this changes the page re-renders once (text, counters, mounted elements)
+  fxSig(P){const W=window.innerWidth,pe=REDUCED?1:(P.ev||0);
+    const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));
+    const evS=pe<KICK.run0+0.01?0:pe<KICK.strike?1:pe<KICK.board0?2:3,printed=this.regM?this.regM.printed:0;
+    return stepIdx+'|'+evS+'|'+printed+'|'+(W<=600&&P.reg>0.01&&P.reg<0.995)+'|'+((P.close||0)>0.02);}
+  scrollFx(P){const last=this.fxPrev||(this.fxPrev={}),ch=k=>{const v=P[k]||0;if(last[k]===v&&!this.fxForce)return false;last[k]=v;return true;};
+    const force=this.fxForce;this.fxForce=false;
+    if(ch('steps')){const A=this.fxArena(P.steps||0);this.fxQ('[data-r=steps-arena]').forEach(el=>{el.style.transform='translateY('+A.y+')';el.style.opacity=A.op;});}
+    const rc=ch('reg'),ric=ch('regIn');if(rc||ric||force){this.regM=this.regModel(P.reg,P.regIn);this.regFx(this.regM);}
+    if(ch('tiles')){this.fxQ('[data-tile]').forEach((el,i)=>{const X=this.fxTile(P.tiles||0,i);el.style.transform=X.tf;el.style.opacity=X.op;el.style.borderRadius=X.br;});}
+    if(ch('car')){const o=this.fxCarOp(P.car||0);this.fxQ('[data-car-text]').forEach(el=>{el.style.opacity=o;});}
+    if(ch('close')){const C=this.fxClose(P.close||0);this.fxQ('[data-close-win]').forEach(el=>{const st=el.style;st.width=C.w;st.height=C.h;st.borderRadius=C.r;st.background=C.bg;});
+      this.fxQ('[data-close-txt]').forEach(el=>{el.style.opacity=C.cop;});this.fxQ('[data-close-vid]').forEach(el=>{el.style.opacity=C.vop;});}}
+  // hand-over from the static first-paint hero: let clicks through at once, fade it after its entrance has finished
+  shellHandoff(){const sh=document.getElementById('gms-shell');if(!sh)return;sh.style.pointerEvents='none';
+    const t0=window.__gmsShellT0||0,wait=Math.max(0,1300-(performance.now()-t0));
+    const go=()=>{if(!sh.isConnected)return;sh.style.transition='opacity .35s ease';sh.style.opacity='0';setTimeout(()=>sh.remove(),420);window.removeEventListener('scroll',go);};
+    window.addEventListener('scroll',go,{passive:true,once:true});requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(go,wait)));}
   // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
   // Everything is a pure function of scroll progress, so scrolling back up rebuilds the cards.
   paperFall(){const L=this.paperL||(this.paperL=document.querySelector('[data-paper-layer]'));if(!L||!L.isConnected){this.paperL=null;return;}
-    const p=this.state.p.tiles||0;
+    const p=(this.P||this.state.p).tiles||0;
     if(p<PAPER.start-0.02){if(L.__on){L.__on=0;L.style.display='none';}return;}
     const host=L.parentElement,W=host.clientWidth,H=host.clientHeight;
     if(!L.__on){L.__on=1;L.style.display='block';}
@@ -1339,7 +1606,7 @@ class Component extends DCLogic {
     const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     if(this.kickBox!==box||this.kickDirty||!this.kickL||this.kickL.W!==W||this.kickL.H!==H){this.kickBox=box;this.kickDirty=false;this.kickBuild(host,box);}
-    const L=this.kickL,K=this.kickK,p=REDUCED?1:(this.state.p.ev||0),build=REDUCED?1:clamp((vh-r.top)/(vh*0.8));
+    const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),build=REDUCED?1:clamp((vh-r.top)/(vh*0.8));
     if(!LITE&&!REDUCED&&this.kickTurb){const now=performance.now();if(!this.kickSeedT||now-this.kickSeedT>125){this.kickSeedT=now;this.kickTurb.setAttribute('seed',String(1+Math.floor(now/125)%7));}}
     const key=p.toFixed(4)+'|'+build.toFixed(3);if(key===this.kickLast)return;this.kickLast=key;
     K.ground.setAttribute('stroke-dashoffset',(1-ease(build)).toFixed(3));
@@ -1511,36 +1778,29 @@ class Component extends DCLogic {
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
       regAthlete:()=>this.startReg('athlete'),regStaff:()=>this.startReg('staff'),
       clock:`${pad(ist.getHours())}:${pad(ist.getMinutes())}:${pad(ist.getSeconds())}`,
-      heroStats:[[String(Math.floor(left/864e5)),'DAYS TO NEXT EVENT'],[String(Math.floor(left/36e5)%24),'HOURS'],['1','SPORTS OPEN'],['Ahmedabad','HOST CITY']].map(([v,l],i)=>({v,l,bl:i?'1px solid rgba(11,13,18,.1)':'none'})),
-      torchTags:[['Overview','dashboard','8%','4%',()=>this.scrollTo('steps')],['Schedule','calendar_month','22%','58%',()=>this.scrollTo('schedule')],['Events','target','40%','0%',()=>this.scrollTo('events')],['Registration','how_to_reg','56%','60%',()=>this.scrollTo('reg')],['Login','login','74%','6%',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings','84%','34%',()=>{this.setState({loginTab:'admin'});this.go('login');}]]
-        .map(([label,icon,top,l,go])=>({label,icon,top,left:l,go})),
+      
+      
       ticker:this.tickerEl(A,B),
       stepNum:pad(stepIdx+1),steps:STEPS.map((x,i)=>({...x,op:i===stepIdx?1:.22,mh:i===stepIdx?'120px':'0px'})),
-      categories:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,events:c.events.map((e,i)=>({n:pad(i+1),name:e[0],meta:`${e[1]} · SENIOR${c.outdoor?' · OUTDOOR':''}`,pick:()=>this.startReg('athlete',e[2])}))})),
+      
       days:DAYS.map((d,i)=>({n:d[0],date:d[1],dow:d[2],pick:()=>this.setState({day:i,openRow:null}),bg:s.day===i?'#0B0D12':'#F6F7F9',fg:s.day===i?'#fff':'#0B0D12',bd:'transparent'})),
       hasRows:s.day===0,noRows:s.day!==0,
-      rows:DAY1.map(([time,code],i)=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===i;
-        return {time,session:'MORNING',code,name:ev.name,cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',open,rot:open?'rotate(90deg)':'none',toggle:()=>this.setState({openRow:open?null:i}),
-          details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:time==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};}),
-      regLeft:REG.slice(0,6).map(regBtn),regRight:REG.slice(6).map(regBtn),
-      _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
+      
+      
+      
       photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),momentVideo:this.lazyVideo('mv','assets/moment.mp4'),
       ...this.newVals(),...this.contactVals(),
-      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:s.botLoaded||s.botFallback||!(P.enable3D??true)?'1':'0',
-      vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
-        return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
-          tf:'rotateY('+(-ang).toFixed(2)+'deg) translateZ('+(side===0?(-120*k).toFixed(1):(-40-160*k).toFixed(1))+'px) translateY('+(60*k).toFixed(1)+'px)',op:(1-0.8*k).toFixed(3),
-          events:c.events.map((e,j)=>({n:pad(j+1),name:e[0],meta:e[1]+' · SENIOR'+(c.outdoor?' · OUTDOOR':''),pick:()=>this.startReg('athlete',e[2])}))};}),
+      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:this.fxClose(s.p.close).vop,botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:s.botLoaded||s.botFallback||!(P.enable3D??true)?'1':'0',
+      
       groups:['08:00','10:00','10:27'].map(time=>({time,items:DAY1.filter(d=>d[0]===time).map(([tm,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;
         return {name:ev.name,code,cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'80px':'0px',
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:tm==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
       liveTop:[{icon:'target',a:'Verma',b:'Kim',scoreLine:`${A} – ${B}`}].concat(allM.slice(0,3)),
-      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),br:(24+c*120).toFixed(0)+'px',tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)+c*40).toFixed(1)}px) rotate(${(r*(1-tp)+c*dir*32).toFixed(2)}deg) scale(${(1-0.82*c).toFixed(4)})`,op:((0.15+0.85*tp)*(1-clamp((c-0.45)/0.4))).toFixed(3)};}),
-      carTf:`translate(${(-80+s.p.car*190).toFixed(2)}vw,-50%)`,carTextOp:(0.08+0.92*clamp(s.p.car*2.2)).toFixed(3),
-      winW:`${(52+48*cp).toFixed(2)}vw`,winH:`${(46+54*cp).toFixed(2)}vh`,winR:`${(40*(1-cp)).toFixed(1)}px`,
-      winBg:`rgb(${lerp(244,0)},${lerp(245,0)},${lerp(247,0)})`,winContentOp:clamp((cp-0.55)/0.45).toFixed(3),
+      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),...this.fxTile(s.p.tiles,i)};}),
+      carTextOp:this.fxCarOp(s.p.car),
+      ...(()=>{const C=this.fxClose(s.p.close);return {winW:C.w,winH:C.h,winR:C.r,winBg:C.bg,winContentOp:C.cop};})(),
       modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
       rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
