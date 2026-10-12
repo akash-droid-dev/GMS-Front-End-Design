@@ -1045,7 +1045,7 @@ html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
       <div style="grid-column:1 / -1;min-width:0;display:flex;flex-direction:column;gap:16px;animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both">
         <div style="position:relative;padding:10px;border-radius:34px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14)">
           <div style="position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#0B0D12">
-            <iframe src="{{ ytSrc }}" title="Hyundai World Archery Para Series live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            {{ ytFrame }}
             <div style="position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(11,13,18,.7);backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;pointer-events:none"><span style="width:7px;height:7px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ curStream.title }}</div>
           </div>
         </div>
@@ -1821,7 +1821,9 @@ class Component extends DCLogic {
       arch,liveCount:String(allM.length+1),
       sportFilters:sports.map(k=>({label:k,icon:k==='All'?'apps':SPORT_ICON[k],pick:()=>this.setState({filter:k}),bg:s.filter===k?'#0B0D12':'#fff',fg:s.filter===k?'#fff':'#0B0D12'})),
       matchCards:s.filter==='All'?allM:allM.filter(m=>m.sport===s.filter),
-      ytSrc:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,curStream:STREAMS[s.stream],
+      ytSrc:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,
+      // built in code so the hidden template never requests the literal placeholder URL
+      ytFrame:screen==='tv'?React.createElement('iframe',{key:'yt',src:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,title:'Hyundai World Archery Para Series live',allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true,style:{position:'absolute',inset:0,width:'100%',height:'100%',border:0}}):null,curStream:STREAMS[s.stream],
       ytThumb:'https://i.ytimg.com/vi/'+(P.youtubeVideoId||'jT9C2wBHn6c').trim()+'/hqdefault.jpg',upNext:DAY1.slice(-4).map(([time,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);return {time,code,name:ev.name};}),
       streams:STREAMS.map((x,i)=>({...x,tagBg:x.tag==='LIVE'?'#E5484D':'rgba(11,13,18,.7)',pick:()=>this.setState({stream:i}),bg:s.stream===i?'#F4F5F7':'transparent',tagColor:x.tag==='LIVE'?'#E5484D':'#8A909C'})),
       chatOpen:s.chatOpen,toggleChat:()=>this.setState(x=>({chatOpen:!x.chatOpen})),chatLabel:s.chatOpen?'Close chat':'Ask GMS',
