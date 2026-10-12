@@ -51,6 +51,39 @@ html,body{background:#F4F5F7}
 .gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
 .gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
 .gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
+/* Contact help desk: ink desk draws in, the form folds into a paper plane on send, then the reference ticket appears */
+.gms-rv [data-ink-y]{transform:scaleY(0);transform-origin:50% 0}
+.gms-rv [data-ink-x]{transform:scaleX(0)}
+.gms-rv [data-ink-drop]{opacity:0;translate:0 -12px}
+.gms-in [data-ink-y]{transform:none;transition:transform .7s var(--gms-ease) .3s}
+.gms-in [data-ink-x]{transform:none;transition:transform 1s var(--gms-ease) .4s}
+.gms-in [data-ink-drop]{opacity:1;translate:0 0;transition:opacity .6s ease .55s,translate .8s var(--gms-ease) .55s}
+[data-ct-sign]{transform-origin:50% -24px;animation:gmsSwing 6s ease-in-out infinite}
+@keyframes gmsSwing{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+[data-ct-window]{transform-origin:50% 55%;transition:transform .45s cubic-bezier(.6,0,.35,1),opacity .4s ease}
+[data-contact-desk]:not([data-phase="form"]) [data-ct-window]{transform:perspective(900px) rotateX(58deg) scale(.16);opacity:0;pointer-events:none}
+[data-contact-desk][data-phase="done"] [data-ct-window]{visibility:hidden}
+[data-ct-plane]{position:absolute;left:50%;top:54%;width:0;height:0;z-index:3;pointer-events:none;opacity:0}
+[data-ct-plane] .ct-planesvg{position:absolute;left:0;top:0;offset-path:path('M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360');offset-rotate:auto;offset-distance:0%}
+[data-ct-plane] .ct-trail{opacity:0}
+[data-contact-desk][data-phase="fly"] [data-ct-plane]{opacity:1}
+[data-contact-desk][data-phase="fly"] [data-ct-plane] .ct-planesvg{animation:gmsPlane 1.25s cubic-bezier(.45,0,.25,1) forwards}
+[data-contact-desk][data-phase="fly"] [data-ct-plane] .ct-trail{animation:gmsTrail 1.25s ease forwards}
+@keyframes gmsPlane{0%{offset-distance:0%;opacity:0;scale:.5}12%{opacity:1;scale:1}82%{opacity:1}100%{offset-distance:100%;opacity:0;scale:.75}}
+@keyframes gmsTrail{0%{opacity:0}25%{opacity:.75}100%{opacity:0}}
+[data-ct-ticket]{position:absolute;left:50%;top:54%;z-index:3;width:min(440px,94%);transform:translate(-50%,-50%) scale(.92);opacity:0;visibility:hidden;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s ease,visibility 0s linear .55s}
+[data-contact-desk][data-phase="done"] [data-ct-ticket]{transform:translate(-50%,-50%);opacity:1;visibility:visible;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s ease}
+[data-ct-window] input::placeholder,[data-ct-window] textarea::placeholder{color:#9AA0AC}
+[data-ct-window] input:focus,[data-ct-window] textarea:focus{border-color:#2F5BFF!important;background:#fff!important}
+@media (max-width:900px){
+ [data-r=contact-section]{padding:90px 18px 100px!important}
+ [data-r=contact-grid]{grid-template-columns:minmax(0,1fr)!important}
+}
+@media (max-width:600px){
+ [data-r=ct-fields]{grid-template-columns:minmax(0,1fr)!important}
+ [data-ct-window]{padding:20px!important;border-radius:24px!important}
+ [data-ct-plane] .ct-planesvg{offset-path:path('M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300')}
+}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
@@ -166,7 +199,7 @@ html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_downward,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,groups,handyman,location_on,medical_services,menu,play_arrow,play_circle,pool,restaurant,science,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=accessible_forward,account_balance,adjust,apps,arrow_downward,arrow_forward,arrow_outward,arrow_upward,assignment,badge,bed,check,close,connect_without_contact,corporate_fare,directions_bus,directions_run,emoji_events,event_available,expand_more,forum,groups,handyman,how_to_reg,location_on,medical_services,menu,play_arrow,play_circle,pool,restaurant,schedule,science,send,sports,sports_basketball,sports_cricket,sports_hockey,sports_kabaddi,sports_score,sports_soccer,sports_tennis,sports_volleyball,support_agent,target,task,upload_file,verified,videocam,volunteer_activism&display=block" rel="stylesheet">
 <script src="./image-slot.js"></script>
 <style>
 @keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -472,6 +505,83 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
+  <section data-r="contact-section" ref="{{ contactRef }}" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#0B0D12 0%,#111727 55%,#151B2E 100%);color:#fff;padding:130px 32px 140px">
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(48% 46% at 72% 46%,rgba(47,91,255,.30),rgba(47,91,255,0) 70%),radial-gradient(38% 40% at 10% 92%,rgba(143,166,255,.12),rgba(143,166,255,0) 70%)"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(143,166,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(143,166,255,.06) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(70% 70% at 62% 46%,#000 20%,transparent 100%);mask-image:radial-gradient(70% 70% at 62% 46%,#000 20%,transparent 100%)"></div>
+    <div data-r="contact-grid" style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,5vw,76px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8FA6FF">CONTACT · HELP DESK</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98;color:#fff">Talk to the right desk.</h2>
+        <p style="margin:0;max-width:460px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.7)">Pick a topic and your message goes straight to the team that handles it, with a reference number you can quote when you follow up.</p>
+        <span style="align-self:flex-start;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)">
+          <span style="position:relative;width:10px;height:10px;flex:none;border-radius:50%;background:{{ ctDot }};box-shadow:0 0 0 4px {{ ctDotRing }}"></span>
+          <span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#fff">{{ ctStatus }}</span><span style="font-size:12px;color:rgba(255,255,255,.55)">{{ ctStatusSub }}</span></span>
+        </span>
+        <div data-r="ct-route" style="display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);max-width:480px">
+          <span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">YOUR MESSAGE GOES TO</span>
+          <sc-if value="{{ ctHasTeam }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:46px;height:46px;flex:none;border-radius:15px;display:grid;place-items:center;background:#2F5BFF;color:#fff;font-family:'Material Symbols Rounded';font-size:23px;box-shadow:0 10px 26px rgba(47,91,255,.4)">{{ ctTeam.icon }}</span>
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;letter-spacing:-.02em">{{ ctTeam.name }}</span><span style="font-family:'JetBrains Mono';font-size:12px;color:#8FA6FF;overflow-wrap:anywhere">{{ ctTeam.email }}</span></span>
+            </div>
+            <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.7)"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8FA6FF">schedule</span>{{ ctTeam.reply }}</span>
+          </sc-if>
+          <sc-if value="{{ ctNoTeam }}" hint-placeholder-val="{{ true }}">
+            <span style="display:flex;align-items:center;gap:12px;font-size:14px;line-height:1.5;color:rgba(255,255,255,.6)"><span style="width:46px;height:46px;flex:none;border-radius:15px;display:grid;place-items:center;border:1.5px dashed rgba(143,166,255,.4);color:#8FA6FF;font-family:'Material Symbols Rounded';font-size:22px">support_agent</span>Choose a topic on the desk to see which team will answer, and how fast.</span>
+          </sc-if>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px 18px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.6)">
+          <span style="display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8FA6FF">location_on</span>Venue help desk · Ahmedabad</span>
+          <button onClick="{{ ctAskBot }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600;transition:background .25s ease" style-hover="background:rgba(255,255,255,.16)"><span style="font-family:'Material Symbols Rounded';font-size:17px">forum</span>Quick question? Ask the GMS assistant</button>
+        </div>
+      </div>
+      <div data-contact-desk data-phase="{{ ctPhase }}" style="position:relative;padding:70px 0 44px">
+        <span data-ink-y aria-hidden="true" style="position:absolute;left:32%;top:0;width:1.5px;height:24px;background:rgba(143,166,255,.65)"></span>
+        <span data-ink-y aria-hidden="true" style="position:absolute;right:32%;top:0;width:1.5px;height:24px;background:rgba(143,166,255,.65)"></span>
+        <span data-ink-drop aria-hidden="true" style="position:absolute;left:50%;top:22px;transform:translateX(-50%);z-index:1">
+          <span data-ct-sign style="display:flex;align-items:center;gap:10px;white-space:nowrap;padding:8px 18px;border-radius:11px;border:1.5px solid rgba(143,166,255,.7);background:rgba(11,13,18,.6);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.2em;color:#DCE4FF"><span style="width:7px;height:7px;border-radius:50%;background:{{ ctDot }}"></span>INFO DESK</span>
+        </span>
+        <form data-ct-window onSubmit="{{ ctSubmit }}" noValidate aria-label="Contact the GMS help desk" style="position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;padding:26px;border-radius:28px;background:rgba(255,255,255,.96);color:#0B0D12;box-shadow:0 40px 90px rgba(0,0,0,.45),inset 0 1px 0 #fff">
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#5B6270">WHAT IS IT ABOUT?</span>
+            <div role="radiogroup" aria-label="Topic" style="display:flex;flex-wrap:wrap;gap:7px">
+              <sc-for list="{{ ctTopics }}" as="t" hint-placeholder-count="6">
+                <button type="button" role="radio" aria-checked="{{ t.on }}" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 13px 8px 10px;border-radius:999px;font-size:13px;font-weight:600;background:{{ t.bg }};color:{{ t.fg }};box-shadow:{{ t.sh }};transition:background .25s ease,color .25s ease,box-shadow .25s ease"><span style="font-family:'Material Symbols Rounded';font-size:17px">{{ t.icon }}</span>{{ t.label }}</button>
+              </sc-for>
+            </div>
+            <span role="alert" style="font-size:12.5px;color:#D93D42;min-height:0">{{ ctErrTopic }}</span>
+          </div>
+          <div data-r="ct-fields" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C">Your name<input value="{{ ctName }}" onChange="{{ onCtName }}" autocomplete="name" placeholder="Full name" style="all:unset;box-sizing:border-box;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdName }};font-size:15px;font-weight:500;color:#0B0D12;transition:border-color .2s ease"><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrName }}</span></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C">Email<input value="{{ ctEmail }}" onChange="{{ onCtEmail }}" type="email" autocomplete="email" placeholder="you@example.com" style="all:unset;box-sizing:border-box;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdEmail }};font-size:15px;font-weight:500;color:#0B0D12;transition:border-color .2s ease"><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrEmail }}</span></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C"><span style="display:flex;justify-content:space-between;gap:8px">Message<span style="font-family:'JetBrains Mono';font-weight:400;color:{{ ctCountFg }}">{{ ctCount }}</span></span><textarea value="{{ ctMsg }}" onChange="{{ onCtMsg }}" rows="4" placeholder="How can we help? Include your registration ID if you have one." style="all:unset;box-sizing:border-box;min-height:112px;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdMsg }};font-size:15px;font-weight:500;line-height:1.5;color:#0B0D12;white-space:pre-wrap;transition:border-color .2s ease"></textarea><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrMsg }}</span></label>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-size:12.5px;color:#5B6270;max-width:280px;line-height:1.4">{{ ctRouteLine }}</span>
+            <button type="submit" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">Send to the desk<span style="font-family:'Material Symbols Rounded';font-size:19px">send</span></button>
+          </div>
+        </form>
+        <div data-ct-plane aria-hidden="true">
+          <svg class="ct-trail" width="1" height="1" style="position:absolute;left:0;top:0;overflow:visible"><path d="{{ ctTrail }}" fill="none" stroke="#8FA6FF" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 9"></path></svg>
+          <svg class="ct-planesvg" viewBox="0 0 48 36" width="48" height="36"><path d="M2 17 L46 2 L30 34 L22 21 Z" fill="#FFFFFF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path><path d="M46 2 L22 21 L20 31 L26 24" fill="#DCE4FF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+        </div>
+        <div data-ct-ticket role="status" aria-live="polite">
+          <div data-ticket style="--nx:72px;display:flex;align-items:stretch;border-radius:20px;background:linear-gradient(160deg,#FFFFFF 0%,#F4F7FF 100%);color:#0B0D12;filter:drop-shadow(0 30px 50px rgba(0,0,0,.4))">
+            <span style="width:72px;flex:none;display:grid;place-items:center;border-right:1.5px dashed rgba(11,13,18,.16)"><span style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#1FA463;color:#fff;font-family:'Material Symbols Rounded';font-size:24px">check</span></span>
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding:20px 20px 20px 18px">
+              <span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#1C8A53">MESSAGE RECEIVED · {{ ctSentTime }}</span>
+              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:28px;letter-spacing:-.03em;line-height:1">{{ ctRef }}</span>
+              <span style="font-size:13.5px;line-height:1.45;color:#4A505C">Routed to the <b style="color:#0B0D12">{{ ctSentDesk }}</b>. {{ ctSentReply }}. We'll reply to {{ ctSentEmail }}.</span>
+              <button type="button" onClick="{{ ctReset }}" style="all:unset;cursor:pointer;align-self:flex-start;margin-top:6px;display:flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:#0B0D12;color:#fff;font-size:13px;font-weight:600">Send another message<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_forward</span></button>
+            </span>
+          </div>
+        </div>
+        <span data-ink-x aria-hidden="true" style="position:absolute;left:-5%;right:-5%;bottom:6px;height:30px;border:1.5px solid rgba(143,166,255,.55);border-radius:14px 14px 6px 6px;background:rgba(143,166,255,.05)"></span>
+        <span data-ink-drop aria-hidden="true" style="position:absolute;right:9%;bottom:36px;width:28px;height:15px;border:1.5px solid rgba(143,166,255,.7);border-bottom:0;border-radius:14px 14px 0 0;box-sizing:border-box"></span>
+      </div>
+    </div>
+  </section>
+
   <section ref="{{ closeRef }}" style="position:relative;height:220vh;background:#FFFFFF">
     <div style="position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden">
       <div style="position:relative;width:{{ winW }};height:{{ winH }};border-radius:{{ winR }};background:{{ winBg }};color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;box-sizing:border-box;border:1px solid rgba(11,13,18,.08);overflow:hidden">
@@ -494,7 +604,7 @@ html{scroll-behavior:smooth}
       <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px">GMS</span>
       <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">Sanctioned by World Archery Federation (Lausanne, Switzerland), Archery Association of India (AAI) and the Gujarat State Archery Association (GSAA), with the Sports Authority of Gujarat (SAG), World Archery partners(Errea, Turkish Airlines, Herbelin), Series title sponsor - Hyundai.</p>
       <div style="display:flex;gap:22px;font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.6)">
-        <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">SCHEDULE</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">EVENTS</button><span>© 2026</span>
+        <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">SCHEDULE</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">EVENTS</button><button onClick="{{ toContact }}" style="all:unset;cursor:pointer">CONTACT</button><span>© 2026</span>
       </div>
     </div>
   </footer>
@@ -613,6 +723,24 @@ html{scroll-behavior:smooth}
             </div>
           </div>
         </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em">Help desk enquiries</span><span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ enqCount }} NEW</span></div>
+        <sc-if value="{{ noEnq }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:18px;border-radius:18px;background:rgba(255,255,255,.7);font-size:14px;color:#5B6270">No enquiries yet. Messages sent from the Contact section on the home page appear here.</div>
+        </sc-if>
+        <sc-if value="{{ hasEnq }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;border-radius:20px;background:rgba(255,255,255,.85);overflow:hidden">
+            <sc-for list="{{ adminEnq }}" as="q" hint-placeholder-count="2">
+              <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ q.ref }}</span>
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ q.name }}</span><span style="font-size:12px;color:#5B6270;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ q.snip }}</span></span>
+                <span style="font-size:13px;color:#4A505C">{{ q.desk }} · {{ q.time }}</span>
+                <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#E8EEFF;color:#2F5BFF">{{ q.status }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
       </div>
     </div>
   </sc-if>
@@ -844,6 +972,13 @@ const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
 const REG_GC=[['#2F5BFF','#E8EEFF'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
 const REG_T={open0:0.05,openDur:0.07,t0:0.12,step:0.052,dur:0.11};
+// Contact desk routing: [id, chip label, icon, desk, address (placeholder .example domain), typical reply hours]
+const CONTACT_TOPICS=[['registration','Registration','how_to_reg','Registration desk','registration@gms.example',4],
+['accreditation','Accreditation','badge','Accreditation desk','accreditation@gms.example',6],
+['media','Media','videocam','Media & broadcast desk','media@gms.example',8],
+['volunteer','Volunteering','volunteer_activism','Volunteer programme','volunteers@gms.example',24],
+['technical','Technical & results','sports_score','Technical & results desk','results@gms.example',12],
+['general','General','forum','General enquiries','hello@gms.example',24]];
 const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -883,6 +1018,7 @@ class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
     day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0},evNear:false,regNear:false,now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
+    contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
     filter:'All',stream:0,flash:{},
     ends:[{a:[10,9,9],b:[9,9,8]},{a:[9,10,9],b:[10,10,9]},{a:[10,10,9],b:[10,9,9]},{a:[10],b:[]}],turn:'b',
@@ -1015,6 +1151,41 @@ class Component extends DCLogic {
           move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
             el.style.transform='perspective(800px) translateY(-4px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*6).toFixed(2)+'deg)';},
           leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};})};}
+  // Contact help desk: topic routing, live desk status on IST, validation, paper-plane send, reference ticket, admin enquiries
+  contactVals(){const s=this.state,c=s.contact,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
+    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),h=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&h>=9&&h<19;
+    const next=open?'':(d>=1&&d<=6&&h<9?'opens today 09:00 IST':(d>=1&&d<=5?'opens tomorrow 09:00 IST':'opens Monday 09:00 IST'));
+    const clock=pad(ist.getHours())+':'+pad(ist.getMinutes());
+    const set=k=>e=>{const v=e.target.value;this.setState(x=>({contact:{...x.contact,[k]:v,errors:{...(x.contact.errors||{}),[k]:''}}}));};
+    const bd=k=>err[k]?'#E5484D':'transparent';
+    return {contactRef:this.ref('contact'),toContact:()=>this.scrollTo('contact'),
+      ctDot:open?'#1FA463':'#E3A008',ctDotRing:open?'rgba(31,164,99,.22)':'rgba(227,160,8,.22)',
+      ctStatus:open?'DESK OPEN · '+clock+' IST':'DESK CLOSED · '+next.toUpperCase(),ctStatusSub:'Mon–Sat · 09:00–19:00 IST'+(open?' · replies today':' · your message will be queued'),
+      ctTopics:CONTACT_TOPICS.map(t=>{const on=c.topic===t[0];return {label:t[1],icon:t[2],on:on?'true':'false',bg:on?'#2F5BFF':'#F1F3F7',fg:on?'#fff':'#0B0D12',sh:on?'0 8px 20px rgba(47,91,255,.32)':'none',
+        pick:()=>this.setState(x=>({contact:{...x.contact,topic:t[0],errors:{...(x.contact.errors||{}),topic:''}}}))};}),
+      ctHasTeam:!!T,ctNoTeam:!T,ctTeam:T?{name:T[3],email:T[4],icon:T[2],reply:'Typically replies within '+T[5]+' hours'+(open?'':' of the desk opening')}:{name:'',email:'',icon:'',reply:''},
+      ctRouteLine:T?'Goes to '+T[3]+' · '+T[4]:'Pick a topic and we route you to the right team.',
+      ctName:c.name,ctEmail:c.email,ctMsg:c.msg,onCtName:set('name'),onCtEmail:set('email'),onCtMsg:set('msg'),
+      ctErrTopic:err.topic||'',ctErrName:err.name||'',ctErrEmail:err.email||'',ctErrMsg:err.msg||'',ctBdName:bd('name'),ctBdEmail:bd('email'),ctBdMsg:bd('msg'),
+      ctCount:c.msg.length+' / 600',ctCountFg:c.msg.length>600?'#D93D42':'#8A909C',
+      ctPhase:c.phase,ctRef:c.ref||'',ctSentDesk:sent.desk||'',ctSentEmail:sent.email||'',ctSentTime:sent.time||'',ctSentReply:sent.reply||'',
+      ctTrail:(typeof window!=='undefined'&&window.innerWidth<=600)?'M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300':'M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360',
+      ctAskBot:()=>this.setState({chatOpen:true}),
+      ctReset:()=>{clearTimeout(this.ctT1);clearTimeout(this.ctT2);this.setState(x=>({contact:{...x.contact,msg:'',errors:{},phase:'form'}}));},
+      ctSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
+        if(!x.topic)er.topic='Pick a topic so we can route you to the right desk.';
+        if(x.name.trim().length<2)er.name='Please enter your name.';
+        if(!/^\S+@\S+\.\S+$/.test(x.email.trim()))er.email='Enter a valid email so the desk can reply.';
+        if(x.msg.trim().length<20)er.msg='Tell us a little more (at least 20 characters).';else if(x.msg.length>600)er.msg='Please keep it under 600 characters.';
+        if(Object.keys(er).length){this.setState({contact:{...x,errors:er}});return;}
+        const TT=CONTACT_TOPICS.find(t=>t[0]===x.topic),ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length);
+        const enq={ref,name:x.name.trim(),email:x.email.trim(),topic:TT[1],desk:TT[3],time:clock+' IST',reply:'Expect a reply within '+TT[5]+' hours'+(open?'':' of the desk opening'),msg:x.msg.trim(),status:'New'};
+        this.setState(st=>({enquiries:[enq,...(st.enquiries||[])],contact:{...x,errors:{},ref,sent:enq,phase:REDUCED?'done':'fold'}}));
+        if(!REDUCED){clearTimeout(this.ctT1);clearTimeout(this.ctT2);
+          this.ctT1=setTimeout(()=>this.setState(st=>({contact:{...st.contact,phase:'fly'}})),450);
+          this.ctT2=setTimeout(()=>this.setState(st=>({contact:{...st.contact,phase:'done'}})),1700);}},
+      enqCount:String((s.enquiries||[]).length),hasEnq:(s.enquiries||[]).length>0,noEnq:!(s.enquiries||[]).length,
+      adminEnq:(s.enquiries||[]).map(q=>({...q,snip:q.msg.length>90?q.msg.slice(0,90)+'…':q.msg}))};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.mp4');}
   heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
     return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4','aria-hidden':'true',
@@ -1024,7 +1195,7 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
@@ -1354,7 +1525,7 @@ class Component extends DCLogic {
       regLeft:REG.slice(0,6).map(regBtn),regRight:REG.slice(6).map(regBtn),
       _unusedTorch:0&&this.torchOrbitEl([['Overview','dashboard',()=>this.scrollTo('steps')],['Schedule','calendar_month',()=>this.scrollTo('schedule')],['Events','target',()=>this.scrollTo('events')],['Registration','how_to_reg',()=>this.scrollTo('reg')],['Login','login',()=>{this.setState({loginTab:'participant'});this.go('login');}],['Admin Login','admin_panel_settings',()=>{this.setState({loginTab:'admin'});this.go('login');}]].map(([label,icon,go])=>({label,icon,go}))),
       photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),momentVideo:this.lazyVideo('mv','assets/moment.mp4'),
-      ...this.newVals(),
+      ...this.newVals(),...this.contactVals(),
       showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:clamp(s.p.close*2).toFixed(3),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:s.botLoaded||s.botFallback||!(P.enable3D??true)?'1':'0',
       vrWins:CATS.map((c,i)=>{const k=1-ease(clamp(s.p.ev*1.4));const side=i-1;const ang=side*(16+40*k);
         return {name:c.name,icon:c.icon,color:c.color,tint:c.tint,origin:side<0?'100% 50%':side>0?'0% 50%':'50% 50%',
