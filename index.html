@@ -31,21 +31,21 @@ html,body{background:#F4F5F7}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
-/* Registration 3x3: hover lifts the tile, fills the icon and previews what the role needs; a ring pops as each tile lands */
-[data-reg-tile]:hover [data-tile-in],[data-reg-tile]:focus-visible [data-tile-in]{box-shadow:0 26px 60px rgba(15,20,40,.16),inset 0 1px 0 #fff!important}
-[data-reg-tile]:focus-visible [data-tile-in]{outline:2px solid #2F5BFF;outline-offset:3px}
-[data-reg-tile]:focus-visible [data-tile-in]{transform:translateY(-6px)}
+/* Registration 3x3 (dealt cards): hover lifts the glass tile, fills the icon and swaps the group line for what the role needs */
+[data-reg-tile]:hover [data-tile-in],[data-reg-tile]:focus-visible [data-tile-in]{box-shadow:0 22px 50px rgba(15,20,40,.15),inset 0 1px 0 #fff!important}
+[data-reg-tile]:focus-visible [data-tile-in]{outline:2px solid #2F5BFF;outline-offset:3px;transform:translateY(-5px)}
 [data-reg-tile]:hover [data-tile-ic],[data-reg-tile]:focus-visible [data-tile-ic]{background:#2F5BFF!important;color:#fff!important}
-[data-reg-tile]:hover [data-tile-needs],[data-reg-tile]:focus-visible [data-tile-needs]{max-height:34px!important;opacity:1!important}
+[data-reg-tile]:hover [data-tile-grp],[data-reg-tile]:focus-visible [data-tile-grp]{opacity:0;transform:translateY(-12px)}
+[data-reg-tile]:hover [data-tile-needs],[data-reg-tile]:focus-visible [data-tile-needs]{opacity:1!important;transform:none!important}
+[data-reg-tile]:hover [data-tile-go]{transform:translateX(3px)}
 [data-reg-tile][data-landed="1"] [data-pop]{animation:gmsPopRing .9s cubic-bezier(.2,.8,.2,1) both}
-@keyframes gmsPopRing{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.16)}}
-[data-reg-layer][data-compact="1"] [data-tile-in]{padding:10px 6px!important;align-items:center;justify-content:center!important;text-align:center;gap:7px!important;border-radius:18px!important}
-[data-reg-layer][data-compact="1"] [data-tile-top]{justify-content:center!important}
-[data-reg-layer][data-compact="1"] [data-tile-ic]{width:36px!important;height:36px!important;font-size:20px!important;border-radius:12px!important}
-[data-reg-layer][data-compact="1"] [data-tile-grp],[data-reg-layer][data-compact="1"] [data-tile-needs],[data-reg-layer][data-compact="1"] [data-tile-go]{display:none!important}
-[data-reg-layer][data-compact="1"] [data-tile-name]{justify-content:center!important;line-height:1.15!important}
-[data-reg-layer][data-compact="1"] [data-tile-bar]{left:auto!important;top:0!important;bottom:auto!important;width:28px!important;height:3px!important;border-radius:0 0 3px 3px!important;left:calc(50% - 14px)!important}
-[data-reg-layer][data-compact="1"] [data-pop],[data-reg-layer][data-compact="1"] [data-reg-tile]{border-radius:18px!important}
+@keyframes gmsPopRing{0%{opacity:.55;transform:scale(1)}100%{opacity:0;transform:scale(1.1,1.3)}}
+[data-reg-layer][data-compact="1"] [data-tile-in]{flex-direction:column;justify-content:center;gap:8px!important;padding:10px 6px!important;text-align:center;border-radius:18px!important}
+[data-reg-layer][data-compact="1"] [data-tile-ic]{width:36px!important;height:36px!important;font-size:19px!important;border-radius:12px!important}
+[data-reg-layer][data-compact="1"] [data-tile-txt]{flex:none!important;width:100%}
+[data-reg-layer][data-compact="1"] [data-tile-sub],[data-reg-layer][data-compact="1"] [data-tile-go]{display:none!important}
+[data-reg-layer][data-compact="1"] [data-tile-bar]{top:0!important;bottom:auto!important;left:calc(50% - 14px)!important;width:28px!important;height:3px!important;border-radius:0 0 3px 3px!important}
+[data-reg-layer][data-compact="1"] [data-reg-tile],[data-reg-layer][data-compact="1"] [data-pop],[data-reg-layer][data-compact="1"] [data-tile-back]{border-radius:18px!important}
 @keyframes gmsWordUp{from{transform:translateY(108%)}to{transform:none}}
 .gms-hl,.gms-w{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em 0 .14em;margin:-.04em 0 -.14em}
 .gms-hl>span{display:inline-block;animation:gmsWordUp 1.1s var(--gms-ease) both}
@@ -315,50 +315,58 @@ html{scroll-behavior:smooth}
   <section ref="{{ regRef }}" data-r="reg-section" style="position:relative;height:440vh;background:#EEF1F6">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box">
       <div aria-hidden="true" style="position:absolute;left:0;right:0;top:-8%;height:116%;background:url('assets/brick-wall.jpg') center/cover no-repeat;transform:translate3d(0,{{ brickY }},0);will-change:transform;pointer-events:none"></div>
-      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 55%,rgba(255,255,255,.86) 0%,rgba(238,241,247,.86) 60%,rgba(228,233,242,.87) 100%);pointer-events:none"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 55%,rgba(255,255,255,.88) 0%,rgba(238,241,247,.87) 60%,rgba(228,233,242,.88) 100%);pointer-events:none"></div>
       <div data-r="reg-head" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 24px">
         <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTRATION · 12 ROLES</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,min(4vw,6.5vh),58px);letter-spacing:-.045em;line-height:1">Pick how you're taking part.</h2>
-        <p data-r="reg-p" style="margin:0;font-size:15px;color:#4A505C">Keep scrolling: the roles come out of the wheel. Hover or tap one to register.</p>
-        <div data-r="reg-progress" style="display:flex;align-items:center;justify-content:center;gap:12px 16px;flex-wrap:wrap;margin-top:6px">
-          <span aria-live="polite" style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#5B6270">{{ regShownLabel }}</span>
-          <span aria-hidden="true" style="display:flex;gap:5px;align-items:center">
+        <p data-r="reg-p" style="margin:0;font-size:15px;color:#4A505C">Keep scrolling: the wheel deals out every role. Hover or tap one to register.</p>
+        <div data-r="reg-progress" style="display:flex;align-items:center;justify-content:center;gap:10px 14px;flex-wrap:wrap;margin-top:4px">
+          <span data-reg-hub aria-hidden="true" style="position:relative;width:46px;height:46px;flex:none">
+            <span style="position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(47,91,255,.22);background:rgba(255,255,255,.7)"></span>
             <sc-for list="{{ regDots }}" as="d" hint-placeholder-count="12">
-              <span style="width:{{ d.w }};height:6px;border-radius:6px;background:{{ d.bg }};transition:width .45s cubic-bezier(.2,.8,.2,1),background .35s ease"></span>
+              <span style="position:absolute;left:{{ d.x }};top:{{ d.y }};width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;box-sizing:border-box;background:{{ d.bg }};border:1.5px solid {{ d.bd }};transition:background .3s ease,border-color .3s ease"></span>
             </sc-for>
           </span>
-          <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;color:#0B0D12;transition:background .25s ease,color .25s ease" style-hover="background:#0B0D12;color:#fff">See all 12 roles<span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span></button>
+          <span aria-live="polite" style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#5B6270">{{ regShownLabel }}</span>
+          <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.85);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;color:#0B0D12;transition:background .25s ease,color .25s ease" style-hover="background:#0B0D12;color:#fff">See all 12 roles<span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span></button>
         </div>
       </div>
       <div ref="{{ regStageRef }}" style="position:relative;flex:1;width:100%;z-index:1">
-        <div onPointerDown="{{ ringDown }}" style="position:absolute;inset:0;perspective:2200px;perspective-origin:50% 40%;touch-action:pan-y;cursor:grab;opacity:{{ wheelOp }};pointer-events:{{ wheelPe }}">
-          <div style="position:absolute;left:50%;top:40%;width:0;height:0;transform-style:preserve-3d;transform:scale({{ ringScale }}) rotateX(-8deg) rotateY({{ ringRot }});will-change:transform">
-            <sc-for list="{{ ringCards }}" as="r" hint-placeholder-count="12">
-              <div onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.tap }}" style="position:absolute;left:-105px;top:-140px;width:210px;height:280px;transform:{{ r.tf }};transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)">
-                <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;box-sizing:border-box;border-radius:26px;background:{{ r.bg }};border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};opacity:{{ r.op }};transition:background .4s ease,box-shadow .4s ease;backface-visibility:hidden">
-                  <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:50px;height:50px;border-radius:16px;background:{{ r.ib }};color:{{ r.ic }};display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;transition:background .4s ease,color .4s ease">{{ r.icon }}</span><span style="font-family:'JetBrains Mono';font-size:11px;color:#8A909C">{{ r.num }}</span></div>
-                  <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ r.nfs }};letter-spacing:-.025em;line-height:1.1;margin-top:auto;overflow-wrap:anywhere">{{ r.displayName }}</span>
-                  <span style="font-size:12.5px;line-height:1.45;color:#4A505C;max-height:{{ r.dh }};overflow:hidden;transition:max-height .45s ease">{{ r.desc }}</span>
-                  <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;text-align:center;padding:11px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:13px;transition:background .3s ease" style-hover="background:#2F5BFF">Register</button>
+        <div data-wheel-wrap style="position:absolute;left:50%;top:50%;width:0;height:0;transform:{{ wheelWrapTf }};opacity:{{ wheelOp }};pointer-events:{{ wheelPe }}">
+          <div aria-hidden="true" style="position:absolute;left:{{ wheelShL }};top:{{ wheelShT }};width:{{ wheelShW }};height:44px;border-radius:50%;background:radial-gradient(closest-side,rgba(15,20,40,.13),rgba(15,20,40,0));pointer-events:none"></div>
+          <div onPointerDown="{{ ringDown }}" style="position:absolute;left:0;top:0;width:0;height:0;perspective:{{ wheelPersp }};touch-action:pan-y;cursor:grab">
+            <div style="position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;transform:{{ wheelTf }}">
+              <sc-for list="{{ ringCards }}" as="r" hint-placeholder-count="12">
+                <div style="position:absolute;left:{{ r.l }};top:{{ r.t }};width:{{ r.w }};height:{{ r.h }};transform:{{ r.tf }};opacity:{{ r.op }};visibility:{{ r.vis }};backface-visibility:hidden;-webkit-backface-visibility:hidden">
+                  <button onClick="{{ r.tap }}" aria-label="{{ r.name }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:{{ r.pad }};border-radius:20px;background:{{ r.bg }};border:1px solid rgba(255,255,255,.95);box-shadow:{{ r.sh }};transition:transform .35s cubic-bezier(.2,.8,.2,1),background .35s ease,box-shadow .35s ease" style-hover="transform:translateY(-6px)">
+                    <span style="display:flex;justify-content:space-between;align-items:flex-start"><span style="width:{{ r.is }};height:{{ r.is }};border-radius:12px;display:grid;place-items:center;background:{{ r.ib }};color:{{ r.ic }};font-family:'Material Symbols Rounded';font-size:{{ r.ifs }};transition:background .35s ease,color .35s ease">{{ r.icon }}</span><span style="font-family:'JetBrains Mono';font-size:10px;color:#8A909C">{{ r.num }}</span></span>
+                    <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ r.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ r.displayName }}</span>
+                  </button>
                 </div>
-              </div>
-            </sc-for>
+              </sc-for>
+            </div>
           </div>
-          <div style="position:absolute;left:50%;bottom:6vh;width:min(720px,80vw);height:60px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(15,20,40,.12),rgba(15,20,40,0));pointer-events:none"></div>
         </div>
         <div data-reg-layer data-compact="{{ regCompact }}" role="group" aria-label="Registration roles. Use the arrow keys to move between them." onKeyDown="{{ regKey }}" style="position:absolute;left:50%;top:50%;width:0;height:0;z-index:3">
           <sc-for list="{{ regTiles }}" as="t" hint-placeholder-count="12">
-            <button data-reg-tile data-landed="{{ t.landed }}" onClick="{{ t.go }}" onMouseMove="{{ t.move }}" onMouseLeave="{{ t.leave }}" aria-label="{{ t.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;position:absolute;left:{{ t.l }};top:{{ t.t }};width:{{ t.w }};height:{{ t.h }};transform:{{ t.tf }};opacity:{{ t.op }};visibility:{{ t.vis }};pointer-events:{{ t.pe }};will-change:transform,opacity;border-radius:22px">
-              <span data-pop aria-hidden="true" style="position:absolute;inset:0;border-radius:22px;border:2px solid {{ t.gc }};opacity:0;pointer-events:none"></span>
-              <span data-tile-in style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:15px 16px 14px 18px;border-radius:22px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.95);box-shadow:0 18px 44px rgba(15,20,40,.10),inset 0 1px 0 #fff;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;overflow:hidden">
-                <span data-tile-bar aria-hidden="true" style="position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:0 3px 3px 0;background:{{ t.gc }}"></span>
-                <span data-tile-top style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-                  <span data-tile-ic style="width:40px;height:40px;flex:none;border-radius:13px;display:grid;place-items:center;background:{{ t.gt }};color:{{ t.gc }};font-family:'Material Symbols Rounded';font-size:22px;transition:background .3s ease,color .3s ease">{{ t.icon }}</span>
-                  <span data-tile-grp style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;color:{{ t.gc }};text-align:right;line-height:1.35">{{ t.num }}<br>{{ t.group }}</span>
+            <button data-reg-tile data-landed="{{ t.landed }}" onClick="{{ t.go }}" onMouseMove="{{ t.move }}" onMouseLeave="{{ t.leave }}" aria-label="{{ t.aria }}" title="{{ t.title }}" style="all:unset;box-sizing:border-box;cursor:pointer;position:absolute;left:{{ t.l }};top:{{ t.t }};width:{{ t.w }};height:{{ t.h }};transform:{{ t.tf }};opacity:{{ t.op }};visibility:{{ t.vis }};pointer-events:{{ t.pe }};border-radius:20px">
+              <span data-pop aria-hidden="true" style="position:absolute;inset:0;border-radius:20px;border:2px solid {{ t.gc }};opacity:0;pointer-events:none"></span>
+              <span data-flip style="position:absolute;inset:0;transform-style:preserve-3d;transform:{{ t.flip }}">
+                <span data-tile-in style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;gap:12px;padding:0 14px 0 18px;border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.97) 0%,rgba(248,250,255,.9) 100%);border:1px solid rgba(255,255,255,.95);box-shadow:0 14px 34px rgba(15,20,40,.09),inset 0 1px 0 #fff;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;overflow:hidden">
+                  <span data-tile-bar aria-hidden="true" style="position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 3px 3px 0;background:{{ t.gc }}"></span>
+                  <span data-tile-ic style="width:42px;height:42px;flex:none;border-radius:13px;display:grid;place-items:center;background:{{ t.gt }};color:{{ t.gc }};font-family:'Material Symbols Rounded';font-size:22px;transition:background .3s ease,color .3s ease">{{ t.icon }}</span>
+                  <span data-tile-txt style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                    <span data-tile-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ t.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ t.name }}</span>
+                    <span data-tile-sub style="position:relative;height:15px;overflow:hidden;font-size:11.5px;line-height:15px">
+                      <span data-tile-grp style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;color:{{ t.gc }};transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">{{ t.group }} · {{ t.num }}</span>
+                      <span data-tile-needs style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#5B6270;opacity:0;transform:translateY(12px);transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">Needs · {{ t.needs }}</span>
+                    </span>
+                  </span>
+                  <span data-tile-go aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px;color:#2F5BFF;flex:none;transition:transform .3s cubic-bezier(.2,.8,.2,1)">arrow_forward</span>
                 </span>
-                <span style="display:flex;flex-direction:column;gap:4px;min-width:0">
-                  <span data-tile-name style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ t.nfs }};letter-spacing:-.025em;line-height:1.08;color:#0B0D12"><span style="min-width:0;overflow-wrap:anywhere">{{ t.name }}</span><span data-tile-go aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px;font-weight:400;color:#2F5BFF;flex:none">arrow_forward</span></span>
-                  <span data-tile-needs style="font-size:12px;line-height:1.35;color:#5B6270;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s ease">Needs · {{ t.needs }}</span>
+                <span data-tile-back aria-hidden="true" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);border-radius:20px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(120% 90% at 20% 10%,#5B84FF 0%,#2F5BFF 45%,#1A34B8 100%);box-shadow:0 14px 34px rgba(26,52,184,.25),inset 0 1px 0 rgba(255,255,255,.35)">
+                  <span style="position:absolute;inset:7px;border-radius:14px;border:1px solid rgba(255,255,255,.28)"></span>
+                  <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.24em;color:rgba(255,255,255,.92)"><span style="width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-sizing:border-box"></span>GMS</span>
                 </span>
               </span>
             </button>
@@ -818,7 +826,7 @@ const REG_GROUPS=[['COMPETITORS & TEAMS',['athlete','staff','entity','lo']],['OF
 const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_OF[id]=g));
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
 const REG_GC=[['#2F5BFF','#E8EEFF'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
-const REG_T={a0:0.12,dur:0.13,back0:0.5,b0:0.56};
+const REG_T={shrink0:0.07,shrinkDur:0.1,a0:0.16,step:0.018,dur:0.09,back0:0.52,b0:0.6};
 const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -930,46 +938,57 @@ class Component extends DCLogic {
         const x=slot*gap*pin,y=(1-pin)*34-pout*18,sc=0.35+0.65*pin-0.12*pout;const op=pin*(1-pout);
         return {...r,go:()=>this.startReg(r.id),op:op.toFixed(3),pe:op>0.6?'auto':'none',tf:'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(2)+'vh)) scale('+sc.toFixed(4)+') rotate('+(slot*(1-pin)*-14).toFixed(2)+'deg)'};}),
       evNear:s.evNear&&(this.props.enable3D??true)&&!LITE,regNear:s.regNear&&(this.props.enable3D??true)};}
-  // Registration: the wheel turns, then the roles pop out of it as a 3x3 (9 roles), fly back as the last 3 come out.
-  // Pure function of the pinned scroll (s.p.reg), so scrolling up reverses it.
+  // Registration: a slim 3D ring of roles turns, shrinks into the progress hub, and the hub deals the roles out
+  // like cards (face-down, flipping face-up as they land) into a 3x3; the last 3 follow as the first 9 are collected.
+  // Pure function of the pinned scroll (s.p.reg), so scrolling up plays it backwards.
   ringVals(){const s=this.state,n=REG.length,step=360/n,W=typeof window!=='undefined'?window.innerWidth:1200,vh=typeof window!=='undefined'?window.innerHeight:800;
-    const R=Math.max(300,Math.min(460,W*0.34)),p=REDUCED?0.4:(s.p.reg||0);
-    const rot=-p*360+(s.ringDrag||0);const front=((Math.round(-rot/step)%n)+n)%n;const open=s.ringOpen??-1;
-    const compact=W<=600,sh=this.regStageH||vh*0.62,gap=compact?8:14,maxW=compact?W-36:Math.min(W-64,960);
-    const tw=Math.min(compact?999:280,(maxW-gap*2)/3),th=Math.max(compact?96:118,Math.min(compact?tw*1.02:tw*(vh/W>1.1?0.74:0.6),(sh-40-gap*2)/3));
-    const F=REG_ORDER.map((ri,k)=>{let o,b=0,lin;
-      if(k<9){lin=clamp((p-REG_T.a0-k*0.014)/REG_T.dur);b=ease(clamp((p-REG_T.back0-k*0.008)/0.1));}
-      else lin=clamp((p-REG_T.b0-(k-9)*0.025)/REG_T.dur);
-      o=ease(lin);return {o,b,lin,f:o*(1-b)};});
-    const dim=clamp(Math.max(...F.map(x=>x.f))*1.25),rs=Math.min(1,Math.max(.55,(vh-260)/400),Math.max(.5,W/680))*(1-0.3*dim);
+    const p=REDUCED?0.42:(s.p.reg||0),compact=W<=600,sh=this.regStageH||vh*0.6,hub=this.regHub||{x:0,y:-sh*0.55};
+    // ring geometry: the ring is pushed back by its radius so the front card renders at 1:1 (sharp text)
+    const cw=compact?94:Math.min(142,W*0.11+36),ch=Math.min(compact?120:176,sh*0.46),R=(cw+(compact?12:20))*n/(2*Math.PI);
+    const rot=-p*430+(s.ringDrag||0),front=((Math.round(-rot/step)%n)+n)%n,open=s.ringOpen??-1;
+    const shrink=ease(clamp((p-REG_T.shrink0)/REG_T.shrinkDur)),endScale=46/(2*R+cw),wsc=1-(1-endScale)*shrink;
+    // grid geometry
+    const gap=compact?8:14,maxW=compact?W-36:Math.min(W-64,980),tw=Math.min(compact?999:304,(maxW-gap*2)/3),th=compact?Math.min(tw*0.98,(sh-40-gap*2)/3):Math.max(74,Math.min(98,(sh-60-gap*2)/3));
+    const T=REG_ORDER.map((ri,k)=>{let out,back=0;
+      if(k<9){out=clamp((p-REG_T.a0-k*REG_T.step)/REG_T.dur);back=clamp((p-REG_T.back0-k*0.01)/0.08);}
+      else out=clamp((p-REG_T.b0-(k-9)*0.025)/REG_T.dur);
+      return {out,back,t:back>0?1-back:out};});
     const kOf={};REG_ORDER.forEach((ri,k)=>kOf[ri]=k);
-    const shown=F.filter(x=>x.o>0.5).length;
-    return {ringRot:rot.toFixed(2)+'deg',ringScale:rs.toFixed(3),ringLabel:pad(front+1)+' / '+n,regStageRef:this.ref('regStage'),
-      wheelOp:(1-0.6*dim).toFixed(3),wheelPe:dim>0.4?'none':'auto',regCompact:compact?'1':'0',brickY:(LITE||REDUCED)?'0px':((0.5-p)*60).toFixed(1)+'px',
-      regShownLabel:shown?pad(shown)+' OF 12 ROLES SHOWN':'SCROLL TO BRING THE ROLES OUT',
-      regDots:REG_ORDER.map((ri,k)=>{const on=F[k].o>0.5;return {w:on?'14px':'6px',bg:on?REG_GC[REG_GROUP_OF[REG[ri].id]][0]:'rgba(11,13,18,.16)'};}),
+    const shown=T.filter(x=>x.out>0.5).length;
+    return {wheelTf:'translateZ('+(-R).toFixed(1)+'px) rotateX(-4deg) rotateY('+rot.toFixed(2)+'deg)',wheelPersp:(compact?1100:1500)+'px',ringLabel:pad(front+1)+' / '+n,regStageRef:this.ref('regStage'),
+      wheelWrapTf:shrink<0.001?'none':'translate('+(hub.x*shrink).toFixed(1)+'px,'+(hub.y*shrink).toFixed(1)+'px) scale('+wsc.toFixed(4)+')',
+      wheelOp:(1-clamp((shrink-0.7)/0.3)).toFixed(3),wheelPe:shrink>0.15?'none':'auto',
+      wheelShL:(-R*0.9).toFixed(1)+'px',wheelShT:(ch*0.62).toFixed(1)+'px',wheelShW:(R*1.8).toFixed(1)+'px',
+      regCompact:compact?'1':'0',brickY:(LITE||REDUCED)?'0px':((0.5-p)*60).toFixed(1)+'px',
+      regShownLabel:shown?pad(shown)+' OF 12 ROLES DEALT':'SCROLL TO DEAL THE ROLES',
+      regDots:REG_ORDER.map((ri,k)=>{const a=k/n*Math.PI*2,out=T[k].t>0.5,gc=REG_GC[REG_GROUP_OF[REG[ri].id]][0];
+        return {x:(23+19*Math.sin(a)).toFixed(2)+'px',y:(23-19*Math.cos(a)).toFixed(2)+'px',bg:out?'transparent':(T[k].out>0.5?gc:'#C9CFDA'),bd:out?gc:(T[k].out>0.5?gc:'#C9CFDA')};}),
       regKey:e=>{const dir={ArrowRight:1,ArrowLeft:-1,ArrowDown:3,ArrowUp:-3}[e.key];if(!dir)return;const L=e.currentTarget,t=[...L.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.visibility!=='hidden'&&x.style.pointerEvents!=='none');
         const i=t.indexOf(document.activeElement);if(i<0){t[0]&&t[0].focus();e.preventDefault();return;}const j=i+dir;if(j>=0&&j<t.length){t[j].focus();e.preventDefault();}},
-      regTiles:REG_ORDER.map((ri,k)=>{const r=REG[ri],x=F[k],g=REG_GROUP_OF[r.id],gc=REG_GC[g];
-        const col=k<9?k%3:k-9,row=k<9?Math.floor(k/3):1,tx=(col-1)*(tw+gap),ty=(row-1)*(th+gap);
-        const ang=(ri*step+rot)*D2R,sx=Math.sin(ang)*R*rs,sy=-0.1*sh,ss=0.32+0.2*(Math.cos(ang)+1)/2;
-        const m=x.b>0?1-x.b:backOut(x.lin),cm=clamp(m),px=sx+(tx-sx)*m,py=sy+(ty-sy)*m-Math.sin(cm*Math.PI)*th*0.35,sc=ss+(1-ss)*m,op=clamp(x.f*2.5);
-        const needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · ');
-        return {name:r.name.split('/').join('/​'),icon:r.icon,num:pad(ri+1),group:REG_GROUPS[g][0].split(' & ')[0],gc:gc[0],gt:gc[1],needs,nfs:compact?'12.5px':(r.name.length>16?'16.5px':'19px'),
-          aria:'Register as '+r.name+'. Needs '+needs,l:(-tw/2).toFixed(1)+'px',t:(-th/2).toFixed(1)+'px',w:tw.toFixed(1)+'px',h:th.toFixed(1)+'px',
-          tf:'translate3d('+px.toFixed(1)+'px,'+py.toFixed(1)+'px,0) scale('+sc.toFixed(4)+') rotate('+((1-cm)*(sx<0?-10:10)).toFixed(2)+'deg)',
-          op:op.toFixed(3),vis:op>0.01?'visible':'hidden',pe:x.f>0.85?'auto':'none',landed:x.o>0.97&&x.b<0.05?'1':'0',
+      regTiles:REG_ORDER.map((ri,k)=>{const r=REG[ri],x=T[k],g=REG_GROUP_OF[r.id],gc=REG_GC[g];
+        const col=k<9?k%3:k-9,row=k<9?Math.floor(k/3):1,cx=(col-1)*(tw+gap),cy=(row-1)*(th+gap);
+        // dealt from the hub: a quick arc out, a little spin, then the card flips face-up as it settles
+        const e=ease(x.t),flipT=smooth(clamp((e-0.5)/0.5)),landed=x.t>=1;
+        const px=hub.x+(cx-hub.x)*e,py=hub.y+(cy-hub.y)*e-Math.sin(e*Math.PI)*(compact?40:70),sc=0.22+0.78*e,rz=(1-e)*(-22+col*14);
+        const needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · '),op=clamp(x.t*8);
+        return {name:r.name.split('/').join('/​'),icon:r.icon,num:pad(ri+1),group:REG_GROUPS[g][0].split(' & ')[0],gc:gc[0],gt:gc[1],needs,nfs:compact?'12.5px':(r.name.length>18?'15px':'17px'),
+          aria:'Register as '+r.name+'. Needs '+needs,title:r.name+' · Needs '+needs,l:(-tw/2).toFixed(1)+'px',t:(-th/2).toFixed(1)+'px',w:tw.toFixed(1)+'px',h:th.toFixed(1)+'px',
+          tf:landed?'translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)':'translate3d('+px.toFixed(1)+'px,'+py.toFixed(1)+'px,0) scale('+sc.toFixed(4)+') rotate('+rz.toFixed(2)+'deg)',
+          flip:landed?'none':'perspective(900px) rotateY('+(180*(1-flipT)).toFixed(1)+'deg)',
+          op:op.toFixed(3),vis:op>0.01?'visible':'hidden',pe:x.t>0.95?'auto':'none',landed:landed&&x.back===0?'1':'0',
           go:()=>{if(compact)this.setState({modal:r.id});else this.startReg(r.id);},
-          move:e=>{if(!HOVER)return;const el=e.currentTarget.querySelector('[data-tile-in]'),b=e.currentTarget.getBoundingClientRect(),u=(e.clientX-b.left)/b.width-.5,v=(e.clientY-b.top)/b.height-.5;
-            el.style.transform='perspective(700px) translateY(-6px) rotateX('+(-v*9).toFixed(2)+'deg) rotateY('+(u*11).toFixed(2)+'deg)';},
-          leave:e=>{const el=e.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};}),
+          move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
+            el.style.transform='perspective(800px) translateY(-5px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*7).toFixed(2)+'deg)';},
+          leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};}),
       ringDown:e=>{const x0=e.clientX,d0=s.ringDrag||0;const mv=ev=>this.setState({ringDrag:d0+(ev.clientX-x0)*0.35});const up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);};window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);},
-      ringCards:REG.map((r,i)=>{const isOpen=open===i,isFront=front===i;const ang=i*step;let rel=((ang+rot)%360+540)%360-180;const fade=Math.max(.25,1-Math.abs(rel)/150)*(1-clamp(F[kOf[i]].f*2.5));
-        return {...r,num:pad(i+1),displayName:r.name.split('/').join('/​'),nfs:r.name.length>16?'17px':'21px',tf:'rotateY('+ang+'deg) translateZ('+R+'px)'+(isOpen?' translateZ(40px) translateY(-10px) scale(1.06)':isFront?' translateZ(24px)':''),
-          bg:isOpen||isFront?'rgba(255,255,255,.9)':'rgba(255,255,255,.74)',sh:isOpen?'0 40px 90px rgba(15,20,40,.22),inset 0 1px 0 #fff':'0 16px 40px rgba(15,20,40,.08),inset 0 1px 0 #fff',op:fade.toFixed(2),
-          ib:isOpen||isFront?'#2F5BFF':'rgba(47,91,255,.1)',ic:isOpen||isFront?'#fff':'#2F5BFF',dh:isOpen||isFront?'80px':'0px',
-          enter:()=>{clearTimeout(this.ringT);this.ringT=setTimeout(()=>this.setState({ringOpen:i}),200);},leave:()=>{clearTimeout(this.ringT);this.setState({ringOpen:-1});},
-          tap:()=>this.setState({ringOpen:i}),go:e=>{e.stopPropagation();this.startReg(r.id);}};})};}
+      ringCards:REG.map((r,i)=>{const isFront=front===i||open===i,ang=i*step;const rel=((ang+rot)%360+540)%360-180,a=Math.abs(rel);
+        const op=a<=62?1:Math.max(0,1-(a-62)/48),gc=REG_GC[REG_GROUP_OF[r.id]];
+        return {...r,num:pad(i+1),displayName:r.name.split('/').join('/​'),nfs:compact?'12.5px':(r.name.length>16?'14px':'16px'),
+          l:(-cw/2).toFixed(1)+'px',t:(-ch/2).toFixed(1)+'px',w:cw.toFixed(1)+'px',h:ch.toFixed(1)+'px',pad:compact?'11px':'14px',is:compact?'34px':'40px',ifs:compact?'18px':'21px',
+          tf:'rotateY('+ang+'deg) translateZ('+R.toFixed(1)+'px)',op:op.toFixed(3),vis:op>0.01?'visible':'hidden',
+          bg:isFront?'rgba(255,255,255,.98)':'rgba(255,255,255,.86)',sh:isFront?'0 22px 50px rgba(15,20,40,.16),inset 0 1px 0 #fff':'0 10px 26px rgba(15,20,40,.07),inset 0 1px 0 #fff',
+          ib:isFront?gc[0]:gc[1],ic:isFront?'#fff':gc[0],
+          tap:()=>this.setState({modal:r.id})};})};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.webm');}
   heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);
     return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:small?'assets/hero-720.mp4':'assets/hero-1080.mp4','aria-hidden':'true',
@@ -985,7 +1004,8 @@ class Component extends DCLogic {
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
   measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
-    const rs=this.refs.regStage&&this.refs.regStage.current;if(rs)this.regStageH=rs.clientHeight;
+    const rs=this.refs.regStage&&this.refs.regStage.current,hb=document.querySelector('[data-reg-hub]');if(rs)this.regStageH=rs.clientHeight;
+    if(rs&&hb){const a=rs.getBoundingClientRect(),b=hb.getBoundingClientRect();this.regHub={x:b.left+b.width/2-(a.left+a.width/2),y:b.top+b.height/2-(a.top+a.height/2)};}
     if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   frame(){
     const o=this.state.p,t=this.target||o,n={};let moved=false;
