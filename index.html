@@ -357,25 +357,23 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 [data-goal-board][data-live="1"] [data-goal-led]{animation:gmsGoalPop .9s var(--gms-ease) both}
 @keyframes gmsGoalPop{0%{transform:scale(.82);letter-spacing:.06em}60%{transform:scale(1.05)}100%{transform:none}}
 [data-goal-board]>[data-goal-sub]{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#4A505C;white-space:nowrap}
-[data-goal-cols][data-mode=pod] [data-goal-col]{position:absolute;pointer-events:auto;display:flex;flex-direction:column;gap:12px;align-items:stretch;box-sizing:border-box;padding:18px 14px 16px;border-radius:20px 20px 8px 8px;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(243,246,255,.7));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 60px rgba(15,20,40,.10),inset 0 1px 0 #fff,inset 0 4px 0 var(--dc)}
-[data-goal-ch]{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;opacity:var(--ci,1);transition:opacity .2s linear}
+[data-goal-cols][data-mode=burst]{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3vh,30px);pointer-events:none}
+[data-goal-cols][data-mode=burst] [data-goal-col]{display:flex;flex-direction:column;align-items:center;gap:11px;pointer-events:auto}
+[data-goal-ch]{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;opacity:var(--ci,1)}
 [data-goal-ic]{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:18px;font-weight:400;flex:none}
-[data-goal-nm]{display:flex;flex-direction:column;gap:3px;line-height:1.1;min-width:0}
+[data-goal-nm]{display:flex;align-items:baseline;gap:8px;line-height:1.1;min-width:0}
 [data-goal-nm] [data-goal-sub]{font-family:'JetBrains Mono';font-size:9.5px;font-weight:400;letter-spacing:.1em;color:#8A909C}
-[data-goal-list]{display:flex;flex-direction:column;gap:6px;opacity:var(--ci,1)}
-[data-goal-ev]{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.75);border:1px solid #E6EAF2;font-size:14px;font-weight:600;color:#0B0D12;transition:background .22s ease,color .22s ease,border-color .22s ease,transform .3s var(--gms-ease),box-shadow .3s ease}
-[data-goal-ev]:hover,[data-goal-ev]:focus-visible{background:var(--dt);color:var(--dc);border-color:var(--dc);transform:translateX(3px);box-shadow:0 10px 22px rgba(15,20,40,.08)}
+[data-goal-list]{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+[data-goal-ev]{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(242,246,255,.8));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 26px rgba(15,20,40,.09),0 0 0 1px rgba(47,91,255,.10),inset 0 1px 0 #fff;font-size:14.5px;font-weight:600;color:#0B0D12;white-space:nowrap;will-change:transform,opacity;transition:background .22s ease,color .22s ease,box-shadow .3s ease}
+[data-goal-ev]::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--dc);flex:none}
+[data-goal-ev]:hover,[data-goal-ev]:focus-visible{background:var(--dt);color:var(--dc);box-shadow:0 14px 30px rgba(15,20,40,.12),0 0 0 1.5px var(--dc)}
 [data-goal-ev]:focus-visible{outline:2px solid var(--dc);outline-offset:2px}
 [data-goal-g]{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C;flex:none}
-.gms-medal{transform-box:fill-box;transform-origin:50% 100%;transition:transform .45s var(--gms-ease)}
-.gms-medal.on{transform:scale(1.12)}
-/* narrow layouts: slimmer steps, chips wrap */
-[data-goal-panel][data-compact="1"] [data-goal-col]{padding:12px 7px 10px!important;gap:8px!important;border-radius:16px 16px 6px 6px!important}
-[data-goal-panel][data-compact="1"] [data-goal-ch]{font-size:12.5px;gap:6px;flex-direction:column;align-items:flex-start}
-[data-goal-panel][data-compact="1"] [data-goal-ic]{width:22px;height:22px;font-size:14px;border-radius:7px}
-[data-goal-panel][data-compact="1"] [data-goal-nm] [data-goal-sub],[data-goal-panel][data-compact="1"] [data-goal-g]{display:none}
-[data-goal-panel][data-compact="1"] [data-goal-list]{gap:5px}
-[data-goal-panel][data-compact="1"] [data-goal-ev]{padding:6px 7px;font-size:11px;line-height:1.15;border-radius:9px}
+[data-goal-panel][data-compact="1"] [data-goal-ch]{font-size:13.5px}
+[data-goal-panel][data-compact="1"] [data-goal-ic]{width:24px;height:24px;font-size:15px;border-radius:8px}
+[data-goal-panel][data-compact="1"] [data-goal-list]{gap:6px}
+[data-goal-panel][data-compact="1"] [data-goal-ev]{padding:7px 11px;font-size:12px;gap:6px}
+[data-goal-panel][data-compact="1"] [data-goal-g],[data-goal-panel][data-compact="1"] [data-goal-nm] [data-goal-sub]{display:none}
 @media (max-width:600px){[data-goal-led]{font-size:48px}[data-goal-board]>[data-goal-sub]{font-size:8.5px;letter-spacing:.08em}[data-goal-board]{padding:12px 20px 11px}}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -1528,10 +1526,10 @@ const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
 const pad=n=>String(n).padStart(2,'0');
 // Programme section: a shaded player runs in and strikes the ball into the net (GOAL!), and the net's ripple becomes
-// a medal podium: one glass step per division with its events. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
+// the ball bursting into the 15 event chips, which settle into three rows. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-const KICK={run0:0.03,run1:0.25,plant:0.3,strike:0.35,follow:0.42,cheer:0.54,hit:0.47,score0:0.47,score1:0.6,ring0:0.57,board0:0.61,board1:0.8};
+const KICK={run0:0.03,run1:0.25,plant:0.3,strike:0.35,follow:0.42,cheer:0.54,hit:0.47,score0:0.47,score1:0.6,ring0:0.57,board0:0.575,board1:0.8};
 // Poses: angles in degrees from straight down, positive = forward (+x). t = torso lean; n*/f* = near/far side;
 // a/e = upper arm / forearm, h/k = thigh / shin (absolute angles), ft = foot relative to the shin (90 = flat).
 const POSES={
@@ -1842,8 +1840,8 @@ class Component extends DCLogic {
     const w=L.gx1-L.gx0,h=L.G-L.gy0;L.gw=w;L.gh=h;L.gcx=(L.gx0+L.gx1)/2;L.fw=Math.max(5,Math.min(10,w*0.012));L.ix=w*0.075;L.iy=h*0.1;
     L.bx0=L.gx0+L.ix;L.bx1=L.gx1-L.ix;L.by0=L.gy0+L.iy;const st=Math.max(15,Math.min(24,w/32));L.nc=Math.max(6,Math.round((L.bx1-L.bx0)/st));L.nr=Math.max(5,Math.round((L.G-L.by0)/st));
     L.hit=[L.gcx+w*0.1,L.gy0+h*(port?0.3:0.36)];
-    // the medal podium that replaces the goal: three glass steps (Compound | Recurve | W1) standing on the pitch line
-    L.cmp=port||w<640;L.ppad=L.cmp?0:Math.max(10,w*0.02);L.pgap=L.cmp?6:16;L.psw=(w-2*L.ppad-2*L.pgap)/3;L.pH=h*0.6;L.mR=Math.max(15,Math.min(27,L.psw*0.12));
+    // after the goal the ball bursts into the 15 event chips, which settle into three rows inside the goal area
+    L.cmp=port||w<640;
     return L;}
   kickBuild(host,box){const L=this.kickL=this.kickLayout(host);const NS='http://www.w3.org/2000/svg';
     const mk=(tag,at,par)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);(par||svg).appendChild(e);return e;};
@@ -1878,29 +1876,16 @@ class Component extends DCLogic {
     // the kicker: shaded rig figure in kit
     K.fig=mk('g',{});K.fig.innerHTML=M.parts.join('');K.P={};['fua','ffa','fhd','fth','fsn','fft','nth','nsn','nft','torso','head','nua','nfa','nhd'].forEach(k=>K.P[k]=K.fig.querySelector('[data-p="'+k+'"]'));
     K.burst=mk('g',{opacity:'0'});for(let i=0;i<6;i++)mk('circle',{r:L.s*2.6,fill:'#C9CFDA'},K.burst);
-    // shock rings from the impact, then a medal for each podium step (gold Recurve, silver Compound, bronze W1)
+    // shock rings from the impact
     K.wave=mk('g',{fill:'none',stroke:BLUE,'stroke-width':'1.6'});K.waves=[0,1,2].map(()=>mk('circle',{r:1,opacity:'0'},K.wave));
-    const MC=[['#FFF3C4','#E9BC3F','#9C700C'],['#FFFFFF','#D2D8E1','#868FA0'],['#F8D4B0','#C98652','#7E441A']];
-    defs.innerHTML+=MC.map((c,i)=>'<radialGradient id="'+u+'m'+i+'" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="'+c[0]+'"/><stop offset=".55" stop-color="'+c[1]+'"/><stop offset="1" stop-color="'+c[2]+'"/></radialGradient>').join('');
-    K.medals=mk('g',{});const mr=L.mR,rl=mr*2.3;
-    K.med=CATS.map((c,i)=>{const g=mk('g',{opacity:'0'},K.medals),sw=mk('g',{},g),inn=mk('g',{class:'gms-medal'},sw);
-      mk('path',{d:'M'+(-mr*0.62)+' '+(-rl)+'L'+(-mr*0.08)+' '+(-mr*0.7)+'L'+(mr*0.34)+' '+(-mr*0.7)+'L'+(-mr*0.12)+' '+(-rl)+'Z',fill:tone(c.color,-0.2)},inn);
-      mk('path',{d:'M'+(mr*0.62)+' '+(-rl)+'L'+(mr*0.08)+' '+(-mr*0.7)+'L'+(-mr*0.34)+' '+(-mr*0.7)+'L'+(mr*0.12)+' '+(-rl)+'Z',fill:c.color},inn);
-      mk('rect',{x:-mr*0.34,y:-mr*1.06,width:mr*0.68,height:mr*0.4,rx:mr*0.1,fill:MC[i][2]},inn);
-      mk('circle',{r:mr,fill:'url(#'+u+'m'+i+')',stroke:MC[i][2],'stroke-width':'1'},inn);mk('circle',{r:mr*0.74,fill:'none',stroke:MC[i][0],'stroke-width':'1.4',opacity:'.9'},inn);
-      mk('circle',{r:mr*0.74,fill:'none',stroke:MC[i][2],'stroke-width':'.8',opacity:'.5',transform:'translate(.8 .8)'},inn);
-      const t=mk('text',{y:(mr*0.3).toFixed(1),'text-anchor':'middle','font-family':'Bricolage Grotesque, sans-serif','font-weight':'800','font-size':(mr*0.82).toFixed(1),fill:MC[i][2]},inn);t.textContent=['1','2','3'][i];
-      mk('ellipse',{cx:-mr*0.34,cy:-mr*0.4,rx:mr*0.34,ry:mr*0.18,fill:'#fff',opacity:'.55',transform:'rotate(-30 '+(-mr*0.34)+' '+(-mr*0.4)+')'},inn);
-      return {g,sw,inn};});
     this.kickK=K;this.kickLast=-1;this.kickNetKey='';
-    // podium steps: measure each division's content, then make the centre (Recurve) the tallest step
-    L.steps=[];const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.dataset.compact=L.cmp?'1':'0';Object.assign(Pn.style,{left:'0px',top:'0px',width:L.W+'px',height:L.H+'px'});
-      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode='pod';Object.assign(C.style,{left:'0px',top:'0px',right:'0px',bottom:'0px'});
-        const cols=[...C.querySelectorAll('[data-goal-col]')],SLOT=[1,0,2],need=cols.map(el=>{el.dataset.side='pod';Object.assign(el.style,{width:L.psw+'px',height:'auto',clipPath:'',transform:''});return el.offsetHeight+(L.cmp?6:14);});
-        const base=Math.max(need[1],need[2]),hC=Math.max(L.pH,need[0]+(L.cmp?40:70),base+(L.cmp?40:70)),hs=[hC,Math.max(need[1],hC-(L.cmp?24:44)),Math.max(need[2],hC-(L.cmp?36:62))];
-        cols.forEach((el,i)=>{const x=L.gx0+L.ppad+SLOT[i]*(L.psw+L.pgap),h=Math.min(hs[i],L.G-L.gy0-L.mR*2-30);L.steps[i]={x,w:L.psw,h,slot:SLOT[i]};
-          Object.assign(el.style,{left:x+'px',top:(L.G-h)+'px',height:h+'px',translate:''});
-          if(!el.__hl){el.__hl=1;el.addEventListener('mouseenter',()=>{const m=this.kickK&&this.kickK.med[i];if(m)m.inn.classList.add('on');});el.addEventListener('mouseleave',()=>{const m=this.kickK&&this.kickK.med[i];if(m)m.inn.classList.remove('on');});}});}}
+    // chip burst: lay the rows out at rest, measure where every chip ends up, then plan a curved flight from the ball
+    L.chips=[];L.burst=[L.hit[0],L.hit[1]+L.rb*1.2];const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.dataset.compact=L.cmp?'1':'0';Object.assign(Pn.style,{left:'0px',top:'0px',width:L.W+'px',height:L.H+'px'});
+      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode='burst';Object.assign(C.style,{left:(L.gx0+(L.cmp?0:12))+'px',width:(L.gw-(L.cmp?0:24))+'px',top:L.gy0+'px',height:(L.G-L.gy0)+'px',right:'',bottom:''});
+        const hr=host.getBoundingClientRect(),chips=[...C.querySelectorAll('[data-goal-ev]')];C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
+        chips.forEach(el=>{el.style.transform='';el.style.opacity='';});
+        chips.forEach((el,i)=>{const b=el.getBoundingClientRect(),ex=b.left-hr.left+b.width/2,ey=b.top-hr.top+b.height/2,dx=ex-L.burst[0],dy=ey-L.burst[1],d=Math.hypot(dx,dy)||1,side=i%2?1:-1,lift=Math.min(L.gh*0.25,d*0.5);
+          L.chips.push({el,ex,ey,cx:L.burst[0]+dx*0.5-dy/d*d*0.35*side,cy:L.burst[1]+dy*0.5+dx/d*d*0.35*side-lift,rot:(i*47%60)-30});});}}
     const B=host.querySelector('[data-goal-board]');if(B)Object.assign(B.style,{left:L.gcx+'px',top:(L.gy0+L.gh*(L.port?0.16:0.2))+'px'});}
   kickNet(L,K,b,amp,tt){const I=L.hit,R=L.gw,pts=[];const key=b.toFixed(3)+'|'+amp.toFixed(3)+'|'+(amp>0?tt.toFixed(2):'');if(key===this.kickNetKey)return;this.kickNetKey=key;
     for(let r=0;r<=L.nr;r++){const row=[];for(let c=0;c<=L.nc;c++){let x=L.bx0+(L.bx1-L.bx0)*c/L.nc,y=L.by0+(L.G-L.by0)*r/L.nr;
@@ -1915,9 +1900,7 @@ class Component extends DCLogic {
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),build=REDUCED?1:clamp((vh-r.top)/(vh*0.8)),now=performance.now();
     // impact clock: the net keeps rippling for a moment even if scrolling stops
     if(p>=KICK.hit&&(this.kickPrevP??0)<KICK.hit)this.kickHitT=now;if(p<KICK.hit-0.01)this.kickHitT=null;this.kickPrevP=p;
-    const tt=this.kickHitT?(now-this.kickHitT)/1000:9,amp=REDUCED?0:Math.exp(-tt*2.1)*(tt<3?1:0);this.kickMedT=this.kickMedT||[0,0,0];
-    const swing=!REDUCED&&this.kickMedT.some(t=>t&&now-t<4500);
-    const key=p.toFixed(4)+'|'+build.toFixed(3)+'|'+(amp>0.002?tt.toFixed(2):'')+'|'+(swing?Math.round(now/16):'');if(key===this.kickLast)return;this.kickLast=key;
+    const tt=this.kickHitT?(now-this.kickHitT)/1000:9,amp=REDUCED?0:Math.exp(-tt*2.1)*(tt<3?1:0);    const key=p.toFixed(4)+'|'+build.toFixed(3)+'|'+(amp>0.002?tt.toFixed(2):'');if(key===this.kickLast)return;this.kickLast=key;
     K.ground.setAttribute('stroke-dashoffset',(1-ease(build)).toFixed(3));
     // figure: run in, plant, strike, follow through, then celebrate (it bows out on portrait where the target fills the screen)
     let P,x;
@@ -1945,7 +1928,7 @@ class Component extends DCLogic {
     const ft=seg(p,KICK.strike,KICK.hit),fu=1-Math.pow(1-ft,1.8),P0=[L.bx,L.G-L.rb],P2=L.hit,P1=[(P0[0]+P2[0])/2,Math.max(L.H*0.05,Math.min(P0[1],P2[1])-Math.hypot(P2[0]-P0[0],P2[1]-P0[1])*0.3)];
     const bez=u=>[(1-u)*(1-u)*P0[0]+2*(1-u)*u*P1[0]+u*u*P2[0],(1-u)*(1-u)*P0[1]+2*(1-u)*u*P1[1]+u*u*P2[1]];
     let bp=bez(fu),br=L.rb*(1-0.2*fu);const drop=seg(p,KICK.hit,KICK.hit+0.05);bp=[bp[0]+L.rb*0.6*bul,bp[1]+drop*L.rb*1.2];
-    const toT=gOut;
+    const pop=seg(p,KICK.ring0,KICK.ring0+0.025),toT=Math.max(gOut,pop);br*=1+pop*0.6;
     const spin=(ft*1080+drop*120)%360;K.ball.setAttribute('transform','translate('+bp[0].toFixed(1)+' '+bp[1].toFixed(1)+') scale('+(br/10).toFixed(4)+')');K.bspin.setAttribute('transform','rotate('+spin.toFixed(1)+')');
     K.ball.setAttribute('opacity',((1-toT)*(build>0.2?1:build*5)).toFixed(3));
     K.bshadow.setAttribute('cx',bp[0].toFixed(1));K.bshadow.setAttribute('opacity',((1-clamp((L.G-bp[1]-L.rb)/(L.H*0.3)))*(ft>0&&p>KICK.hit?0.4:1)*(1-toT)).toFixed(3));
@@ -1954,15 +1937,11 @@ class Component extends DCLogic {
       Bd.style.opacity=bv.toFixed(3);Bd.style.visibility=bv>0.01?'visible':'hidden';Bd.style.transform='translate(-50%,-50%) scale('+(0.86+0.14*bi-0.06*bo2).toFixed(3)+')';Bd.dataset.live=bv>0.5?'1':'0';}
     // ripple -> target
     const wt=seg(p,KICK.hit,KICK.ring0+0.06);K.waves.forEach((c,i)=>{const k=clamp(wt*1.4-i*0.18);c.setAttribute('cx',L.hit[0].toFixed(1));c.setAttribute('cy',L.hit[1].toFixed(1));c.setAttribute('r',(4+k*L.gw*0.45).toFixed(1));c.setAttribute('opacity',(k>0&&k<1?(1-k)*0.55:0).toFixed(3));});
-    // podium: steps grow out of the pitch line (centre first), medals drop onto them and swing to rest
+    // burst: each chip flies out of the ball on its own curve, spins flat and lands in its row; division names fade in last
     const Pn=host.querySelector('[data-goal-panel]');if(Pn){const bt=seg(p,KICK.board0,KICK.board1);Pn.style.opacity=bt>0?'1':'0';Pn.style.visibility=bt>0?'visible':'hidden';
-      Pn.querySelectorAll('[data-goal-col]').forEach((el,i)=>{const S=L.steps[i];if(!S)return;const ord=S.slot===1?0:S.slot===0?1:2,e=ease(clamp(bt*2.1-ord*0.2)),hid=(1-e)*S.h;
-        el.style.transform='translateY('+hid.toFixed(1)+'px)';el.style.clipPath='inset(0 0 '+hid.toFixed(1)+'px 0 round 20px 20px 8px 8px)';el.style.opacity=e>0?'1':'0';
-        el.style.setProperty('--ci',clamp(bt*2.1-ord*0.2-0.35).toFixed(3));});}
-    K.med.forEach((m,i)=>{const S=L.steps[i];if(!S)return;const ord=S.slot===1?0:S.slot===0?1:2,md=seg(p,KICK.board0+0.07+ord*0.025,KICK.board0+0.13+ord*0.025),cx=S.x+S.w/2,cy=L.G-S.h-L.mR-12;
-      if(md>=1&&!this.kickMedT[i])this.kickMedT[i]=now;if(md<1)this.kickMedT[i]=0;const mt=this.kickMedT[i]?(now-this.kickMedT[i])/1000:0;
-      const y=cy-(1-backOut(md))*(cy-L.gy0+L.mR*4),ang=md>=1?16*Math.exp(-mt*1.5)*Math.sin(mt*5.2):(1-md)*-18;
-      m.g.setAttribute('opacity',md>0?'1':'0');m.g.setAttribute('transform','translate('+cx.toFixed(1)+' '+y.toFixed(1)+')');m.sw.setAttribute('transform','translate(0 '+(-L.mR*2.3).toFixed(1)+') rotate('+ang.toFixed(2)+') translate(0 '+(L.mR*2.3).toFixed(1)+')');});}
+      const O=L.burst;L.chips.forEach((c,i)=>{const t=clamp((bt-i*0.022)/0.36),u=t>0?backOut(t):0,v=1-u,bx=v*v*O[0]+2*v*u*c.cx+u*u*c.ex,by=v*v*O[1]+2*v*u*c.cy+u*u*c.ey;
+        c.el.style.transform='translate('+(bx-c.ex).toFixed(1)+'px,'+(by-c.ey).toFixed(1)+'px) rotate('+((1-clamp(t*1.3))*c.rot).toFixed(1)+'deg) scale('+(0.25+0.75*clamp(t*1.2)).toFixed(3)+')';c.el.style.opacity=clamp(t*5).toFixed(3);});
+      Pn.querySelectorAll('[data-goal-col]').forEach((el,j)=>el.style.setProperty('--ci',ease(clamp((bt-0.42-j*0.07)/0.25)).toFixed(3)));}}
   patchSpline(){
     document.querySelectorAll('spline-viewer').forEach(v=>{const app=v._spline;if(!app||this.splineDone.has(app))return;let objs;try{objs=app.getAllObjects();}catch(e){return;}if(!objs||!objs.length)return;
       const url=v.getAttribute('url')||'';
