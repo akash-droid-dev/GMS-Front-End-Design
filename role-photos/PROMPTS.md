@@ -96,3 +96,21 @@ When a few are in, tell me and I'll process and wire them into the site. Any rol
 - **REST:** Photorealistic wide 16:9 landscape studio photograph, full body, side view facing right: an event production manager (woman, 30s, light skin, chestnut hair in a ponytail) wearing an all-black outfit (black shirt and trousers), black trainers, a black wireless headset with a mic, and a white accreditation pass on an amber lanyard, standing holding a tablet in one hand. Left third of the frame, the right side empty white. Pure white seamless studio, soft daylight from the front-right, soft contact shadow, 85mm, same style as the reference photo. No text, no logos.
 - **MID:** Same person, outfit, camera, framing, lighting and studio as the uploaded photo, same spot. Change only the pose: she looks down at the tablet and taps the screen with one finger.
 - **PEAK:** Same person, outfit, camera, framing, lighting and studio as the uploaded photo, same spot. Change only the pose: she presses her headset earpiece with one hand and speaks into the mic, looking forward to the right, tablet in the other hand.
+
+---
+
+## Kick-to-goal footballer (the "15 events" section)
+
+Already made: `kick/kick-0.png` (running) and `kick/kick-2.png` (plant, the moment before the kick).
+For each frame below, upload `kick/kick-0.png` to ChatGPT with the prompt and save the result in `role-photos/kick/` under the name shown. Ask for a **wide 16:9 landscape** image if ChatGPT gives you a square one.
+
+Every prompt starts with this rule:
+
+> Same footballer, same blue number 10 kit, white shorts, blue socks, black boots, same camera angle, framing, scale, lighting and pure white studio as the uploaded photo, in the same spot. No ball, no text. Change only the pose: …
+
+| File | Pose to describe after the rule |
+|---|---|
+| `kick-1.png` | the opposite running stride: the other leg forward and the arms swapped, still running to the right. |
+| `kick-3.png` | the instant of striking the ball: his right kicking leg swings forward and low, foot just in front of his support foot at ground level, toes pointed, arms out for balance, looking down. |
+| `kick-4.png` | the follow-through: his right kicking leg is high in the air in front of him toward the right, support foot on the floor, arms out wide, body leaning back, eyes following the ball to the right. |
+| `kick-5.png` | celebrating a goal: standing tall facing right, one fist punched high in the air, a big joyful shout. |

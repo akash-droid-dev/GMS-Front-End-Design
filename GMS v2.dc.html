@@ -480,7 +480,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
         <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">DATES</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">05 — 09 Sep 2026</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">HOST CITY</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">Ahmedabad</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">DIVISIONS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">3</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">MEDAL EVENTS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">15</span></div>
       </div>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
-        <button class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Athlete</button>
+        <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Athlete</button>
         <button class="gms-liquid gms-liquid--glass" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease">Explore the programme</button>
         <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
@@ -549,7 +549,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
         </sc-for>
       </div>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
-        <button class="gms-liquid gms-liquid--blue" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px rgba(47,91,255,.55)">Register as Athlete</button>
+        <button class="gms-liquid gms-liquid--water" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px rgba(47,91,255,.55)">Register as Athlete</button>
         <button class="gms-liquid gms-liquid--glass" onClick="{{ toEvents }}" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.2)">Explore the programme</button>
         <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
@@ -1555,6 +1555,9 @@ const pad=n=>String(n).padStart(2,'0');
 // the ball bursting into the 15 event chips, which settle into three rows. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
+// Real-player frames for the kick (assets/kick/kick-N.webp): run A, run B, plant, strike, follow-through, celebrate.
+// Shot on white, so they're drawn with multiply blending and a soft edge mask to sit on the page.
+const KICK_PHOTOS=[0,1,2,3,4,5].map(i=>'assets/kick/kick-'+i+'.webp');
 const KICK={run0:0.03,run1:0.25,plant:0.3,strike:0.35,follow:0.42,cheer:0.54,hit:0.47,score0:0.47,score1:0.6,ring0:0.57,board0:0.575,board1:0.8};
 // Poses: angles in degrees from straight down, positive = forward (+x). t = torso lean; n*/f* = near/far side;
 // a/e = upper arm / forearm, h/k = thigh / shin (absolute angles), ft = foot relative to the shin (90 = flat).
@@ -1901,6 +1904,10 @@ class Component extends DCLogic {
     K.postE=mk('path',{d:fr,fill:'none',stroke:'#C5CCD8','stroke-width':'1','stroke-linejoin':'round',opacity:'.9',pathLength:'1','stroke-dasharray':'1 1',transform:'translate('+(L.fw*0.36).toFixed(1)+' '+(L.fw*0.36).toFixed(1)+')'},K.goal);
     // the kicker: shaded rig figure in kit
     K.fig=mk('g',{});K.fig.innerHTML=M.parts.join('');K.P={};['fua','ffa','fhd','fth','fsn','fft','nth','nsn','nft','torso','head','nua','nfa','nhd'].forEach(k=>K.P[k]=K.fig.querySelector('[data-p="'+k+'"]'));
+    // photo kicker: one <image> per frame, positioned on the pitch line each frame; the drawn figure stays as a fallback
+    K.ph=null;if(KICK_PHOTOS.some(Boolean)){K.fig.style.display='none';defs.innerHTML+='<radialGradient id="'+u+'phg" cx="50%" cy="52%" r="52%"><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="'+u+'phm" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#'+u+'phg)"/></mask>';
+      const ih=L.s*172/0.71,iw=ih*16/9;L.ph={ih,iw};K.ph=mk('g',{style:'mix-blend-mode:multiply'});
+      K.phImgs=KICK_PHOTOS.map((src,i)=>src?mk('image',{href:src,width:iw.toFixed(1),height:ih.toFixed(1),preserveAspectRatio:'xMidYMid slice',opacity:'0',mask:'url(#'+u+'phm)'},K.ph):null);}
     K.burst=mk('g',{opacity:'0'});for(let i=0;i<6;i++)mk('circle',{r:L.s*2.6,fill:'#C9CFDA'},K.burst);
     // shock rings from the impact
     K.wave=mk('g',{fill:'none',stroke:BLUE,'stroke-width':'1.6'});K.waves=[0,1,2].map(()=>mk('circle',{r:1,opacity:'0'},K.wave));
@@ -1942,6 +1949,10 @@ class Component extends DCLogic {
     K.fig.setAttribute('transform','translate('+x.toFixed(1)+' '+L.G.toFixed(1)+') scale('+L.s.toFixed(4)+')');
     const figOp=(L.port?1-seg(p,0.5,0.58):1-seg(p,KICK.board1,KICK.board1+0.06)*0.3)*clamp((x+L.s*40)/(L.s*30));K.fig.setAttribute('opacity',figOp.toFixed(3));
     K.fshadow.setAttribute('cx',x.toFixed(1));K.fshadow.setAttribute('opacity',figOp.toFixed(3));
+    if(K.ph){const si=Math.floor(Math.max(0,x-L.fx0)/L.dh)%2,f=p<KICK.run1?si:p<KICK.plant?1+seg(p,KICK.run1,KICK.plant):p<KICK.strike?2+seg(p,KICK.strike-0.012,KICK.strike):p<KICK.follow?3+seg(p,KICK.strike+0.01,KICK.follow):4+seg(p,KICK.follow+0.03,KICK.cheer);
+      const have=K.phImgs.map((im,i)=>im?i:-1).filter(i=>i>=0),near=i=>have.reduce((b,c)=>Math.abs(c-i)<Math.abs(b-i)?c:b,have[0]),fa=Math.floor(f),fb=Math.min(5,fa+1),t=f-fa,A=near(fa),Bn=near(fb);
+      K.phImgs.forEach((im,i)=>{if(!im)return;const op=(i===A?(A===Bn?1:1-t):0)+(i===Bn&&Bn!==A?t:0);im.setAttribute('opacity',op.toFixed(3));if(op>0){im.setAttribute('x',(x-L.ph.iw*0.5).toFixed(1));im.setAttribute('y',(L.G-L.ph.ih*0.875).toFixed(1));}});
+      K.ph.setAttribute('opacity',figOp.toFixed(3));}
     // goal draws in as the section arrives and gives way to the target after the goal
     const gIn=ease(seg(build,0.2,1)),gOut=seg(p,KICK.ring0,KICK.ring0+0.07);K.goal.setAttribute('opacity',(1-gOut).toFixed(3));
     [K.post,K.postSh,K.postE].forEach(e=>e.setAttribute('stroke-dashoffset',(1-gIn).toFixed(4)));K.netS.setAttribute('opacity',(0.4*ease(seg(build,0.5,1))).toFixed(3));
