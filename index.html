@@ -293,27 +293,32 @@ html,body{background:#F4F5F7}
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
 #gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg') 0% 42%/cover no-repeat}
 @media (max-aspect-ratio:11/10){#gms-shell [data-r=hero-media]{background-position:57% 50%}}
+/* Registration index + live preview */
+[data-role-row] button{transition:background .25s ease}
+[data-role-name]{transition:color .3s ease,transform .5s var(--gms-ease)}
+[data-role-row][data-on="1"] [data-role-name]{color:#2F5BFF;transform:translateX(10px)}
+[data-role-arrow]{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid #E1E5EC;color:#0B0D12;box-sizing:border-box;transition:background .3s ease,color .3s ease,border-color .3s ease,transform .5s var(--gms-ease)}
+[data-role-row][data-on="1"] [data-role-arrow]{background:#2F5BFF;border-color:#2F5BFF;color:#fff;transform:rotate(45deg)}
+[data-role-row] button:focus-visible{outline:2px solid #2F5BFF;outline-offset:-2px;border-radius:14px}
+[data-art]{position:absolute;inset:0;opacity:0;transform:translateY(14px) scale(.985);transition:opacity .45s ease,transform .65s var(--gms-ease);pointer-events:none}
+[data-art][data-on="1"]{opacity:1;transform:none}
+[data-role-drawer]{display:none}
+@media (max-width:760px){
+ [data-r=roles-section]{padding:90px 18px 100px!important}
+ [data-r=roles-grid]{grid-template-columns:minmax(0,1fr)!important}
+ [data-r=roles-preview]{display:none!important}
+ [data-role-drawer]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--gms-ease)}
+ [data-role-row][data-open="true"] [data-role-drawer]{grid-template-rows:1fr}
+ [data-role-drawer-in]{overflow:hidden;min-height:0}
+ [data-role-row][data-open="true"] [data-role-arrow]{transform:rotate(135deg)}
+ [data-role-name]{font-size:clamp(22px,6.6vw,28px)!important}
+ [data-role-row][data-on="1"] [data-role-name]{transform:none}
+}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.2,.8,.2,1)}
-/* Registration tickets: glass tickets with perforation notches; hover lifts, fills the icon and swaps in what the role needs */
+/* Notched ticket shape (used by the contact desk's confirmation ticket) */
 [data-ticket]{-webkit-mask:radial-gradient(circle at var(--nx) 0,#0000 7px,#000 7.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--nx) 100%,#0000 7px,#000 7.5px) bottom/100% 51% no-repeat;mask:radial-gradient(circle at var(--nx) 0,#0000 7px,#000 7.5px) top/100% 51% no-repeat,radial-gradient(circle at var(--nx) 100%,#0000 7px,#000 7.5px) bottom/100% 51% no-repeat}
-[data-reg-tile]{filter:drop-shadow(0 10px 18px rgba(15,20,40,.09)) drop-shadow(0 1px 1px rgba(15,20,40,.06));transition:filter .35s ease}
-html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
-[data-reg-tile]:hover,[data-reg-tile]:focus-visible{filter:drop-shadow(0 18px 28px rgba(15,20,40,.15)) drop-shadow(0 1px 1px rgba(15,20,40,.06))}
-[data-reg-tile]:focus-visible [data-tile-in]{transform:translateY(-4px)}
-[data-reg-tile]:focus-visible{outline:2px solid #2F5BFF;outline-offset:4px;border-radius:16px}
-[data-reg-tile]:hover [data-tile-ic],[data-reg-tile]:focus-visible [data-tile-ic]{background:#2F5BFF!important;color:#fff!important}
-[data-reg-tile]:hover [data-tile-grp],[data-reg-tile]:focus-visible [data-tile-grp]{opacity:0;transform:translateY(-12px)}
-[data-reg-tile]:hover [data-tile-needs],[data-reg-tile]:focus-visible [data-tile-needs]{opacity:1!important;transform:none!important}
-[data-reg-tile]:hover [data-tile-go]{transform:translateX(3px)}
-[data-reg-tile][data-landed="1"] [data-pop]{animation:gmsPopRing .9s cubic-bezier(.2,.8,.2,1) both}
-@keyframes gmsPopRing{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.06,1.3)}}
-[data-reg-layer][data-compact="1"] [data-ticket]{flex-direction:column;-webkit-mask:radial-gradient(circle at 0 var(--nx),#0000 6px,#000 6.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% var(--nx),#0000 6px,#000 6.5px) right/51% 100% no-repeat;mask:radial-gradient(circle at 0 var(--nx),#0000 6px,#000 6.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% var(--nx),#0000 6px,#000 6.5px) right/51% 100% no-repeat}
-[data-reg-layer][data-compact="1"] [data-tk-stub]{width:auto!important;height:var(--nx);border-right:0!important;border-bottom:1.5px dashed rgba(11,13,18,.16)}
-[data-reg-layer][data-compact="1"] [data-tile-ic]{width:28px!important;height:28px!important;font-size:16px!important;border-radius:9px!important}
-[data-reg-layer][data-compact="1"] [data-tile-txt]{padding:0 6px!important;align-items:center;text-align:center}
-[data-reg-layer][data-compact="1"] [data-tile-sub],[data-reg-layer][data-compact="1"] [data-tile-go]{display:none!important}
 @keyframes gmsWordUp{from{transform:translateY(108%)}to{transform:none}}
 .gms-hl,.gms-w{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em 0 .14em;margin:-.04em 0 -.14em}
 .gms-hl>span{display:inline-block;animation:gmsWordUp 1.1s var(--gms-ease) both}
@@ -608,46 +613,58 @@ html.gms-lite [data-reg-tile]{filter:drop-shadow(0 4px 8px rgba(15,20,40,.08))}
     </div>
   </section>
 
-  <section ref="{{ regRef }}" data-r="reg-section" style="position:relative;height:440vh;background:#F6F7F9">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box;background:radial-gradient(70% 60% at 50% 60%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
-      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(47,91,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(47,91,255,.055) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(75% 70% at 50% 58%,#000 25%,transparent 100%);mask-image:radial-gradient(75% 70% at 50% 58%,#000 25%,transparent 100%)"></div>
-      <div data-r="reg-head" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 24px">
-        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTRATION · 12 ROLES · 3 GATES</span>
-        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,min(4vw,6.5vh),58px);letter-spacing:-.045em;line-height:1">Pick how you're taking part.</h2>
-        <p data-r="reg-p" style="margin:0;font-size:15px;color:#4A505C">Keep scrolling: the gates open and print a ticket for every role. Hover or tap one to register.</p>
-        <div data-r="reg-progress" style="display:flex;align-items:center;justify-content:center;gap:10px 14px;flex-wrap:wrap;margin-top:4px">
-          <span aria-live="polite" style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#5B6270">{{ regShownLabel }}</span>
-          <span aria-hidden="true" style="display:flex;gap:4px;align-items:center">
-            <sc-for list="{{ regDots }}" as="d" hint-placeholder-count="12">
-              <span style="width:11px;height:7px;border-radius:2px;background:{{ d.bg }};transition:background .3s ease"></span>
-            </sc-for>
-          </span>
-          <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid rgba(11,13,18,.08);font-weight:600;font-size:13px;color:#0B0D12;transition:background .25s ease,color .25s ease" style-hover="background:#0B0D12;color:#fff">See all 12 roles<span style="font-family:'Material Symbols Rounded';font-size:16px">arrow_forward</span></button>
-        </div>
-      </div>
-      <div ref="{{ regStageRef }}" style="position:relative;flex:1;width:100%;z-index:1">
-        <div data-reg-layer data-compact="{{ regCompact }}" role="group" aria-label="Registration tickets, three gates of four. Use the arrow keys to move between them." onKeyDown="{{ regKey }}" style="position:absolute;left:50%;top:50%;width:0;height:0">
-          {{ regGates }}
-          <sc-for list="{{ regTiles }}" as="t" hint-placeholder-count="12">
-            <button data-reg-tile data-g="{{ t.g }}" data-j="{{ t.j }}" data-landed="{{ t.landed }}" onClick="{{ t.go }}" onMouseMove="{{ t.move }}" onMouseLeave="{{ t.leave }}" aria-label="{{ t.aria }}" title="{{ t.title }}" style="all:unset;box-sizing:border-box;cursor:pointer;position:absolute;left:{{ t.l }};top:{{ t.t }};width:{{ t.w }};height:{{ t.h }};transform:{{ t.tf }};clip-path:{{ t.clip }};visibility:{{ t.vis }};pointer-events:{{ t.pe }};z-index:2">
-              <span data-pop aria-hidden="true" style="position:absolute;inset:0;border-radius:16px;border:2px solid {{ t.gc }};opacity:0;pointer-events:none"></span>
-              <span data-tile-in data-ticket style="position:absolute;inset:0;display:flex;align-items:stretch;border-radius:16px;background:linear-gradient(160deg,#FFFFFF 0%,#F7F9FF 100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);--nx:{{ t.nx }}">
-                <span data-tk-stub style="width:{{ t.nx }};flex:none;display:grid;place-items:center;border-right:1.5px dashed rgba(11,13,18,.16);box-sizing:border-box">
-                  <span data-tile-ic style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:{{ t.gt }};color:{{ t.gc }};font-family:'Material Symbols Rounded';font-size:21px;transition:background .3s ease,color .3s ease">{{ t.icon }}</span>
-                </span>
-                <span data-tile-txt style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 6px 0 14px">
-                  <span data-tile-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:{{ t.nfs }};letter-spacing:-.02em;line-height:1.12;color:#0B0D12;overflow-wrap:anywhere">{{ t.name }}</span>
-                  <span data-tile-sub style="position:relative;height:15px;overflow:hidden;font-size:11.5px;line-height:15px">
-                    <span data-tile-grp style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:{{ t.gc }};transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">ADMIT ONE · GATE {{ t.gate }} · {{ t.num }}</span>
-                    <span data-tile-needs style="position:absolute;left:0;right:0;top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#5B6270;opacity:0;transform:translateY(12px);transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s ease">Needs · {{ t.needs }}</span>
-                  </span>
-                </span>
-                <span data-tile-go aria-hidden="true" style="align-self:center;padding-right:12px;font-family:'Material Symbols Rounded';font-size:20px;color:#2F5BFF;flex:none;transition:transform .3s cubic-bezier(.2,.8,.2,1)">arrow_forward</span>
-              </span>
-            </button>
+  <section ref="{{ regRef }}" data-r="roles-section" style="position:relative;background:#FFFFFF;padding:130px 32px 140px;overflow:clip">
+    <div aria-hidden="true" style="position:absolute;right:-14%;top:4%;width:64%;height:90%;background:radial-gradient(closest-side,rgba(47,91,255,.11),rgba(47,91,255,0));pointer-events:none"></div>
+    <div data-r="roles-grid" style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(32px,5vw,84px);align-items:start">
+      <div style="display:flex;flex-direction:column;min-width:0">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">REGISTRATION · 12 WAYS TO TAKE PART</span>
+        <h2 style="margin:12px 0 0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Pick how you're taking part.</h2>
+        <p data-r="roles-p" style="margin:16px 0 0;max-width:480px;font-size:16px;line-height:1.6;color:#4A505C">{{ roleHint }}</p>
+        <div data-r="roles-index">
+          <sc-for list="{{ roleGroups }}" as="g" hint-placeholder-count="3">
+            <div data-rise style="margin-top:40px">
+              <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#0B0D12"><span style="width:9px;height:9px;border-radius:50%;flex:none;background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:#8A909C">{{ g.count }}</span></div>
+              <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+                <div data-role-row data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid #E8EBF0">
+                  <button onClick="{{ r.click }}" onMouseEnter="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:17px 6px">
+                    <span style="font-family:'JetBrains Mono';font-size:12px;color:#8A909C">{{ r.num }}</span>
+                    <span data-role-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(24px,2.5vw,36px);letter-spacing:-.035em;line-height:1.05;color:#0B0D12;overflow-wrap:anywhere">{{ r.name }}</span>
+                    <span data-role-arrow aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px">arrow_outward</span>
+                  </button>
+                  <div data-role-drawer>
+                    <div data-role-drawer-in>
+                      <div style="display:flex;flex-direction:column;gap:14px;padding:2px 6px 22px">
+                        <div style="position:relative;border-radius:22px;overflow:hidden;aspect-ratio:9/7;background:#fff;border:1px solid #EEF0F4">{{ r.art }}</div>
+                        <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">{{ r.who }}</p>
+                        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ r.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+                        <button onClick="{{ r.go }}" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;align-self:flex-start;display:flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">{{ r.regLabel }}<span style="font-family:'Material Symbols Rounded';font-size:19px">arrow_forward</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
           </sc-for>
         </div>
       </div>
+      <aside data-r="roles-preview" aria-label="Selected role" style="position:sticky;top:104px;min-width:0">
+        <div style="border-radius:32px;background:#FFFFFF;border:1px solid #E8EBF0;box-shadow:0 40px 90px rgba(15,20,40,.10),0 2px 6px rgba(15,20,40,.04);overflow:hidden">
+          <div data-r="roles-art" style="position:relative;aspect-ratio:16/11;max-height:calc(100vh - 470px);min-height:220px;width:100%;background:#FFFFFF;border-bottom:1px solid #EEF0F4">
+            <sc-for list="{{ roleArts }}" as="a" hint-placeholder-count="12"><span data-art data-on="{{ a.on }}">{{ a.el }}</span></sc-for>
+            <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#8A909C">{{ rolePrev.num }}</span>
+          </div>
+          <div style="padding:22px 26px 24px;display:flex;flex-direction:column;gap:12px">
+            <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:{{ rolePrev.gc }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ rolePrev.gc }}"></span>{{ rolePrev.group }}</span>
+            <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,2.6vw,38px);letter-spacing:-.04em;line-height:1.02;color:#0B0D12">{{ rolePrev.name }}</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A505C">{{ rolePrev.who }}</p>
+            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ rolePrev.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px">
+              <button onClick="{{ rolePrev.go }}" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">{{ rolePrev.regLabel }}<span style="font-family:'Material Symbols Rounded';font-size:19px">arrow_forward</span></button>
+              <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;font-size:13.5px;font-weight:600;color:#4A505C;border-bottom:1px solid rgba(11,13,18,.2);padding-bottom:2px" style-hover="color:#0B0D12">Open the registration menu</button>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -1154,7 +1171,7 @@ const REG=[
 {id:'service',name:'Service Provider',icon:'handyman',desc:'Vendors delivering catering, transport, equipment and venue services.'},
 {id:'ema',name:'EMA',icon:'event_available',desc:'Event management agency staff responsible for operations and production.'},
 {id:'lo',name:'Liaison Officer',icon:'connect_without_contact',desc:'Officers assigned to a delegation as their point of contact throughout the event.'}];
-const DOCS={athlete:['Passport / National ID','Para classification card','Passport-size photo'],entity:['Federation authorisation letter','Delegation list'],media:['Press card','Organisation letter'],_:['Photo ID','Authorisation letter']};
+const DOCS={athlete:['Passport / National ID','Para classification card','Passport-size photo'],staff:['Passport / National ID','Team accreditation letter','Passport-size photo'],entity:['Federation authorisation letter','Delegation list'],lo:['Photo ID','LOC appointment letter'],official:['Photo ID','Officiating licence'],medical:['Photo ID','Medical registration certificate'],nada:['Photo ID','NADA / WADA authorisation'],gov:['Government ID','Official nomination letter'],media:['Press card','Organisation letter'],volunteer:['Photo ID','Volunteer consent form'],service:['Company registration','Work order / contract'],ema:['Photo ID','Agency authorisation letter'],_:['Photo ID','Authorisation letter']};
 const STEPS=[
 {title:'Registration',when:'Now',desc:'Athletes, staff, officials and every accredited role register online through one verified identity.'},
 {title:'Classification',when:'TBA',desc:'Para classification and equipment checks confirm each athlete’s eligibility for their division.'},
@@ -1196,7 +1213,72 @@ const REG_GROUPS=[['COMPETITORS & TEAMS',['athlete','staff','entity','lo']],['OF
 const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_OF[id]=g));
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
 const REG_GC=[['#2F5BFF','#E8EEFF'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
-const REG_T={open0:0.05,openDur:0.07,t0:0.12,step:0.052,dur:0.11};
+// Role illustrations: the same ink figure as the kick-to-goal player (kickJoints), posed per role, with props at the
+// hands/head and a small accreditation pass on the chest in the role's group colour. Built once as SVG strings.
+const ROLE_POSE={
+  athlete:{t:0,na:-102,ne:78,fa:90,fe:90,nh:-10,nk:-10,nf:90,fh:13,fk:13,ff:90},
+  staff:{t:3,na:112,ne:118,fa:42,fe:122,nh:6,nk:2,nf:90,fh:-7,fk:-9,ff:90},
+  entity:{t:2,na:152,ne:172,fa:14,fe:40,nh:7,nk:3,nf:90,fh:-7,fk:-9,ff:90},
+  lo:{t:2,na:74,ne:80,fa:16,fe:30,nh:6,nk:2,nf:90,fh:-7,fk:-9,ff:90},
+  official:{t:1,na:92,ne:96,fa:40,fe:120,nh:7,nk:3,nf:90,fh:-7,fk:-9,ff:90},
+  medical:{t:6,na:28,ne:40,fa:62,fe:112,nh:12,nk:6,nf:90,fh:-12,fk:-14,ff:90},
+  nada:{t:1,na:118,ne:156,fa:42,fe:122,nh:6,nk:2,nf:90,fh:-7,fk:-9,ff:90},
+  gov:{t:2,na:64,ne:86,fa:64,fe:84,nh:5,nk:2,nf:90,fh:-6,fk:-8,ff:90},
+  media:{t:6,na:104,ne:150,fa:96,fe:148,nh:10,nk:-6,nf:90,fh:-10,fk:-12,ff:90},
+  volunteer:{t:0,na:166,ne:176,fa:146,fe:164,nh:7,nk:3,nf:90,fh:-7,fk:-9,ff:90},
+  service:{t:4,na:62,ne:98,fa:62,fe:98,nh:10,nk:4,nf:90,fh:-9,fk:-11,ff:90},
+  ema:{t:2,na:52,ne:104,fa:40,fe:116,nh:6,nk:2,nf:90,fh:-7,fk:-9,ff:90}};
+const roleArtSVG=(id,gi)=>{const INK='#14161C',BL=BLUE,gc=REG_GC[gi]||REG_GC[0],P=ROLE_POSE[id]||ROLE_POSE.staff,s=1.2,J=kickJoints(P);
+  const low=Math.max(J.nl[2][1],J.nl[3][1],J.fl[2][1],J.fl[3][1])+5.5,G=258,X=id==='gov'?150:id==='official'?132:150,Y=G-low*s;
+  const f=v=>v.toFixed(1),tp=q=>[X+q[0]*s,Y+q[1]*s],at=(a,b,k)=>[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k],ln=(a,b)=>'M'+f(a[0])+' '+f(a[1])+'L'+f(b[0])+' '+f(b[1]);
+  const pth=(d,w,c,x)=>'<path d="'+d+'" stroke="'+(c||INK)+'" stroke-width="'+(w*s).toFixed(2)+'"'+(x||'')+'/>';
+  const perp=(p,a,b,hl)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;return ln([p[0]-dy/l*hl,p[1]+dx/l*hl],[p[0]+dy/l*hl,p[1]-dx/l*hl]);};
+  const chain=(segs,W,C,O,far,tick)=>{let o='';segs.forEach((g,i)=>o+=pth(ln(g[0],g[1]),W[i]+2.7));O.forEach(i=>o+=pth(ln(segs[i][0],segs[i][1]),W[i],C[i]?INK:(far?'#E3E7EE':'#FFFFFF')));if(tick)o+=pth(tick,1.35);return o;};
+  const AW=[11,8.4,7,9.2],AO=[1,2,3,0],LW=[17.5,13.6,11.4,9.2,9.6],LC=[1,0,0,0,1],LO=[1,2,3,0,4];
+  const leg=(l,far)=>{const [h,k,a,t]=l.map(tp),sk=at(k,a,0.74);return chain([[h,at(h,k,0.46)],[at(h,k,0.3),k],[k,sk],[sk,a],[at(a,t,-0.3),t]],LW,LC,LO,far,perp(sk,k,a,5.2*s));};
+  const arm=(l,far)=>{const [sh,el,wr]=l.map(tp),sl=at(sh,el,0.48);return chain([[sh,sl],[sh,el],[el,wr],[wr,at(el,wr,1.1)]],AW,[0,0,0,0],AO,far,perp(sl,sh,el,5.6*s));};
+  const tn=[-J.tu[1],J.tu[0]],TV=(u,v)=>tp([J.tu[0]*u+tn[0]*v,J.tu[1]*u+tn[1]*v]);
+  const torso='M'+[[-5,-10],[20,-9.6],[36,-11.4],[45,-9.2],[50,-4],[50,5.2],[44,10.6],[34,12.2],[20,10.2],[-5,10.6]].map(([u,v])=>{const q=TV(u,v);return f(q[0])+' '+f(q[1]);}).join('L')+'Z';
+  const hc=tp(J.head),hr=9.6*s,ha=Math.atan2(J.tu[1],J.tu[0]);let hair='';for(let i=0;i<=8;i++){const a=ha-Math.PI*0.66+i/8*Math.PI*0.8;hair+=(i?'L':'M')+f(hc[0]+Math.cos(a)*7.2*s)+' '+f(hc[1]+Math.sin(a)*7.2*s);}
+  const nw=tp(J.na[2]),fw=tp(J.fa[2]),c0=TV(30,3.5);
+  // accreditation pass on the chest: lanyard + card in the group colour
+  const pass='<path d="'+ln(TV(46,-6),c0)+'M'+f(c0[0])+' '+f(c0[1])+'L'+f(TV(46,6)[0])+' '+f(TV(46,6)[1])+'" stroke="'+gc[0]+'" stroke-width="1.6"/>'+
+    '<rect x="'+f(c0[0]-5.5)+'" y="'+f(c0[1])+'" width="11" height="14" rx="2" fill="#fff" stroke="'+INK+'" stroke-width="1.4"/><rect x="'+f(c0[0]-5.5)+'" y="'+f(c0[1])+'" width="11" height="4.5" rx="1.5" fill="'+gc[0]+'"/>';
+  const box=(x,y,w,h,r,fill,stroke,sw)=>'<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(w)+'" height="'+f(h)+'" rx="'+(r||3)+'" fill="'+(fill||'#fff')+'" stroke="'+(stroke||INK)+'" stroke-width="'+(sw||2)+'"/>';
+  const circ=(x,y,r,fill,stroke,sw)=>'<circle cx="'+f(x)+'" cy="'+f(y)+'" r="'+f(r)+'" fill="'+(fill||'#fff')+'" stroke="'+(stroke||INK)+'" stroke-width="'+(sw||2)+'"/>';
+  let back='',front='';
+  switch(id){
+    case 'athlete':{const bx=fw[0]+4;front+='<path d="M'+f(bx-4)+' '+f(fw[1]-62)+'Q'+f(bx+34)+' '+f(fw[1])+' '+f(bx-4)+' '+f(fw[1]+62)+'" stroke="'+BL+'" stroke-width="4.2"/>'+
+      '<path d="M'+f(bx-4)+' '+f(fw[1]-62)+'L'+f(nw[0])+' '+f(nw[1])+'L'+f(bx-4)+' '+f(fw[1]+62)+'" stroke="'+INK+'" stroke-width="1.1"/>'+
+      '<path d="'+ln([nw[0]-6,nw[1]],[bx+44,fw[1]])+'M'+f(bx+44)+' '+f(fw[1])+'l-9 -5M'+f(bx+44)+' '+f(fw[1])+'l-9 5" stroke="'+INK+'" stroke-width="2"/>';
+      back+=circ(318,150,26,'#fff',INK,2)+circ(318,150,17,'#fff',INK,1.6)+circ(318,150,8,BL,'none',0)+'<path d="M318 176V'+G+'M300 '+G+'L318 182 336 '+G+'" stroke="'+INK+'" stroke-width="2"/>';break;}
+    case 'staff':front+=box(fw[0]-6,fw[1]-24,22,30,3)+box(fw[0]+0,fw[1]-27,10,6,2,BL,BL,1)+'<path d="M'+f(fw[0]-1)+' '+f(fw[1]-14)+'h12M'+f(fw[0]-1)+' '+f(fw[1]-8)+'h9M'+f(fw[0]-1)+' '+f(fw[1]-2)+'h11" stroke="'+INK+'" stroke-width="1.4"/>'+
+      '<path d="M'+f(hc[0]-hr-1)+' '+f(hc[1]-2)+'Q'+f(hc[0])+' '+f(hc[1]-hr-8)+' '+f(hc[0]+hr+1)+' '+f(hc[1]-2)+'Z" fill="'+BL+'" stroke="'+INK+'" stroke-width="1.8"/><path d="'+ln([hc[0]+hr-2,hc[1]-2],[hc[0]+hr+13,hc[1]])+'" stroke="'+INK+'" stroke-width="3"/>';break;
+    case 'entity':{const top=[nw[0]+2,nw[1]-40];front+='<path d="'+ln([nw[0]+2,nw[1]+26],top)+'" stroke="'+INK+'" stroke-width="2.6"/><path d="M'+f(top[0])+' '+f(top[1])+'c18 -8 30 8 52 0v30c-22 8 -34 -8 -52 0z" fill="'+BL+'" stroke="'+INK+'" stroke-width="2"/><circle cx="'+f(top[0]+26)+'" cy="'+f(top[1]+15)+'" r="5" fill="#fff"/>'+box(fw[0]-4,fw[1]-6,24,18,3,'#fff',INK,2);break;}
+    case 'lo':{const bx=hc[0]+22,by=hc[1]-46;back+='<path d="M'+f(bx)+' '+f(by)+'h70a10 10 0 0 1 10 10v24a10 10 0 0 1-10 10h-48l-14 12 2-12h-10a10 10 0 0 1-10-10v-24a10 10 0 0 1 10-10z" fill="#fff" stroke="'+INK+'" stroke-width="2"/>'+circ(bx+24,by+22,3.5,BL,'none',0)+circ(bx+40,by+22,3.5,BL,'none',0)+circ(bx+56,by+22,3.5,BL,'none',0);break;}
+    case 'official':{const tx=292,ty=150;back+=circ(tx,ty,34,'#fff',INK,2)+circ(tx,ty,23,'#fff',INK,1.6)+circ(tx,ty,12,BL,'none',0)+'<path d="M'+tx+' '+(ty+34)+'V'+G+'M'+(tx-22)+' '+G+'L'+tx+' '+(ty+40)+' '+(tx+22)+' '+G+'" stroke="'+INK+'" stroke-width="2"/><path d="M'+(tx+4)+' '+(ty-4)+'l18 -18" stroke="'+INK+'" stroke-width="2"/>';
+      front+=box(fw[0]-6,fw[1]-22,20,28,3)+'<path d="M'+f(fw[0]-1)+' '+f(fw[1]-12)+'h10M'+f(fw[0]-1)+' '+f(fw[1]-5)+'h8" stroke="'+BL+'" stroke-width="1.6"/>';break;}
+    case 'medical':front+=box(fw[0]-6,fw[1]-6,40,30,5)+'<path d="M'+f(fw[0]+14)+' '+f(fw[1]+1)+'v16M'+f(fw[0]+6)+' '+f(fw[1]+9)+'h16" stroke="'+BL+'" stroke-width="4.5"/><path d="M'+f(fw[0]+6)+' '+f(fw[1]-6)+'v-6h16v6" fill="none" stroke="'+INK+'" stroke-width="2"/>'+
+      '<path d="M'+f(hc[0]-hr-1)+' '+f(hc[1]-3)+'Q'+f(hc[0])+' '+f(hc[1]-hr-7)+' '+f(hc[0]+hr+1)+' '+f(hc[1]-3)+'Z" fill="#fff" stroke="'+INK+'" stroke-width="1.8"/><path d="M'+f(hc[0])+' '+f(hc[1]-hr-1)+'v-0" stroke="'+BL+'" stroke-width="0"/><path d="M'+f(hc[0]-3)+' '+f(hc[1]-hr+1)+'h6M'+f(hc[0])+' '+f(hc[1]-hr-2)+'v6" stroke="'+BL+'" stroke-width="2"/>';break;
+    case 'nada':front+='<rect x="'+f(nw[0]-4)+'" y="'+f(nw[1]-30)+'" width="10" height="30" rx="5" fill="#fff" stroke="'+INK+'" stroke-width="2"/><rect x="'+f(nw[0]-2.5)+'" y="'+f(nw[1]-14)+'" width="7" height="13" rx="3.5" fill="'+BL+'"/><path d="M'+f(nw[0]-6)+' '+f(nw[1]-31)+'h14" stroke="'+INK+'" stroke-width="2.4"/>'+box(fw[0]-6,fw[1]-22,20,28,3)+'<path d="M'+f(fw[0]-1)+' '+f(fw[1]-12)+'l3 3 6-7" stroke="'+BL+'" stroke-width="1.8"/>';break;
+    case 'gov':{const px=X+40;front+='<path d="M'+(px-44)+' 176H'+(px+44)+'L'+(px+32)+' '+G+'H'+(px-32)+'Z" fill="#fff" stroke="'+INK+'" stroke-width="2"/>'+circ(px,212,13,'#fff',BL,2.4)+'<path d="M'+(px-6)+' 212h12M'+px+' 206v12" stroke="'+BL+'" stroke-width="2"/><path d="M'+(px-50)+' 176h100" stroke="'+INK+'" stroke-width="3"/><path d="M'+(px+26)+' 176l-8 -30" stroke="'+INK+'" stroke-width="2"/>'+circ(px+17,143,4,INK,'none',0);break;}
+    case 'media':{const cx=hc[0]+hr+6,cy=hc[1]-2;front+=box(cx-6,cy-11,30,22,4)+circ(cx+12,cy,7.5,'#fff',INK,2)+circ(cx+12,cy,3.5,BL,'none',0)+box(cx-1,cy-16,9,5,1.5,BL,BL,1);
+      back+='<path d="M'+f(X+70)+' '+G+'l14 -60 14 60M'+f(X+84)+' '+f(G-60)+'V'+f(G-10)+'" stroke="'+INK+'" stroke-width="1.6" opacity=".45"/>';break;}
+    case 'volunteer':{const vy=TV(22,0);front+='<path d="'+ln(TV(40,-9),TV(6,-9))+'M'+f(TV(40,10)[0])+' '+f(TV(40,10)[1])+'L'+f(TV(6,10)[0])+' '+f(TV(6,10)[1])+'" stroke="'+BL+'" stroke-width="5"/>';
+      back+='<path d="M'+f(nw[0]-14)+' '+f(nw[1]-10)+'q-6 -6 0 -12M'+f(nw[0]+14)+' '+f(nw[1]-10)+'q6 -6 0 -12M'+f(fw[0]-14)+' '+f(fw[1]-8)+'q-6 -6 0 -12" stroke="'+BL+'" stroke-width="2"/>';break;}
+    case 'service':{const bx=Math.min(nw[0],fw[0])-6,by=Math.min(nw[1],fw[1])-22;front+=box(bx,by,58,40,4)+'<path d="M'+f(bx)+' '+f(by+13)+'h58M'+f(bx+20)+' '+f(by)+'v40M'+f(bx+38)+' '+f(by)+'v40" stroke="'+INK+'" stroke-width="1.6"/><rect x="'+f(bx+22)+'" y="'+f(by+18)+'" width="14" height="10" rx="2" fill="'+BL+'"/>';
+      back+=box(X+86,G-38,46,38,4,'#fff',INK,1.8)+'<path d="M'+(X+86)+' '+(G-26)+'h46" stroke="'+INK+'" stroke-width="1.4"/>';break;}
+    case 'ema':{front+='<path d="M'+f(hc[0]-hr-2)+' '+f(hc[1]+2)+'A'+f(hr+3)+' '+f(hr+3)+' 0 0 1 '+f(hc[0]+hr+2)+' '+f(hc[1]+2)+'" stroke="'+INK+'" stroke-width="2.4"/>'+circ(hc[0]+hr+2,hc[1]+3,3.6,BL,INK,1.4)+'<path d="M'+f(hc[0]+hr+2)+' '+f(hc[1]+6)+'q2 10 -8 12" stroke="'+INK+'" stroke-width="1.8"/>'+
+      box(fw[0]-8,fw[1]-20,30,22,4,'#fff',INK,2)+'<rect x="'+f(fw[0]-4)+'" y="'+f(fw[1]-16)+'" width="22" height="14" rx="2" fill="'+gc[1]+'"/><path d="M'+f(fw[0]-1)+' '+f(fw[1]-6)+'l5 -4 4 3 6 -6" stroke="'+BL+'" stroke-width="1.6"/>';break;}
+  }
+  const shadow='<ellipse cx="'+f(X)+'" cy="'+(G+2)+'" rx="'+f(26*s)+'" ry="'+f(3.4*s)+'" fill="'+INK+'" opacity=".09"/>';
+  const ground='<path d="M24 '+G+'H336" stroke="'+INK+'" stroke-width="1.5" opacity=".35"/>';
+  const fig=arm(J.fa,1)+leg(J.fl,1)+'<path d="'+torso+'" fill="#FFFFFF" stroke="'+INK+'" stroke-width="'+(1.35*s).toFixed(2)+'" stroke-linejoin="round"/>'+pass+
+    chain([[TV(45,0),hc]],[7.4],[0],[0],0)+'<circle cx="'+f(hc[0])+'" cy="'+f(hc[1])+'" r="'+f(hr)+'" fill="#FFFFFF" stroke="'+INK+'" stroke-width="'+(1.35*s).toFixed(2)+'"/>'+
+    '<path d="'+hair+'" stroke="'+INK+'" stroke-width="'+(5.2*s).toFixed(2)+'"/>'+leg(J.nl,0)+arm(J.na,0);
+  return '<svg viewBox="0 0 360 280" width="100%" height="100%" aria-hidden="true" focusable="false"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+
+    '<circle cx="'+f(X+18)+'" cy="158" r="98" fill="'+gc[1]+'" stroke="none"/>'+ground+shadow+back+fig+front+'</g></svg>';};
+const ROLE_ART={};
 // Contact desk routing: [id, chip label, icon, desk, address (placeholder .example domain), typical reply hours]
 const CONTACT_TOPICS=[['registration','Registration','how_to_reg','Registration desk','registration@gms.example',4],
 ['accreditation','Accreditation','badge','Accreditation desk','accreditation@gms.example',6],
@@ -1296,13 +1378,13 @@ class Component extends DCLogic {
       heroFacts:[['DATES','05 — 09 Sep 2026',''],['HOST CITY','Ahmedabad',''],['DIVISIONS','3','3'],['MEDAL EVENTS','15','15']].map(([k,v,n])=>({k,v,n})),
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
-      regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'0':'1',botPe:s.regOpen||s.menuOpen||(W<=600&&s.p.reg>0.01&&s.p.reg<0.995)?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
+      regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen?'0':'1',botPe:s.regOpen||s.menuOpen?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
       navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
       evStage:pe<KICK.run0+0.01?'SCROLL TO KICK OFF':pe<KICK.strike?'THE RUN-UP':pe<KICK.board0?'THE STRIKE':(HOVER?'HOVER AN EVENT · CLICK TO REGISTER':'TAP AN EVENT TO REGISTER'),
       goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
-      ...this.ringVals(),
+      ...this.rolesVals(),
       
       arenaY:this.fxArena(s.p.steps).y,arenaOp:this.fxArena(s.p.steps).op,
       
@@ -1314,81 +1396,26 @@ class Component extends DCLogic {
       
       
       evNear:s.evNear&&(this.props.enable3D??true)&&!LITE,regNear:s.regNear&&(this.props.enable3D??true)};}
-  // Registration: three ink-drawn speed gates (one per role group) draw in, open, and each prints its four
-  // glass tickets: a ticket slides out of the slot under its gate and drops into the gate's column.
-  // Pure function of scroll (s.p.reg pinned progress, s.p.regIn entry), so scrolling up reverses it.
-  regLayout(){const W=typeof window!=='undefined'?window.innerWidth:1200,vh=typeof window!=='undefined'?window.innerHeight:800,compact=W<=600,sh=this.regStageH||vh*0.6;
-    const gapX=compact?10:28,maxW=compact?W-28:Math.min(W-64,1020),tw=Math.min(compact?999:300,(maxW-2*gapX)/3),gy=compact?8:12;
-    const gh=compact?Math.max(64,Math.min(80,sh*0.15)):Math.max(84,Math.min(118,sh*0.21));
-    const th=compact?Math.max(70,Math.min(96,(sh-gh-22-3*gy-24)/4)):Math.max(56,Math.min(76,(sh-gh-22-3*gy-24)/4));
-    const total=gh+22+4*th+3*gy,top=-total/2,floorY=top+gh;
-    return {W,compact,tw,th,gh,gy,gapX,top,floorY,rowsTop:floorY+22,cx:g=>(g-1)*(tw+gapX)};}
-  // the scroll-dependent state of the gates and tickets; used for the render and for the direct per-frame updates
-  regModel(pr,pin){const L=this.regLayout(),p=REDUCED?1:(pr||0),draw=REDUCED?1:ease(clamp(((pin||0)-0.2)/0.6));
-    const opens=[0,1,2].map(g=>ease(clamp((p-REG_T.open0-g*0.015)/REG_T.openDur)));
-    // printer feed: each gate prints its last role first; every new ticket comes out on top and pushes the earlier ones down a row
-    const T=REG_ORDER.map((ri,k)=>{const g=Math.floor(k/4),j=k%4,n=3-j,o=n*3+g;return {ri,g,j,n,lt:clamp((p-REG_T.t0-o*REG_T.step)/REG_T.dur)};});
-    T.forEach(x=>{const cx=L.cx(x.g),slotY=L.floorY,later=T.filter(y=>y.g===x.g&&y.n>x.n),push=later.reduce((a,y)=>a+ease(y.lt),0);
-      // print: slide out of the slot under the gate (clipped at the slot line) into the top row, then get pushed down by later tickets
-      const e=ease(x.lt),landed=x.lt>=1&&later.every(y=>y.lt<=0||y.lt>=1);
-      const top=slotY-L.th+(L.rowsTop-slotY+L.th)*e+(L.th+L.gy)*push,clip=Math.max(0,slotY-top),rz=(1-e)*(x.g-1||0.6)*-1.5;
-      x.tf=landed?'translate('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px)':'translate3d('+cx.toFixed(1)+'px,'+top.toFixed(1)+'px,0) rotate('+rz.toFixed(2)+'deg)';
-      x.clip=landed||clip<=0?'none':'inset('+clip.toFixed(1)+'px 0 0 0)';x.vis=x.lt>0?'visible':'hidden';x.pe=x.lt>0.95?'auto':'none';x.landed=landed?'1':'0';});
-    return {L,draw,opens,T,printed:T.filter(x=>x.lt>=0.5).length};}
-  rrPath(x,y,w,hh,r){const f=v=>v.toFixed(1);r=Math.min(r,w/2,hh/2);return 'M'+f(x+r)+' '+f(y)+'H'+f(x+w-r)+'Q'+f(x+w)+' '+f(y)+' '+f(x+w)+' '+f(y+r)+'V'+f(y+hh-r)+'Q'+f(x+w)+' '+f(y+hh)+' '+f(x+w-r)+' '+f(y+hh)+'H'+f(x+r)+'Q'+f(x)+' '+f(y+hh)+' '+f(x)+' '+f(y+hh-r)+'V'+f(y+r)+'Q'+f(x)+' '+f(y)+' '+f(x+r)+' '+f(y)+'Z';}
-  gateFlaps(L,o){const w=L.tw,gh=L.gh,bh=Math.round(gh*0.3),pw=Math.max(14,w*0.1),py=bh+8,ph=gh-py,flapW=w/2-2-(6+pw),fy=py+ph*0.22,fh=ph*0.5,lf=Math.max(0.6,flapW*(1-o));
-    return {lf:flapW*(1-o),l:this.rrPath(6+pw,fy,lf,fh,4),r:this.rrPath(w-6-pw-lf,fy,lf,fh,4)};}
-  regGatesEl(M){const h=React.createElement,INK='#14161C',BL=BLUE,f=v=>v.toFixed(1),L=M.L,draw=M.draw,opens=M.opens,rr=(...a)=>this.rrPath(...a);
-    const ink=(d,extra)=>h('path',Object.assign({d,'data-gink':'1',fill:'none',stroke:INK,strokeWidth:1.5,strokeLinecap:'round',strokeLinejoin:'round',pathLength:1,strokeDasharray:1,strokeDashoffset:(1-draw).toFixed(3)},extra||{}));
-    const fill=d=>h('path',{d,'data-gfill':'1',fill:'#FFFFFF',opacity:draw.toFixed(3)});
-    const span=L.tw*3+L.gapX*2+80,w=L.tw,gh=L.gh,bh=Math.round(gh*0.3),pw=Math.max(14,w*0.1),py=bh+8,ph=gh-py;
-    return h('div',{'aria-hidden':'true',style:{position:'absolute',left:0,top:0,width:0,height:0,pointerEvents:'none'}},
-      h('svg',{width:span,height:12,viewBox:'0 0 '+span+' 12',style:{position:'absolute',left:-span/2,top:L.floorY-6,overflow:'visible'}},
-        ink('M0 6H'+span,{opacity:.45}),
-        [0,1,2].map(g=>h('path',{key:g,'data-gslot':String(g),d:'M'+f(span/2+L.cx(g)-w*0.22)+' 6H'+f(span/2+L.cx(g)+w*0.22),stroke:BL,strokeWidth:3,strokeLinecap:'round',opacity:(0.35+0.65*opens[g]).toFixed(3)}))),
-      [0,1,2].map(g=>{const o=opens[g],x0=L.cx(g)-w/2,FL=this.gateFlaps(L,o),fop=(FL.lf>0.5?draw:0).toFixed(3);
-        return h('div',{key:g,style:{position:'absolute',left:x0,top:L.top,width:w,height:gh}},
-          h('svg',{width:w,height:gh,viewBox:'0 0 '+f(w)+' '+f(gh),style:{position:'absolute',inset:0,overflow:'visible'}},
-            fill(rr(0.75,0.75,w-1.5,bh,10)),ink(rr(0.75,0.75,w-1.5,bh,10)),
-            fill(rr(6,py,pw,ph,6)),ink(rr(6,py,pw,ph,6)),
-            fill(rr(w-6-pw,py,pw,ph,6)),ink(rr(w-6-pw,py,pw,ph,6)),
-            ink('M'+f(6+pw*0.3)+' '+f(py+ph*0.62)+'H'+f(6+pw*0.7)+'M'+f(w-6-pw*0.7)+' '+f(py+ph*0.62)+'H'+f(w-6-pw*0.3),{opacity:.6}),
-            h('path',{'data-flap':String(g),d:FL.l,fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:fop}),
-            h('path',{'data-flap':String(g),d:FL.r,fill:'rgba(47,91,255,.1)',stroke:BL,strokeWidth:1.2,opacity:fop}),
-            h('circle',{'data-led':String(g),cx:f(6+pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)}),
-            h('circle',{'data-led':String(g),cx:f(w-6-pw/2),cy:f(py+9),r:3,fill:o>0.5?'#1FA463':'#E5484D',opacity:draw.toFixed(3)})),
-          h('div',{'data-glab':'1',style:{position:'absolute',left:0,top:0,width:w,height:bh,display:'flex',alignItems:'center',justifyContent:L.compact?'center':'space-between',gap:8,padding:L.compact?'0 6px':'0 14px',boxSizing:'border-box',opacity:clamp(draw*1.4-0.4)}},
-            h('span',{style:{fontFamily:'JetBrains Mono',fontSize:L.compact?9:10,letterSpacing:'.16em',color:BL,whiteSpace:'nowrap'}},'GATE '+'ABC'[g]),
-            L.compact?null:h('span',{style:{fontFamily:'Bricolage Grotesque',fontWeight:700,fontSize:13,letterSpacing:'-.01em',color:'#0B0D12',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}},REG_GROUPS[g][0].toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))));}));}
-  // per-frame: write the gates and tickets straight to the DOM (no page re-render)
-  regFx(M){const q=sel=>this.fxQ(sel),d=M.draw;if(!q('[data-reg-layer]').length)return;
-    const ds=(1-d).toFixed(3),dop=d.toFixed(3);
-    q('[data-reg-layer] [data-gink]').forEach(el=>el.setAttribute('stroke-dashoffset',ds));
-    q('[data-reg-layer] [data-gfill]').forEach(el=>el.setAttribute('opacity',dop));
-    q('[data-reg-layer] [data-glab]').forEach(el=>{el.style.opacity=String(clamp(d*1.4-0.4));});
-    const flaps=q('[data-reg-layer] [data-flap]'),leds=q('[data-reg-layer] [data-led]'),slots=q('[data-reg-layer] [data-gslot]');
-    [0,1,2].forEach(g=>{const o=M.opens[g],FL=this.gateFlaps(M.L,o),fop=(FL.lf>0.5?d:0).toFixed(3);
-      const fl=flaps.filter(el=>el.getAttribute('data-flap')===String(g));if(fl[0]){fl[0].setAttribute('d',FL.l);fl[0].setAttribute('opacity',fop);}if(fl[1]){fl[1].setAttribute('d',FL.r);fl[1].setAttribute('opacity',fop);}
-      leds.forEach(el=>{if(el.getAttribute('data-led')===String(g)){el.setAttribute('fill',o>0.5?'#1FA463':'#E5484D');el.setAttribute('opacity',dop);}});
-      const sl=slots.find(el=>el.getAttribute('data-gslot')===String(g));if(sl)sl.setAttribute('opacity',(0.35+0.65*o).toFixed(3));});
-    const tiles=q('[data-reg-layer] [data-reg-tile]');
-    M.T.forEach((x,k)=>{const el=tiles[k];if(!el)return;const st=el.style;st.transform=x.tf;st.clipPath=x.clip;st.visibility=x.vis;st.pointerEvents=x.pe;if(el.getAttribute('data-landed')!==x.landed)el.setAttribute('data-landed',x.landed);});}
-  ringVals(){const s=this.state,M=this.regModel(s.p.reg,s.p.regIn),L=M.L,T=M.T,compact=L.compact;
-    return {regStageRef:this.ref('regStage'),regCompact:compact?'1':'0',regGates:this.regGatesEl(M),
-      regShownLabel:pad(M.printed)+' OF 12 REGISTRATION TYPES',
-      regDots:T.map(x=>({bg:x.lt>=0.5?REG_GC[x.g][0]:'#D5DAE3'})),
-      regKey:e=>{const d={ArrowRight:[1,0],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowUp:[0,-1]}[e.key];if(!d)return;const a=document.activeElement,Ly=e.currentTarget;
-        const vis=[...Ly.querySelectorAll('[data-reg-tile]')].filter(x=>x.style.pointerEvents!=='none');
-        if(!a||!a.hasAttribute('data-reg-tile')){vis[0]&&vis[0].focus();e.preventDefault();return;}
-        const g=+a.dataset.g+d[0],j=+a.dataset.j+d[1],n=vis.find(x=>+x.dataset.g===g&&+x.dataset.j===j);if(n){n.focus();e.preventDefault();}},
-      regTiles:T.map(x=>{const r=REG[x.ri],g=x.g,gc=REG_GC[g],needs=(DOCS[r.id]||DOCS._).slice(0,2).join(' · ');
-        return {g:String(g),j:String(x.j),name:r.name.split('/').join('/​'),icon:r.icon,num:pad(x.ri+1),gate:'ABC'[g],gc:gc[0],gt:gc[1],needs,nx:compact?'40px':'64px',
-          nfs:compact?'12px':(r.name.length>18?'14.5px':'16px'),aria:'Register as '+r.name+'. Gate '+'ABC'[g]+'. Needs '+needs,title:r.name+' · Needs '+needs,
-          l:(-L.tw/2).toFixed(1)+'px',t:'0px',w:L.tw.toFixed(1)+'px',h:L.th.toFixed(1)+'px',tf:x.tf,clip:x.clip,vis:x.vis,pe:x.pe,landed:x.landed,
-          go:()=>{if(compact)this.setState({modal:r.id});else this.startReg(r.id);},
-          move:ev=>{if(!HOVER)return;const el=ev.currentTarget.querySelector('[data-tile-in]'),b=ev.currentTarget.getBoundingClientRect(),u=(ev.clientX-b.left)/b.width-.5,v=(ev.clientY-b.top)/b.height-.5;
-            el.style.transform='perspective(800px) translateY(-4px) rotateX('+(-v*8).toFixed(2)+'deg) rotateY('+(u*6).toFixed(2)+'deg)';},
-          leave:ev=>{const el=ev.currentTarget.querySelector('[data-tile-in]');if(el)el.style.transform='';}};})};}
+  // phones: while rows open/close above, keep the tapped row under the finger
+  anchorRow(el){if(!el)return;const y0=el.getBoundingClientRect().top,t0=performance.now();cancelAnimationFrame(this.anchorRaf);
+    const step=()=>{if(!el.isConnected)return;const d=el.getBoundingClientRect().top-y0;if(Math.abs(d)>0.5)window.scrollBy({top:d,behavior:'instant'});if(performance.now()-t0<650)this.anchorRaf=requestAnimationFrame(step);};this.anchorRaf=requestAnimationFrame(step);}
+  // Registration: an editorial index of the 12 roles (grouped) with a live preview card. Hover/focus/tap selects a role;
+  // on phones each row opens in place. Illustrations are built once (roleArtSVG) and kept as static SVG.
+  rolesVals(){const s=this.state,sel=s.roleSel??0,open=s.roleOpen??0,h=React.createElement;
+    const art=ri=>{const r=REG[ri];return ROLE_ART[r.id]||(ROLE_ART[r.id]=roleArtSVG(r.id,REG_GROUP_OF[r.id]));};
+    const artEl=(ri,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},dangerouslySetInnerHTML:{__html:art(ri)}});
+    const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
+    const cur=info(sel);
+    return {roleHint:HOVER?'Hover a role to see who it is for and what you will need. Click to register.':'Tap a role to see who it is for and what you will need.',
+      roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
+        return {num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
+          enter:()=>{if(this.state.roleSel!==k&&window.innerWidth>760)this.setState({roleSel:k});},
+          click:e=>{if(window.innerWidth<=760){this.anchorRow(e&&e.currentTarget);this.setState({roleOpen:op?-1:k,roleSel:k});return;}if(HOVER)this.startReg(I.r.id);else this.setState({roleSel:k});},
+          who:I.r.desc,needs:I.needs.map(t=>({t})),gt:I.gc[1],art:op?artEl(I.ri,'m'+k):null,regLabel:'Register as '+I.r.name,
+          go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};})})),
+      roleArts:REG_ORDER.map((ri,k)=>({on:k===sel?'1':'0',el:artEl(ri,'a'+k)})),
+      rolePrev:{name:cur.r.name,group:REG_GROUPS[cur.g][0],gc:cur.gc[0],gt:cur.gc[1],who:cur.r.desc,needs:cur.needs.map(t=>({t})),num:pad(sel+1)+' / 12',
+        regLabel:'Register as '+cur.r.name,go:()=>this.startReg(cur.r.id)}};}
   // Contact help desk: topic routing, live desk status on IST, validation, paper-plane send, reference ticket, admin enquiries
   contactVals(){const s=this.state,c=s.contact,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),h=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&h>=9&&h<19;
@@ -1438,10 +1465,8 @@ class Component extends DCLogic {
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
-  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),reg:this.prog('reg'),regIn:this.vis('reg')};
+  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
-    const rs=this.refs.regStage&&this.refs.regStage.current,hb=document.querySelector('[data-reg-hub]');if(rs)this.regStageH=rs.clientHeight;
-    if(rs&&hb){const a=rs.getBoundingClientRect(),b=hb.getBoundingClientRect();this.regHub={x:b.left+b.width/2-(a.left+a.width/2),y:b.top+b.height/2-(a.top+a.height/2)};}
     if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
@@ -1464,12 +1489,11 @@ class Component extends DCLogic {
   // discrete state: when this changes the page re-renders once (text, counters, mounted elements)
   fxSig(P){const W=window.innerWidth,pe=REDUCED?1:(P.ev||0);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));
-    const evS=pe<KICK.run0+0.01?0:pe<KICK.strike?1:pe<KICK.board0?2:3,printed=this.regM?this.regM.printed:0;
-    return stepIdx+'|'+evS+'|'+printed+'|'+(W<=600&&P.reg>0.01&&P.reg<0.995)+'|'+((P.close||0)>0.02);}
+    const evS=pe<KICK.run0+0.01?0:pe<KICK.strike?1:pe<KICK.board0?2:3;
+    return stepIdx+'|'+evS+'|'+((P.close||0)>0.02);}
   scrollFx(P){const last=this.fxPrev||(this.fxPrev={}),ch=k=>{const v=P[k]||0;if(last[k]===v&&!this.fxForce)return false;last[k]=v;return true;};
     const force=this.fxForce;this.fxForce=false;
     if(ch('steps')){const A=this.fxArena(P.steps||0);this.fxQ('[data-r=steps-arena]').forEach(el=>{el.style.transform='translateY('+A.y+')';el.style.opacity=A.op;});}
-    const rc=ch('reg'),ric=ch('regIn');if(rc||ric||force){this.regM=this.regModel(P.reg,P.regIn);this.regFx(this.regM);}
     if(ch('tiles')){this.fxQ('[data-tile]').forEach((el,i)=>{const X=this.fxTile(P.tiles||0,i);el.style.transform=X.tf;el.style.opacity=X.op;el.style.borderRadius=X.br;});}
     if(ch('car')){const o=this.fxCarOp(P.car||0);this.fxQ('[data-car-text]').forEach(el=>{el.style.opacity=o;});}
     if(ch('close')){const C=this.fxClose(P.close||0);this.fxQ('[data-close-win]').forEach(el=>{const st=el.style;st.width=C.w;st.height=C.h;st.borderRadius=C.r;st.background=C.bg;});
