@@ -250,6 +250,11 @@ html,body{background:#F4F5F7}
 .gms-liquid--blue{background:linear-gradient(180deg,#4F78FF 0%,#2F5BFF 52%,#2448E6 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -8px 16px rgba(14,30,120,.28),0 12px 28px rgba(47,91,255,.32)!important}
 .gms-liquid--blue::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(150,180,255,.42)'/%3E%3C/svg%3E")}
 .gms-liquid--blue::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(20,46,190,.5)'/%3E%3C/svg%3E")}
+.gms-liquid--water{background:linear-gradient(180deg,rgba(214,228,255,.55) 0%,rgba(150,180,255,.35) 100%)!important;color:#fff!important;text-shadow:0 1px 2px rgba(10,30,120,.45);border:1px solid rgba(47,91,255,.45)!important;-webkit-backdrop-filter:blur(10px) saturate(1.5);backdrop-filter:blur(10px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -10px 18px rgba(20,50,200,.18),0 10px 24px rgba(47,91,255,.28)!important}
+.gms-liquid--water::before,.gms-liquid--water::after{top:2%}
+.gms-liquid--water::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(102,206,255,.9)'/%3E%3C/svg%3E")}
+.gms-liquid--water::after{top:12%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(47,91,255,.92)'/%3E%3C/svg%3E")}
+.gms-liquid--water:hover::before,.gms-liquid--water:hover::after,.gms-liquid--water:focus-visible::before,.gms-liquid--water:focus-visible::after{translate:0 -14%}
 .gms-liquid--dark{background:linear-gradient(180deg,#2A3044 0%,#11141C 55%,#0B0D12 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -8px 16px rgba(0,0,0,.35)!important}
 .gms-liquid--dark::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(91,132,255,.30)'/%3E%3C/svg%3E")}
 .gms-liquid--dark::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.07)'/%3E%3C/svg%3E")}
@@ -342,38 +347,32 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 .gms-in .gms-w>span{transform:none}
 .gms-rv{opacity:0;translate:0 34px;transition:opacity .9s var(--gms-ease) var(--d,0s),translate .9s var(--gms-ease) var(--d,0s)}
 .gms-rv.gms-in{opacity:1;translate:none}
-/* Programme: GOAL scoreboard, then the three divisions around the target */
-[data-goal-board]{position:absolute;z-index:4;left:50%;top:30%;transform:translate(-50%,-50%);opacity:0;visibility:hidden;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 26px 14px;border-radius:18px;background:linear-gradient(180deg,#151A2B,#0B0E18);border:1px solid rgba(143,166,255,.28);box-shadow:0 30px 70px rgba(11,13,18,.35),inset 0 1px 0 rgba(255,255,255,.08),0 0 0 6px rgba(47,91,255,.08)}
-[data-goal-led]{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(44px,7vw,96px);line-height:.9;letter-spacing:.02em;color:#FFD54A;-webkit-mask:radial-gradient(circle,#000 58%,transparent 62%) 0 0/5px 5px;mask:radial-gradient(circle,#000 58%,transparent 62%) 0 0/5px 5px;filter:drop-shadow(0 0 10px rgba(255,200,60,.55))}
-[data-goal-board][data-live="1"] [data-goal-led]{animation:gmsLed .9s steps(2,jump-none) 3}
-@keyframes gmsLed{50%{color:#FFFFFF}}
-[data-goal-sub]{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7);white-space:nowrap}
-[data-goal-cols][data-mode=ring] [data-goal-col]{position:absolute;pointer-events:auto;display:flex;flex-direction:column;gap:10px}
-[data-goal-col][data-side=l]{align-items:flex-end}
-[data-goal-col][data-side=r]{align-items:flex-start}
-[data-goal-col][data-side=b]{align-items:center}
-[data-goal-ch]{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px}
-[data-goal-col][data-side=l] [data-goal-ch]{flex-direction:row-reverse;text-align:right}
+/* Programme: a white-glass GOAL pill, then a medal podium with one glass step per division */
+[data-goal-board]{position:absolute;z-index:4;left:50%;top:30%;transform:translate(-50%,-50%);opacity:0;visibility:hidden;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 34px 16px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(240,244,255,.7));-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 70px rgba(47,91,255,.22),0 0 0 8px rgba(47,91,255,.06),inset 0 1px 0 #fff}
+[data-goal-led]{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(44px,6.4vw,92px);line-height:.92;letter-spacing:-.04em;background:linear-gradient(180deg,#5B80FF 0%,#2F5BFF 55%,#1A3FD6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 18px rgba(47,91,255,.28))}
+[data-goal-board][data-live="1"] [data-goal-led]{animation:gmsGoalPop .9s var(--gms-ease) both}
+@keyframes gmsGoalPop{0%{transform:scale(.82);letter-spacing:.06em}60%{transform:scale(1.05)}100%{transform:none}}
+[data-goal-board]>[data-goal-sub]{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#4A505C;white-space:nowrap}
+[data-goal-cols][data-mode=pod] [data-goal-col]{position:absolute;pointer-events:auto;display:flex;flex-direction:column;gap:12px;align-items:stretch;box-sizing:border-box;padding:18px 14px 16px;border-radius:20px 20px 8px 8px;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(243,246,255,.7));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 60px rgba(15,20,40,.10),inset 0 1px 0 #fff,inset 0 4px 0 var(--dc)}
+[data-goal-ch]{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;opacity:var(--ci,1);transition:opacity .2s linear}
 [data-goal-ic]{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:18px;font-weight:400;flex:none}
-[data-goal-nm]{display:flex;flex-direction:column;gap:3px;line-height:1.1}
-[data-goal-nm] [data-goal-sub]{font-size:9.5px;letter-spacing:.1em;color:#8A909C}
-[data-goal-list]{display:flex;flex-direction:column;gap:7px;align-items:inherit}
-[data-goal-col][data-side=b] [data-goal-list]{flex-direction:row;flex-wrap:wrap;justify-content:center;max-width:620px}
-[data-goal-ev]{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;background:#FFFFFF;border:1px solid #E3E7EF;box-shadow:0 8px 20px rgba(15,20,40,.06);font-size:14.5px;font-weight:600;color:#0B0D12;white-space:nowrap;transition:background .22s ease,color .22s ease,border-color .22s ease,transform .3s var(--gms-ease),box-shadow .3s ease}
-[data-goal-ev]:hover,[data-goal-ev]:focus-visible{background:var(--t);color:var(--c);border-color:var(--c);transform:translateY(-2px);box-shadow:0 12px 26px rgba(15,20,40,.1)}
-[data-goal-ev]:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+[data-goal-nm]{display:flex;flex-direction:column;gap:3px;line-height:1.1;min-width:0}
+[data-goal-nm] [data-goal-sub]{font-family:'JetBrains Mono';font-size:9.5px;font-weight:400;letter-spacing:.1em;color:#8A909C}
+[data-goal-list]{display:flex;flex-direction:column;gap:6px;opacity:var(--ci,1)}
+[data-goal-ev]{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.75);border:1px solid #E6EAF2;font-size:14px;font-weight:600;color:#0B0D12;transition:background .22s ease,color .22s ease,border-color .22s ease,transform .3s var(--gms-ease),box-shadow .3s ease}
+[data-goal-ev]:hover,[data-goal-ev]:focus-visible{background:var(--dt);color:var(--dc);border-color:var(--dc);transform:translateX(3px);box-shadow:0 10px 22px rgba(15,20,40,.08)}
+[data-goal-ev]:focus-visible{outline:2px solid var(--dc);outline-offset:2px}
 [data-goal-g]{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C;flex:none}
-.gms-arc{transition:stroke-width .35s var(--gms-ease),filter .35s ease}
-.gms-arc.on{stroke-width:9;filter:drop-shadow(0 0 6px currentColor)}
-/* narrow layouts: target on top, divisions stacked as cards of chips */
-[data-goal-cols][data-mode=list]{display:flex;flex-direction:column;gap:8px;justify-content:flex-start;pointer-events:auto}
-[data-goal-cols][data-mode=list] [data-goal-col]{display:flex;flex-direction:column;gap:7px;padding:11px;border-radius:16px;background:rgba(255,255,255,.95);border:1px solid rgba(47,91,255,.13);box-shadow:0 12px 28px rgba(15,20,40,.07)}
-[data-goal-cols][data-mode=list] [data-goal-ch]{font-size:13.5px}
-[data-goal-cols][data-mode=list] [data-goal-ic]{width:24px;height:24px;font-size:15px;border-radius:8px}
-[data-goal-cols][data-mode=list] [data-goal-list]{flex-direction:row;flex-wrap:wrap;gap:6px}
-[data-goal-cols][data-mode=list] [data-goal-ev]{padding:7px 11px;font-size:12.5px;box-shadow:none;background:#F2F4F8;border-color:transparent}
-[data-goal-cols][data-mode=list] [data-goal-g]{display:none}
-@media (max-width:600px){[data-goal-led]{font-size:46px}[data-goal-sub]{font-size:9px;letter-spacing:.1em}[data-goal-board]{padding:12px 18px 11px}}
+.gms-medal{transform-box:fill-box;transform-origin:50% 100%;transition:transform .45s var(--gms-ease)}
+.gms-medal.on{transform:scale(1.12)}
+/* narrow layouts: slimmer steps, chips wrap */
+[data-goal-panel][data-compact="1"] [data-goal-col]{padding:12px 7px 10px!important;gap:8px!important;border-radius:16px 16px 6px 6px!important}
+[data-goal-panel][data-compact="1"] [data-goal-ch]{font-size:12.5px;gap:6px;flex-direction:column;align-items:flex-start}
+[data-goal-panel][data-compact="1"] [data-goal-ic]{width:22px;height:22px;font-size:14px;border-radius:7px}
+[data-goal-panel][data-compact="1"] [data-goal-nm] [data-goal-sub],[data-goal-panel][data-compact="1"] [data-goal-g]{display:none}
+[data-goal-panel][data-compact="1"] [data-goal-list]{gap:5px}
+[data-goal-panel][data-compact="1"] [data-goal-ev]{padding:6px 7px;font-size:11px;line-height:1.15;border-radius:9px}
+@media (max-width:600px){[data-goal-led]{font-size:48px}[data-goal-board]>[data-goal-sub]{font-size:8.5px;letter-spacing:.08em}[data-goal-board]{padding:12px 20px 11px}}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
  .gms-rv{opacity:1!important;translate:none!important}.gms-w>span{transform:none!important}
@@ -457,7 +456,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px">menu</button>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--dark" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
   </div>
 <div data-r="hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
@@ -480,7 +479,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0"></div>
   </div>
-<div aria-hidden="true" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;pointer-events:none"><img src="assets/bot-still.webp" alt="" width="120" height="120" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-family:'Instrument Sans',system-ui,sans-serif;font-size:12px;font-weight:600;white-space:nowrap">Ask GMS</span></div>
+<div aria-hidden="true" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;pointer-events:none"><img src="assets/bot-still.webp" alt="" width="120" height="120" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-family:'Instrument Sans',system-ui,sans-serif;font-size:12px;font-weight:600;white-space:nowrap">Ask COCO</span></div>
 </div>
 <script>window.__gmsShellT0=performance.now();document.documentElement.classList.add('gms-shelled');(function(){try{var d=new Date(Date.now()+(330+new Date().getTimezoneOffset())*60000),p=function(n){return(n<10?'0':'')+n},e=document.querySelector('[data-shell-clock]');if(e)e.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}catch(x){}})();</script>
 <x-dc>
@@ -500,7 +499,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px">{{ menuIcon }}</button>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--dark" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" class="gms-liquid gms-liquid--blue" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:28px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid #E6E9EF;box-shadow:0 30px 80px rgba(15,20,40,.16);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
@@ -590,7 +589,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
       <div data-goal-panel data-compact="0" style="position:absolute;left:0;top:0;width:0;height:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none">
         <div data-goal-cols data-mode="ring" style="position:absolute">
           <sc-for list="{{ goalCats }}" as="c" hint-placeholder-count="3">
-            <div data-goal-col style="opacity:0;will-change:transform,opacity">
+            <div data-goal-col style="opacity:0;will-change:transform,opacity;--dc:{{ c.color }};--dt:{{ c.tint }}">
               <span data-goal-ch style="color:{{ c.color }}"><span data-goal-ic style="background:{{ c.tint }}">{{ c.icon }}</span><span data-goal-nm><span>{{ c.name }}</span><span data-goal-sub>{{ c.sub }} · 5 EVENTS</span></span></span>
               <div data-goal-list>
                 <sc-for list="{{ c.events }}" as="e" hint-placeholder-count="5">
@@ -1156,7 +1155,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
   <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
     <div data-r="chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.78);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.18)">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(11,13,18,.06)">
-        <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">GMS Assistant</span><span style="font-size:12px;color:#5B6270">Events, schedule, registration and scores</span></div>
+        <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">COCO</span><span style="font-size:12px;color:#5B6270">Events, schedule, registration and scores</span></div>
         <button onClick="{{ toggleChat }}" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px">close</button>
       </div>
       <div ref="{{ chatScrollRef }}" style="flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
@@ -1183,7 +1182,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
       </div>
     </sc-if>
 
-    <button onClick="{{ toggleChat }}" title="Chat with GMS Assistant" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
+    <button onClick="{{ toggleChat }}" title="Chat with COCO" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
     <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
   </div>
 </sc-if>
@@ -1525,10 +1524,10 @@ const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
 const pad=n=>String(n).padStart(2,'0');
 // Programme section: a shaded player runs in and strikes the ball into the net (GOAL!), and the net's ripple becomes
-// a target ringed by the three divisions and their events. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
+// a medal podium: one glass step per division with its events. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-const KICK={run0:0.03,run1:0.25,plant:0.3,strike:0.35,follow:0.42,cheer:0.54,hit:0.47,score0:0.47,score1:0.62,ring0:0.58,ring1:0.72,board0:0.69,board1:0.84};
+const KICK={run0:0.03,run1:0.25,plant:0.3,strike:0.35,follow:0.42,cheer:0.54,hit:0.47,score0:0.47,score1:0.6,ring0:0.57,board0:0.61,board1:0.8};
 // Poses: angles in degrees from straight down, positive = forward (+x). t = torso lean; n*/f* = near/far side;
 // a/e = upper arm / forearm, h/k = thigh / shin (absolute angles), ft = foot relative to the shin (90 = flat).
 const POSES={
@@ -1550,7 +1549,7 @@ class Component extends DCLogic {
     day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0},now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
-    chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
+    chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m COCO! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
     filter:'All',stream:0,flash:{},
     ends:[{a:[10,9,9],b:[9,9,8]},{a:[9,10,9],b:[10,10,9]},{a:[10,10,9],b:[10,9,9]},{a:[10],b:[]}],turn:'b',
     matches:[
@@ -1839,11 +1838,8 @@ class Component extends DCLogic {
     const w=L.gx1-L.gx0,h=L.G-L.gy0;L.gw=w;L.gh=h;L.gcx=(L.gx0+L.gx1)/2;L.fw=Math.max(5,Math.min(10,w*0.012));L.ix=w*0.075;L.iy=h*0.1;
     L.bx0=L.gx0+L.ix;L.bx1=L.gx1-L.ix;L.by0=L.gy0+L.iy;const st=Math.max(15,Math.min(24,w/32));L.nc=Math.max(6,Math.round((L.bx1-L.bx0)/st));L.nr=Math.max(5,Math.round((L.G-L.by0)/st));
     L.hit=[L.gcx+w*0.1,L.gy0+h*(port?0.3:0.36)];
-    // the target and the three division clusters that replace the goal
-    L.cmp=port||w<600;
-    if(!L.cmp){L.colW=Math.max(160,Math.min(240,w*0.26));L.pad=Math.max(8,w*0.015);const TRw=(w-2*L.pad-2*L.colW)/2-40;
-      L.TR=Math.max(84,Math.min(TRw,h*0.3,230));L.tcx=L.gcx;L.tcy=L.gy0+Math.max(L.TR+34,h*0.4);L.bTop=L.tcy+L.TR+44;}
-    else{L.TR=Math.max(44,Math.min(w*0.16,h*0.12,90));L.tcx=L.gcx;L.tcy=L.gy0+L.TR+16;L.bTop=L.tcy+L.TR+26;}
+    // the medal podium that replaces the goal: three glass steps (Compound | Recurve | W1) standing on the pitch line
+    L.cmp=port||w<640;L.ppad=L.cmp?0:Math.max(10,w*0.02);L.pgap=L.cmp?6:16;L.psw=(w-2*L.ppad-2*L.pgap)/3;L.pH=h*0.6;L.mR=Math.max(15,Math.min(27,L.psw*0.12));
     return L;}
   kickBuild(host,box){const L=this.kickL=this.kickLayout(host);const NS='http://www.w3.org/2000/svg';
     const mk=(tag,at,par)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);(par||svg).appendChild(e);return e;};
@@ -1878,30 +1874,29 @@ class Component extends DCLogic {
     // the kicker: shaded rig figure in kit
     K.fig=mk('g',{});K.fig.innerHTML=M.parts.join('');K.P={};['fua','ffa','fhd','fth','fsn','fft','nth','nsn','nft','torso','head','nua','nfa','nhd'].forEach(k=>K.P[k]=K.fig.querySelector('[data-p="'+k+'"]'));
     K.burst=mk('g',{opacity:'0'});for(let i=0;i<6;i++)mk('circle',{r:L.s*2.6,fill:'#C9CFDA'},K.burst);
-    // shock rings from the impact, then the target face with division arcs, leader lines and the centre count
+    // shock rings from the impact, then a medal for each podium step (gold Recurve, silver Compound, bronze W1)
     K.wave=mk('g',{fill:'none',stroke:BLUE,'stroke-width':'1.6'});K.waves=[0,1,2].map(()=>mk('circle',{r:1,opacity:'0'},K.wave));
-    K.tgt=mk('g',{opacity:'0'});const RC=['#F4F4F0','#F4F4F0','#1E2027','#1E2027','#3A8EE6','#3A8EE6','#E5453D','#E5453D','#F6D13C','#F6D13C'];
-    mk('circle',{r:L.TR*1.18,fill:BLUE,opacity:'.10',filter:'url(#'+u+'glow)'},K.tgt);
-    K.rings=RC.map((c,i)=>mk('circle',{r:L.TR*(1-i/10),fill:c,stroke:i===2||i===3?'#5B606B':'#0B0D12','stroke-opacity':'.28','stroke-width':'.7'},K.tgt));
-    mk('circle',{r:L.TR*0.05,fill:'none',stroke:'#0B0D12','stroke-opacity':'.35','stroke-width':'.7'},K.tgt);
-    K.ctr=mk('g',{opacity:'0'},K.tgt);const cf=Math.max(13,L.TR*0.16);mk('text',{y:(cf*0.32).toFixed(1),'text-anchor':'middle','font-family':'Bricolage Grotesque, sans-serif','font-weight':'800','font-size':cf.toFixed(1),fill:'#0B0D12'},K.ctr).textContent='15';
-    const arcR=L.TR+Math.max(10,L.TR*0.09),arc=(a0,a1)=>{const p0=[Math.cos(a0*D2R)*arcR,Math.sin(a0*D2R)*arcR],p1=[Math.cos(a1*D2R)*arcR,Math.sin(a1*D2R)*arcR];return 'M'+p0[0].toFixed(1)+' '+p0[1].toFixed(1)+'A'+arcR+' '+arcR+' 0 0 1 '+p1[0].toFixed(1)+' '+p1[1].toFixed(1);};
-    const AR=L.cmp?[[150,240],[-60,30],[48,132]]:[[128,232],[-52,52],[62,118]];
-    K.arcs=CATS.map((c,i)=>mk('path',{d:arc(AR[i][0],AR[i][1]),fill:'none',stroke:c.color,'stroke-width':Math.max(4,L.TR*0.035).toFixed(1),'stroke-linecap':'round',pathLength:'1','stroke-dasharray':'1 1','stroke-dashoffset':'1',class:'gms-arc'},K.tgt));
-    // leaders from each arc to its cluster (ring layout only)
-    K.lead=mk('g',{fill:'none',stroke:'#9AA3B2','stroke-width':'1',opacity:'0'});
-    if(!L.cmp){const lx=L.TR+arcR*0.0,cl=L.gx0+L.pad+L.colW+10,cr=L.gx1-L.pad-L.colW-10;
-      [['M'+(L.tcx-arcR)+' '+L.tcy+'H'+cl,cl,L.tcy],['M'+(L.tcx+arcR)+' '+L.tcy+'H'+cr,cr,L.tcy],['M'+L.tcx+' '+(L.tcy+arcR)+'V'+(L.bTop-8),L.tcx,L.bTop-8]].forEach(([d,x,y],i)=>{mk('path',{d,'stroke-dasharray':'2 4'},K.lead);mk('circle',{cx:x,cy:y,r:2.6,fill:CATS[i].color,stroke:'none'},K.lead);});}
+    const MC=[['#FFF3C4','#E9BC3F','#9C700C'],['#FFFFFF','#D2D8E1','#868FA0'],['#F8D4B0','#C98652','#7E441A']];
+    defs.innerHTML+=MC.map((c,i)=>'<radialGradient id="'+u+'m'+i+'" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="'+c[0]+'"/><stop offset=".55" stop-color="'+c[1]+'"/><stop offset="1" stop-color="'+c[2]+'"/></radialGradient>').join('');
+    K.medals=mk('g',{});const mr=L.mR,rl=mr*2.3;
+    K.med=CATS.map((c,i)=>{const g=mk('g',{opacity:'0'},K.medals),sw=mk('g',{},g),inn=mk('g',{class:'gms-medal'},sw);
+      mk('path',{d:'M'+(-mr*0.62)+' '+(-rl)+'L'+(-mr*0.08)+' '+(-mr*0.7)+'L'+(mr*0.34)+' '+(-mr*0.7)+'L'+(-mr*0.12)+' '+(-rl)+'Z',fill:tone(c.color,-0.2)},inn);
+      mk('path',{d:'M'+(mr*0.62)+' '+(-rl)+'L'+(mr*0.08)+' '+(-mr*0.7)+'L'+(-mr*0.34)+' '+(-mr*0.7)+'L'+(mr*0.12)+' '+(-rl)+'Z',fill:c.color},inn);
+      mk('rect',{x:-mr*0.34,y:-mr*1.06,width:mr*0.68,height:mr*0.4,rx:mr*0.1,fill:MC[i][2]},inn);
+      mk('circle',{r:mr,fill:'url(#'+u+'m'+i+')',stroke:MC[i][2],'stroke-width':'1'},inn);mk('circle',{r:mr*0.74,fill:'none',stroke:MC[i][0],'stroke-width':'1.4',opacity:'.9'},inn);
+      mk('circle',{r:mr*0.74,fill:'none',stroke:MC[i][2],'stroke-width':'.8',opacity:'.5',transform:'translate(.8 .8)'},inn);
+      const t=mk('text',{y:(mr*0.3).toFixed(1),'text-anchor':'middle','font-family':'Bricolage Grotesque, sans-serif','font-weight':'800','font-size':(mr*0.82).toFixed(1),fill:MC[i][2]},inn);t.textContent=['1','2','3'][i];
+      mk('ellipse',{cx:-mr*0.34,cy:-mr*0.4,rx:mr*0.34,ry:mr*0.18,fill:'#fff',opacity:'.55',transform:'rotate(-30 '+(-mr*0.34)+' '+(-mr*0.4)+')'},inn);
+      return {g,sw,inn};});
     this.kickK=K;this.kickLast=-1;this.kickNetKey='';
-    // place the division clusters around the target (or stacked under it on narrow layouts)
-    const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.dataset.compact=L.cmp?'1':'0';Object.assign(Pn.style,{left:'0px',top:'0px',width:L.W+'px',height:L.H+'px'});
-      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode=L.cmp?'list':'ring';
-        if(L.cmp)Object.assign(C.style,{left:(L.gx0+4)+'px',right:(L.W-L.gx1+4)+'px',top:L.bTop+'px',bottom:'12px',width:'',height:''});else Object.assign(C.style,{left:'0px',top:'0px',right:'0px',bottom:'0px'});
-        C.querySelectorAll('[data-goal-col]').forEach((el,i)=>{const side=L.cmp?'list':['l','r','b'][i];el.dataset.side=side;
-          if(L.cmp)Object.assign(el.style,{left:'',top:'',width:'',transform:''});
-          else if(i<2)Object.assign(el.style,{left:(i===0?L.gx0+L.pad:L.gx1-L.pad-L.colW)+'px',top:L.tcy+'px',width:L.colW+'px',marginTop:'',translate:'0 -50%'});
-          else Object.assign(el.style,{left:(L.gx0+L.pad)+'px',top:L.bTop+'px',width:(L.gw-2*L.pad)+'px',translate:''});
-          if(!el.__hl){el.__hl=1;el.addEventListener('mouseenter',()=>{const a=this.kickK&&this.kickK.arcs[i];if(a)a.classList.add('on');});el.addEventListener('mouseleave',()=>{const a=this.kickK&&this.kickK.arcs[i];if(a)a.classList.remove('on');});}});}}
+    // podium steps: measure each division's content, then make the centre (Recurve) the tallest step
+    L.steps=[];const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.dataset.compact=L.cmp?'1':'0';Object.assign(Pn.style,{left:'0px',top:'0px',width:L.W+'px',height:L.H+'px'});
+      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode='pod';Object.assign(C.style,{left:'0px',top:'0px',right:'0px',bottom:'0px'});
+        const cols=[...C.querySelectorAll('[data-goal-col]')],SLOT=[1,0,2],need=cols.map(el=>{el.dataset.side='pod';Object.assign(el.style,{width:L.psw+'px',height:'auto',clipPath:'',transform:''});return el.offsetHeight+(L.cmp?6:14);});
+        const base=Math.max(need[1],need[2]),hC=Math.max(L.pH,need[0]+(L.cmp?40:70),base+(L.cmp?40:70)),hs=[hC,Math.max(need[1],hC-(L.cmp?24:44)),Math.max(need[2],hC-(L.cmp?36:62))];
+        cols.forEach((el,i)=>{const x=L.gx0+L.ppad+SLOT[i]*(L.psw+L.pgap),h=Math.min(hs[i],L.G-L.gy0-L.mR*2-30);L.steps[i]={x,w:L.psw,h,slot:SLOT[i]};
+          Object.assign(el.style,{left:x+'px',top:(L.G-h)+'px',height:h+'px',translate:''});
+          if(!el.__hl){el.__hl=1;el.addEventListener('mouseenter',()=>{const m=this.kickK&&this.kickK.med[i];if(m)m.inn.classList.add('on');});el.addEventListener('mouseleave',()=>{const m=this.kickK&&this.kickK.med[i];if(m)m.inn.classList.remove('on');});}});}}
     const B=host.querySelector('[data-goal-board]');if(B)Object.assign(B.style,{left:L.gcx+'px',top:(L.gy0+L.gh*(L.port?0.16:0.2))+'px'});}
   kickNet(L,K,b,amp,tt){const I=L.hit,R=L.gw,pts=[];const key=b.toFixed(3)+'|'+amp.toFixed(3)+'|'+(amp>0?tt.toFixed(2):'');if(key===this.kickNetKey)return;this.kickNetKey=key;
     for(let r=0;r<=L.nr;r++){const row=[];for(let c=0;c<=L.nc;c++){let x=L.bx0+(L.bx1-L.bx0)*c/L.nc,y=L.by0+(L.G-L.by0)*r/L.nr;
@@ -1916,8 +1911,9 @@ class Component extends DCLogic {
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),build=REDUCED?1:clamp((vh-r.top)/(vh*0.8)),now=performance.now();
     // impact clock: the net keeps rippling for a moment even if scrolling stops
     if(p>=KICK.hit&&(this.kickPrevP??0)<KICK.hit)this.kickHitT=now;if(p<KICK.hit-0.01)this.kickHitT=null;this.kickPrevP=p;
-    const tt=this.kickHitT?(now-this.kickHitT)/1000:9,amp=REDUCED?0:Math.exp(-tt*2.1)*(tt<3?1:0);
-    const key=p.toFixed(4)+'|'+build.toFixed(3)+'|'+(amp>0.002?tt.toFixed(2):'');if(key===this.kickLast)return;this.kickLast=key;
+    const tt=this.kickHitT?(now-this.kickHitT)/1000:9,amp=REDUCED?0:Math.exp(-tt*2.1)*(tt<3?1:0);this.kickMedT=this.kickMedT||[0,0,0];
+    const swing=!REDUCED&&this.kickMedT.some(t=>t&&now-t<4500);
+    const key=p.toFixed(4)+'|'+build.toFixed(3)+'|'+(amp>0.002?tt.toFixed(2):'')+'|'+(swing?Math.round(now/16):'');if(key===this.kickLast)return;this.kickLast=key;
     K.ground.setAttribute('stroke-dashoffset',(1-ease(build)).toFixed(3));
     // figure: run in, plant, strike, follow through, then celebrate (it bows out on portrait where the target fills the screen)
     let P,x;
@@ -1945,24 +1941,24 @@ class Component extends DCLogic {
     const ft=seg(p,KICK.strike,KICK.hit),fu=1-Math.pow(1-ft,1.8),P0=[L.bx,L.G-L.rb],P2=L.hit,P1=[(P0[0]+P2[0])/2,Math.max(L.H*0.05,Math.min(P0[1],P2[1])-Math.hypot(P2[0]-P0[0],P2[1]-P0[1])*0.3)];
     const bez=u=>[(1-u)*(1-u)*P0[0]+2*(1-u)*u*P1[0]+u*u*P2[0],(1-u)*(1-u)*P0[1]+2*(1-u)*u*P1[1]+u*u*P2[1]];
     let bp=bez(fu),br=L.rb*(1-0.2*fu);const drop=seg(p,KICK.hit,KICK.hit+0.05);bp=[bp[0]+L.rb*0.6*bul,bp[1]+drop*L.rb*1.2];
-    const toT=ease(seg(p,KICK.ring0,KICK.ring0+0.07));if(toT>0){bp=[bp[0]+(L.tcx-bp[0])*toT,bp[1]+(L.tcy-bp[1])*toT];br=br*(1-toT);}
+    const toT=gOut;
     const spin=(ft*1080+drop*120)%360;K.ball.setAttribute('transform','translate('+bp[0].toFixed(1)+' '+bp[1].toFixed(1)+') scale('+(br/10).toFixed(4)+')');K.bspin.setAttribute('transform','rotate('+spin.toFixed(1)+')');
-    K.ball.setAttribute('opacity',(toT>=1?0:(build>0.2?1:build*5)).toFixed(3));
+    K.ball.setAttribute('opacity',((1-toT)*(build>0.2?1:build*5)).toFixed(3));
     K.bshadow.setAttribute('cx',bp[0].toFixed(1));K.bshadow.setAttribute('opacity',((1-clamp((L.G-bp[1]-L.rb)/(L.H*0.3)))*(ft>0&&p>KICK.hit?0.4:1)*(1-toT)).toFixed(3));
     // GOAL scoreboard
     const Bd=host.querySelector('[data-goal-board]');if(Bd){const bi=ease(seg(p,KICK.score0,KICK.score0+0.025)),bo2=seg(p,KICK.score1-0.03,KICK.score1),bv=bi*(1-bo2);
       Bd.style.opacity=bv.toFixed(3);Bd.style.visibility=bv>0.01?'visible':'hidden';Bd.style.transform='translate(-50%,-50%) scale('+(0.86+0.14*bi-0.06*bo2).toFixed(3)+')';Bd.dataset.live=bv>0.5?'1':'0';}
     // ripple -> target
     const wt=seg(p,KICK.hit,KICK.ring0+0.06);K.waves.forEach((c,i)=>{const k=clamp(wt*1.4-i*0.18);c.setAttribute('cx',L.hit[0].toFixed(1));c.setAttribute('cy',L.hit[1].toFixed(1));c.setAttribute('r',(4+k*L.gw*0.45).toFixed(1));c.setAttribute('opacity',(k>0&&k<1?(1-k)*0.55:0).toFixed(3));});
-    const te=seg(p,KICK.ring0,KICK.ring1),mv=ease(clamp(te*1.25)),cx=L.hit[0]+(L.tcx-L.hit[0])*mv,cy=L.hit[1]+(L.tcy-L.hit[1])*mv;
-    K.tgt.setAttribute('opacity',te>0?'1':'0');K.tgt.setAttribute('transform','translate('+cx.toFixed(1)+' '+cy.toFixed(1)+')');
-    K.rings.forEach((c,i)=>{const e=clamp(te*1.5-(9-i)*0.045),s2=e>0?backOut(e):0;c.setAttribute('r',Math.max(0,L.TR*(1-i/10)*s2).toFixed(1));});
-    K.ctr.setAttribute('opacity',ease(seg(te,0.6,1)).toFixed(3));
-    const ae=seg(p,KICK.ring1-0.05,KICK.ring1+0.05);K.arcs.forEach((a,i)=>a.setAttribute('stroke-dashoffset',(1-ease(clamp(ae*1.6-i*0.2))).toFixed(4)));
-    K.lead.setAttribute('opacity',(0.9*ease(seg(p,KICK.board0,KICK.board0+0.05))).toFixed(3));
+    // podium: steps grow out of the pitch line (centre first), medals drop onto them and swing to rest
     const Pn=host.querySelector('[data-goal-panel]');if(Pn){const bt=seg(p,KICK.board0,KICK.board1);Pn.style.opacity=bt>0?'1':'0';Pn.style.visibility=bt>0?'visible':'hidden';
-      Pn.querySelectorAll('[data-goal-col]').forEach((el,i)=>{const e=ease(clamp(bt*1.8-i*0.24)),side=el.dataset.side,dx=side==='l'?-1:side==='r'?1:0,dy=side==='b'||side==='list'?1:0;
-        el.style.opacity=e.toFixed(3);el.style.transform='translate('+((1-e)*dx*26).toFixed(1)+'px,'+((1-e)*dy*22).toFixed(1)+'px)';});}}
+      Pn.querySelectorAll('[data-goal-col]').forEach((el,i)=>{const S=L.steps[i];if(!S)return;const ord=S.slot===1?0:S.slot===0?1:2,e=ease(clamp(bt*2.1-ord*0.2)),hid=(1-e)*S.h;
+        el.style.transform='translateY('+hid.toFixed(1)+'px)';el.style.clipPath='inset(0 0 '+hid.toFixed(1)+'px 0 round 20px 20px 8px 8px)';el.style.opacity=e>0?'1':'0';
+        el.style.setProperty('--ci',clamp(bt*2.1-ord*0.2-0.35).toFixed(3));});}
+    K.med.forEach((m,i)=>{const S=L.steps[i];if(!S)return;const ord=S.slot===1?0:S.slot===0?1:2,md=seg(p,KICK.board0+0.07+ord*0.025,KICK.board0+0.13+ord*0.025),cx=S.x+S.w/2,cy=L.G-S.h-L.mR-12;
+      if(md>=1&&!this.kickMedT[i])this.kickMedT[i]=now;if(md<1)this.kickMedT[i]=0;const mt=this.kickMedT[i]?(now-this.kickMedT[i])/1000:0;
+      const y=cy-(1-backOut(md))*(cy-L.gy0+L.mR*4),ang=md>=1?16*Math.exp(-mt*1.5)*Math.sin(mt*5.2):(1-md)*-18;
+      m.g.setAttribute('opacity',md>0?'1':'0');m.g.setAttribute('transform','translate('+cx.toFixed(1)+' '+y.toFixed(1)+')');m.sw.setAttribute('transform','translate(0 '+(-L.mR*2.3).toFixed(1)+') rotate('+ang.toFixed(2)+') translate(0 '+(L.mR*2.3).toFixed(1)+')');});}
   patchSpline(){
     document.querySelectorAll('spline-viewer').forEach(v=>{const app=v._spline;if(!app||this.splineDone.has(app))return;let objs;try{objs=app.getAllObjects();}catch(e){return;}if(!objs||!objs.length)return;
       const url=v.getAttribute('url')||'';
@@ -2134,7 +2130,7 @@ class Component extends DCLogic {
       ytFrame:screen==='tv'?React.createElement('iframe',{key:'yt',src:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,title:'Hyundai World Archery Para Series live',allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true,style:{position:'absolute',inset:0,width:'100%',height:'100%',border:0}}):null,curStream:STREAMS[s.stream],
       ytThumb:'https://i.ytimg.com/vi/'+(P.youtubeVideoId||'jT9C2wBHn6c').trim()+'/hqdefault.jpg',upNext:DAY1.slice(-4).map(([time,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);return {time,code,name:ev.name};}),
       streams:STREAMS.map((x,i)=>({...x,tagBg:x.tag==='LIVE'?'#E5484D':'rgba(11,13,18,.7)',pick:()=>this.setState({stream:i}),bg:s.stream===i?'#F4F5F7':'transparent',tagColor:x.tag==='LIVE'?'#E5484D':'#8A909C'})),
-      chatOpen:s.chatOpen,toggleChat:()=>this.setState(x=>({chatOpen:!x.chatOpen})),chatLabel:s.chatOpen?'Close chat':'Ask GMS',
+      chatOpen:s.chatOpen,toggleChat:()=>this.setState(x=>({chatOpen:!x.chatOpen})),chatLabel:s.chatOpen?'Close chat':'Ask COCO',
       messages:s.messages.map(m=>({text:m.text,align:m.from==='me'?'flex-end':'flex-start',bg:m.from==='me'?'#0B0D12':'#fff',fg:m.from==='me'?'#fff':'#0B0D12'})),
       quick:['How do I register?','When is it?','Live scores'].map(l=>({label:l,send:()=>this.send(l)})),
       draft:s.draft,onDraft:e=>this.setState({draft:e.target.value}),submitChat:e=>{e.preventDefault();this.send(s.draft);}
