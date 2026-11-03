@@ -352,6 +352,94 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 .gms-in .gms-w>span{transform:none}
 .gms-rv{opacity:0;translate:0 26px;filter:blur(6px);transition:opacity 1s var(--gms-soft) var(--d,0s),translate 1.2s var(--gms-ease) var(--d,0s),filter 1s var(--gms-soft) var(--d,0s)}
 .gms-rv.gms-in{opacity:1;translate:none;filter:none}
+/* Event centre (Live Scores page) */
+[data-r=ec-top]{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+[data-r=ec-filters]{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ec-seg{display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff;border:1px solid #E6EAF0;box-shadow:0 8px 24px rgba(15,20,40,.04);overflow-x:auto;scrollbar-width:none;max-width:100%;box-sizing:border-box}
+.ec-seg::-webkit-scrollbar{display:none}
+.ec-seg button{appearance:none;border:0;background:none;font:inherit;cursor:pointer;flex:none;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;color:#4A505C;transition:background .3s var(--gms-ease),color .3s var(--gms-ease)}
+.ec-seg button:hover{color:#0B0D12}
+.ec-seg button[data-on="1"]{background:#0B0D12;color:#fff}
+.ec-seg button:focus-visible,[data-r=ec-row]:focus-visible,.tvh-chs button:focus-visible,.tvh-row:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
+.ec-seg i{font-style:normal;font-family:'JetBrains Mono';font-size:11px;opacity:.55}
+.ec-seg .dot{width:7px;height:7px;border-radius:50%}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;font-weight:500;background:#F1F3F7;color:#4A505C;white-space:nowrap}
+.pill .pd{width:6px;height:6px;border-radius:50%;background:#AEB4BF}
+.pill[data-live="1"]{background:#FDECEC;color:#C8343A}.pill[data-live="1"] .pd{background:#E5484D;animation:gmsPulse 1.4s infinite}
+.pill--dark{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}.pill--dark[data-live="1"]{background:rgba(229,72,77,.18);color:#FF8A8E}
+[data-r=ec-grid]{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:24px;align-items:start}
+[data-r=ec-list]{display:flex;flex-direction:column;gap:10px}
+[data-r=ec-row]{appearance:none;border:1px solid #E6EAF0;background:#fff;font:inherit;color:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 18px 14px 22px;border-radius:20px;position:relative;overflow:hidden;transition:transform .35s var(--gms-ease),box-shadow .35s var(--gms-ease),border-color .3s}
+[data-r=ec-row]::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;background:var(--c)}
+[data-r=ec-row]:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(15,20,40,.08)}
+[data-r=ec-row][data-on="1"]{border-color:#0B0D12;box-shadow:0 14px 34px rgba(15,20,40,.10)}
+.ec-meta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#8A909C}
+.ec-ev{grid-column:1/-1;font-weight:600;font-size:14px;margin-bottom:2px}
+.ec-nm{display:flex;align-items:center;gap:8px;font-size:14px;color:#4A505C;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ec-nm small,.ec-pl small,.ec-arw small{flex:none;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;padding:2px 6px;border-radius:6px;background:#F1F3F7;color:#4A505C}
+.ec-nm[data-win="1"]{color:#0B0D12;font-weight:700}
+.ec-sc{font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;text-align:right;font-variant-numeric:tabular-nums}
+[data-r=ec-detail]{position:sticky;top:96px;min-width:0}
+.ec-card{border-radius:30px;background:#fff;border:1px solid #E6EAF0;box-shadow:0 30px 70px rgba(15,20,40,.07);padding:26px;display:flex;flex-direction:column;gap:20px}
+.ec-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.ec-vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:center;padding:6px 0}
+.ec-pl{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}.ec-pl:last-child{align-items:flex-end;text-align:right}
+.ec-pl b{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(19px,2.1vw,27px);letter-spacing:-.02em;line-height:1.1}
+.ec-pl[data-win="true"] small{background:#2F5BFF;color:#fff}
+.ec-big{display:flex;gap:10px;align-items:center;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,5.6vw,80px);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.ec-big span:nth-child(2){color:#C3C8D2;font-size:.45em}
+.ec-body{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:24px;align-items:start}
+.ec-target svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 30px rgba(15,20,40,.12))}
+.ec-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.06em;color:#4A505C}
+.ec-legend span{display:flex;align-items:center;gap:6px}.ec-legend i{width:9px;height:9px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(15,20,40,.2)}
+.ec-dot{transform-box:fill-box;transform-origin:center;animation:gmsDot .5s var(--gms-ease) both}
+.ec-ping{transform-box:fill-box;transform-origin:center;animation:gmsPing 1.6s ease-out infinite}
+@keyframes gmsDot{0%{transform:scale(0);opacity:0}60%{transform:scale(1.35);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes gmsPing{0%{transform:scale(1);opacity:.75}100%{transform:scale(3.4);opacity:0}}
+.ec-ends{display:flex;flex-direction:column;border:1px solid #EEF0F4;border-radius:18px;overflow:hidden;min-width:0}
+.ec-end{display:grid;grid-template-columns:36px minmax(0,1fr) 40px 64px;grid-template-areas:"l a sa sp" "l b sb sp";gap:6px 10px;align-items:center;padding:10px 14px;border-top:1px solid #F0F2F6;transition:background .5s var(--gms-ease)}
+.ec-endh{grid-template-areas:"l a sa sp";border-top:0;padding:10px 14px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:#8A909C;background:#FAFBFC}
+.ec-end[data-cur="1"]{background:#F3F6FF}
+.ec-l{grid-area:l;font-family:'JetBrains Mono';font-size:12px;color:#4A505C}
+.ec-arw{display:flex;align-items:center;gap:5px}
+.ec-arw small{width:30px;text-align:center;padding:2px 0;margin-right:3px}
+.ec-arw>span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;transition:background .4s,color .4s}
+.ec-sum{font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;text-align:center;color:#4A505C;font-variant-numeric:tabular-nums}
+.ec-sum[data-win="1"]{color:#2F5BFF}
+.ec-sp{grid-area:sp;text-align:right;font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+@media (max-width:1100px){.ec-body{grid-template-columns:1fr}.ec-target{max-width:260px;margin:0 auto;width:100%}}
+@media (max-width:960px){[data-r=ec-grid]{grid-template-columns:1fr}[data-r=ec-detail]{position:static;order:-1}}
+@media (max-width:600px){[data-r=ec]{padding:100px 16px 64px!important}.ec-card{padding:18px;border-radius:24px}.ec-seg{width:100%}.ec-vs{gap:10px}.ec-end{grid-template-columns:30px minmax(0,1fr) 30px 50px;gap:6px 6px;padding:9px 10px}.ec-arw>span{width:23px;height:23px;font-size:11px}.ec-arw small{width:26px;font-size:9px}}
+/* Broadcast hub (Live TV page) */
+[data-r=tvh]{position:relative;min-height:100vh;background:radial-gradient(70% 45% at 50% 0%,#1B2346 0%,#0B0D12 62%);color:#fff;padding:112px 32px 80px;box-sizing:border-box;overflow:hidden}
+.tvh-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
+.tvh-player{position:relative;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07)}
+.tvh-player iframe,.tvh-player img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.tvh-bug{position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11px;font-weight:700;letter-spacing:.1em;pointer-events:none;box-shadow:0 8px 20px rgba(229,72,77,.35)}
+.tvh-flash{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px),#0B0D12;animation:gmsTvSw .7s var(--gms-soft) both}
+@keyframes gmsTvSw{0%{opacity:1;transform:scaleY(1)}55%{opacity:.85;transform:scaleY(.02)}100%{opacity:0;transform:scaleY(.002)}}
+.tvh-info{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 20px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.tvh-score{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tvh-score i{font-style:normal;color:rgba(255,255,255,.35);font-size:20px}
+.tvh-score small{font-family:'JetBrains Mono';font-size:10px;font-weight:500;letter-spacing:.06em;padding:3px 6px;border-radius:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75)}
+.tvh-chs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tvh-chs button{appearance:none;font:inherit;color:#fff;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);transition:background .35s var(--gms-ease),color .35s var(--gms-ease),transform .35s var(--gms-ease)}
+.tvh-chs button:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.tvh-chs button[data-on="1"]{background:#fff;color:#0B0D12;border-color:#fff}
+.tvh-chs button[data-on="1"] .pill--dark{background:#F1F3F7;color:#4A505C}.tvh-chs button[data-on="1"] .pill--dark[data-live="1"]{background:#FDECEC;color:#C8343A}
+.tvh-chtop{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;opacity:.8}
+.tvh-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.tvh-panel{display:flex;flex-direction:column;gap:4px;padding:18px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.tvh-ttl{font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;letter-spacing:-.02em;padding:2px 6px 10px}
+.tvh-row{appearance:none;border:0;background:none;font:inherit;color:#fff;text-align:left;cursor:pointer;display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 8px;border-radius:14px;border-top:1px solid rgba(255,255,255,.06);transition:background .3s}
+.tvh-row:hover{background:rgba(255,255,255,.06)}
+.tvh-row[data-now="1"]{background:rgba(229,72,77,.10)}
+.tvh-row b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tvh-row small{font-size:12px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tvh-tag{justify-self:start;white-space:nowrap;padding:4px 7px;border-radius:7px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
+.tvh-tag[data-k=NOW]{background:#E5484D;color:#fff}
+.tvh-rs{font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+@media (max-width:1040px){.tvh-grid{grid-template-columns:1fr}}
+@media (max-width:640px){[data-r=tvh]{padding:100px 16px 64px}.tvh-player{border-radius:18px}.tvh-chs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:0 16px}.tvh-chs::-webkit-scrollbar{display:none}.tvh-chs button{scroll-snap-align:start}.tvh-info{padding:16px}.tvh-score{font-size:26px}}
 /* Live: split-flap stadium board */
 [data-r=flap-board]{border-radius:28px;background:#FFFFFF;border:1px solid #E6EAF0;box-shadow:0 30px 70px rgba(15,20,40,.07);padding:8px 12px 10px}
 [data-r=flap-head],[data-r=flap-row]{display:grid;grid-template-columns:104px minmax(0,1.25fr) minmax(0,1fr) auto minmax(0,1fr) 128px;align-items:center;gap:16px}
@@ -764,7 +852,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
     <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
       <div data-rise style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div style="display:flex;flex-direction:column;gap:12px">
-          <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>LIVE NOW · {{ liveNowCount }} MATCHES ON 3 FIELDS</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none"></span><span>LIVE NOW · {{ liveNowCount }} MATCHES ON 3 FIELDS</span></span>
           <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Live from the field.</h2>
         </div>
         <button onClick="{{ goScores }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14px">Open the event centre<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_outward</span></button>
@@ -1100,58 +1188,80 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 </sc-if>
 
 <sc-if value="{{ isScores }}" hint-placeholder-val="{{ false }}">
-<main data-screen-label="Live Scores" style="position:relative;min-height:100vh;background:radial-gradient(90% 60% at 80% 0%,#FFFFFF 0%,#F1F3F7 55%,#E9EDF4 100%);padding:116px 32px 80px;box-sizing:border-box;overflow:hidden">
-  <div style="position:absolute;right:-12vw;top:-14vw;width:46vw;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(47,91,255,.18);animation:gmsSpin 90s linear infinite;pointer-events:none"></div>
-  <div style="position:relative;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;color:#E5484D"><span style="width:9px;height:9px;border-radius:50%;background:#E5484D;animation:gmsLive 1.4s infinite"></span>{{ liveCount }} MATCHES LIVE · {{ clock }} IST</span>
-        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(44px,5.5vw,80px);letter-spacing:-.045em;line-height:1">Live scores</h1>
+<main data-screen-label="Live Scores" data-r="ec" style="position:relative;min-height:100vh;background:#F4F5F7;padding:112px 32px 80px;box-sizing:border-box">
+  <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+    <div data-r="ec-top" style="animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none"></span><span>LIVE · {{ liveNowCount }} MATCHES ON 3 FIELDS · {{ clock }} IST</span></span>
+        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Event centre</h1>
+        <p style="margin:0;font-size:16px;line-height:1.5;color:#5B6270;max-width:520px">Every match of the Series, arrow by arrow. Pick a match to see each end and where every arrow landed.</p>
       </div>
-      <button onClick="{{ goTv }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px;transition:transform .3s ease" style-hover="transform:translateY(-2px)"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#FF7A7E">play_circle</span>Watch on Live TV</button>
+      <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px">play_arrow</span>Watch live</button>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border-radius:26px;background:rgba(255,255,255,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.9);animation:gmsRise .7s .08s cubic-bezier(.2,.8,.2,1) both">
-      <sc-for list="{{ sportFilters }}" as="f" hint-placeholder-count="8">
-        <button onClick="{{ f.pick }}" style="all:unset;cursor:pointer;flex:none;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;background:{{ f.bg }};color:{{ f.fg }};transition:background .3s ease,color .3s ease"><span style="font-family:'Material Symbols Rounded';font-size:18px">{{ f.icon }}</span>{{ f.label }}</button>
-      </sc-for>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start">
-      <div data-r="score-card" style="grid-column:1 / -1;min-width:0;display:flex;flex-direction:column;gap:22px;padding:30px;border-radius:30px;background:linear-gradient(160deg,#0B0D12 0%,#151B2E 100%);color:#fff;box-shadow:0 30px 80px rgba(15,20,40,.18);animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
-        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
-          <span style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.7)"><span style="padding:5px 10px;border-radius:999px;background:#E5484D;color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em">LIVE</span>Recurve Open Men Individual · Gold medal match</span>
-          <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.55)">FINALS FIELD · 70M · SET SYSTEM</span>
-        </div>
-        <div data-r="score-vs" style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:center;padding:8px 0">
-          <div data-r="score-pl" style="display:flex;align-items:center;gap:14px"><span style="width:52px;height:52px;border-radius:50%;background:rgba(143,166,255,.16);color:#8FA6FF;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">IND</span><span style="display:flex;flex-direction:column;gap:2px"><span data-r="score-name" style="font-weight:700;font-size:22px">Rahul Verma</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 2</span></span></div>
-          <div data-r="score-big" style="display:flex;align-items:center;gap:16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(64px,8vw,108px);letter-spacing:-.04em;line-height:1"><span>{{ arch.setA }}</span><span style="font-size:.35em;color:rgba(255,255,255,.3)">:</span><span>{{ arch.setB }}</span></div>
-          <div data-r="score-pr" style="display:flex;align-items:center;gap:14px;justify-content:flex-end;text-align:right"><span style="display:flex;flex-direction:column;gap:2px"><span data-r="score-name" style="font-weight:700;font-size:22px">Kim Min-jun</span><span style="font-size:13px;color:rgba(255,255,255,.5)">Seed 1</span></span><span style="width:52px;height:52px;border-radius:50%;background:rgba(255,184,107,.16);color:#FFB86B;display:grid;place-items:center;font-family:'JetBrains Mono';font-size:13px;font-weight:500">KOR</span></div>
-        </div>
-        <div style="align-self:center;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.07);font-family:'JetBrains Mono';font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,.75)">{{ arch.status }}</div>
-        <div style="border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);overflow:hidden">
-          <div data-r="score-row" style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;padding:12px 18px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45)"><span>END</span><span>ARROW 1</span><span>ARROW 2</span><span>ARROW 3</span><span>TOTAL</span><span>SP</span></div>
-          <sc-for list="{{ arch.rows }}" as="r" hint-placeholder-count="6">
-            <div data-r="score-row" style="display:grid;grid-template-columns:90px repeat(3,minmax(0,1fr)) 64px 50px;gap:6px;align-items:center;padding:8px 18px;border-top:1px solid rgba(255,255,255,.05);background:{{ r.bg }};transition:background .5s ease">
-              <span style="font-family:'JetBrains Mono';font-size:12px;color:{{ r.who }}">{{ r.label }}</span>
-              <sc-for list="{{ r.arrows }}" as="x" hint-placeholder-count="3">
-                <span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;background:{{ x.bg }};color:{{ x.fg }};transition:background .4s ease,transform .4s ease">{{ x.v }}</span>
-              </sc-for>
-              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ r.sum }}</span>
-              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;color:#8FA6FF">{{ r.sp }}</span>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-      <div style="min-width:0;display:flex;flex-direction:column;gap:12px;animation:gmsRise .8s .2s cubic-bezier(.2,.8,.2,1) both">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 6px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:22px;letter-spacing:-.02em">All live</span><span style="font-size:13px;color:#5B6270">Updates every few seconds</span></div>
-        <sc-for list="{{ matchCards }}" as="m" hint-placeholder-count="6">
-          <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 30px rgba(15,20,40,.05);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease" style-hover="transform:translateY(-3px);box-shadow:0 18px 40px rgba(15,20,40,.10)">
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px"><span style="display:flex;align-items:center;gap:8px;color:#4A505C;font-weight:600"><span style="width:28px;height:28px;border-radius:9px;background:#EEF2FF;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:17px">{{ m.icon }}</span>{{ m.sport }} · {{ m.venue }}</span><span style="display:flex;align-items:center;gap:6px;color:#E5484D;font-weight:700"><span style="width:6px;height:6px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>{{ m.clock }}</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center">
-              <span style="font-weight:600;font-size:15px">{{ m.a }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;padding:0 8px;border-radius:8px;background:{{ m.flashA }};transition:background .6s ease">{{ m.sa }}</span>
-              <span style="font-weight:600;font-size:15px">{{ m.b }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;padding:0 8px;border-radius:8px;background:{{ m.flashB }};transition:background .6s ease">{{ m.sb }}</span>
-            </div>
-          </div>
+    <div data-r="ec-filters" style="animation:gmsRise .7s .06s cubic-bezier(.2,.8,.2,1) both">
+      <div class="ec-seg" role="group" aria-label="Division">
+        <sc-for list="{{ ec.divs }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}"><span class="dot" style="background:{{ f.color }}"></span>{{ f.label }}</button>
         </sc-for>
+      </div>
+      <div class="ec-seg" role="group" aria-label="Match status">
+        <sc-for list="{{ ec.states }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}">{{ f.label }}<i>{{ f.n }}</i></button>
+        </sc-for>
+      </div>
+    </div>
+    <div data-r="ec-grid">
+      <div data-r="ec-list" style="animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
+        <sc-for list="{{ ec.list }}" as="m" hint-placeholder-count="6">
+          <button data-r="ec-row" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
+            <span class="ec-meta"><span>{{ m.fieldShort }} · {{ m.time }} IST</span><span class="pill" data-live="{{ m.liveAttr }}"><span class="pd"></span>{{ m.status }}</span></span>
+            <span class="ec-ev">{{ m.event }} <span style="color:#8A909C;font-weight:500">· {{ m.round }}</span></span>
+            <span class="ec-nm" data-win="{{ m.winA }}"><small>{{ m.A1 }}</small>{{ m.A0 }}</span><span class="ec-sc">{{ m.sa }}</span>
+            <span class="ec-nm" data-win="{{ m.winB }}"><small>{{ m.B1 }}</small>{{ m.B0 }}</span><span class="ec-sc">{{ m.sb }}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{ ec.empty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:34px 20px;border-radius:20px;border:1px dashed #D5D9E1;text-align:center;color:#5B6270;font-size:14px">No matches in this view yet. Try another division or status.</div>
+        </sc-if>
+      </div>
+      <div data-r="ec-detail" ref="{{ ecdRef }}" style="animation:gmsRise .8s .18s cubic-bezier(.2,.8,.2,1) both">
+        <div class="ec-card">
+          <div class="ec-head">
+            <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#8A909C">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
+            <span class="pill" data-live="{{ ec.d.liveAttr }}"><span class="pd"></span>{{ ec.d.status }}</span>
+          </div>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#8A909C">· {{ ec.d.round }}</span></h2>
+          <div class="ec-vs">
+            <div class="ec-pl" data-win="{{ ec.d.winA }}"><small>{{ ec.d.A1 }}</small><b>{{ ec.d.A0 }}</b></div>
+            <div class="ec-big"><span>{{ ec.d.sa }}</span><span>:</span><span>{{ ec.d.sb }}</span></div>
+            <div class="ec-pl" data-win="{{ ec.d.winB }}"><small>{{ ec.d.B1 }}</small><b>{{ ec.d.B0 }}</b></div>
+          </div>
+          <sc-if value="{{ ec.d.hasEnds }}" hint-placeholder-val="{{ true }}">
+            <div class="ec-body">
+              <div class="ec-target"><div>{{ ec.target }}</div><div class="ec-legend"><span><i style="background:#2F5BFF"></i>{{ ec.d.A1 }}</span><span><i style="background:#FF8A3D"></i>{{ ec.d.B1 }}</span><span style="color:#8A909C">{{ ec.d.endNote }}</span></div></div>
+              <div class="ec-ends">
+                <div class="ec-end ec-endh"><span>END</span><span style="grid-area:a">ARROWS</span><span style="grid-area:sa;text-align:center">END</span><span style="grid-area:sp;text-align:right">{{ ec.d.spLabel }}</span></div>
+                <sc-for list="{{ ec.ends }}" as="e" hint-placeholder-count="4">
+                  <div class="ec-end" data-cur="{{ e.cur }}">
+                    <span class="ec-l">{{ e.label }}</span>
+                    <span class="ec-arw" style="grid-area:a"><small>{{ e.A1 }}</small><sc-for list="{{ e.a }}" as="x" hint-placeholder-count="3"><span style="background:{{ x.bg }};color:{{ x.fg }};box-shadow:{{ x.bd }}">{{ x.v }}</span></sc-for></span>
+                    <span class="ec-sum" style="grid-area:sa" data-win="{{ e.winA }}">{{ e.sa }}</span>
+                    <span class="ec-arw" style="grid-area:b"><small>{{ e.B1 }}</small><sc-for list="{{ e.b }}" as="x" hint-placeholder-count="3"><span style="background:{{ x.bg }};color:{{ x.fg }};box-shadow:{{ x.bd }}">{{ x.v }}</span></sc-for></span>
+                    <span class="ec-sum" style="grid-area:sb" data-win="{{ e.winB }}">{{ e.sb }}</span>
+                    <span class="ec-sp">{{ e.sp }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ec.d.noEnds }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:30px 20px;border-radius:20px;background:#F7F8FA;text-align:center;color:#5B6270;font-size:14px;line-height:1.5">This match starts at {{ ec.d.time }} IST on the {{ ec.d.fieldName }}.<br>Arrows appear here end by end as they are shot.</div>
+          </sc-if>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px;border-top:1px solid #F0F2F6">
+            <span style="font-size:13px;color:#5B6270;padding-top:14px">{{ ec.d.fmtHelp }}</span>
+            <button onClick="{{ ec.watch }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;margin-top:12px;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px"><span style="font-family:'Material Symbols Rounded';font-size:18px">play_arrow</span><span>Watch the {{ ec.d.fieldName }}</span></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1159,44 +1269,66 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 </sc-if>
 
 <sc-if value="{{ isTv }}" hint-placeholder-val="{{ false }}">
-<main data-screen-label="Live TV" style="position:relative;min-height:100vh;background:radial-gradient(90% 60% at 20% 0%,#FFFFFF 0%,#F1F3F7 55%,#E9EDF4 100%);padding:116px 32px 80px;box-sizing:border-box;overflow:hidden">
-  <div style="position:relative;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+<main data-screen-label="Live TV" data-r="tvh">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.1em;color:#E5484D"><span style="width:9px;height:9px;border-radius:50%;background:#E5484D;animation:gmsLive 1.4s infinite"></span>STREAMING NOW ON YOUTUBE</span>
-        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(44px,5.5vw,80px);letter-spacing:-.045em;line-height:1">Live TV</h1>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#FF6B70"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none"></span><span>BROADCAST · 3 CHANNELS · {{ clock }} IST</span></span>
+        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Live TV</h1>
       </div>
-      <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px;border-radius:999px;background:rgba(255,255,255,.75);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);font-weight:600;font-size:14px;transition:transform .3s ease" style-hover="transform:translateY(-2px)">IND {{ arch.setA }} : {{ arch.setB }} KOR<span style="padding:8px 14px;border-radius:999px;background:#0B0D12;color:#fff;font-size:13px">Scorecard</span></button>
+      <span style="font-size:15px;color:rgba(255,255,255,.6);max-width:380px;line-height:1.5">One channel per field. Switch channels to follow any match, with the live score beside the picture.</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;align-items:start">
-      <div style="grid-column:1 / -1;min-width:0;display:flex;flex-direction:column;gap:16px;animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both">
-        <div style="position:relative;padding:10px;border-radius:34px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.14)">
-          <div style="position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;background:#0B0D12">
-            {{ ytFrame }}
-            <div style="position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(11,13,18,.7);backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;pointer-events:none"><span style="width:7px;height:7px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ curStream.title }}</div>
+    <div class="tvh-grid">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0;animation:gmsRise .8s .08s cubic-bezier(.2,.8,.2,1) both">
+        <div class="tvh-player">
+          {{ tv.player }}
+          {{ tv.flash }}
+          <span class="tvh-bug"><span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ tv.now.num }} · {{ tv.now.fieldUp }}</span>
+        </div>
+        <div class="tvh-info">
+          <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+            <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.55)">{{ tv.now.eventUp }} · {{ tv.now.roundUp }}</span>
+            <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em;line-height:1.1">{{ tv.now.A0 }} <span style="color:rgba(255,255,255,.4)">vs</span> {{ tv.now.B0 }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <span class="tvh-score"><small>{{ tv.now.A1 }}</small>{{ tv.now.sa }}<i>:</i>{{ tv.now.sb }}<small>{{ tv.now.B1 }}</small></span>
+            <span class="pill pill--dark" data-live="{{ tv.now.liveAttr }}"><span class="pd"></span>{{ tv.now.status }}</span>
+            <button onClick="{{ tv.scorecard }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px">Scorecard<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_outward</span></button>
           </div>
         </div>
-        <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;padding:4px 8px">
-          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.03em">{{ curStream.title }}</span><span style="font-size:14px;color:#5B6270">{{ curStream.sub }}</span></div>
-          <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.06em;color:#5B6270">AHMEDABAD · {{ clock }} IST</span>
-        </div>
-      </div>
-      <div style="min-width:0;display:flex;flex-direction:column;gap:14px;animation:gmsRise .8s .2s cubic-bezier(.2,.8,.2,1) both">
-        <div style="display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:28px;background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95)">
-          <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em;padding:4px 6px 8px">Channels</span>
-          <sc-for list="{{ streams }}" as="s" hint-placeholder-count="4">
-            <button onClick="{{ s.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;padding:8px;border-radius:18px;background:{{ s.bg }};transition:background .3s ease" style-hover="background:rgba(47,91,255,.06)">
-              <span style="position:relative;width:96px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0B0D12"><img src="https://i.ytimg.com/vi/jT9C2wBHn6c/hqdefault.jpg" loading="lazy" decoding="async" alt="" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.85"><span style="position:absolute;left:6px;bottom:5px;padding:2px 6px;border-radius:6px;background:{{ s.tagBg }};color:#fff;font-size:9px;font-weight:700;letter-spacing:.06em">{{ s.tag }}</span></span>
-              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ s.title }}</span><span style="font-size:12px;color:#5B6270;line-height:1.35">{{ s.sub }}</span></span>
+        <div class="tvh-chs" role="group" aria-label="Channels">
+          <sc-for list="{{ tv.channels }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.pick }}" data-on="{{ c.on }}" aria-pressed="{{ c.pressed }}">
+              <span class="tvh-chtop"><span>CH {{ c.num }}</span><span class="pill pill--dark" data-live="{{ c.live }}"><span class="pd"></span>{{ c.status }}</span></span>
+              <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px"><span style="font-family:'Material Symbols Rounded';font-size:20px;opacity:.7">{{ c.icon }}</span>{{ c.name }}</span>
+              <span style="display:flex;justify-content:space-between;gap:8px;font-size:13px;opacity:.75"><span>{{ c.line }}</span><b style="font-family:'Bricolage Grotesque';font-size:15px">{{ c.score }}</b></span>
             </button>
           </sc-for>
         </div>
-        <div style="display:flex;flex-direction:column;gap:6px;padding:18px;border-radius:28px;background:#0B0D12;color:#fff">
-          <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em;padding:4px 6px 8px">Up next today</span>
-          <sc-for list="{{ upNext }}" as="u" hint-placeholder-count="4">
-            <div style="display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:center;padding:10px 6px;border-top:1px solid rgba(255,255,255,.08)"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ u.time }}</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:14px">{{ u.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.5)">{{ u.code }}</span></span></div>
+      </div>
+      <div class="tvh-side" style="animation:gmsRise .8s .16s cubic-bezier(.2,.8,.2,1) both">
+        <div class="tvh-panel">
+          <span class="tvh-ttl">On the {{ tv.now.fieldName }}</span>
+          <sc-for list="{{ tv.schedule }}" as="r" hint-placeholder-count="3">
+            <button class="tvh-row" data-now="{{ r.on }}" onClick="{{ r.open }}">
+              <span class="tvh-tag" data-k="{{ r.tag }}">{{ r.tag }}</span>
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><b>{{ r.event }}</b><small>{{ r.round }} · {{ r.A0 }} v {{ r.B0 }}</small></span>
+              <span class="tvh-rs">{{ r.score }}</span>
+            </button>
           </sc-for>
         </div>
+        <sc-if value="{{ tv.railAny }}" hint-placeholder-val="{{ true }}">
+          <div class="tvh-panel">
+            <span class="tvh-ttl">Live on other fields</span>
+            <sc-for list="{{ tv.rail }}" as="r" hint-placeholder-count="2">
+              <button class="tvh-row" onClick="{{ r.open }}">
+                <span class="tvh-tag" data-k="NOW">{{ r.fieldShort }}</span>
+                <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><b>{{ r.A1 }} {{ r.A0 }} v {{ r.B1 }} {{ r.B0 }}</b><small>{{ r.event }} · {{ r.status }}</small></span>
+                <span class="tvh-rs">{{ r.sa }}–{{ r.sb }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
       </div>
     </div>
   </div>
@@ -1297,12 +1429,6 @@ const PAPER={start:0.5,stagger:0.022,crumple:0.1,fall:0.2};
 const tileCrumple=(p,i)=>ease(clamp((p-PAPER.start-i*PAPER.stagger)/PAPER.crumple));
 const DAY1=[['08:00','PCMTEAM'],['08:00','PCWTEAM'],['08:00','W1MIND'],['08:00','W1MTEAM'],['08:00','W1WIND'],['08:00','W1WTEAM'],['10:00','W1XTEAM'],['10:27','RMIND'],['10:27','RWIND']];
 const DAYS=[['01','05 Sept','Sat'],['02','06 Sept','Sun'],['03','07 Sept','Mon'],['04','08 Sept','Tue'],['05','09 Sept','Wed']];
-const SPORT_ICON={Archery:'target',Cricket:'sports_cricket',Football:'sports_soccer',Basketball:'sports_basketball',Athletics:'directions_run',Kabaddi:'sports_kabaddi',Volleyball:'sports_volleyball',Badminton:'sports_tennis','Table Tennis':'sports_tennis',Hockey:'sports_hockey',Swimming:'pool'};
-const STREAMS=[
-{title:'Finals Field',sub:'Recurve Open Men Individual · Gold medal match',icon:'target',tag:'LIVE'},
-{title:'Compound Range',sub:'Compound Open Women Team · Semi-finals',icon:'adjust',tag:'LIVE'},
-{title:'W1 Range',sub:'W1 Men Individual · Quarter-finals',icon:'accessible_forward',tag:'LIVE'},
-{title:'Ceremony Stage',sub:'Medal ceremony · 17:30 IST',icon:'emoji_events',tag:'LATER'}];
 // ---- Live archery: matches on three fields, scored arrow by arrow. Recurve uses the set system (first to 6 set points,
 // 2 per end won, 1 for a tie); Compound and W1 are cumulative over 5 ends of 3 arrows. liveShoot() fires the next arrow. ----
 const FIELDS=[{id:'finals',name:'Finals Field',short:'FINALS',icon:'target'},{id:'compound',name:'Compound Range',short:'COMPOUND',icon:'adjust'},{id:'w1',name:'W1 Range',short:'W1 RANGE',icon:'accessible_forward'}];
@@ -1340,7 +1466,7 @@ const liveStep=list=>{const live=list.filter(m=>m.state==='live');if(!live.lengt
   return out;};
 // display helpers
 const liveView=m=>{const [A,B]=liveScore(m),done=m.state==='final',full=m.ends.filter(e=>e.a.length===3&&e.b.length===3).length,cur=m.ends.length,c=CATS[m.div];
-  const status=m.state==='next'?'NEXT '+m.time:done?'FINAL':(m.fmt==='set'?'SET ':'END ')+Math.max(1,cur);
+  const lastFull=cur>0&&m.ends[cur-1].a.length===3&&m.ends[cur-1].b.length===3,status=m.state==='next'?'NEXT '+m.time:done?'FINAL':(m.fmt==='set'?'SET ':'END ')+Math.max(1,lastFull?cur+1:cur);
   return {...m,A0:m.A[0],A1:m.A[1],B0:m.B[0],B1:m.B[1],sa:m.state==='next'?'–':String(A),sb:m.state==='next'?'–':String(B),status,live:m.state==='live',color:c.color,tint:c.tint,divName:c.name,
     event:c.name+' '+m.ev,winA:done&&A>B,winB:done&&B>A,fieldName:(FIELDS.find(f=>f.id===m.field)||FIELDS[0]).name,fieldShort:(FIELDS.find(f=>f.id===m.field)||FIELDS[0]).short,full};};
 const liveOrder=list=>list.slice().sort((a,b)=>({live:0,next:1,final:2}[a.state]-{live:0,next:1,final:2}[b.state])||a.time.localeCompare(b.time));
@@ -1410,21 +1536,7 @@ class Component extends DCLogic {
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m COCO! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
-    filter:'All',stream:0,flash:{},
-    ends:[{a:[10,9,9],b:[9,9,8]},{a:[9,10,9],b:[10,10,9]},{a:[10,10,9],b:[10,9,9]},{a:[10],b:[]}],turn:'b',
-    matches:[
-      {id:1,sport:'Archery',a:'Lee S. (KOR)',b:'Kaur H. (IND)',sa:146,sb:144,clock:'End 5',venue:'Compound Range'},
-      {id:2,sport:'Archery',a:'Rossi M. (ITA)',b:'Tanaka K. (JPN)',sa:4,sb:2,clock:'Set 4',venue:'W1 Range'},
-      {id:3,sport:'Cricket',a:'Mavericks',b:'Strikers',sa:168,sb:0,clock:'17.2 ov',venue:'Ground A'},
-      {id:4,sport:'Football',a:'Rangers FC',b:'City United',sa:2,sb:1,clock:"67'",venue:'Field 2'},
-      {id:5,sport:'Basketball',a:'Hawks',b:'Titans',sa:78,sb:74,clock:'Q4 05:12',venue:'Arena 1'},
-      {id:6,sport:'Kabaddi',a:'Panthers',b:'Warriors',sa:31,sb:28,clock:'2nd half',venue:'Hall A'},
-      {id:7,sport:'Volleyball',a:'Spikers',b:'Blockers',sa:2,sb:1,clock:'Set 4',venue:'Court 3'},
-      {id:8,sport:'Badminton',a:'A. Rao',b:'K. Mehta',sa:21,sb:17,clock:'Game 2',venue:'Hall B'},
-      {id:9,sport:'Table Tennis',a:'S. Kumar',b:'L. Wong',sa:9,sb:7,clock:'Game 3',venue:'Hall C'},
-      {id:10,sport:'Hockey',a:'Strikers HC',b:'Royals HC',sa:3,sb:3,clock:"52'",venue:'Turf 1'},
-      {id:11,sport:'Athletics',a:'100m T54 · Patel R.',b:'Okoro D.',sa:1,sb:2,clock:'Final',venue:'Track'},
-      {id:12,sport:'Swimming',a:'50m Free S9 · Sato Y.',b:'Brown L.',sa:1,sb:2,clock:'Final',venue:'Aquatics'}]};
+    chan:'finals'};
   refs={};
   ref(k){return this.refs[k]||(this.refs[k]=React.createRef());}
   componentDidMount(){
@@ -1546,6 +1658,54 @@ class Component extends DCLogic {
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0D12'}},
       h('img',{src:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',alt:'',decoding:'async',loading:'lazy',style:{...cov,objectFit:'cover',filter:'saturate(1.05)'}}),
       this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&modestbranding=1&playsinline=1&rel=0',title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
+  // Event centre: division/status filters, live-first match list, and the picked match end by end with its arrows on a target face
+  ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
+    const list=byDiv.filter(v=>s.liveState==='all'||v.state===s.liveState),d=views.find(v=>v.id===s.sel)||views[0],m=s.live.find(x=>x.id===d.id);
+    const pick=id=>()=>{this.setState({sel:id});const el=this.refs.ecd&&this.refs.ecd.current;
+      if(el&&window.innerWidth<=960)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-84,behavior:REDUCED?'auto':'smooth'});};
+    const tone=v=>v===undefined?{v:'',bg:'transparent',fg:'#C3C8D2',bd:'inset 0 0 0 1px #DDE1E8'}:
+      {v:String(v),bd:'none',...((v==='X'||v>=9)?{bg:'#FFD43B',fg:'#0B0D12'}:v>=7?{bg:'#E5484D',fg:'#fff'}:v>=5?{bg:'#3FA9F5',fg:'#fff'}:v>=3?{bg:'#1B1E24',fg:'#fff'}:{bg:'#fff',fg:'#0B0D12',bd:'inset 0 0 0 1px #C9CED8'})};
+    let ra=0,rb=0;const ends=m.ends.map((e,i)=>{const full=e.a.length===3&&e.b.length===3,sa=endSum(e.a),sb=endSum(e.b);let sp='';
+      if(m.fmt==='set'){if(full){ra+=sa>sb?2:sa===sb?1:0;rb+=sb>sa?2:sa===sb?1:0;sp=ra+'–'+rb;}}else{ra+=sa;rb+=sb;sp=ra+'–'+rb;}
+      return {label:'E'+(i+1),A1:d.A1,B1:d.B1,a:[0,1,2].map(k=>tone(e.a[k])),b:[0,1,2].map(k=>tone(e.b[k])),sa:e.a.length?String(sa):'–',sb:e.b.length?String(sb):'–',sp,
+        cur:!full&&d.live?'1':'0',winA:full&&sa>sb?'1':'0',winB:full&&sb>sa?'1':'0'};});
+    const set=m.fmt==='set',cnt=k=>byDiv.filter(v=>k==='all'||v.state===k).length;
+    return {ecdRef:this.ref('ecd'),ec:{
+      divs:[{label:'All divisions',color:'#0B0D12',i:-1},...CATS.map((c,i)=>({label:c.name,color:c.color,i}))].map(f=>({...f,on:s.liveDiv===f.i?'1':'0',pressed:String(s.liveDiv===f.i),pick:()=>this.setState({liveDiv:f.i})})),
+      states:[['all','All'],['live','Live'],['next','Up next'],['final','Results']].map(([k,label])=>({label,n:String(cnt(k)),on:s.liveState===k?'1':'0',pressed:String(s.liveState===k),pick:()=>this.setState({liveState:k})})),
+      list:list.map(v=>({...v,on:v.id===d.id?'1':'0',liveAttr:v.live?'1':'0',winA:v.winA?'1':'0',winB:v.winB?'1':'0',pick:pick(v.id),aria:v.event+', '+v.round+': '+v.A0+' '+v.sa+', '+v.B0+' '+v.sb+', '+v.status})),
+      empty:!list.length,
+      d:{...d,liveAttr:d.live?'1':'0',winA:String(d.winA),winB:String(d.winB),fieldUp:d.fieldName.toUpperCase(),hasEnds:m.ends.length>0,noEnds:!m.ends.length,
+        fmtLabel:set?'SET SYSTEM':'CUMULATIVE',spLabel:set?'SET PTS':'TOTAL',endNote:d.live?'end '+m.ends.length+' bright':'last end bright',
+        fmtHelp:set?'Recurve: 2 set points for an end won, 1 for a tie. First to 6 wins.':'Compound and W1: 5 ends of 3 arrows, highest total wins.'},
+      ends,target:this.targetEl(m),watch:()=>{this.setState({chan:d.field});this.go('tv');}}};}
+  // a World Archery target face; each arrow lands at a fixed spot inside its scoring ring, the latest end bright and the newest arrow pinging
+  targetEl(m){const h=React.createElement,fill=v=>v>=9?'#FFD43B':v>=7?'#E5484D':v>=5?'#3FA9F5':v>=3?'#1B1E24':'#FFFFFF',line=v=>v<=2?'#C9CED8':v<=4?'#5A606C':'rgba(11,13,18,.22)';
+    const hs=str=>{let x=7;for(const ch of str)x=(x*31+ch.charCodeAt(0))%1000003;return x/1000003;};
+    const last=m.ends.length-1,le=m.ends[last],newest=le&&m.last&&le[m.last].length?last+m.last+(le[m.last].length-1):'',dots=[];
+    m.ends.forEach((e,i)=>['a','b'].forEach(sd=>e[sd].forEach((v,k)=>{const sc=arrowVal(v),r0=v==='X'?0:(10-sc)*10+(sc===10?5:0),r1=v==='X'?5:(11-sc)*10;
+      const r=r0+(r1-r0)*(0.2+0.6*hs(m.id+'r'+i+sd+k)),a=hs(m.id+'a'+i+sd+k)*Math.PI*2;dots.push({key:i+sd+k,x:Math.cos(a)*r,y:Math.sin(a)*r,sd,cur:i===last});})));
+    return h('svg',{viewBox:'-108 -108 216 216',role:'img','aria-label':'Target face with '+dots.length+' arrows'},
+      Array.from({length:10},(_,j)=>j+1).map(v=>h('circle',{key:'r'+v,r:(11-v)*10,fill:fill(v),stroke:line(v),strokeWidth:v===1?1.2:.6})),
+      h('circle',{key:'x',r:5,fill:'none',stroke:'rgba(11,13,18,.35)',strokeWidth:.5}),
+      h('path',{key:'c',d:'M-2 0H2M0 -2V2',stroke:'rgba(11,13,18,.5)',strokeWidth:.5}),
+      dots.filter(p=>!p.cur).map(p=>h('circle',{key:p.key,cx:p.x,cy:p.y,r:2.8,fill:p.sd==='a'?'#2F5BFF':'#FF8A3D',opacity:.35})),
+      dots.filter(p=>p.cur).map(p=>h('g',{key:p.key},p.key===newest?h('circle',{className:'ec-ping',cx:p.x,cy:p.y,r:5,fill:'none',stroke:p.sd==='a'?'#2F5BFF':'#FF8A3D',strokeWidth:1.5}):null,
+        h('circle',{className:'ec-dot',cx:p.x,cy:p.y,r:5,fill:p.sd==='a'?'#2F5BFF':'#FF8A3D',stroke:'#fff',strokeWidth:1.6}))));}
+  // Broadcast hub: one channel per field, the picked channel's match under the player, its now/next running order, and live matches elsewhere
+  tvVals(screen){const s=this.state,h=React.createElement,views=liveOrder(s.live).map(liveView),chan=s.chan||'finals';
+    const onField=f=>views.filter(v=>v.field===f),cur=f=>{const l=onField(f);return l.find(v=>v.live)||l.find(v=>v.state==='next')||l[0];};
+    const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'jT9C2wBHn6c').trim(),up=x=>String(x).toUpperCase();
+    const open=v=>()=>{this.setState({sel:v.id});this.go('scores');};
+    return {tv:{
+      player:screen==='tv'?h('iframe',{key:'ytp',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',title:'Live TV: '+F.name,allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true}):null,
+      flash:REDUCED?null:h('div',{key:'sw'+chan,className:'tvh-flash','aria-hidden':'true'}),
+      now:{...now,num:'CH 0'+(FIELDS.indexOf(F)+1),fieldName:F.name,fieldUp:up(F.name),eventUp:up(now.event),roundUp:up(now.round),liveAttr:now.live?'1':'0'},
+      channels:FIELDS.map((f,i)=>{const c=cur(f.id);return {num:'0'+(i+1),name:f.name,icon:f.icon,on:f.id===chan?'1':'0',pressed:String(f.id===chan),live:c&&c.live?'1':'0',
+        line:c?c.A0.split(' ').pop()+' v '+c.B0.split(' ').pop():'',score:c&&c.state!=='next'?c.sa+'–'+c.sb:'',status:c?c.status:'',pick:()=>this.setState({chan:f.id})};}),
+      schedule:onField(F.id).slice().sort((a,b)=>a.time.localeCompare(b.time)).map(v=>({...v,tag:v.live?'NOW':v.state==='next'?v.time:'FINAL',on:v.live?'1':'0',score:v.state==='next'?'':v.sa+'–'+v.sb,open:open(v)})),
+      rail:views.filter(v=>v.live&&v.field!==F.id).map(v=>({...v,open:open(v)})),railAny:views.some(v=>v.live&&v.field!==F.id),
+      scorecard:open(now)}};}
   // Contact help desk: topic routing, live desk status on IST, validation, paper-plane send, reference ticket, admin enquiries
   contactVals(){const s=this.state,c=s.contact,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),h=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&h>=9&&h<19;
@@ -1804,21 +1964,7 @@ class Component extends DCLogic {
     const col=(order,anim)=>h('div',{style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
       order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
     return h('div',{style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
-  sum(a){return a.reduce((t,v)=>t+(v==='X'?10:v),0);}
-  setPts(ends){let A=0,B=0;ends.forEach(e=>{if(e.a.length<3||e.b.length<3)return;const sa=this.sum(e.a),sb=this.sum(e.b);if(sa>sb)A+=2;else if(sb>sa)B+=2;else{A++;B++;}});return [A,B];}
-  tick(){
-    this.setState(s=>{
-      let ends=s.ends.map(e=>({a:e.a.slice(),b:e.b.slice()})),turn=s.turn;const [A,B]=this.setPts(ends);
-      if(A>=6||B>=6){ends=[{a:[],b:[]}];turn='a';}
-      else{let cur=ends[ends.length-1];if(cur.a.length>=3&&cur.b.length>=3){cur={a:[],b:[]};ends.push(cur);turn='a';}
-        const r=Math.random();cur[turn].push(r<.12?'X':r<.5?10:r<.85?9:r<.97?8:7);turn=turn==='a'?'b':'a';}
-      const ms=s.matches.slice();const i=Math.floor(Math.random()*ms.length);const m={...ms[i]};const side=Math.random()<.5?'sa':'sb';
-      const inc={Basketball:2,Cricket:Math.ceil(Math.random()*4),Archery:m.id===1?9:0,Kabaddi:1,Badminton:1,'Table Tennis':1}[m.sport]||0;
-      let flash={};if(inc){m[side]+=inc;ms[i]=m;flash={[m.id+side]:1};}
-      return {ends,turn,matches:ms,flash,live:liveStep(s.live)};
-    });
-    setTimeout(()=>this.setState({flash:{}}),900);
-  }
+  tick(){this.setState(s=>({live:liveStep(s.live)}));}
   go(screen,after){this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
@@ -1837,14 +1983,14 @@ class Component extends DCLogic {
     if(/regist|sign|athlete|staff|entry/.test(t))return 'Registration is open for 12 types, including Athlete, Support Staff, Technical Official, Media & Broadcasting and Volunteer. Pick one in the Register As section.';
     if(/when|date|schedule|time/.test(t))return 'The Series runs 05 Sep 2026 to 09 Sep 2026 in Ahmedabad. Day 1 competition starts at 08:00 IST.';
     if(/event|categor|recurve|compound|w1/.test(t))return 'There are 15 medal events across Recurve Open, Compound Open and W1, five in each.';
-    if(/score|live|result/.test(t))return 'The Recurve Open Men Individual gold medal match is live. Open Live Scores for the scorecard.';
-    if(/watch|stream|youtube|tv/.test(t))return 'Open Live TV to watch the YouTube stream.';
+    if(/score|live|result/.test(t)){const n=this.state.live.filter(m=>m.state==='live').length;return n+' matches are live on 3 fields right now. Open Live Scores to follow any of them arrow by arrow.';}
+    if(/watch|stream|youtube|tv/.test(t))return 'Open Live TV: one channel per field, with the live score beside the picture.';
     if(/where|venue|city|ahmedabad/.test(t))return 'The host city is Ahmedabad.';
     return 'I can help with events, the schedule, registration, live scores and streams.';}
   send(text){if(!text||!text.trim())return;const q=text.trim();
     this.setState(s=>({draft:'',messages:s.messages.concat({from:'me',text:q})}));
     setTimeout(()=>this.setState(s=>({messages:s.messages.concat({from:'bot',text:this.reply(q)})})),450);}
-  tickerEl(A,B){
+  tickerEl(){
     const h=React.createElement;const items=liveOrder(this.state.live).map(liveView).map(v=>`${v.fieldName.toUpperCase()} · ${v.event} · ${v.round} · ${v.A1} ${v.sa}–${v.sb} ${v.B1} · ${v.status}`);
     const row=items.concat(items);
     return h('div',{style:{display:'flex',gap:56,width:'max-content',animation:'gmsMarquee 80s linear infinite',fontSize:14,fontWeight:500,color:'#2A2F3A',whiteSpace:'nowrap'}},
@@ -1853,17 +1999,9 @@ class Component extends DCLogic {
   renderVals(){
     const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=(P.enable3D??true)&&!LITE;
     const rt=REG.find(r=>r.id===s.regType)||REG[0];const mr=REG.find(r=>r.id===s.modal);const f=s.form;
-    const [A,B]=this.setPts(s.ends);
-    const ab=v=>v===undefined?{v:'·',bg:'rgba(255,255,255,.06)',fg:'rgba(255,255,255,.3)'}:{v:String(v),bg:v==='X'||v===10?'#FFD43B':v===9?'#FFE580':v>=7?'#E5484D':'#3FA9F5',fg:'#0B0D12'};
-    const rows=[];s.ends.forEach((e,i)=>{const done=e.a.length===3&&e.b.length===3;const sa=this.sum(e.a),sb=this.sum(e.b);const live=i===s.ends.length-1;
-      rows.push({label:`E${i+1} IND`,who:'#8FA6FF',arrows:[0,1,2].map(j=>ab(e.a[j])),sum:e.a.length?String(sa):'–',sp:done?String(sa>sb?2:sa===sb?1:0):'',bg:live?'rgba(47,91,255,.12)':'transparent'});
-      rows.push({label:`E${i+1} KOR`,who:'#FFB86B',arrows:[0,1,2].map(j=>ab(e.b[j])),sum:e.b.length?String(sb):'–',sp:done?String(sb>sa?2:sa===sb?1:0):'',bg:live?'rgba(47,91,255,.12)':'transparent'});});
-    const arch={setA:String(A),setB:String(B),rows,status:A>=6?'VERMA WINS GOLD':B>=6?'KIM WINS GOLD':`END ${s.ends.length} · ${s.turn==='a'?'VERMA':'KIM'} TO SHOOT`};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000);const left=Math.max(0,EVENT_START-s.now);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,s.p.steps/0.72)*STEPS.length));
     const tp=ease(clamp(s.p.tiles*2.4));const cp=ease(clamp(s.p.close*1.25));const lerp=(a,b)=>Math.round(a+(b-a)*cp);
-    const fmt=m=>({...m,icon:SPORT_ICON[m.sport],sa:String(m.sa),sb:String(m.sb),scoreLine:`${m.sa} – ${m.sb}`,flashA:s.flash[m.id+'sa']?'#FFE9A8':'transparent',flashB:s.flash[m.id+'sb']?'#FFE9A8':'transparent'});
-    const allM=s.matches.map(fmt);const sports=['All',...new Set(s.matches.map(m=>m.sport))];
     const isAth=s.regType==='athlete';const docs=this.docList();
     const fld=(k,label,ph,type)=>({label,ph,type:type||'text',value:f[k],on:e=>this.setF(k,e.target.value)});
     const mine=s.session&&s.admin.find(r=>r.email&&r.email===s.session.email);
@@ -1879,7 +2017,7 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
-      goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>this.go('tv'),
+      goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>{this.setState({chan:'finals'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
@@ -1887,7 +2025,7 @@ class Component extends DCLogic {
       clock:`${pad(ist.getHours())}:${pad(ist.getMinutes())}:${pad(ist.getSeconds())}`,
       
       
-      ticker:this.tickerEl(A,B),
+      ticker:this.tickerEl(),
       stepNum:pad(stepIdx+1),steps:STEPS.map((x,i)=>({...x,op:i===stepIdx?1:.22,mh:i===stepIdx?'120px':'0px'})),
       
       days:DAYS.map((d,i)=>({n:d[0],date:d[1],dow:d[2],pick:()=>this.setState({day:i,openRow:null}),bg:s.day===i?'#0B0D12':'#F6F7F9',fg:s.day===i?'#fff':'#0B0D12',bd:'transparent'})),
@@ -1904,7 +2042,6 @@ class Component extends DCLogic {
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:tm==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
-      liveTop:[{icon:'target',a:'Verma',b:'Kim',scoreLine:`${A} – ${B}`}].concat(allM.slice(0,3)),
       tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),...this.fxTile(s.p.tiles,i)};}),
       carTextOp:this.fxCarOp(s.p.car),
       ...(()=>{const C=this.fxClose(s.p.close);return {winW:C.w,winH:C.h,winR:C.r,winBg:C.bg,winContentOp:C.cop};})(),
@@ -1925,15 +2062,8 @@ class Component extends DCLogic {
       kpis:[['Total',s.admin.length,'#0B0D12'],['Pending',s.admin.filter(r=>r.status==='Pending').length,'#9A6B00'],['Verified',s.admin.filter(r=>r.status==='Verified').length,BLUE],['Accredited',s.admin.filter(r=>r.status==='Accredited').length,'#1C8A53']].map(([label,v,c])=>({label,v:String(v),c})),
       adminRows:s.admin.map(r=>{const done=r.status==='Accredited'||r.status==='Rejected';return {...r,sBg:ST[r.status][0],sFg:ST[r.status][1],actOp:done?'0.3':'1',
         approve:()=>!done&&setStatus(r.id,r.status==='Pending'?'Verified':'Accredited'),reject:()=>!done&&setStatus(r.id,'Rejected')};}),
-      arch,liveCount:String(allM.length+1),
-      ...this.liveVals(),
-      sportFilters:sports.map(k=>({label:k,icon:k==='All'?'apps':SPORT_ICON[k],pick:()=>this.setState({filter:k}),bg:s.filter===k?'#0B0D12':'#fff',fg:s.filter===k?'#fff':'#0B0D12'})),
-      matchCards:s.filter==='All'?allM:allM.filter(m=>m.sport===s.filter),
-      ytSrc:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,
-      // built in code so the hidden template never requests the literal placeholder URL
-      ytFrame:screen==='tv'?React.createElement('iframe',{key:'yt',src:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,title:'Hyundai World Archery Para Series live',allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true,style:{position:'absolute',inset:0,width:'100%',height:'100%',border:0}}):null,curStream:STREAMS[s.stream],
-      ytThumb:'https://i.ytimg.com/vi/'+(P.youtubeVideoId||'jT9C2wBHn6c').trim()+'/hqdefault.jpg',upNext:DAY1.slice(-4).map(([time,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);return {time,code,name:ev.name};}),
-      streams:STREAMS.map((x,i)=>({...x,tagBg:x.tag==='LIVE'?'#E5484D':'rgba(11,13,18,.7)',pick:()=>this.setState({stream:i}),bg:s.stream===i?'#F4F5F7':'transparent',tagColor:x.tag==='LIVE'?'#E5484D':'#8A909C'})),
+      ...this.liveVals(),...this.ecVals(),...this.tvVals(screen),
+
       chatOpen:s.chatOpen,toggleChat:()=>this.setState(x=>({chatOpen:!x.chatOpen})),chatLabel:s.chatOpen?'Close chat':'Ask COCO',
       messages:s.messages.map(m=>({text:m.text,align:m.from==='me'?'flex-end':'flex-start',bg:m.from==='me'?'#0B0D12':'#fff',fg:m.from==='me'?'#fff':'#0B0D12'})),
       quick:['How do I register?','When is it?','Live scores'].map(l=>({label:l,send:()=>this.send(l)})),
