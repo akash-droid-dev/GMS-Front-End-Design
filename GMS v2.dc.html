@@ -266,39 +266,56 @@ html,body{background:#F4F5F7}
 .gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
 .gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
 .gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
-/* Contact help desk: ink desk draws in, the form folds into a paper plane on send, then the reference ticket appears */
-.gms-rv [data-ink-y]{transform:scaleY(0);transform-origin:50% 0}
-.gms-rv [data-ink-x]{transform:scaleX(0)}
-.gms-rv [data-ink-drop]{opacity:0;translate:0 -12px}
-.gms-in [data-ink-y]{transform:none;transition:transform .7s var(--gms-ease) .3s}
-.gms-in [data-ink-x]{transform:none;transition:transform 1s var(--gms-ease) .4s}
-.gms-in [data-ink-drop]{opacity:1;translate:0 0;transition:opacity .6s ease .55s,translate .8s var(--gms-ease) .55s}
-[data-ct-sign]{transform-origin:50% -24px;animation:gmsSwing 6s ease-in-out infinite}
-@keyframes gmsSwing{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
-[data-ct-window]{transform-origin:50% 55%;transition:transform .45s cubic-bezier(.6,0,.35,1),opacity .4s ease}
-[data-contact-desk]:not([data-phase="form"]) [data-ct-window]{transform:perspective(900px) rotateX(58deg) scale(.16);opacity:0;pointer-events:none}
-[data-contact-desk][data-phase="done"] [data-ct-window]{visibility:hidden}
-[data-ct-plane]{position:absolute;left:50%;top:54%;width:0;height:0;z-index:3;pointer-events:none;opacity:0}
-[data-ct-plane] .ct-planesvg{position:absolute;left:0;top:0;offset-path:path('M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360');offset-rotate:auto;offset-distance:0%}
-[data-ct-plane] .ct-trail{opacity:0}
-[data-contact-desk][data-phase="fly"] [data-ct-plane]{opacity:1}
-[data-contact-desk][data-phase="fly"] [data-ct-plane] .ct-planesvg{animation:gmsPlane 1.25s cubic-bezier(.45,0,.25,1) forwards}
-[data-contact-desk][data-phase="fly"] [data-ct-plane] .ct-trail{animation:gmsTrail 1.25s ease forwards}
-@keyframes gmsPlane{0%{offset-distance:0%;opacity:0;scale:.5}12%{opacity:1;scale:1}82%{opacity:1}100%{offset-distance:100%;opacity:0;scale:.75}}
-@keyframes gmsTrail{0%{opacity:0}25%{opacity:.75}100%{opacity:0}}
-[data-ct-ticket]{position:absolute;left:50%;top:54%;z-index:3;width:min(440px,94%);transform:translate(-50%,-50%) scale(.92);opacity:0;visibility:hidden;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s ease,visibility 0s linear .55s}
-[data-contact-desk][data-phase="done"] [data-ct-ticket]{transform:translate(-50%,-50%);opacity:1;visibility:visible;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s ease}
-[data-ct-window] input::placeholder,[data-ct-window] textarea::placeholder{color:#9AA0AC}
-[data-ct-window] input:focus,[data-ct-window] textarea:focus{border-color:#2F5BFF!important;background:#fff!important}
-@media (max-width:900px){
- [data-r=contact-section]{padding:90px 18px 100px!important}
- [data-r=contact-grid]{grid-template-columns:minmax(0,1fr)!important}
-}
-@media (max-width:600px){
- [data-r=ct-fields]{grid-template-columns:minmax(0,1fr)!important}
- [data-ct-window]{padding:20px!important;border-radius:24px!important}
- [data-ct-plane] .ct-planesvg{offset-path:path('M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300')}
-}
+/* Help desk: a COCO-led chat. Two tap-to-answer questions, a short message, a summary, then the hand-off ticket */
+.hd-grid{position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,5vw,76px);align-items:center}
+.hd-intro{display:flex;flex-direction:column;gap:22px}
+.hd-status{align-self:flex-start;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;border-radius:999px;background:#fff;border:1px solid #E6EAF0}
+.hd-desks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:520px}
+.hd-cap{grid-column:1/-1;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C;padding:2px 2px 4px}
+.hd-desk{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid #E6EAF0;transition:background .4s var(--gms-ease),border-color .4s,box-shadow .4s,transform .4s var(--gms-ease)}
+.hd-desk b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hd-desk small{font-size:11.5px;color:#8A909C}
+.hd-ico{width:32px;height:32px;flex:none;border-radius:10px;display:grid;place-items:center;background:#F1F3F7;color:#4A505C;font-family:'Material Symbols Rounded';font-size:18px;transition:background .4s,color .4s}
+.hd-tick{margin-left:auto;font-family:'Material Symbols Rounded';font-size:18px;color:#2F5BFF;opacity:0;transform:scale(.5);transition:opacity .3s,transform .4s var(--gms-ease)}
+.hd-desk[data-on="1"]{background:#fff;border-color:#2F5BFF;box-shadow:0 12px 28px rgba(47,91,255,.14);transform:translateY(-2px)}
+.hd-desk[data-on="1"] .hd-ico{background:#2F5BFF;color:#fff}.hd-desk[data-on="1"] .hd-tick{opacity:1;transform:none}
+.hd-chat{display:flex;flex-direction:column;border-radius:30px;background:rgba(255,255,255,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #fff;box-shadow:0 40px 90px rgba(15,20,40,.12),0 0 0 1px rgba(15,20,40,.04);overflow:hidden;min-width:0}
+.hd-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #EEF0F4;background:rgba(255,255,255,.7)}
+.hd-head img{width:44px;height:44px;border-radius:14px;object-fit:cover;background:#EEF2FF;flex:none}
+.hd-ghost{appearance:none;border:1px solid #E6EAF0;background:#fff;font:inherit;font-size:12.5px;font-weight:600;color:#4A505C;padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
+.hd-ghost:hover{background:#0B0D12;color:#fff}
+.hd-thread{display:flex;flex-direction:column;gap:10px;padding:20px 18px;height:380px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.hd-thread>*{flex:none}
+.hd-msg{max-width:84%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.45;animation:gmsBubble .45s var(--gms-ease) both}
+.hd-msg--bot{align-self:flex-start;background:#F1F3F7;color:#0B0D12;border-bottom-left-radius:6px}
+.hd-msg--me{align-self:flex-end;background:#0B0D12;color:#fff;border-bottom-right-radius:6px}
+.hd-msg--me small{display:block;margin-top:6px;font-size:12px;color:rgba(255,255,255,.6)}
+@keyframes gmsBubble{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+.hd-typing{align-self:flex-start;display:flex;gap:4px;padding:14px 16px;border-radius:18px;border-bottom-left-radius:6px;background:#F1F3F7}
+.hd-typing i{width:7px;height:7px;border-radius:50%;background:#8A909C;animation:gmsTyping 1s infinite}.hd-typing i:nth-child(2){animation-delay:.15s}.hd-typing i:nth-child(3){animation-delay:.3s}
+@keyframes gmsTyping{0%,60%,100%{transform:none;opacity:.45}30%{transform:translateY(-4px);opacity:1}}
+.hd-sum{align-self:flex-start;width:min(100%,380px);border-radius:18px;background:#fff;border:1px solid #E6EAF0;overflow:hidden;animation:gmsBubble .45s var(--gms-ease) both}
+.hd-sum>span{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;padding:10px 14px;border-top:1px solid #F0F2F6;font-size:13.5px}.hd-sum>span:first-child{border-top:0}
+.hd-sum em{font-style:normal;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#8A909C;padding-top:2px}
+.hd-ticket{--nx:66px;align-self:stretch;display:flex;border-radius:18px;background:linear-gradient(160deg,#FFFFFF 0%,#EEF3FF 100%);border:1px solid #DCE4FF;animation:gmsBubble .5s var(--gms-ease) both}
+.hd-compose{padding:14px 18px 18px;border-top:1px solid #EEF0F4;background:rgba(255,255,255,.75)}
+.hd-chips{display:flex;flex-wrap:wrap;gap:8px}
+.hd-chip{appearance:none;border:1px solid #E1E5EC;background:#fff;font:inherit;font-size:13.5px;font-weight:600;color:#0B0D12;display:flex;align-items:center;gap:7px;padding:9px 14px 9px 11px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s,border-color .25s,transform .3s var(--gms-ease)}
+.hd-chip:hover{border-color:#2F5BFF;color:#2F5BFF;transform:translateY(-1px)}
+.hd-chip span{font-family:'Material Symbols Rounded';font-size:18px;color:#2F5BFF}
+.hd-chip--quiet{background:transparent;border-style:dashed;color:#5B6270;padding-left:14px}
+.hd-chip:focus-visible,.hd-ghost:focus-visible,.hd-form button:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
+.hd-form{display:flex;flex-direction:column;gap:10px}
+.hd-form .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hd-form input,.hd-form textarea{box-sizing:border-box;width:100%;font:inherit;font-size:14.5px;color:#0B0D12;padding:12px 14px;border-radius:14px;background:#F3F5F9;border:1.5px solid transparent;outline:none;transition:border-color .2s,background .2s}
+.hd-form textarea{resize:none;min-height:76px;line-height:1.45}
+.hd-form input:focus,.hd-form textarea:focus{border-color:#2F5BFF;background:#fff}
+.hd-form [aria-invalid=true]{border-color:#E5484D}
+.hd-form input::placeholder,.hd-form textarea::placeholder{color:#9AA0AC}
+.hd-err{font-size:12.5px;color:#D93D42}
+.hd-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hd-go{appearance:none;border:0;font:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14.5px}
+@media (max-width:900px){[data-r=contact-section]{padding:90px 16px 100px!important}.hd-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.hd-desks{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hd-desk{padding:8px 10px}.hd-desk small{display:none}.hd-thread{height:340px;padding:16px 14px}.hd-compose{padding:12px 14px 14px}.hd-form .row{grid-template-columns:minmax(0,1fr)}.hd-chat{border-radius:24px}.hd-msg{max-width:90%}}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
 #gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg') 0% 42%/cover no-repeat}
@@ -945,79 +962,29 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
     </div>
   </section>
 
-  <section data-r="contact-section" ref="{{ contactRef }}" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#0B0D12 0%,#111727 55%,#151B2E 100%);color:#fff;padding:130px 32px 140px">
-    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(48% 46% at 72% 46%,rgba(47,91,255,.30),rgba(47,91,255,0) 70%),radial-gradient(38% 40% at 10% 92%,rgba(143,166,255,.12),rgba(143,166,255,0) 70%)"></div>
-    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(143,166,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(143,166,255,.06) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(70% 70% at 62% 46%,#000 20%,transparent 100%);mask-image:radial-gradient(70% 70% at 62% 46%,#000 20%,transparent 100%)"></div>
-    <div data-r="contact-grid" style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,5vw,76px);align-items:center">
-      <div style="display:flex;flex-direction:column;gap:22px">
-        <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8FA6FF">CONTACT · HELP DESK</span>
-        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98;color:#fff">Talk to the right desk.</h2>
-        <p style="margin:0;max-width:460px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.7)">Pick a topic and your message goes straight to the team that handles it, with a reference number you can quote when you follow up.</p>
-        <span style="align-self:flex-start;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)">
-          <span style="position:relative;width:10px;height:10px;flex:none;border-radius:50%;background:{{ ctDot }};box-shadow:0 0 0 4px {{ ctDotRing }}"></span>
-          <span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#fff">{{ ctStatus }}</span><span style="font-size:12px;color:rgba(255,255,255,.55)">{{ ctStatusSub }}</span></span>
-        </span>
-        <div data-r="ct-route" style="display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);max-width:480px">
-          <span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">YOUR MESSAGE GOES TO</span>
-          <sc-if value="{{ ctHasTeam }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:46px;height:46px;flex:none;border-radius:15px;display:grid;place-items:center;background:#2F5BFF;color:#fff;font-family:'Material Symbols Rounded';font-size:23px;box-shadow:0 10px 26px rgba(47,91,255,.4)">{{ ctTeam.icon }}</span>
-              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;letter-spacing:-.02em">{{ ctTeam.name }}</span><span style="font-family:'JetBrains Mono';font-size:12px;color:#8FA6FF;overflow-wrap:anywhere">{{ ctTeam.email }}</span></span>
-            </div>
-            <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.7)"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8FA6FF">schedule</span>{{ ctTeam.reply }}</span>
-          </sc-if>
-          <sc-if value="{{ ctNoTeam }}" hint-placeholder-val="{{ true }}">
-            <span style="display:flex;align-items:center;gap:12px;font-size:14px;line-height:1.5;color:rgba(255,255,255,.6)"><span style="width:46px;height:46px;flex:none;border-radius:15px;display:grid;place-items:center;border:1.5px dashed rgba(143,166,255,.4);color:#8FA6FF;font-family:'Material Symbols Rounded';font-size:22px">support_agent</span>Choose a topic on the desk to see which team will answer, and how fast.</span>
-          </sc-if>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px 18px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.6)">
-          <span style="display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8FA6FF">location_on</span>Venue help desk · Ahmedabad</span>
-          <button onClick="{{ ctAskBot }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600;transition:background .25s ease" style-hover="background:rgba(255,255,255,.16)"><span style="font-family:'Material Symbols Rounded';font-size:17px">forum</span>Quick question? Ask the GMS assistant</button>
+  <section data-r="contact-section" ref="{{ contactRef }}" style="position:relative;overflow:hidden;background:#F4F5F7;padding:120px 32px 130px">
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 50% at 78% 40%,rgba(47,91,255,.10),rgba(47,91,255,0) 70%),radial-gradient(30% 40% at 8% 90%,rgba(63,169,245,.10),rgba(63,169,245,0) 70%)"></div>
+    <div data-r="contact-grid" class="hd-grid">
+      <div class="hd-intro">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#2F5BFF">HELP DESK · ASK COCO</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Tell COCO.<br>The right desk answers.</h2>
+        <p style="margin:0;max-width:460px;font-size:16px;line-height:1.6;color:#5B6270">Two quick taps and a line about your question. COCO hands it to the team that handles it, with a summary and a reference number you can quote.</p>
+        <span class="hd-status"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:{{ ctDot }};box-shadow:0 0 0 4px {{ ctDotRing }}"></span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#0B0D12">{{ ctStatus }}</span><span style="font-size:12px;color:#5B6270">{{ ctStatusSub }}</span></span></span>
+        <div class="hd-desks" role="list" aria-label="Help desks">
+          <span class="hd-cap">COCO ROUTES YOU TO</span>
+          <sc-for list="{{ ctDesks }}" as="d" hint-placeholder-count="6">
+            <div role="listitem" class="hd-desk" data-on="{{ d.on }}"><span class="hd-ico">{{ d.icon }}</span><span style="display:flex;flex-direction:column;gap:1px;min-width:0"><b>{{ d.name }}</b><small>{{ d.reply }}</small></span><span class="hd-tick" aria-hidden="true">check</span></div>
+          </sc-for>
         </div>
       </div>
-      <div data-contact-desk data-phase="{{ ctPhase }}" style="position:relative;padding:70px 0 44px">
-        <span data-ink-y aria-hidden="true" style="position:absolute;left:32%;top:0;width:1.5px;height:24px;background:rgba(143,166,255,.65)"></span>
-        <span data-ink-y aria-hidden="true" style="position:absolute;right:32%;top:0;width:1.5px;height:24px;background:rgba(143,166,255,.65)"></span>
-        <span data-ink-drop aria-hidden="true" style="position:absolute;left:50%;top:22px;transform:translateX(-50%);z-index:1">
-          <span data-ct-sign style="display:flex;align-items:center;gap:10px;white-space:nowrap;padding:8px 18px;border-radius:11px;border:1.5px solid rgba(143,166,255,.7);background:rgba(11,13,18,.6);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.2em;color:#DCE4FF"><span style="width:7px;height:7px;border-radius:50%;background:{{ ctDot }}"></span>INFO DESK</span>
-        </span>
-        <form data-ct-window onSubmit="{{ ctSubmit }}" noValidate aria-label="Contact the GMS help desk" style="position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;padding:26px;border-radius:28px;background:rgba(255,255,255,.96);color:#0B0D12;box-shadow:0 40px 90px rgba(0,0,0,.45),inset 0 1px 0 #fff">
-          <div style="display:flex;flex-direction:column;gap:9px">
-            <span style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#5B6270">WHAT IS IT ABOUT?</span>
-            <div role="radiogroup" aria-label="Topic" style="display:flex;flex-wrap:wrap;gap:7px">
-              <sc-for list="{{ ctTopics }}" as="t" hint-placeholder-count="6">
-                <button type="button" role="radio" aria-checked="{{ t.on }}" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 13px 8px 10px;border-radius:999px;font-size:13px;font-weight:600;background:{{ t.bg }};color:{{ t.fg }};box-shadow:{{ t.sh }};transition:background .25s ease,color .25s ease,box-shadow .25s ease"><span style="font-family:'Material Symbols Rounded';font-size:17px">{{ t.icon }}</span>{{ t.label }}</button>
-              </sc-for>
-            </div>
-            <span role="alert" style="font-size:12.5px;color:#D93D42;min-height:0">{{ ctErrTopic }}</span>
-          </div>
-          <div data-r="ct-fields" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C">Your name<input value="{{ ctName }}" onChange="{{ onCtName }}" autocomplete="name" placeholder="Full name" style="all:unset;box-sizing:border-box;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdName }};font-size:15px;font-weight:500;color:#0B0D12;transition:border-color .2s ease"><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrName }}</span></label>
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C">Email<input value="{{ ctEmail }}" onChange="{{ onCtEmail }}" type="email" autocomplete="email" placeholder="you@example.com" style="all:unset;box-sizing:border-box;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdEmail }};font-size:15px;font-weight:500;color:#0B0D12;transition:border-color .2s ease"><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrEmail }}</span></label>
-          </div>
-          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#4A505C"><span style="display:flex;justify-content:space-between;gap:8px">Message<span style="font-family:'JetBrains Mono';font-weight:400;color:{{ ctCountFg }}">{{ ctCount }}</span></span><textarea value="{{ ctMsg }}" onChange="{{ onCtMsg }}" rows="4" placeholder="How can we help? Include your registration ID if you have one." style="all:unset;box-sizing:border-box;min-height:112px;padding:13px 15px;border-radius:14px;background:#F3F5F9;border:1.5px solid {{ ctBdMsg }};font-size:15px;font-weight:500;line-height:1.5;color:#0B0D12;white-space:pre-wrap;transition:border-color .2s ease"></textarea><span role="alert" style="font-weight:500;color:#D93D42">{{ ctErrMsg }}</span></label>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <span style="font-size:12.5px;color:#5B6270;max-width:280px;line-height:1.4">{{ ctRouteLine }}</span>
-            <button type="submit" class="gms-liquid gms-liquid--blue" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">Send to the desk<span style="font-family:'Material Symbols Rounded';font-size:19px">send</span></button>
-          </div>
-        </form>
-        <div data-ct-plane aria-hidden="true">
-          {{ ctTrailEl }}
-          <svg class="ct-planesvg" viewBox="0 0 48 36" width="48" height="36"><path d="M2 17 L46 2 L30 34 L22 21 Z" fill="#FFFFFF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path><path d="M46 2 L22 21 L20 31 L26 24" fill="#DCE4FF" stroke="#14161C" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+      <div class="hd-chat" role="region" aria-label="Help desk chat with COCO">
+        <div class="hd-head">
+          <img src="assets/bot-still.webp" alt="" width="44" height="44" decoding="async" loading="lazy">
+          <span style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0"><b style="font-size:16px">COCO</b><small style="display:flex;align-items:center;gap:6px;font-size:12px;color:#5B6270"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463"></span>Help desk assistant · hands you to a person</small></span>
+          <button type="button" onClick="{{ ctRestart }}" class="hd-ghost">Start over</button>
         </div>
-        <div data-ct-ticket role="status" aria-live="polite">
-          <div data-ticket style="--nx:72px;display:flex;align-items:stretch;border-radius:20px;background:linear-gradient(160deg,#FFFFFF 0%,#F4F7FF 100%);color:#0B0D12;filter:drop-shadow(0 30px 50px rgba(0,0,0,.4))">
-            <span style="width:72px;flex:none;display:grid;place-items:center;border-right:1.5px dashed rgba(11,13,18,.16)"><span style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#1FA463;color:#fff;font-family:'Material Symbols Rounded';font-size:24px">check</span></span>
-            <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding:20px 20px 20px 18px">
-              <span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#1C8A53">MESSAGE RECEIVED · {{ ctSentTime }}</span>
-              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:28px;letter-spacing:-.03em;line-height:1">{{ ctRef }}</span>
-              <span style="font-size:13.5px;line-height:1.45;color:#4A505C">Routed to the <b style="color:#0B0D12">{{ ctSentDesk }}</b>. {{ ctSentReply }}. We'll reply to {{ ctSentEmail }}.</span>
-              <button type="button" onClick="{{ ctReset }}" style="all:unset;cursor:pointer;align-self:flex-start;margin-top:6px;display:flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:#0B0D12;color:#fff;font-size:13px;font-weight:600">Send another message<span style="font-family:'Material Symbols Rounded';font-size:17px">arrow_forward</span></button>
-            </span>
-          </div>
-        </div>
-        <span data-ink-x aria-hidden="true" style="position:absolute;left:-5%;right:-5%;bottom:6px;height:30px;border:1.5px solid rgba(143,166,255,.55);border-radius:14px 14px 6px 6px;background:rgba(143,166,255,.05)"></span>
-        <span data-ink-drop aria-hidden="true" style="position:absolute;right:9%;bottom:36px;width:28px;height:15px;border:1.5px solid rgba(143,166,255,.7);border-bottom:0;border-radius:14px 14px 0 0;box-sizing:border-box"></span>
+        {{ ctThread }}
+        {{ ctComposer }}
       </div>
     </div>
   </section>
@@ -1513,6 +1480,10 @@ const CONTACT_TOPICS=[['registration','Registration','how_to_reg','Registration 
 ['volunteer','Volunteering','volunteer_activism','Volunteer programme','volunteers@gms.example',24],
 ['technical','Technical & results','sports_score','Technical & results desk','results@gms.example',12],
 ['general','General','forum','General enquiries','hello@gms.example',24]];
+// the follow-up COCO asks once you've picked a topic
+const CONTACT_ISSUES={registration:['Haven\'t started yet','Stuck on documents','Change my details','Something else'],accreditation:['Card not received','Wrong details on my card','Access to a zone','Something else'],
+  media:['Media accreditation','Interview request','Footage & photos','Something else'],volunteer:['Apply to volunteer','My shift or role','Training','Something else'],
+  technical:['Score or ranking query','Results correction','Equipment check','Something else'],general:['Travel & venue','Spectators & tickets','Accessibility support','Something else']};
 const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -1534,7 +1505,7 @@ class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
     day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
-    contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
+    contact:{step:'topic',topic:null,issue:'',name:'',email:'',msg:'',errors:{},typing:false,ref:'',sent:null},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m COCO! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
     chan:'finals'};
   refs={};
@@ -1706,40 +1677,61 @@ class Component extends DCLogic {
       schedule:onField(F.id).slice().sort((a,b)=>a.time.localeCompare(b.time)).map(v=>({...v,tag:v.live?'NOW':v.state==='next'?v.time:'FINAL',on:v.live?'1':'0',score:v.state==='next'?'':v.sa+'–'+v.sb,open:open(v)})),
       rail:views.filter(v=>v.live&&v.field!==F.id).map(v=>({...v,open:open(v)})),railAny:views.some(v=>v.live&&v.field!==F.id),
       scorecard:open(now)}};}
-  // Contact help desk: topic routing, live desk status on IST, validation, paper-plane send, reference ticket, admin enquiries
-  contactVals(){const s=this.state,c=s.contact,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
-    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),h=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&h>=9&&h<19;
-    const next=open?'':(d>=1&&d<=6&&h<9?'opens today 09:00 IST':(d>=1&&d<=5?'opens tomorrow 09:00 IST':'opens Monday 09:00 IST'));
-    const clock=pad(ist.getHours())+':'+pad(ist.getMinutes());
+  // Help desk: COCO asks for the topic and the issue (tap to answer), takes a short message and a reply address,
+  // shows the summary it will pass on, then hands over to the human desk with a reference (it also lands in the admin enquiries list)
+  contactVals(){const s=this.state,c=s.contact,h=React.createElement,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
+    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),hr=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&hr>=9&&hr<19;
+    const next=open?'':(d>=1&&d<=6&&hr<9?'opens today 09:00 IST':(d>=1&&d<=5?'opens tomorrow 09:00 IST':'opens Monday 09:00 IST'));
+    const clock=pad(ist.getHours())+':'+pad(ist.getMinutes()),eta=t=>'Usually replies within '+t[5]+' hours'+(open?'':' of opening');
+    const put=(patch,typing)=>{this.setState(x=>({contact:{...x.contact,...patch,typing:!!typing&&!REDUCED}}));
+      if(typing&&!REDUCED){clearTimeout(this.ctT1);this.ctT1=setTimeout(()=>this.setState(x=>({contact:{...x.contact,typing:false}})),700);}};
     const set=k=>e=>{const v=e.target.value;this.setState(x=>({contact:{...x.contact,[k]:v,errors:{...(x.contact.errors||{}),[k]:''}}}));};
-    const bd=k=>err[k]?'#E5484D':'transparent';
-    return {contactRef:this.ref('contact'),toContact:()=>this.scrollTo('contact'),
-      ctDot:open?'#1FA463':'#E3A008',ctDotRing:open?'rgba(31,164,99,.22)':'rgba(227,160,8,.22)',
-      ctStatus:open?'DESK OPEN · '+clock+' IST':'DESK CLOSED · '+next.toUpperCase(),ctStatusSub:'Mon–Sat · 09:00–19:00 IST'+(open?' · replies today':' · your message will be queued'),
-      ctTopics:CONTACT_TOPICS.map(t=>{const on=c.topic===t[0];return {label:t[1],icon:t[2],on:on?'true':'false',bg:on?'#2F5BFF':'#F1F3F7',fg:on?'#fff':'#0B0D12',sh:on?'0 8px 20px rgba(47,91,255,.32)':'none',
-        pick:()=>this.setState(x=>({contact:{...x.contact,topic:t[0],errors:{...(x.contact.errors||{}),topic:''}}}))};}),
-      ctHasTeam:!!T,ctNoTeam:!T,ctTeam:T?{name:T[3],email:T[4],icon:T[2],reply:'Typically replies within '+T[5]+' hours'+(open?'':' of the desk opening')}:{name:'',email:'',icon:'',reply:''},
-      ctRouteLine:T?'Goes to '+T[3]+' · '+T[4]:'Pick a topic and we route you to the right team.',
-      ctName:c.name,ctEmail:c.email,ctMsg:c.msg,onCtName:set('name'),onCtEmail:set('email'),onCtMsg:set('msg'),
-      ctErrTopic:err.topic||'',ctErrName:err.name||'',ctErrEmail:err.email||'',ctErrMsg:err.msg||'',ctBdName:bd('name'),ctBdEmail:bd('email'),ctBdMsg:bd('msg'),
-      ctCount:c.msg.length+' / 600',ctCountFg:c.msg.length>600?'#D93D42':'#8A909C',
-      ctPhase:c.phase,ctRef:c.ref||'',ctSentDesk:sent.desk||'',ctSentEmail:sent.email||'',ctSentTime:sent.time||'',ctSentReply:sent.reply||'',
-      ctTrail:(typeof window!=='undefined'&&window.innerWidth<=600)?'M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300':'M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360',
-      ctTrailEl:React.createElement('svg',{className:'ct-trail',width:1,height:1,style:{position:'absolute',left:0,top:0,overflow:'visible'}},React.createElement('path',{d:(typeof window!=='undefined'&&window.innerWidth<=600)?'M0 0 C 60 -30 120 -10 170 -90 S 260 -220 360 -300':'M0 0 C 90 -40 180 -10 260 -120 S 430 -300 620 -360',fill:'none',stroke:'#8FA6FF',strokeWidth:2,strokeLinecap:'round',strokeDasharray:'0.1 9'})),
-      ctAskBot:()=>this.setState({chatOpen:true}),
-      ctReset:()=>{clearTimeout(this.ctT1);clearTimeout(this.ctT2);this.setState(x=>({contact:{...x.contact,msg:'',errors:{},phase:'form'}}));},
-      ctSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
-        if(!x.topic)er.topic='Pick a topic so we can route you to the right desk.';
+    const step=c.step,at=k=>['topic','issue','details','confirm','done'].indexOf(step)>=['topic','issue','details','confirm','done'].indexOf(k);
+    // the conversation so far, rebuilt from the answers; while COCO is "typing" its newest line is held back
+    const bot=(k,txt)=>h('div',{key:k,className:'hd-msg hd-msg--bot'},txt),me=(k,txt,sub)=>h('div',{key:k,className:'hd-msg hd-msg--me'},txt,sub?h('small',null,sub):null);
+    const lines=[bot('b0','Hi, I\'m COCO from the help desk. What do you need help with?')];
+    if(T&&at('issue')){lines.push(me('m1',T[1]),bot('b1',T[1]+' it is. What\'s it about?'));}
+    if(T&&at('details')&&c.issue){lines.push(me('m2',c.issue),bot('b2','Got it. Tell me a little more, and where the '+T[3]+' should reply.'));}
+    if(T&&at('confirm')){const msg=c.msg.trim();lines.push(me('m3',msg,c.name.trim()+' · '+c.email.trim()),bot('b3','Here\'s what I\'ll pass to the '+T[3]+':'),
+      h('div',{key:'sum',className:'hd-sum'},[['DESK',T[3]],['ABOUT',T[1]+' · '+c.issue],['REPLY TO',c.email.trim()],['TIMING',eta(T)]].map(([k,v])=>h('span',{key:k},h('em',null,k),h('span',null,v)))));}
+    if(T&&step==='done'){lines.push(me('m4','Send it'),bot('b4','Done. A person on the '+(sent.desk||T[3])+' now has your message.'),
+      h('div',{key:'tk',className:'hd-ticket','data-ticket':'',role:'status'},
+        h('span',{style:{width:66,flex:'none',display:'grid',placeItems:'center',borderRight:'1.5px dashed rgba(11,13,18,.16)'}},h('span',{style:{width:38,height:38,borderRadius:'50%',display:'grid',placeItems:'center',background:'#1FA463',color:'#fff',fontFamily:"'Material Symbols Rounded'",fontSize:22}},'check')),
+        h('span',{style:{flex:1,minWidth:0,display:'flex',flexDirection:'column',gap:5,padding:'16px 16px 16px 14px'}},
+          h('span',{style:{fontFamily:"'JetBrains Mono'",fontSize:10.5,letterSpacing:'.14em',color:'#1C8A53'}},'REFERENCE · '+(sent.time||'')),
+          h('span',{style:{fontFamily:"'Bricolage Grotesque'",fontWeight:700,fontSize:26,letterSpacing:'-.03em',lineHeight:1}},c.ref),
+          h('span',{style:{fontSize:13,lineHeight:1.45,color:'#4A505C'}},(sent.reply||'')+'. Quote this reference if you follow up.'))));}
+    const shown=c.typing?lines.slice(0,lines.map(l=>/^b|^sum|^tk/.test(l.key)).lastIndexOf(true)):lines;
+    const thread=h('div',{className:'hd-thread','aria-live':'polite',ref:el=>{if(el)requestAnimationFrame(()=>el.scrollTo({top:el.scrollHeight,behavior:REDUCED?'auto':'smooth'}));}},
+      shown,c.typing?h('div',{key:'typing',className:'hd-typing','aria-label':'COCO is typing'},h('i'),h('i'),h('i')):null);
+    // what you can answer right now
+    const chip=(k,label,on,icon,quiet)=>h('button',{key:k,type:'button',className:'hd-chip'+(quiet?' hd-chip--quiet':''),onClick:on},icon?h('span',{'aria-hidden':'true'},icon):null,label);
+    const goBtn=(label,on,type)=>h('button',{type:type||'button',onClick:on,className:'hd-go gms-liquid gms-liquid--water',style:{all:'unset',cursor:'pointer',display:'flex',alignItems:'center',gap:8,padding:'13px 20px',borderRadius:999,fontWeight:600,fontSize:14.5}},label);
+    let comp=null;
+    if(c.typing)comp=null;
+    else if(step==='topic')comp=h('div',{className:'hd-chips',role:'group','aria-label':'Pick a topic'},CONTACT_TOPICS.map(t=>chip(t[0],t[1],()=>put({topic:t[0],issue:'',step:'issue',errors:{}},1),t[2])));
+    else if(step==='issue'&&T)comp=h('div',{className:'hd-chips',role:'group','aria-label':'What is it about?'},(CONTACT_ISSUES[T[0]]||[]).map(i=>chip(i,i,()=>put({issue:i,step:'details'},1))),chip('back','Different topic',()=>put({step:'topic',topic:null,issue:''}),null,1));
+    else if(step==='details'&&T)comp=h('form',{className:'hd-form',noValidate:true,'aria-label':'Your message for the '+T[3],onSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
+        if(x.msg.trim().length<10)er.msg='Add a little more detail (at least 10 characters).';else if(x.msg.length>600)er.msg='Please keep it under 600 characters.';
         if(x.name.trim().length<2)er.name='Please enter your name.';
         if(!/^\S+@\S+\.\S+$/.test(x.email.trim()))er.email='Enter a valid email so the desk can reply.';
-        if(x.msg.trim().length<20)er.msg='Tell us a little more (at least 20 characters).';else if(x.msg.length>600)er.msg='Please keep it under 600 characters.';
-        if(Object.keys(er).length){this.setState({contact:{...x,errors:er}});return;}
-        const TT=CONTACT_TOPICS.find(t=>t[0]===x.topic),ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length);
-        const enq={ref,name:x.name.trim(),email:x.email.trim(),topic:TT[1],desk:TT[3],time:clock+' IST',reply:'Expect a reply within '+TT[5]+' hours'+(open?'':' of the desk opening'),msg:x.msg.trim(),status:'New'};
-        this.setState(st=>({enquiries:[enq,...(st.enquiries||[])],contact:{...x,errors:{},ref,sent:enq,phase:REDUCED?'done':'fold'}}));
-        if(!REDUCED){clearTimeout(this.ctT1);clearTimeout(this.ctT2);
-          this.ctT1=setTimeout(()=>this.setState(st=>({contact:{...st.contact,phase:'fly'}})),450);
-          this.ctT2=setTimeout(()=>this.setState(st=>({contact:{...st.contact,phase:'done'}})),1700);}},
+        if(Object.keys(er).length){this.setState({contact:{...x,errors:er}});return;}put({step:'confirm',errors:{}},1);}},
+      h('textarea',{value:c.msg,onChange:set('msg'),rows:3,placeholder:'Your question, in a line or two',maxLength:700,'aria-label':'Your question','aria-invalid':String(!!err.msg)}),
+      h('div',{className:'row'},h('input',{value:c.name,onChange:set('name'),autoComplete:'name',placeholder:'Your name','aria-label':'Your name','aria-invalid':String(!!err.name)}),
+        h('input',{value:c.email,onChange:set('email'),type:'email',autoComplete:'email',placeholder:'Email for the reply','aria-label':'Email for the reply','aria-invalid':String(!!err.email)})),
+      (err.msg||err.name||err.email)?h('span',{className:'hd-err',role:'alert'},err.msg||err.name||err.email):null,
+      h('div',{className:'hd-actions'},h('span',{style:{fontSize:12.5,color:c.msg.length>600?'#D93D42':'#8A909C',fontFamily:"'JetBrains Mono'"}},c.msg.length+' / 600'),goBtn('Continue',null,'submit')));
+    else if(step==='confirm'&&T)comp=h('div',{className:'hd-actions'},chip('edit','Edit my message',()=>put({step:'details'}),null,1),
+      goBtn('Send to the '+T[3],()=>{const x=this.state.contact,ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length);
+        const enq={ref,name:x.name.trim(),email:x.email.trim(),topic:T[1]+' · '+x.issue,desk:T[3],time:clock+' IST',reply:eta(T),msg:x.msg.trim(),status:'New'};
+        this.setState(st=>({enquiries:[enq,...(st.enquiries||[])]}));put({step:'done',ref,sent:enq},1);}));
+    else if(step==='done')comp=h('div',{className:'hd-actions'},chip('ask','Ask COCO something else',()=>this.setState({chatOpen:true}),null,1),goBtn('Start a new request',()=>put({step:'topic',topic:null,issue:'',msg:'',errors:{},ref:'',sent:null})));
+    return {contactRef:this.ref('contact'),toContact:()=>this.scrollTo('contact'),
+      ctDot:open?'#1FA463':'#E3A008',ctDotRing:open?'rgba(31,164,99,.18)':'rgba(227,160,8,.2)',
+      ctStatus:open?'DESKS OPEN · '+clock+' IST':'DESKS CLOSED · '+next.toUpperCase(),ctStatusSub:'Mon–Sat · 09:00–19:00 IST'+(open?' · replies today':' · COCO queues your message'),
+      ctDesks:CONTACT_TOPICS.map(t=>({name:t[3],icon:t[2],reply:'~'+t[5]+' h reply',on:c.topic===t[0]&&step!=='topic'?'1':'0'})),
+      ctThread:thread,ctComposer:h('div',{className:'hd-compose'},comp||h('span',{style:{fontSize:13,color:'#8A909C'}},'COCO is typing…')),
+      ctRestart:()=>{clearTimeout(this.ctT1);put({step:'topic',topic:null,issue:'',msg:'',errors:{},ref:'',sent:null});},
       enqCount:String((s.enquiries||[]).length),hasEnq:(s.enquiries||[]).length>0,noEnq:!(s.enquiries||[]).length,
       adminEnq:(s.enquiries||[]).map(q=>({...q,snip:q.msg.length>90?q.msg.slice(0,90)+'…':q.msg}))};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.mp4');}
