@@ -488,6 +488,34 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .vz-chat{transform-origin:calc(100% - 46px) calc(100% + 62px);animation:gmsZoop .62s cubic-bezier(.2,1.25,.35,1) both}
 @keyframes gmsZoop{0%{opacity:0;transform:scale(.03);filter:brightness(1.8) blur(8px)}55%{opacity:1;filter:none}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.vz-glow{animation:none}.vz-chat{animation:none}}
+/* Compact button system: every button about 40px tall (36px on phones, 34px in the header) with smaller type.
+   Liquid buttons keep one royal-blue liquid, now a thinner layer in the lower part of the glass, with a bright top edge,
+   a soft inner glow and a light sheen on hover; the quiet secondary buttons stay clean outline glass */
+.gms-liquid{box-sizing:border-box!important;min-height:40px!important;padding:0 18px!important;display:inline-flex!important;align-items:center!important;justify-content:center;gap:7px!important;font-size:13.5px!important;font-weight:600!important;letter-spacing:.005em;line-height:1!important;white-space:nowrap!important}
+@media (max-width:420px){[data-r=nav] .gms-liquid{padding:0 11px!important;font-size:12.5px!important}}
+.gms-liquid [style*="Material Symbols"]{font-size:17px!important}
+.gms-liquid--water,.gms-liquid--blue{background:linear-gradient(180deg,rgba(104,138,255,.94) 0%,rgba(62,102,255,.94) 100%)!important;color:#fff!important;border:1px solid rgba(255,255,255,.28)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -8px 16px rgba(14,30,120,.22),0 8px 20px rgba(47,91,255,.3)!important;text-shadow:0 1px 1px rgba(10,30,120,.35)}
+.gms-liquid--water::after,.gms-liquid--blue::after{top:30%!important}
+.gms-liquid--clear,.gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(15,20,40,.08)!important}
+.gms-liquid::before{content:''!important;position:absolute;top:0!important;left:0!important;width:100%!important;height:100%!important;z-index:-1;pointer-events:none;
+ background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.34) 50%,transparent 70%)!important;background-size:250% 100%!important;background-repeat:no-repeat!important;background-position:130% 0!important;
+ animation:none!important;transform:none!important;translate:none!important;transition:background-position .9s var(--gms-ease)!important}
+.gms-liquid:hover::before,.gms-liquid:focus-visible::before{background-position:-30% 0!important}
+.gms-liquid--water:hover,.gms-liquid--blue:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -8px 16px rgba(14,30,120,.2),0 12px 28px rgba(47,91,255,.42)!important}
+.gms-glow{height:40px;padding:0 4px 0 17px;gap:12px;font-size:13.5px;box-shadow:0 8px 22px rgba(47,91,255,.32),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -6px 12px rgba(14,30,120,.22)}
+.gms-glow>i{width:32px;height:32px}
+.gms-cta{height:38px;font-size:13px;padding:0 4px 0 16px}.gms-cta>i{width:30px;height:30px}
+[data-r=nav] .gms-liquid{min-height:34px!important;padding:0 14px!important;font-size:13px!important}
+@media (min-width:901px){
+ [data-r=nav]{top:12px!important;padding:5px 5px 5px 14px!important;gap:12px!important}
+ [data-r=nav]>button:first-child>span:first-child{width:28px!important;height:28px!important}
+ [data-r=nav]>button:first-child>span:first-child>span{width:17px!important;height:17px!important}
+ [data-r=nav]>button:first-child>span:last-child{font-size:16px!important}
+ [data-r=navlinks] button{padding:7px 12px!important;font-size:13.5px!important}
+ [data-r=backwrap]{top:66px}
+}
+@media (max-width:600px){.gms-liquid{min-height:36px!important;padding:0 15px!important;font-size:13px!important}.gms-glow{height:38px;font-size:13px}.gms-glow>i{width:30px;height:30px}.rc-go{height:42px}}
 /* Event centre (Live Scores page) */
 .ec-cap{display:block;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#8A909C;margin-bottom:6px}
 .ec-per{display:grid;grid-template-columns:64px 1fr 1fr 84px;gap:8px;align-items:center;padding:11px 16px;border-top:1px solid #F0F2F6;transition:background .5s var(--gms-ease)}
@@ -1145,8 +1173,8 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         </div>
         <span style="font-size:13px;color:#E5484D;min-height:16px">{{ regError }}</span>
         <div style="display:flex;gap:10px;justify-content:space-between">
-          <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;padding:15px 22px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-weight:600;font-size:14px">Cancel</button>
-          <button onClick="{{ submitReg }}" style="all:unset;cursor:pointer;padding:15px 26px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:14px">Submit registration</button>
+          <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-weight:600;font-size:14px">Cancel</button>
+          <button onClick="{{ submitReg }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:14px">Submit registration</button>
         </div>
       </div>
     </sc-if>
@@ -1156,7 +1184,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.03em">Registration submitted</h2>
         <span style="font-size:15px;color:#4A505C;max-width:400px">Your application is with the verification team. Log in with this email to track it.</span>
         <span style="font-family:'JetBrains Mono';font-size:17px;padding:12px 18px;border-radius:14px;background:rgba(255,255,255,.85)">{{ lastRegId }}</span>
-        <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:15px 26px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px">Go to login</button>
+        <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px">Go to login</button>
       </div>
     </sc-if>
   </div>
