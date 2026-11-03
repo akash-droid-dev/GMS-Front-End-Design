@@ -18,7 +18,7 @@
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
 var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.jpg?v=ms1';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
-})();
+if(!lite)addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?500:0);});})();
 </script>
 <style>
 /* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
@@ -351,34 +351,34 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .bt-head p{margin:0;max-width:360px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.66)}
 .bt-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vh,16px);
  grid-template-areas:"reg reg reg reg reg ver ver ver ver acc acc acc" "reg reg reg reg reg cms cms cms cms cms cms cms" "sta sta sta sta tra tra tra tra cat cat cat cat"}
-.bt-tile{appearance:none;font:inherit;color:#0B0D12;text-align:left;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:0;padding:clamp(16px,2.4vh,24px);border-radius:24px;
- background:rgba(255,255,255,.93);color:#0B0D12;border:1px solid rgba(255,255,255,.7);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 24px 60px rgba(0,0,0,.32),inset 0 1px 0 #fff;
+.bt-tile{appearance:none;font:inherit;color:#fff;text-align:left;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:0;padding:clamp(16px,2.4vh,24px);border-radius:24px;
+ background:linear-gradient(160deg,rgba(30,36,54,.62),rgba(14,18,28,.5));color:#fff;border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1);
  transition:border-color .5s var(--gms-ease),background .5s var(--gms-ease),box-shadow .5s var(--gms-ease)}
-.bt-tile::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(120% 80% at 0% 0%,rgba(47,91,255,.10),rgba(47,91,255,0) 55%);opacity:0;transition:opacity .6s var(--gms-ease)}
-.bt-tile:hover,.bt-tile[data-open=true]{border-color:#2F5BFF;background:#fff;box-shadow:0 30px 70px rgba(0,0,0,.38),0 0 0 4px rgba(47,91,255,.18)}
+.bt-tile::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(120% 80% at 0% 0%,rgba(91,132,255,.22),rgba(91,132,255,0) 55%);opacity:0;transition:opacity .6s var(--gms-ease)}
+.bt-tile:hover,.bt-tile[data-open=true]{border-color:rgba(143,166,255,.6);background:linear-gradient(160deg,rgba(36,44,68,.72),rgba(18,22,34,.6));box-shadow:0 30px 70px rgba(0,0,0,.42),0 0 0 4px rgba(47,91,255,.16)}
 .bt-tile:hover::after,.bt-tile[data-open=true]::after{opacity:1}
 .bt-tile:focus-visible{outline:2px solid #8FA6FF;outline-offset:3px}
 .bt-top{display:flex;justify-content:space-between;align-items:center}
-.bt-ico{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#EEF2FF;border:1px solid #E1E7FF;font-family:'Material Symbols Rounded';font-size:21px;color:#2F5BFF;transition:background .5s,color .5s}
+.bt-ico{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:rgba(47,91,255,.16);border:1px solid rgba(143,166,255,.28);font-family:'Material Symbols Rounded';font-size:21px;color:#AFC0FF;transition:background .5s,color .5s}
 .bt-tile:hover .bt-ico,.bt-tile[data-open=true] .bt-ico{background:#2F5BFF;color:#fff;border-color:#2F5BFF}
-.bt-num{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#8A909C}
+.bt-num{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:rgba(255,255,255,.42)}
 .bt-body{position:relative;display:grid;gap:6px}
 .bt-title{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(18px,2.6vh,24px);letter-spacing:-.02em;line-height:1.1}
 .bt-front,.bt-back{grid-row:2;grid-column:1;transition:opacity .45s var(--gms-ease),transform .55s var(--gms-ease)}
-.bt-front{font-size:clamp(12.5px,1.7vh,14.5px);line-height:1.45;color:#4A505C}
+.bt-front{font-size:clamp(12.5px,1.7vh,14.5px);line-height:1.45;color:rgba(255,255,255,.66)}
 .bt-back{display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(10px);pointer-events:none}
 .bt-tile:hover .bt-front,.bt-tile[data-open=true] .bt-front{opacity:0;transform:translateY(-8px)}
 .bt-tile:hover .bt-back,.bt-tile[data-open=true] .bt-back{opacity:1;transform:none}
-.bt-team{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#2F5BFF}
-.bt-items{display:flex;flex-wrap:wrap;gap:6px}.bt-items span{padding:5px 10px;border-radius:999px;background:#F1F3F7;border:1px solid #E6EAF0;font-size:12px;color:#0B0D12}
+.bt-team{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#9FB3FF}
+.bt-items{display:flex;flex-wrap:wrap;gap:6px}.bt-items span{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.88)}
 @media (max-width:900px){
  [data-r=bt-section]{height:auto}[data-r=bt-sticky]{position:relative;height:auto}
  .bt-inner{padding:84px 16px 56px;gap:22px}.bt-media{transform:none}
  .bt-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-template-areas:"reg reg" "ver acc" "cms cms" "sta tra" "cat cat"}
  .bt-tile{min-height:0;border-radius:20px;padding:14px 14px 16px;gap:14px}.bt-head p{font-size:14px}.bt-ico{width:34px;height:34px;font-size:19px;border-radius:11px}.bt-title{font-size:18px}
- .bt-back{display:none}.bt-tile[data-open=true] .bt-back{display:flex}.bt-tile[data-open=true] .bt-front{display:none}.bt-tile:hover .bt-front{opacity:1;transform:none}.bt-items{flex-direction:column;gap:5px}.bt-items span{padding:0;background:none;border:0;font-size:12.5px;line-height:1.35}.bt-items span::before{content:'· ';color:#2F5BFF}
+ .bt-back{display:none}.bt-tile[data-open=true] .bt-back{display:flex}.bt-tile[data-open=true] .bt-front{display:none}.bt-tile:hover .bt-front{opacity:1;transform:none}.bt-items{flex-direction:column;gap:5px}.bt-items span{padding:0;background:none;border:0;font-size:12.5px;line-height:1.35}.bt-items span::before{content:'· ';color:#8FA6FF}
 }
-.gms-lite .bt-tile{background:#fff!important}
+.gms-lite .bt-tile{background:rgba(20,24,38,.86)!important}
 /* Finale: a window opens into the full-screen film, the countdown flips in, then the headline and the way in */
 .fn-win{position:absolute;inset:0;overflow:hidden;background:#0B0D12;clip-path:inset(20vh 22vw round 36px);will-change:clip-path;color:#fff}
 .fn-vid{position:absolute;inset:0;transform:scale(1.18);will-change:transform}.fn-vid video{object-position:50% 40%}
@@ -439,8 +439,8 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-panel][data-compact="1"] [data-goal-ev]::before{display:none}
 [data-goal-panel][data-compact="1"] [data-goal-ev]:last-child:nth-child(odd){grid-column:auto!important}
 .bt-grid{position:relative}
-.bt-core{position:absolute;left:50%;top:50%;z-index:4;width:min(460px,70%);padding:34px 30px;margin:0;box-sizing:border-box;border-radius:28px;background:#fff;color:#0B0D12;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);box-shadow:0 30px 90px rgba(47,91,255,.35),0 0 0 1px rgba(255,255,255,.6);will-change:transform,opacity}
-.bt-core b{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.04em;line-height:1}.bt-core b+b{color:#2F5BFF}
+.bt-core{position:absolute;left:50%;top:50%;z-index:4;width:min(460px,70%);padding:34px 30px;margin:0;box-sizing:border-box;border-radius:28px;background:linear-gradient(160deg,rgba(36,44,68,.85),rgba(14,18,28,.8));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(143,166,255,.45);color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);box-shadow:0 30px 90px rgba(47,91,255,.35),0 0 0 1px rgba(255,255,255,.6);will-change:transform,opacity}
+.bt-core b{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.04em;line-height:1}.bt-core b+b{color:#8FA6FF}
 .bt-core small{margin-top:10px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;color:#8A909C}
 .bt-core i{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle,#8FA6FF 0%,#2F5BFF 45%,rgba(47,91,255,0) 72%);opacity:0}
 .bt-dim{position:absolute;inset:0;z-index:5;background:#06080D;opacity:0;pointer-events:none}
@@ -458,20 +458,21 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 @keyframes gmsSheen{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
 @keyframes gmsNudge{0%,70%,100%{transform:none}80%{transform:translateX(4px)}90%{transform:translateX(-1px)}}
 @media (prefers-reduced-motion:reduce){.gms-glow::before,.gms-glow::after,.gms-glow>i{animation:none}}
-/* Roles on phones: a sideways rail of role cards (native scrolling everywhere) */
+/* Roles on phones: the section holds while the page scroll slides the role cards from left to right, then releases */
 .rc-wrap{display:none}
 @media (max-width:760px){
- [data-r=roles-pin]{padding:84px 16px 64px!important}
- [data-r=roles-grid]{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+ [data-r=roles-section]{height:calc(100svh + 11 * 46svh)}
+ [data-r=roles-pin]{position:sticky;top:0;height:100svh;box-sizing:border-box;padding:76px 16px 12px!important;display:flex;flex-direction:column}
+ [data-r=roles-grid]{flex:1;min-height:0;width:100%;grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+ [data-r=roles-left]{min-height:0}
  [data-r=roles-window],[data-r=roles-preview],[data-r=roles-progress]{display:none!important}
- [data-r=roles-left] h2{font-size:28px!important}
- [data-r=roles-p]{font-size:14px!important}
- .rc-wrap{display:block;margin:20px -16px 0}
- .rc-rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:6px 16px 20px;scroll-padding:0 16px;overscroll-behavior-x:contain}
- .rc-rail::-webkit-scrollbar{display:none}
- .rc-card{flex:0 0 84%;scroll-snap-align:start;scroll-snap-stop:always;border-radius:26px;background:#fff;border:1px solid #E8EBF0;box-shadow:0 24px 50px rgba(15,20,40,.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease)}
- .rc-card[data-on="0"]{transform:scale(.96);box-shadow:0 10px 24px rgba(15,20,40,.05)}
- .rc-art{position:relative;aspect-ratio:4/4.4;max-height:44vh;width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
+ [data-r=roles-left] h2{font-size:26px!important;margin-top:8px!important}
+ [data-r=roles-p]{font-size:13.5px!important;margin-top:8px!important}
+ .rc-wrap{display:flex;flex-direction:column;gap:10px;margin:14px -16px 0;overflow:hidden}
+ .rc-rail{display:flex;gap:12px;padding:4px 16px 8px;will-change:transform}
+ .rc-card{flex:0 0 84%;border-radius:26px;background:#fff;border:1px solid #E8EBF0;box-shadow:0 24px 50px rgba(15,20,40,.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
+ .rc-card[data-on="0"]{transform:scale(.95);opacity:.6;box-shadow:0 10px 24px rgba(15,20,40,.05)}
+ .rc-art{position:relative;height:max(200px,calc(100svh - 470px));width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
  .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C}
  .rc-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
  .rc-group{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em}
@@ -480,12 +481,10 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  .rc-go{display:flex;width:100%;font-size:14px}
  .rc-dots{display:flex;justify-content:center;gap:6px}.rc-dots i{width:6px;height:6px;border-radius:3px;background:#D5D9E1;transition:width .45s var(--gms-ease),background .45s}.rc-dots i[data-on="1"]{width:22px;background:#2F5BFF}
 }
-/* Vision: the waving loop sits on its still frame; the reactor glows, flares on open, and the chat grows out of it */
-[data-r=bot] .vz-anim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.vz-glow{position:absolute;left:50%;top:60%;width:34px;height:34px;margin:-17px 0 0 -14px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,236,224,.9) 0%,rgba(255,170,130,.55) 35%,rgba(255,140,90,0) 70%);mix-blend-mode:screen;animation:gmsReactor 2.4s ease-in-out infinite}
+/* Vision: the reactor flares on open and the chat grows out of it */
+.vz-glow{position:absolute;left:50%;top:60%;width:34px;height:34px;margin:-17px 0 0 -14px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,236,224,.95) 0%,rgba(255,170,130,.6) 35%,rgba(255,140,90,0) 70%);mix-blend-mode:screen;opacity:0}
 .vz-glow[data-zoop="1"]{animation:gmsReactorFlare .9s var(--gms-ease) both}
-@keyframes gmsReactor{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:.8;transform:scale(1.15)}}
-@keyframes gmsReactorFlare{0%{opacity:.6;transform:scale(1)}35%{opacity:1;transform:scale(3.2)}100%{opacity:.4;transform:scale(1)}}
+@keyframes gmsReactorFlare{0%{opacity:0;transform:scale(.6)}30%{opacity:1;transform:scale(3.4)}100%{opacity:0;transform:scale(1)}}
 .vz-chat{transform-origin:calc(100% - 46px) calc(100% + 62px);animation:gmsZoop .62s cubic-bezier(.2,1.25,.35,1) both}
 @keyframes gmsZoop{0%{opacity:0;transform:scale(.03);filter:brightness(1.8) blur(8px)}55%{opacity:1;filter:none}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.vz-glow{animation:none}.vz-chat{animation:none}}
@@ -763,7 +762,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0"></div>
   </div>
-<div aria-hidden="true" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;pointer-events:none"><img src="assets/vision-still.webp" alt="" width="120" height="120" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-family:'Instrument Sans',system-ui,sans-serif;font-size:12px;font-weight:600;white-space:nowrap">Ask Vision</span></div>
+<div aria-hidden="true" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;pointer-events:none"><img src="assets/bot-still.webp" alt="" width="120" height="120" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-family:'Instrument Sans',system-ui,sans-serif;font-size:12px;font-weight:600;white-space:nowrap">Ask Vision</span></div>
 </div>
 <script>window.__gmsShellT0=performance.now();document.documentElement.classList.add('gms-shelled');(function(){try{var d=new Date(Date.now()+(330+new Date().getTimezoneOffset())*60000),p=function(n){return(n<10?'0':'')+n},e=document.querySelector('[data-shell-clock]');if(e)e.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}catch(x){}})();</script>
 <x-dc>
@@ -1417,9 +1416,13 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </div>
   </sc-if>
   <div data-r="bot" data-zoop="{{ visionZoop }}" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;transition:opacity .25s ease;opacity:{{ botOp }};pointer-events:{{ botPe }}">
-    <img src="assets/vision-still.webp" alt="" width="120" height="120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:{{ botStillOp }};transition:opacity .7s ease .15s">
+    <img src="assets/bot-still.webp" alt="" width="120" height="120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:{{ botStillOp }};transition:opacity .7s ease .15s">
+    <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;pointer-events:none">
+        <x-import component-from-global-scope="spline-viewer" url="https://prod.spline.design/wMuw2CRsxbceMWK0/scene.splinecode" background="transparent" style="width:100%;height:100%;display:block" hint-size="120px,120px"></x-import>
+      </div>
+    </sc-if>
     <span class="vz-glow" data-zoop="{{ visionZoop }}" aria-hidden="true"></span>
-    {{ visionAnim }}
 
     <button onClick="{{ toggleChat }}" title="Chat with Vision" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
     <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
@@ -1608,7 +1611,7 @@ class Component extends DCLogic {
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{step:'ask',q:'',desk:null,name:'',email:'',msg:'',errors:{},stage:0,ref:'',sent:null,track:''},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m Vision. Ask me anything about the Games or GMS: registration, accreditation, schedules, venues, scores. If I can\'t settle it, I\'ll hand you to the right person.'}],coco:{mode:null,desk:null,name:'',email:'',msg:'',err:{}},cocoTyping:false,btOpen:-1,
-    chan:'stadium',visionOpen:null,visionLive:false};
+    chan:'stadium',visionOpen:false};
   refs={};
   ref(k){return this.refs[k]||(this.refs[k]=React.createRef());}
   componentDidMount(){
@@ -1617,8 +1620,7 @@ class Component extends DCLogic {
     this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});if(/[?&]debug/.test(location.search))window.__gms=this;
     // start the footballer's frames (and Vision's opening animation) quietly once the page has loaded, so the scene is ready long before you reach it
-    const warm=()=>setTimeout(()=>{(window.requestIdleCallback||(f=>setTimeout(f,1)))(()=>{this.kvPreload();this.setState({visionLive:true});
-      fetch('assets/vision-open.webp').then(r=>r.blob()).then(b=>{this.visionBlob=b;}).catch(()=>{});});},LITE?1800:700);
+    const warm=()=>setTimeout(()=>{(window.requestIdleCallback||(f=>setTimeout(f,1)))(()=>{this.kvPreload();});},LITE?1800:700);
     if(document.readyState==='complete')warm();else window.addEventListener('load',warm,{once:true});
     // phones: inside the pinned roles section each swipe moves exactly one role. The page follows the finger a little,
     // then eases onto the next role; a fling from outside stops at the first or last role instead of flying through.
@@ -1687,7 +1689,7 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':'Swipe sideways through the twelve roles. Each card shows who it is for.',
+    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':'Keep scrolling: the twelve roles slide past one by one.',
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
@@ -1700,11 +1702,10 @@ class Component extends DCLogic {
       roleLive:(ROLE_VERB[cur.r.id]||'').toUpperCase(),
       rolePrev:{name:cur.r.name,group:REG_GROUPS[cur.g][0],gc:cur.gc[0],gt:cur.gc[1],who:cur.r.desc,needs:cur.needs.map(t=>({t})),num:pad(sel+1)+' / 12',
         regLabel:'Register as '+cur.r.name,go:()=>this.startReg(cur.r.id)}};}
-  // phones: the twelve roles as a swipe-sideways rail, one card per swipe; the card in view plays its film. Page scrolling stays native.
-  // Vision opens the chat: both hands come to the glowing reactor and spread, the window comes out of it, with a soft whoosh
-  visionOpen(){this.zoop();const b=this.visionBlob,url=b?URL.createObjectURL(b):'assets/vision-open.webp?'+Date.now();if(this.vzUrl&&this.vzUrl.startsWith('blob:'))URL.revokeObjectURL(this.vzUrl);this.vzUrl=url;
-    clearTimeout(this.vzT1);clearTimeout(this.vzT2);this.setState({visionOpen:REDUCED?null:url});
-    this.vzT1=setTimeout(()=>this.setState({chatOpen:true}),REDUCED?0:560);this.vzT2=setTimeout(()=>this.setState({visionOpen:null}),1500);}
+  // phones: the twelve roles on a rail that your normal scrolling slides left to right (rolesGlide), pausing on each role; the card in view plays its film
+  // Vision opens the chat: its reactor flares and the window grows out of it, with a soft whoosh
+  visionOpen(){this.zoop();clearTimeout(this.vzT1);clearTimeout(this.vzT2);this.setState({visionOpen:!REDUCED});
+    this.vzT1=setTimeout(()=>this.setState({chatOpen:true}),REDUCED?0:260);this.vzT2=setTimeout(()=>this.setState({visionOpen:false}),1000);}
   // a short rising whoosh made in the browser (no sound file); respects the phone's silent switch where the browser allows it
   zoop(){if(REDUCED)return;try{if(navigator.audioSession)navigator.audioSession.type='ambient';const C=this.actx||(this.actx=new (window.AudioContext||window.webkitAudioContext)());if(C.state==='suspended')C.resume();
     const t=C.currentTime,o=C.createOscillator(),g=C.createGain(),lp=C.createBiquadFilter();o.type='sine';o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(820,t+0.3);
@@ -1713,9 +1714,8 @@ class Component extends DCLogic {
     const bp=C.createBiquadFilter(),ng=C.createGain();n.buffer=buf;bp.type='bandpass';bp.Q.value=0.8;bp.frequency.setValueAtTime(500,t);bp.frequency.exponentialRampToValueAtTime(3200,t+0.32);ng.gain.setValueAtTime(0.045,t);ng.gain.exponentialRampToValueAtTime(0.0001,t+0.36);
     n.connect(bp);bp.connect(ng);ng.connect(C.destination);n.start(t);}catch(e){}}
   roleRailEl(){const h=React.createElement,sel=this.state.roleSel??0;
-    const onScroll=e=>{const el=e.currentTarget,c=el.firstChild,w=c?c.offsetWidth+12:1,k=Math.max(0,Math.min(11,Math.round(el.scrollLeft/w)));if(k!==(this.state.roleSel??0))this.setState({roleSel:k});};
     return h('div',{className:'rc-wrap'},
-      h('div',{className:'rc-rail',onScroll,role:'list','aria-label':'Ways to take part'},REG_ORDER.map((ri,k)=>{const r=REG[ri],g=REG_GROUP_OF[r.id],on=k===sel?'1':'0';
+      h('div',{className:'rc-rail',role:'list','aria-label':'Ways to take part'},REG_ORDER.map((ri,k)=>{const r=REG[ri],g=REG_GROUP_OF[r.id],on=k===sel?'1':'0';
         return h('article',{key:r.id,className:'rc-card',role:'listitem','data-on':on},
           h('div',{className:'rc-art'},h('span',{'data-cart':'','data-on':on,style:{position:'absolute',inset:0}},h('span',{style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)})),h('span',{className:'rc-num'},pad(k+1)+' / 12')),
           h('div',{className:'rc-copy'},h('span',{className:'rc-group',style:{color:REG_GC[g][0]}},REG_GROUPS[g][0]),h('h3',null,r.name),h('p',null,r.desc),
@@ -1735,13 +1735,14 @@ class Component extends DCLogic {
   // pinned index: smoothed progress -> a role position that holds on each role, then glides to the next
   rolesGlide(){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const W=window.innerWidth,vh=window.innerHeight;
     const ix=sec.querySelector('[data-r=roles-index]'),win=sec.querySelector('[data-r=roles-window]');if(!ix||!win)return;
-    if(W<=760)return;const mob=false;
+    const mob=W<=760;
     const r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;this.rgOn=1;
     const span=r.height-vh,tg=span>0?clamp(-r.top/span):0;this.rgP=this.rgP==null?tg:this.rgP+(tg-this.rgP)*(REDUCED?1:0.085);if(Math.abs(tg-this.rgP)<0.00015)this.rgP=tg;
     const key=this.rgP.toFixed(5)+'|'+W+'|'+vh;if(key===this.rgKey)return;this.rgKey=key;
     const c=Math.min(11.999,this.rgP*12),k=Math.floor(c),fr=c-k,g=k+(k<11?smooth(clamp((fr-0.56)/0.44)):0);
     let R=this.rgRows;if(!R||R.W!==W||R.H!==vh||!R.el[0]||!R.el[0].isConnected){const el=[...ix.querySelectorAll('[data-role-row]')];R=this.rgRows={W,H:vh,el,y:el.map(e=>e.offsetTop+e.offsetHeight/2)};}
     if(!mob&&R.el.length<12)return;
+    if(mob){const rail=sec.querySelector('.rc-rail'),c0=rail&&rail.firstChild;if(rail&&c0)rail.style.transform='translate3d('+(-g*(c0.offsetWidth+12)).toFixed(1)+'px,0,0)';}
     if(!mob){const i0=Math.floor(g),i1=Math.min(11,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
       const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
       R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});}
@@ -2202,7 +2203,6 @@ class Component extends DCLogic {
       chatOpen:s.chatOpen,toggleChat:()=>{if(this.state.chatOpen)this.setState({chatOpen:false});else this.visionOpen();},chatLabel:s.chatOpen?'Close chat':'Ask Vision',
       ...this.chatVals(),
       visionZoop:s.visionOpen?'1':'0',
-      visionAnim:s.visionOpen?React.createElement('img',{key:s.visionOpen,className:'vz-anim',src:s.visionOpen,alt:''}):(s.visionLive&&!REDUCED?React.createElement('img',{key:'wave',className:'vz-anim',src:'assets/vision-wave.webp',alt:'',decoding:'async'}):null),
       draft:s.draft,onDraft:e=>this.setState({draft:e.target.value}),submitChat:e=>{e.preventDefault();this.send(s.draft);}
     };
   }
