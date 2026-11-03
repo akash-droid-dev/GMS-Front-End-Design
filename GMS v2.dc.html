@@ -363,7 +363,8 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 @keyframes gmsGoalPop{0%{transform:translateY(40%);opacity:0}100%{transform:none;opacity:1}}
 [data-goal-rule]{width:1px;height:22px;background:#DDE2EA;flex:none}
 [data-goal-board]>[data-goal-sub]{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#5B6270;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-[data-kv-veil]{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(90deg,rgba(246,247,249,0) 34%,rgba(246,247,249,.72) 52%,rgba(246,247,249,.86) 100%);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(90deg,transparent 36%,#000 54%);mask-image:linear-gradient(90deg,transparent 36%,#000 54%)}
+[data-kv-veil]{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(246,248,252,.5),rgba(240,244,251,.72));-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15)}
+[data-kv-wash]{position:absolute;left:0;top:0;width:min(640px,70%);height:min(420px,55%);pointer-events:none;background:radial-gradient(90% 85% at 0% 0%,rgba(246,247,249,.92) 30%,rgba(246,247,249,0) 100%)}
 [data-goal-cols][data-mode=burst]{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3vh,30px);pointer-events:none}
 [data-goal-cols][data-align=start] [data-goal-col]{align-items:flex-start!important}
 [data-goal-cols][data-align=start] [data-goal-list]{justify-content:flex-start}
@@ -1301,10 +1302,10 @@ const pad=n=>String(n).padStart(2,'0');
 // real kick footage scrubbed by scroll, then the 15 event chips bursting out of the net. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-// Kick clip as a frame sequence (assets/kickvid/d|m/NNN.webp, 1120 / 640 wide): every frame up to 5.2 s, then every
-// second frame for the celebration. idx(t) maps clip time (s) to a frame.
-const KV={n:182,w:1120,h:630,idx:t=>Math.max(0,Math.min(181,Math.round(t<5.2?t*24:125+(t-5.25)*12)))};
-const KICK={run0:0.03,strike:0.256,hit:0.47,score0:0.47,score1:0.6,board0:0.575,board1:0.8};
+// Kick clip as a frame sequence (assets/kickfull/d|m/NNN.webp, 1280 / 720 wide): every frame up to 6 s, then every
+// second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1).
+const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
+const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
 const smooth=t=>t*t*(3-2*t);
 const backOut=t=>{const c=1.25;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2);};
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
@@ -1592,51 +1593,64 @@ class Component extends DCLogic {
     let top=null,line=-1;words.forEach((w,k)=>{const t=w.offsetTop;if(top===null||Math.abs(t-top)>4){top=t;line++;}w.firstChild.style.setProperty('--d',(line*0.1+k*0.012).toFixed(3)+'s');});}
   countUp(el){const n=el.__count,tn=el.firstChild;if(!tn||tn.nodeType!==3)return;const fin=tn.nodeValue,t0=performance.now(),d=1200;
     const step=now=>{const k=Math.min(1,(now-t0)/d);tn.nodeValue=k<1?String(Math.round(n*ease(k))):fin;if(k<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
-  // ---- Programme, real footage: a 10 s studio clip (run-up, strike, ball into the net, celebration) shown as a frame
-  // sequence that scrubs with the pinned scroll, then the GOAL capsule and the 15 event chips burst out of the net ----
-  kvPreload(){if(this.kv)return;const mob=window.innerWidth<=760,dir='assets/kickvid/'+(mob?'m':'d')+'/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false),last:-1};
+  // ---- Programme, real footage: a 10 s clip (run-up from the left, strike, ball into the net, celebration) shown full-screen as
+  // a frame sequence that scrubs with the pinned scroll; then the net dissolves and the 15 events float up into the goal ----
+  kvPreload(){if(this.kv)return;const mob=window.innerWidth<=760,dir='assets/kickfull/'+(mob?'m':'d')+'/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false)};
     const load=i=>new Promise(res=>{const im=new Image();im.decoding='async';im.onload=()=>{kv.ok[i]=true;res();};im.onerror=res;im.src=dir+String(i+1).padStart(3,'0')+'.webp';kv.imgs[i]=im;});
-    // first frame, then the strike, then everything else in order, six at a time
-    const order=[0,KV.idx(2),KV.idx(3.9)];for(let i=0;i<KV.n;i++)if(!order.includes(i))order.push(i);let q=0;
+    // first frame, the strike and the goal first, then everything else in order, six at a time
+    const order=[0,KV.idx(2),KV.idx(KV.hitT)];for(let i=0;i<KV.n;i++)if(!order.includes(i))order.push(i);let q=0;
     const next=()=>{if(q>=order.length)return;const i=order[q++];load(i).then(()=>{this.kickLast=-1;next();});};for(let k=0;k<6;k++)next();}
-  kvLayout(host){const W=host.clientWidth,H=host.clientHeight,hd=host.querySelector('[data-ev-head]'),hb=hd?hd.getBoundingClientRect().bottom-host.getBoundingClientRect().top:200,port=W/H<1.1;
-    const L={W,H,port,hb};if(!port){const cx0=Math.max(18,(W-1280)/2+32),lw=Math.max(340,Math.min(480,W*0.35));Object.assign(L,{cx0,lw,bx:cx0+lw+20,by:Math.max(84,H*0.11),r:28});L.bw=W-L.bx-cx0;L.bh=H-L.by-Math.max(20,H*0.04);}else{const bw=W-24,bh=Math.min(H*0.3,bw*0.72);Object.assign(L,{bx:12,by:hb+18,bw,bh,r:22});}
-    return L;}
-  // video frame -> screen transform for time t (cover fit; on portrait the crop pans to follow the action)
-  kvView(L,t){const s=Math.max(L.bw/KV.w,L.bh/KV.h)*(1.03+0.03*clamp(t/9.8)),dw=KV.w*s,dh=KV.h*s;
-    const fx=t<1.8?0.3:t<3.9?0.3+0.48*smooth((t-1.8)/2.1):t<5.5?0.78:t<7?0.78-0.43*smooth((t-5.5)/1.5):0.35;
-    const ox=L.bx+Math.min(0,Math.max(L.bw-dw,L.bw/2-fx*dw)),oy=L.by+(L.bh-dh)*0.55;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
-  kvBuild(host,box){const L=this.kickL=this.kvLayout(host);box.innerHTML='';const c=document.createElement('canvas'),dpr=Math.min(2,window.devicePixelRatio||1);
-    c.width=Math.round(L.bw*dpr);c.height=Math.round(L.bh*dpr);Object.assign(c.style,{position:'absolute',left:L.bx+'px',top:L.by+'px',width:L.bw+'px',height:L.bh+'px',borderRadius:L.r+'px',display:'block',background:'#E9EEF5',boxShadow:'0 40px 90px rgba(15,20,40,.12),0 0 0 1px rgba(15,20,40,.04)'});
-    box.appendChild(c);const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
-    this.kickK={c,ctx:c.getContext('2d'),dpr,veil};this.kickLast=-1;this.kvPreload();
-    const V=this.kvView(L,5);L.burst=V.pt(0.86,0.62);
-    // event rows: right half on desktop (the celebrating player stays visible on the left), under the clip on phones
-    L.chips=[];const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.dataset.compact='1';const h2=host.querySelector('[data-ev-head] h2'),h2b=h2?h2.getBoundingClientRect().bottom-host.getBoundingClientRect().top:L.hb;Object.assign(Pn.style,{left:'0px',top:'0px',width:L.W+'px',height:L.H+'px'});
-      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode='burst';
-        C.dataset.align='center';if(L.port)Object.assign(C.style,{left:'12px',width:(L.W-24)+'px',top:(L.by+L.bh+14)+'px',height:Math.max(160,L.H-(L.by+L.bh+14)-12)+'px',right:'',bottom:''});
-        else Object.assign(C.style,{left:L.cx0+'px',width:(L.lw-12)+'px',top:(h2b+22)+'px',height:Math.max(200,L.H-h2b-48)+'px',right:'',bottom:''});C.dataset.align=L.port?'center':'start';
-        const hr=host.getBoundingClientRect(),chips=[...C.querySelectorAll('[data-goal-ev]')];C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
-        chips.forEach(el=>{el.style.transform='';el.style.opacity='';});
-        chips.forEach((el,i)=>{const b=el.getBoundingClientRect(),ex=b.left-hr.left+b.width/2,ey=b.top-hr.top+b.height/2,dx=ex-L.burst[0],dy=ey-L.burst[1],d=Math.hypot(dx,dy)||1,side=i%2?1:-1,lift=Math.min(L.H*0.2,d*0.45);
-          L.chips.push({el,ex,ey,cx:L.burst[0]+dx*0.5-dy/d*d*0.3*side,cy:L.burst[1]+dy*0.5+dx/d*d*0.3*side-lift,rot:(i*47%60)-30});});}}
-    const B=host.querySelector('[data-goal-board]');if(B){const g=this.kvView(L,3.9).pt(0.79,0.06);Object.assign(B.style,{left:(L.bx+L.bw/2)+'px',maxWidth:(L.bw-24)+'px',top:(L.by+16)+'px'});}}
+  // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
+  kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/9.8)),dw=KV.w*s,dh=KV.h*s,fx=L.port?(t<2.2?0.32+0.18*smooth(t/2.2):0.5):0.5;
+    const ox=Math.min(0,Math.max(L.W-dw,L.W/2-fx*dw)),oy=L.port?L.H*0.17:(L.H-dh)*0.5;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
+  kvBuild(host,box){const W=host.clientWidth,H=host.clientHeight,L=this.kickL={W,H,port:W/H<1.1};box.innerHTML='';
+    const c=document.createElement('canvas'),dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
+    // soft white wash behind the heading, the frosted veil that dissolves the net, and a clean goal frame that stays as the menu's frame
+    const wash=document.createElement('div');wash.setAttribute('data-kv-wash','');box.appendChild(wash);
+    const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
+    const V=this.kvView(L,9.8),g0=V.pt(KV.goal[0],KV.goal[1]),g1=V.pt(KV.goal[2],KV.goal[3]);L.goal=[g0[0],g0[1],g1[0],g1[1]];
+    const cx0=Math.max(18,(W-1280)/2+32),hh=host.querySelector('[data-ev-head] h2'),h2r=hh?hh.getBoundingClientRect().right-host.getBoundingClientRect().left:W*0.3;
+    L.menu=[Math.max(W*0.3,h2r+48),Math.max(96,H*0.13),W-cx0,H-Math.max(36,H*0.07)];
+    const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('width','100%');svg.setAttribute('height','100%');Object.assign(svg.style,{position:'absolute',inset:'0',pointerEvents:'none'});
+    const fr=document.createElementNS(NS,'path'),d='M'+g0[0].toFixed(1)+' '+g1[1].toFixed(1)+'V'+g0[1].toFixed(1)+'H'+g1[0].toFixed(1)+'V'+g1[1].toFixed(1);fr.setAttribute('vector-effect','non-scaling-stroke');
+    Object.entries({d,fill:'none',stroke:'#FFFFFF','stroke-width':Math.max(5,(g1[0]-g0[0])*0.012).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round',pathLength:'1','stroke-dasharray':'1 1','stroke-dashoffset':'1'}).forEach(([k,v])=>fr.setAttribute(k,v));
+    fr.style.filter='drop-shadow(0 10px 24px rgba(15,20,40,.16))';svg.appendChild(fr);box.appendChild(svg);
+    this.kickK={c,ctx:c.getContext('2d'),dpr,veil,wash,frame:fr};this.kickLast=-1;this.kvPreload();
+    // the events float up into the goal mouth (desktop) or into the lower half of the screen (phones)
+    L.chips=[];const Pn=host.querySelector('[data-goal-panel]');if(Pn){const nar=L.port||L.W<900;Pn.dataset.compact=nar?'1':'0';Object.assign(Pn.style,{left:'0px',top:'0px',width:W+'px',height:H+'px'});
+      const C=Pn.querySelector('[data-goal-cols]');if(C){C.dataset.mode='burst';C.dataset.align='center';
+        if(L.port)Object.assign(C.style,{left:'12px',width:(W-24)+'px',top:(H*0.3)+'px',height:(H*0.66)+'px',right:'',bottom:''});
+        else{const M=L.menu,gw=M[2]-M[0],gh=M[3]-M[1];Object.assign(C.style,{left:(M[0]+gw*0.04)+'px',width:(gw*0.92)+'px',top:(M[1]+gh*0.05)+'px',height:(gh*0.9)+'px',right:'',bottom:''});}
+        const hr=host.getBoundingClientRect();C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
+        const items=[...C.querySelectorAll('[data-goal-ch],[data-goal-ev]')];items.forEach(el=>{el.style.transform='';el.style.opacity='';});
+        items.forEach((el,i)=>{const b=el.getBoundingClientRect();L.chips.push({el,rise:H-(b.top-hr.top)+40+((i*37)%60),spin:((i*53)%24)-12,delay:i*0.055,head:el.hasAttribute('data-goal-ch')});});}}
+    const B=host.querySelector('[data-goal-board]');if(B){const hb=this.kvView(L,KV.hitT).pt(KV.goal[0]/2+KV.goal[2]/2,KV.goal[1]);Object.assign(B.style,{left:(L.port?W/2:hb[0])+'px',maxWidth:(W-24)+'px',top:Math.max(L.port?H*0.22:96,hb[1]-56)+'px'});}}
   kickAnim(){const box=document.querySelector('[data-kick]');if(!box){this.kickBox=null;return;}
     const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     if(this.kickBox!==box||this.kickDirty||!this.kickL||this.kickL.W!==W||this.kickL.H!==H){this.kickBox=box;this.kickDirty=false;this.kvBuild(host,box);}
-    const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0);
-    // scroll -> clip time: run-up and strike take the most scroll, the drop and celebration move quicker
-    const t=p<KICK.run0?0:p<KICK.hit?3.9*seg(p,KICK.run0,KICK.hit):p<KICK.board0?3.9+1.3*seg(p,KICK.hit,KICK.board0):5.2+4.6*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);
-    const key=fi+'|'+p.toFixed(4);if(key===this.kickLast)return;this.kickLast=key;
-    let j=fi;while(j>0&&!(this.kv&&this.kv.ok[j]))j--;if(this.kv&&this.kv.ok[j]){const V=this.kvView(L,t),d=K.dpr,im=this.kv.imgs[j];K.ctx.setTransform(d,0,0,d,-L.bx*d,-L.by*d);K.ctx.drawImage(im,V.ox,V.oy,KV.w*V.s,KV.h*V.s);}
-    K.veil.style.opacity='0';if(!L.port){const fo=(1-ease(clamp(seg(p,KICK.board0,KICK.board1)*3))).toFixed(3);host.querySelectorAll('[data-r=ev-p],[data-ev-head]>span:last-child').forEach(el=>{el.style.opacity=fo;});}
+    const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),now=performance.now();
+    // scroll -> clip time: run-up, strike and flight take most of the scroll; the drop and celebration move quicker
+    const t=p<KICK.run0?0:p<KICK.hit?KV.hitT*seg(p,KICK.run0,KICK.hit):p<KICK.board0?KV.hitT+(6-KV.hitT)*seg(p,KICK.hit,KICK.board0):6+3.8*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);
+    // the reveal runs on its own clock once it starts, so the float-up and jiggle play out even if scrolling stops
+    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=this.kvRevealT&&rt<3.4&&!REDUCED;
+    const key=fi+'|'+p.toFixed(4)+'|'+(live?Math.round(now/16):'');if(key===this.kickLast)return;this.kickLast=key;
+    let j=fi;while(j>0&&!(this.kv&&this.kv.ok[j]))j--;if(this.kv&&this.kv.ok[j]){const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
+      if(L.port){const bg=x.createLinearGradient(0,0,0,L.H);bg.addColorStop(0,'#DCE4EE');bg.addColorStop(1,'#EDF0F4');x.fillStyle=bg;x.fillRect(0,0,L.W,L.H);}
+      x.drawImage(this.kv.imgs[j],V.ox,V.oy,KV.w*V.s,dh);
+      if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
+        const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}
+    // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in on top
+    const nf=REDUCED?1:ease(clamp(rt/0.9));K.veil.style.opacity=nf.toFixed(3);K.frame.setAttribute('stroke-dashoffset',(L.port?1:1-ease(clamp((rt-0.1)/0.7))).toFixed(4));
+    if(!L.port){const m=REDUCED?1:ease(clamp((rt-0.25)/0.9)),G=L.goal,M=L.menu,lx=G[0]+(M[0]-G[0])*m,ty=G[1]+(M[1]-G[1])*m,rx=G[2]+(M[2]-G[2])*m,by=G[3]+(M[3]-G[3])*m;
+      K.frame.setAttribute('d','M'+lx.toFixed(1)+' '+by.toFixed(1)+'V'+ty.toFixed(1)+'H'+rx.toFixed(1)+'V'+by.toFixed(1));}
+    const fo=(1-nf).toFixed(3);host.querySelectorAll('[data-r=ev-p]').forEach(el=>{el.style.opacity=fo;});
     const Bd=host.querySelector('[data-goal-board]');if(Bd){const bi=ease(seg(p,KICK.score0,KICK.score0+0.025)),bo2=seg(p,KICK.score1-0.03,KICK.score1),bv=bi*(1-bo2);
       Bd.style.opacity=bv.toFixed(3);Bd.style.visibility=bv>0.01?'visible':'hidden';Bd.style.transform='translate(-50%,'+((1-bi)*-14+bo2*-10).toFixed(1)+'px) scale('+(0.94+0.06*bi).toFixed(3)+')';Bd.dataset.live=bv>0.5?'1':'0';}
-    const Pn=host.querySelector('[data-goal-panel]');if(Pn){const bt=seg(p,KICK.board0,KICK.board1);Pn.style.opacity=bt>0?'1':'0';Pn.style.visibility=bt>0?'visible':'hidden';
-      const O=L.burst;L.chips.forEach((c,i)=>{const tt=clamp((bt-i*0.022)/0.36),u=tt>0?backOut(tt):0,v=1-u,bx=v*v*O[0]+2*v*u*c.cx+u*u*c.ex,by=v*v*O[1]+2*v*u*c.cy+u*u*c.ey;
-        c.el.style.transform='translate('+(bx-c.ex).toFixed(1)+'px,'+(by-c.ey).toFixed(1)+'px) rotate('+((1-clamp(tt*1.3))*c.rot).toFixed(1)+'deg) scale('+(0.25+0.75*clamp(tt*1.2)).toFixed(3)+')';c.el.style.opacity=clamp(tt*5).toFixed(3);});
-      Pn.querySelectorAll('[data-goal-col]').forEach((el,jj)=>el.style.setProperty('--ci',ease(clamp((bt-0.42-jj*0.07)/0.25)).toFixed(3)));}}
+    // events: rise from below the screen against gravity, overshoot and jiggle into place (damped spring), headers lead their rows
+    const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.style.opacity=rt>0||REDUCED?'1':'0';Pn.style.visibility=rt>0||REDUCED?'visible':'hidden';
+      L.chips.forEach(c=>{const u=REDUCED?9:Math.max(0,rt-0.35-c.delay),sp=u>0?1-Math.exp(-4.2*u)*Math.cos(9.5*u):0,wob=u>0?Math.exp(-3.6*u)*Math.sin(15*u):0;
+        c.el.style.transform='translate('+(wob*(c.head?2:5)).toFixed(2)+'px,'+((1-sp)*c.rise).toFixed(1)+'px) rotate('+(wob*c.spin).toFixed(2)+'deg) scale('+(1+0.06*wob).toFixed(4)+')';c.el.style.opacity=clamp(u*4).toFixed(3);});}}
   patchSpline(){
     document.querySelectorAll('spline-viewer').forEach(v=>{const app=v._spline;if(!app||this.splineDone.has(app))return;let objs;try{objs=app.getAllObjects();}catch(e){return;}if(!objs||!objs.length)return;
       const url=v.getAttribute('url')||'';
