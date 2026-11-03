@@ -348,17 +348,6 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
  [data-r=roles-progress]{display:block;position:relative;height:2px;margin-top:14px;border-radius:2px;background:#E8EBF0;overflow:hidden;flex:none}
  [data-r=roles-bar]{position:absolute;inset:0;display:block;background:#2F5BFF;transform-origin:0 50%;transform:scaleX(.083)}
 }
-@media (max-width:760px){
- [data-r=roles-pin]{padding:90px 18px 100px}
- [data-r=roles-grid]{grid-template-columns:minmax(0,1fr)!important}
- [data-r=roles-preview]{display:none!important}
- [data-role-drawer]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--gms-ease)}
- [data-role-row][data-open="true"] [data-role-drawer]{grid-template-rows:1fr}
- [data-role-drawer-in]{overflow:hidden;min-height:0}
- [data-role-row][data-open="true"] [data-role-arrow]{transform:rotate(135deg)}
- [data-role-name]{font-size:clamp(22px,6.6vw,28px)!important}
- [data-role-row][data-on="1"] [data-role-name]{transform:none}
-}
 @keyframes gmsBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* Motion system: one easing everywhere. Headings rise line by line, blocks rise with a short stagger. */
 :root{--gms-ease:cubic-bezier(.16,1,.3,1);--gms-soft:cubic-bezier(.45,0,.2,1)}
@@ -400,6 +389,70 @@ button,[role=tab],a[href]{transition-property:translate,scale,transform,backgrou
 }
 button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.12s!important}
 @media (prefers-reduced-motion:reduce){button,[role=tab],a[href]{transition-duration:.01s!important}main[data-screen-label]{animation:none!important}[data-r=backwrap]{animation:none}}
+/* Follow one athlete: one record travels through every module, each station stamps what it did */
+[data-r=jr-sticky]{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;box-sizing:border-box;padding:clamp(84px,11vh,104px) 32px clamp(18px,3vh,36px);display:flex;flex-direction:column;gap:clamp(14px,2.6vh,28px)}
+.jr-head{max-width:1240px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:16px 28px;flex-wrap:wrap}
+.jr-who{display:flex;align-items:center;gap:12px;padding:8px 10px 8px 8px;border-radius:999px;background:#F4F6FA;border:1px solid #E6EAF0}
+.jr-who img,.jr-token img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:22% 18%;background:#fff;flex:none;display:block}
+.jr-who small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:#8A909C}.jr-who b{font-size:15px}
+.jr-count{margin-left:6px;padding:6px 10px;border-radius:999px;background:#0B0D12;color:#fff;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em}
+.jr-board{position:relative;flex:1;min-height:0;max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(18px,3vh,34px) clamp(18px,2.4vw,34px)}
+.jr-svg{position:absolute;inset:0;overflow:visible;pointer-events:none;z-index:0}
+.jr-base{fill:none;stroke:#E3E7EE;stroke-width:3;stroke-dasharray:2 9;stroke-linecap:round}
+.jr-line{fill:none;stroke:#2F5BFF;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 10px rgba(47,91,255,.35))}
+.jr-st{position:relative;z-index:1;display:flex;flex-direction:column;gap:clamp(6px,1vh,10px);padding:clamp(14px,2vh,22px);border-radius:24px;background:#F6F7F9;border:1.5px solid transparent;min-height:0;overflow:hidden;transition:background .6s var(--gms-ease),border-color .6s,box-shadow .6s var(--gms-ease),transform .7s var(--gms-ease),opacity .6s}
+.jr-st[data-st=next]{opacity:.5}
+.jr-st[data-st=on]{background:#fff;border-color:#2F5BFF;box-shadow:0 26px 60px rgba(47,91,255,.18);transform:translateY(-4px) scale(1.015)}
+.jr-st[data-st=done]{background:#fff;border-color:#E3E7EE}
+.jr-top{display:flex;align-items:center;gap:10px}.jr-top b{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(17px,2.4vh,22px);letter-spacing:-.02em;line-height:1.1;min-width:0}
+.jr-ico{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:#fff;color:#2F5BFF;font-family:'Material Symbols Rounded';font-size:21px;transition:background .5s,color .5s}
+.jr-st[data-st=on] .jr-ico{background:#2F5BFF;color:#fff}.jr-st[data-st=done] .jr-ico{background:#E9F7EF;color:#1C8A53}
+.jr-num{margin-left:auto;font-family:'JetBrains Mono';font-size:11px;color:#8A909C}
+.jr-st p{margin:0;font-size:clamp(12.5px,1.7vh,14.5px);line-height:1.45;color:#4A505C}
+.jr-stamp{margin-top:auto;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:clamp(10.5px,1.45vh,12px);letter-spacing:.02em;color:#1C8A53;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .6s var(--gms-ease)}
+.jr-tick{width:20px;height:20px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1FA463;color:#fff;font-family:'Material Symbols Rounded';font-size:14px}
+.jr-st[data-st=on] .jr-stamp,.jr-st[data-st=done] .jr-stamp{opacity:1;transform:none}
+.jr-st[data-st=on] .jr-stamp{color:#2F5BFF}.jr-st[data-st=on] .jr-tick{background:#2F5BFF;animation:gmsPulse 1.4s infinite}
+.jr-team{font-size:11.5px;color:#8A909C}
+.jr-token{position:absolute;left:0;top:0;z-index:3;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:3px solid #fff;box-shadow:0 12px 26px rgba(15,20,40,.28),0 0 0 6px rgba(47,91,255,.18);will-change:transform;pointer-events:none}
+.jr-token::after{content:'';position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(47,91,255,.45);animation:gmsPing 1.8s ease-out infinite}
+@media (max-width:900px){.jr-board{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(0,1fr)}.jr-st{grid-column:auto!important;grid-row:auto!important}.jr-st:last-of-type{grid-column:1 / -1!important}}
+@media (max-width:600px){[data-r=jr-sticky]{padding:78px 16px 14px;gap:12px}.jr-head{gap:10px}.jr-who{padding:6px 8px 6px 6px;width:100%;box-sizing:border-box}.jr-who img{width:36px;height:36px}.jr-count{margin-left:auto}
+ .jr-board{grid-template-columns:minmax(0,1fr);gap:7px;padding-left:44px}.jr-st:last-of-type{grid-column:auto!important}.jr-st{padding:9px 12px;gap:4px;border-radius:16px}.jr-st p,.jr-team{display:none}.jr-ico{width:28px;height:28px;border-radius:9px;font-size:17px}.jr-top b{font-size:15px}.jr-stamp{font-size:10.5px}.jr-tick{width:16px;height:16px;font-size:11px}
+ .jr-token,.jr-token img{width:34px;height:34px}.jr-token{margin:-17px 0 0 -17px}}
+/* Finale: a window opens into the full-screen film, the countdown flips in, then the headline and the way in */
+.fn-win{position:absolute;inset:0;overflow:hidden;background:#0B0D12;clip-path:inset(20vh 22vw round 36px);will-change:clip-path;color:#fff}
+.fn-vid{position:absolute;inset:0;transform:scale(1.18);will-change:transform}.fn-vid video{object-position:50% 40%}
+.fn-shade{position:absolute;inset:0;background:radial-gradient(80% 70% at 50% 50%,rgba(8,10,16,.35),rgba(8,10,16,.72)),linear-gradient(180deg,rgba(8,10,16,.35),rgba(8,10,16,.1) 40%,rgba(8,10,16,.8))}
+.fn-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(16px,2.6vh,26px);padding:90px 24px 40px;text-align:center}
+.fn-count{display:flex;flex-direction:column;align-items:center;gap:14px;opacity:var(--c,0);transform:translateY(calc((1 - var(--c,0)) * 30px)) scale(calc(.94 + var(--c,0) * .06))}
+.fn-label{font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.16em;color:#9FB3FF}
+.fn-units{display:flex;gap:clamp(10px,2vw,22px);align-items:flex-start}
+.fn-unit{display:flex;flex-direction:column;align-items:center;gap:8px}.fn-unit small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.6)}
+.flaps--fin .flap{font-size:clamp(30px,4.6vw,58px);color:#0B0D12;border-radius:.14em;box-shadow:0 12px 30px rgba(0,0,0,.35),inset 0 0 0 1px rgba(15,20,40,.06)}
+.fn-h{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(40px,6.6vw,104px);letter-spacing:-.05em;line-height:.95;max-width:980px}
+.fn-w{display:inline-block;--k:clamp(0,calc(var(--t,0) * 7 - var(--i)),1);opacity:var(--k);transform:translateY(calc((1 - var(--k)) * .45em));filter:blur(calc((1 - var(--k)) * 6px))}
+.fn-p{margin:0;max-width:620px;font-size:16.5px;line-height:1.55;color:rgba(255,255,255,.74);opacity:clamp(0,calc(var(--t,0) * 3 - 1.4),1)}
+.fn-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:clamp(0,calc(var(--t,0) * 3 - 1.9),1);transform:translateY(calc((1 - clamp(0,calc(var(--t,0) * 3 - 1.9),1)) * 16px))}
+@media (max-width:600px){.fn-txt{padding:80px 16px 28px}.fn-p{font-size:14.5px}.fn-units{gap:8px}}
+@media (prefers-reduced-motion:reduce){.fn-w{filter:none}}
+/* Roles on phones: the section pins like desktop and every swipe settles on exactly one role */
+@media (max-width:760px){
+ [data-r=roles-section]{height:calc(100svh + 12 * 62svh)}
+ [data-r=roles-pin]{position:sticky;top:0;height:100svh;box-sizing:border-box;padding:76px 16px 14px!important;display:flex}
+ [data-r=roles-grid]{height:100%;width:100%;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr);gap:12px!important}
+ [data-r=roles-left] h2{font-size:30px!important;margin-top:8px!important}
+ [data-r=roles-p],[data-r=roles-window]{display:none!important}
+ [data-r=roles-progress]{display:block;position:relative;height:3px;margin-top:12px;border-radius:2px;background:#E8EBF0;overflow:hidden}
+ [data-r=roles-bar]{position:absolute;inset:0;display:block;background:#2F5BFF;transform-origin:0 50%;transform:scaleX(.083)}
+ [data-r=roles-preview]{display:block!important;min-height:0;height:100%;align-self:stretch}
+ [data-r=roles-preview]>div{height:100%;display:flex;flex-direction:column;border-radius:26px!important}
+ [data-r=roles-art]{flex:1;aspect-ratio:auto!important;max-height:none!important;min-height:0!important}
+ [data-r=roles-copy]{padding:14px 16px 16px!important;gap:8px!important}
+ [data-r=roles-copy] h3{font-size:26px!important}
+ [data-r=roles-copy] p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px!important}
+ [data-r=roles-copy]>div:nth-of-type(1),[data-r=roles-copy] button+button{display:none!important}
+}
 /* Event centre (Live Scores page) */
 [data-r=ec-top]{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
 [data-r=ec-filters]{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -946,56 +999,27 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </div>
   </section>
 
-  <section ref="{{ tilesRef }}" style="position:relative;height:380vh;background:#FFFFFF">
-    <div data-r="tiles-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,3vh,36px);padding:clamp(76px,10vh,100px) 32px clamp(16px,3vh,40px);box-sizing:border-box">
-      <div style="max-width:1240px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
-        <div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">A COMPLETE GAMES ECOSYSTEM</span>
-        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(4.8vw,7vh),68px);letter-spacing:-.045em;line-height:1">Built for every team behind the Games.</h2></div>
-        <span data-r="tiles-p" style="max-width:340px;font-size:15px;line-height:1.5;color:#5B6270">Purpose-built modules share workflows and data, giving every team the clarity they need without adding operational complexity.</span>
+  <section ref="{{ tilesRef }}" data-r="jr-section" style="position:relative;height:440vh;background:#FFFFFF">
+    <div data-r="jr-sticky">
+      <div class="jr-head">
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0"><span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">A COMPLETE GAMES ECOSYSTEM</span>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,min(4.4vw,6.6vh),64px);letter-spacing:-.045em;line-height:1">Built for every team behind the Games.</h2></div>
+        <div class="jr-who"><img src="assets/roles/athlete-0.webp" alt="" width="46" height="46" loading="lazy" decoding="async"><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><small>FOLLOW ONE ATHLETE THROUGH IT</small><b>Kenji Tanaka · JPN</b><small style="letter-spacing:.04em">W1 Men Individual</small></span><span class="jr-count" data-jr-count>01 / 07</span></div>
       </div>
-      <div data-r="tiles-grid" style="max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
-        <sc-for list="{{ tiles }}" as="c" hint-placeholder-count="6">
-          <div data-tile style="grid-column:{{ c.gc }};transform:{{ c.tf }};opacity:{{ c.op }};display:flex;flex-direction:column;gap:clamp(6px,1.1vh,12px);padding:clamp(16px,2.2vh,26px);border-radius:{{ c.br }};background:{{ c.bg }};min-height:{{ c.mh }};box-sizing:border-box;will-change:transform">
-            <sc-if value="{{ c.narrow }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span style="width:44px;height:44px;border-radius:14px;background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:24px">{{ c.icon }}</span>
-                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
-              </div>
-              <div data-r="tile-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1;margin-top:auto">{{ c.title }}</div>
-              <div data-r="tile-desc" style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
-            </sc-if>
-            <sc-if value="{{ c.wide }}" hint-placeholder-val="{{ false }}">
-              <div style="display:flex;align-items:center;gap:clamp(14px,2vw,28px);flex-wrap:wrap;margin:auto 0">
-                <span style="width:52px;height:52px;flex:none;border-radius:16px;background:#2F5BFF;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:27px;box-shadow:0 10px 24px rgba(47,91,255,.28)">{{ c.icon }}</span>
-                <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 320px;min-width:0">
-                  <div data-r="tile-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(20px,3.2vh,26px);letter-spacing:-.025em;line-height:1.1">{{ c.title }}</div>
-                  <div data-r="tile-desc" style="font-size:clamp(12px,1.7vh,15px);line-height:1.4;color:#4A505C">{{ c.desc }}</div>
-                </div>
-                <div data-r="cms-chips" style="display:flex;flex-wrap:wrap;gap:8px;flex:1 1 300px;justify-content:flex-end">
-                  <sc-for list="{{ c.chips }}" as="k" hint-placeholder-count="5">
-                    <span style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(47,91,255,.15);font-size:12px;font-weight:600;color:#1A3FD6"><span style="width:6px;height:6px;border-radius:50%;background:#2F5BFF;animation:gmsPulse 1.8s infinite"></span>{{ k.t }}</span>
-                  </sc-for>
-                </div>
-                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ c.num }}</span>
-              </div>
-            </sc-if>
+      <div class="jr-board" data-jr-board>
+        <svg class="jr-svg" aria-hidden="true" width="100%" height="100%"><path class="jr-base" d=""></path><path class="jr-line" d=""></path></svg>
+        <sc-for list="{{ journey }}" as="j" hint-placeholder-count="7">
+          <div class="jr-st" data-jr-st data-st="next" style="grid-column:{{ j.gc }};grid-row:{{ j.gr }}">
+            <div class="jr-top"><span class="jr-ico">{{ j.icon }}</span><b>{{ j.title }}</b><span class="jr-num">{{ j.num }}</span></div>
+            <p>{{ j.desc }}</p>
+            <span class="jr-stamp"><span class="jr-tick" aria-hidden="true">check</span><span>{{ j.stamp }}</span></span>
+            <small class="jr-team">{{ j.team }}</small>
           </div>
         </sc-for>
-      </div>
-      <div data-paper-layer style="position:absolute;inset:0;pointer-events:none;z-index:5;display:none">
+        <span class="jr-token" data-jr-token aria-hidden="true"><img src="assets/roles/athlete-0.webp" alt="" width="46" height="46" loading="lazy" decoding="async"></span>
       </div>
     </div>
   </section>
-
-  <section ref="{{ carRef }}" style="position:relative;height:200vh;background:#FFFFFF">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center">
-      <div style="position:absolute;inset:0">{{ momentVideo }}<div style="position:absolute;inset:0;background:rgba(255,255,255,.5)"></div></div>
-      <div style="position:relative;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(64px,11vw,190px);letter-spacing:-.06em;line-height:.88;text-align:center;color:#0B0D12;opacity:{{ carTextOp }}" data-car-text>The moment<br>before impact.</div>
-      
-      <div style="position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);max-width:560px;text-align:center;font-size:17px;line-height:1.55;color:#4A505C;padding:0 24px;color:#0B0D12;font-weight:500;opacity:{{ carTextOp }}" data-car-text>Experience the intensity of Para Archery at the Hyundai World Para Archery Series, Ahmedabad.</div>
-    </div>
-  </section>
-
   <section data-r="contact-section" ref="{{ contactRef }}" style="position:relative;overflow:hidden;background:#F4F5F7;padding:120px 32px 130px">
     <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 50% at 78% 40%,rgba(47,91,255,.10),rgba(47,91,255,0) 70%),radial-gradient(30% 40% at 8% 90%,rgba(224,122,95,.10),rgba(224,122,95,0) 70%)"></div>
     <div data-r="contact-grid" class="rl-grid">
@@ -1010,17 +1034,21 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </div>
   </section>
 
-  <section ref="{{ closeRef }}" style="position:relative;height:220vh;background:#FFFFFF">
-    <div style="position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden">
-      <div data-close-win style="position:relative;width:{{ winW }};height:{{ winH }};border-radius:{{ winR }};background:{{ winBg }};color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px;box-sizing:border-box;border:1px solid rgba(11,13,18,.08);overflow:hidden">
-        <div data-close-vid style="position:absolute;inset:0;opacity:{{ videoOp }};pointer-events:none">{{ closingVideo }}<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.75) 100%)"></div></div>
-        <div data-close-txt style="position:relative;opacity:{{ winContentOp }};display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;max-width:960px">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8FA6FF">THE RANGE · AWAITS</div>
-          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(48px,7vw,112px);letter-spacing:-.05em;line-height:.95">Every arrow has a moment.</h2>
-          <p style="margin:0;max-width:620px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.7)">Prepare for the World Para Archery stage — from classification and equipment checks to qualification, eliminations and the final shot. <b style="color:#fff">One range. One target. One moment to make it count.</b></p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-            <button onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px">Begin registration</button>
-            <button onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;background:#fff;color:#0B0D12;font-weight:600;font-size:15px">Admin login</button>
+  <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:260vh;background:#F4F5F7">
+    <div style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden">
+      <div data-fn-win class="fn-win">
+        <div data-fn-vid class="fn-vid">{{ finaleVideo }}</div>
+        <div class="fn-shade" aria-hidden="true"></div>
+        <div class="fn-txt">
+          <div class="fn-count">
+            <span class="fn-label">{{ fnLabel }}</span>
+            <div class="fn-units">{{ fnCount }}</div>
+          </div>
+          <h2 class="fn-h">{{ fnWords }}</h2>
+          <p class="fn-p">Prepare for the World Para Archery stage, from classification and equipment checks to qualification, eliminations and the final shot. <b style="color:#fff">One range. One target. One moment to make it count.</b></p>
+          <div class="fn-cta">
+            <button onClick="{{ fnPrimary.go }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;font-weight:600;font-size:15px">{{ fnPrimary.label }}</button>
+            <button onClick="{{ goAdminLogin }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;font-weight:600;font-size:15px">Admin login</button>
           </div>
         </div>
       </div>
@@ -1411,10 +1439,9 @@ const MODULES=[
 {icon:'directions_bus',title:'Transportation',desc:'Move the Games without the guesswork.',bg:'#EEF2FF'},
 {icon:'restaurant',title:'Catering',desc:'Every meal. Every delegation. Accounted for.',bg:'#F2F4F7'},
 {icon:'sports_score',title:'Competition Management System',desc:'Draws, brackets, live scoring, results and rankings. Every match on every range, run from one console.',bg:'linear-gradient(115deg,#EEF2FF 0%,#E4EBFF 45%,#F3EEFF 100%)',wide:true,chips:['Draws & brackets','Live scoring','Results','Rankings','Records']}];
-const SCATTER=[[-360,-260,-12],[0,-340,8],[360,-260,-9],[-380,260,11],[0,320,-7],[380,260,12],[0,420,5]];
-// Paper-fall timing for the ecosystem tiles (fractions of the section's scroll progress).
-const PAPER={start:0.5,stagger:0.022,crumple:0.1,fall:0.2};
-const tileCrumple=(p,i)=>ease(clamp((p-PAPER.start-i*PAPER.stagger)/PAPER.crumple));
+// Follow one athlete: what each module does for the same record, who runs it, and where it sits on the board (desktop snake: 4 across, back along the bottom)
+const JOURNEY=[['Entry GMS-26-0413 received','Registration team',1,1],['Passport and classification card checked','Verification desk',2,1],['Card printed · field-of-play access','Accreditation centre',3,1],
+['Official hotel · room 412 · step-free','Accommodation team',4,1],['Airport pickup 06:40 · accessible shuttle','Transport control',4,2],['Dietary needs logged · athletes\' dining','Catering team',3,2],['W1 Men Individual · qualification · 08:00','Technical officials and results','1 / 3',2]];
 const DAY1=[['08:00','PCMTEAM'],['08:00','PCWTEAM'],['08:00','W1MIND'],['08:00','W1MTEAM'],['08:00','W1WIND'],['08:00','W1WTEAM'],['10:00','W1XTEAM'],['10:27','RMIND'],['10:27','RWIND']];
 const DAYS=[['01','05 Sept','Sat'],['02','06 Sept','Sun'],['03','07 Sept','Mon'],['04','08 Sept','Tue'],['05','09 Sept','Wed']];
 // ---- Live archery: matches on three fields, scored arrow by arrow. Recurve uses the set system (first to 6 set points,
@@ -1479,17 +1506,22 @@ const ROLE_VERB={athlete:'Draw · anchor · release',staff:'Notes and coaching c
 // Role photos (assets/roles/<id>-0..2.webp: rest, mid-action, peak): idle breathes with a slow zoom, the action blends rest -> mid -> peak and back with a gentle push-in.
 // The action frames only download the first time that role plays.
 const ROLE_PHOTOS={athlete:3,staff:3,entity:3,lo:3,official:3,medical:3,nada:3,gov:3,media:3,volunteer:3,service:3,ema:3};
+// roles with a filmed loop (the photo stays underneath as the instant first frame)
+const ROLE_VIDEO={athlete:10,entity:10,staff:10,lo:10};
 const PHOTO_KEYS=[[0,0],[0.35,0],[0.55,1],[1,1],[1.2,2],[2.6,2],[2.8,1],[3.1,1],[3.3,0],[3.6,0]];
-const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],D=3.6;
+const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],V=ROLE_VIDEO[id],D=V||3.6;
   host.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;background:#FFFFFF"><div data-ph style="position:absolute;inset:-3%;will-change:transform">'+
-    Array.from({length:n},(_,i)=>'<img alt="" decoding="async" '+(i?'data-src':'src')+'="assets/roles/'+id+'-'+i+'.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:'+(i?0:1)+'">').join('')+'</div></div>';
-  const wrap=host.querySelector('[data-ph]'),imgs=[...wrap.children],st={mode:'idle',w:0,tw:0,t0:0,last:0,once:false,loaded:false};
+    Array.from({length:n},(_,i)=>'<img alt="" decoding="async" '+(i?'data-src':'src')+'="assets/roles/'+id+'-'+i+'.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:'+(i?0:1)+'">').join('')+(V?'<video muted loop playsinline preload="none" poster="assets/rolevid/'+id+'-poster.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:0"></video>':'')+'</div></div>';
+  const wrap=host.querySelector('[data-ph]'),imgs=[...wrap.querySelectorAll('img')],vid=wrap.querySelector('video'),st={mode:'idle',w:0,tw:0,t0:0,last:0,once:false,loaded:false};
   const frame=tc=>{let i=0;while(i<PHOTO_KEYS.length-2&&tc>PHOTO_KEYS[i+1][0])i++;const a=PHOTO_KEYS[i],b=PHOTO_KEYS[i+1];return a[1]+(b[1]-a[1])*smooth(clamp((tc-a[0])/((b[0]-a[0])||1)));};
   return {el:host,id,_st:st,
-    act(mode,now){if(mode==='idle'){st.tw=0;return;}if(!st.loaded){st.loaded=true;imgs.forEach(im=>{const s=im.getAttribute('data-src');if(s)im.src=s;});}
+    act(mode,now){if(mode==='idle'){st.tw=0;return;}if(!st.loaded){st.loaded=true;imgs.forEach(im=>{const s=im.getAttribute('data-src');if(s)im.src=s;});
+        if(vid){vid.src='assets/rolevid/'+id+'-'+(window.innerWidth<=760?'m':'d')+'.mp4';vid.preload='auto';}}
+      if(vid){if(st.mode==='idle'||mode!==st.mode)try{vid.currentTime=0;}catch(e){}const pl=vid.play();if(pl&&pl.catch)pl.catch(()=>{});}
       if(st.mode==='idle'||st.tw===0||mode!==st.mode)st.t0=now;st.mode=mode;st.tw=1;st.once=mode==='once';},
     tick(now){const dt=Math.min(0.05,(now-(st.last||now))/1000);st.last=now;let tc=(now-st.t0)/1000;if(st.once&&tc>=D)st.tw=0;
-      st.w+=(st.tw-st.w)*Math.min(1,dt*(st.tw>st.w?6:2.6));if(st.w<0.002&&st.tw===0){st.w=0;st.mode='idle';}
+      st.w+=(st.tw-st.w)*Math.min(1,dt*(st.tw>st.w?6:2.6));if(st.w<0.002&&st.tw===0){st.w=0;st.mode='idle';if(vid&&!vid.paused)vid.pause();}
+      if(vid){vid.style.opacity=(vid.readyState>=2?smooth(st.w):0).toFixed(3);wrap.style.transform='scale('+(1+0.02*st.w).toFixed(4)+')';return;}
       tc=((tc%D)+D)%D;const f=Math.min(n-1,frame(tc)*(n-1)/2)*st.w,s=now/1000;
       imgs.forEach((im,i)=>{if(i)im.style.opacity=clamp(f-(i-1)).toFixed(3);});
       const push=st.w*(0.012+0.03*smooth(clamp(tc/1.2))*(tc<3.2?1:clamp((D-tc)/0.4)));
@@ -1544,7 +1576,22 @@ class Component extends DCLogic {
     this.target={hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
     this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
     this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
-    window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
+    window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});if(/[?&]debug/.test(location.search))window.__gms=this;
+    // phones: inside the pinned roles section each swipe moves exactly one role. The page follows the finger a little,
+    // then eases onto the next role; a fling from outside stops at the first or last role instead of flying through.
+    if(!HOVER){const sw={on:false,busy:false};
+      const marks=()=>{const sec=this.refs.reg&&this.refs.reg.current;if(!sec||window.innerWidth>760)return null;const r=sec.getBoundingClientRect(),top=r.top+window.scrollY,span=r.height-window.innerHeight;
+        return span>0?{top,span,m:Array.from({length:12},(_,k)=>top+span*(k+0.28)/12)}:null;};
+      const glide=(to,dur)=>{cancelAnimationFrame(this.swRaf);const from=window.scrollY,t0=performance.now();sw.busy=true;
+        const step=n=>{const u=Math.min(1,(n-t0)/dur),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;window.scrollTo(0,from+(to-from)*e);if(u<1)this.swRaf=requestAnimationFrame(step);else sw.busy=false;};this.swRaf=requestAnimationFrame(step);};
+      this.onTS=e=>{const M=marks(),y=window.scrollY;sw.on=!!M&&y>=M.m[0]-6&&y<=M.m[11]+6;if(!sw.on)return;cancelAnimationFrame(this.swRaf);sw.busy=false;
+        sw.M=M;sw.y0=e.touches[0].clientY;sw.s0=y;sw.k=M.m.reduce((b,v,i)=>Math.abs(v-y)<Math.abs(M.m[b]-y)?i:b,0);};
+      this.onTM=e=>{if(!sw.on)return;e.preventDefault();window.scrollTo(0,sw.s0+(sw.y0-e.touches[0].clientY)*0.35);};
+      this.onTE=e=>{if(!sw.on)return;sw.on=false;const t=e.changedTouches&&e.changedTouches[0],dy=sw.y0-(t?t.clientY:sw.y0),M=sw.M,k=sw.k+(dy>36?1:dy<-36?-1:0);
+        if(k>11)glide(M.top+M.span+2,700);else if(k<0)glide(M.top-window.innerHeight*0.55,700);else glide(M.m[k],REDUCED?1:620);};
+      this.onSwScroll=()=>{const y=window.scrollY,py=this.swPrevY==null?y:this.swPrevY;this.swPrevY=y;if(sw.on||sw.busy)return;const M=marks();if(!M)return;
+        if(py<M.m[0]-2&&y>M.m[0]+2&&y<M.m[11])window.scrollTo(0,M.m[0]);else if(py>M.m[11]+2&&y<M.m[11]-2&&y>M.m[0])window.scrollTo(0,M.m[11]);};
+      window.addEventListener('touchstart',this.onTS,{passive:true});window.addEventListener('touchmove',this.onTM,{passive:false});window.addEventListener('touchend',this.onTE,{passive:true});window.addEventListener('scroll',this.onSwScroll,{passive:true});}
     try{if(!history.state||!history.state.gms)history.replaceState({gms:this.state.screen||this.props.startScreen||'home'},'');}catch(e){}
     this.onPop=e=>{const sc=(e.state&&e.state.gms)||'home';this.setState({screen:sc,modal:null,regOpen:false,menuOpen:false});window.scrollTo(0,0);};window.addEventListener('popstate',this.onPop);
     // magnetic hover: small buttons and tabs lean a few pixels toward the pointer (fine pointers only)
@@ -1553,15 +1600,15 @@ class Component extends DCLogic {
         if(b!==mag){rel(mag);mag=null;}if(!b||b.disabled)return;const r=b.getBoundingClientRect();if(r.width>280||r.height>72)return;
         mag=b;b.setAttribute('data-mag','');const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;b.style.translate=(dx*7).toFixed(1)+'px '+(dy*5-2).toFixed(1)+'px';});};
       this.onMagOut=()=>{rel(mag);mag=null;};window.addEventListener('pointermove',this.onMag,{passive:true});document.addEventListener('pointerleave',this.onMagOut);window.addEventListener('blur',this.onMagOut);}
-    this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
+    this.onScroll=()=>{this.measure();this.awake=240;};this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;this.awake=Math.max(this.awake||0,90);};
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.fxForce=true;this.fxDirty=true;this.shellHandoff();
     this.measure();
     const loop=()=>{this.raf=requestAnimationFrame(loop);this.frame();};loop();
     this.splineT=setInterval(()=>this.patchSpline(),250);
-    this.clockT=setInterval(()=>this.setState({now:Date.now()}),1000);
+    this.clockT=setInterval(()=>{const n=Date.now();if((this.state.screen||'home')!=='home'||this.secNeed!==false||n-this.state.now>=30000)this.setState({now:n});},1000);
     this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
-    this.tickT=setInterval(()=>this.tick(),2800);
+    this.tickT=setInterval(()=>{if((this.state.screen||'home')!=='home'||this.liveNeed!==false)this.tick();},2800);
     this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?700:250);
     this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);
     this.onResize=()=>{this.kickDirty=true;this.fxDirty=true;this.fxC=null;this.setState({p:{...(this.P||this.state.p)}});};window.addEventListener('resize',this.onResize);
@@ -1627,7 +1674,7 @@ class Component extends DCLogic {
   figTick(now){if(!this.figs||!this.figs.size)return;const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<-80||r.top>window.innerHeight+80)return;
     const mob=window.innerWidth<=760;
     this.figs.forEach(f=>{if(!f.el.isConnected){this.figs.delete(f);return;}
-      const box=f.el.closest('[data-art]'),row=box?null:f.el.closest('[data-role-row]'),vis=box?!mob&&box.getAttribute('data-on')==='1':!!row&&mob&&row.getAttribute('data-open')==='true';
+      const box=f.el.closest('[data-art]'),row=box?null:f.el.closest('[data-role-row]'),vis=box?box.getAttribute('data-on')==='1':false;
       if(!vis){if(f.want!=='idle'){f.want='idle';f.act('idle',now);}if(f.tail&&now<f.tail)f.tick(now);return;}
       f.tail=now+600;
       const want=REDUCED?'idle':(HOVER&&!mob)?(this.roleHovK===f.k?'loop':this.roleOnceK===f.k?'once':'idle'):'loop';
@@ -1636,16 +1683,16 @@ class Component extends DCLogic {
   // pinned index: smoothed progress -> a role position that holds on each role, then glides to the next
   rolesGlide(){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const W=window.innerWidth,vh=window.innerHeight;
     const ix=sec.querySelector('[data-r=roles-index]'),win=sec.querySelector('[data-r=roles-window]');if(!ix||!win)return;
-    if(W<=760){if(this.rgOn){this.rgOn=0;this.rgKey=null;ix.style.transform='';ix.querySelectorAll('[data-role-row]').forEach(e=>{e.style.opacity='';});}return;}
+    const mob=W<=760;
     const r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;this.rgOn=1;
     const span=r.height-vh,tg=span>0?clamp(-r.top/span):0;this.rgP=this.rgP==null?tg:this.rgP+(tg-this.rgP)*(REDUCED?1:0.085);if(Math.abs(tg-this.rgP)<0.00015)this.rgP=tg;
     const key=this.rgP.toFixed(5)+'|'+W+'|'+vh;if(key===this.rgKey)return;this.rgKey=key;
     const c=Math.min(11.999,this.rgP*12),k=Math.floor(c),fr=c-k,g=k+(k<11?smooth(clamp((fr-0.56)/0.44)):0);
     let R=this.rgRows;if(!R||R.W!==W||R.H!==vh||!R.el[0]||!R.el[0].isConnected){const el=[...ix.querySelectorAll('[data-role-row]')];R=this.rgRows={W,H:vh,el,y:el.map(e=>e.offsetTop+e.offsetHeight/2)};}
-    if(R.el.length<12)return;
-    const i0=Math.floor(g),i1=Math.min(11,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
-    const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
-    R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});
+    if(!mob&&R.el.length<12)return;
+    if(!mob){const i0=Math.floor(g),i1=Math.min(11,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
+      const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
+      R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});}
     const bar=sec.querySelector('[data-r=roles-bar]');if(bar)bar.style.transform='scaleX('+((g+1)/12).toFixed(4)+')';
     const sk=Math.round(g);if(sk!==this.rgK){const first=this.rgK==null;this.rgK=sk;if(!first&&(this.state.roleSel??0)!==sk){this.roleOnceK=sk;this.roleHovK=-1;this.setState({roleSel:sk});}}}
   // touch tablets: tapping a row scrolls the pinned index to it
@@ -1715,6 +1762,17 @@ class Component extends DCLogic {
       schedule:onField(F.id).slice().sort((a,b)=>a.time.localeCompare(b.time)).map(v=>({...v,tag:v.live?'NOW':v.state==='next'?v.time:'FINAL',on:v.live?'1':'0',score:v.state==='next'?'':v.sa+'–'+v.sb,open:open(v)})),
       rail:views.filter(v=>v.live&&v.field!==F.id).map(v=>({...v,open:open(v)})),railAny:views.some(v=>v.live&&v.field!==F.id),
       scorecard:open(now)}};}
+  // Finale: countdown to the first arrow (live: to the last arrow; afterwards it rests at zero and points to the results)
+  finVals(){const s=this.state,h=React.createElement,END=new Date('2026-09-09T19:00:00+05:30').getTime(),ph=s.now<EVENT_START?'pre':s.now<END?'live':'post';
+    const left=Math.max(0,(ph==='pre'?EVENT_START:END)-s.now),inn=REDUCED||s.p.close>0.3,fresh=inn&&!this.finAt?(this.finAt=performance.now()):0;
+    const units=[['DAYS',String(Math.floor(left/864e5)).padStart(2,'0')],['HRS',pad(Math.floor(left/36e5)%24)],['MIN',pad(Math.floor(left/6e4)%60)],['SEC',pad(Math.floor(left/1e3)%60)]];
+    const first=performance.now()-(this.finAt||0)<2000;
+    return {finaleVideo:this.lazyVideo('fv','assets/finale.mp4'),
+      fnLabel:ph==='pre'?'UNTIL THE FIRST ARROW · 05 SEP 2026 · 08:00 IST':ph==='live'?'LIVE NOW · UNTIL THE LAST ARROW':'THE SERIES IS COMPLETE · RESULTS ARE IN',
+      fnCount:units.map(([l,v],u)=>h('div',{key:l,className:'fn-unit'},h('span',{className:'flaps flaps--fin'},(inn?v:'  ').split('').map((ch,i)=>h('span',{key:i,className:'flap'},
+        h('i',{key:ch,style:{'--fd':first?(u*0.12+i*0.05).toFixed(2)+'s':'0s'}},ch===' '?'\u00a0':ch)))),h('small',null,l))),
+      fnWords:'Every arrow has a moment.'.split(' ').map((w,i)=>h('span',{key:i,className:'fn-w',style:{'--i':i}},w,i<4?'\u00a0':'')),
+      fnPrimary:ph==='post'?{label:'See the results',go:()=>this.go('scores')}:{label:'Begin registration',go:()=>this.startReg('athlete')}};}
   // Help desk relay. Leg 1: COCO matches your question against the FAQ as you type. Hand-off: the baton crosses the exchange zone to the
   // desk that owns the topic (inferred from the best match, or picked). Leg 2: the message runs to the finish and becomes a tracked reference.
   contactVals(){const s=this.state,c=s.contact,h=React.createElement,err=c.errors||{};
@@ -1787,7 +1845,6 @@ class Component extends DCLogic {
       ctRelay:h('div',null,track,h('div',{className:'rl-body'},body)),ctTrackBox:trackBox,
       enqCount:String((s.enquiries||[]).length),hasEnq:(s.enquiries||[]).length>0,noEnq:!(s.enquiries||[]).length,
       adminEnq:(s.enquiries||[]).map(q=>({...q,snip:q.msg.length>90?q.msg.slice(0,90)+'…':q.msg}))};}
-  closingVideoEl(){return this.lazyVideo('cv','assets/closing.mp4');}
   heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
     return React.createElement('video',{key:'hv',autoPlay:!REDUCED,loop:true,muted:true,playsInline:true,preload:'auto',poster:'assets/hero-poster.jpg',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
@@ -1797,13 +1854,20 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',poster:src.replace('.mp4','-poster.webp'),
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('touchstart',this.onTS);window.removeEventListener('touchmove',this.onTM);window.removeEventListener('touchend',this.onTE);window.removeEventListener('scroll',this.onSwScroll);cancelAnimationFrame(this.swRaf);window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
   measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
-    if(near('events'))this.kvPreload();if(!this.state.tvNear&&near('tv'))this.setState({tvNear:true});if(!this.state.boardIn){const lv=this.refs.live&&this.refs.live.current;if(lv&&lv.getBoundingClientRect().top<window.innerHeight*0.8){this.boardInAt=performance.now();this.setState({boardIn:true});}}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+    if(near('events'))this.kvPreload();
+    const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
+    this.secNeed=window.scrollY<vh*1.2||inView('close');this.liveNeed=window.scrollY<vh*1.2||inView('live')||inView('tv');
+    // the home stream only exists while its section is near, so it stops downloading and decoding once you've scrolled past
+    const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose!==!!this.state.tvNear)this.setState({tvNear:tvClose});
+    // the chat robot is WebGL: let it rest while the page scrolls, resume once scrolling settles
+    const bot=this.botApp;if(bot){try{if(!bot._isPaused&&!this.botScrollStop){bot.stop();this.botScrollStop=true;}}catch(e){}clearTimeout(this.botResumeT);
+      this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},260);}if(!this.state.boardIn){const lv=this.refs.live&&this.refs.live.current;if(lv&&lv.getBoundingClientRect().top<window.innerHeight*0.8){this.boardInAt=performance.now();this.setState({boardIn:true});}}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
   // (a step number, the programme caption, the ticket counter, the closing video mounting...).
@@ -1813,29 +1877,40 @@ class Component extends DCLogic {
     if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.setState({p:{...P}});}}
     if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
       this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
-    this.heroParallax();this.kickAnim();this.paperFall();this.mediaDolly();this.rolesGlide();this.figTick(performance.now());
+    if(moved||this.fxDirty)this.awake=240;
+    if(this.awake>0){this.awake--;this.heroParallax();this.kickAnim();this.mediaDolly();this.rolesGlide();}
+    this.figTick(performance.now());
   }
   fxQ(sel){const c=this.fxC||(this.fxC={});let a=c[sel];if(!a||!a.length||!a[0].isConnected){a=[...document.querySelectorAll(sel)];c[sel]=a;}return a;}
   fxArena(p){return {y:((1-ease(clamp((p-0.74)/0.22)))*110).toFixed(2)+'%',op:p>0.7?'1':'0'};}
-  fxTile(p,i){const [x,y,r]=SCATTER[i],tp=ease(clamp(p*2.4)),c=tileCrumple(p,i),dir=i%2?-1:1;
-    return {br:(24+c*120).toFixed(0)+'px',tf:`translate(${(x*(1-tp)).toFixed(1)}px,${(y*(1-tp)+c*40).toFixed(1)}px) rotate(${(r*(1-tp)+c*dir*32).toFixed(2)}deg) scale(${(1-0.82*c).toFixed(4)})`,op:((0.15+0.85*tp)*(1-clamp((c-0.45)/0.4))).toFixed(3)};}
-  fxCarOp(p){return (0.08+0.92*clamp(p*2.2)).toFixed(3);}
-  fxClose(p){const cp=ease(clamp(p*1.25)),lerp=(a,b)=>Math.round(a+(b-a)*cp);
-    return {w:`${(52+48*cp).toFixed(2)}vw`,h:`${(46+54*cp).toFixed(2)}vh`,r:`${(40*(1-cp)).toFixed(1)}px`,bg:`rgb(${lerp(244,0)},${lerp(245,0)},${lerp(247,0)})`,cop:clamp((cp-0.55)/0.45).toFixed(3),vop:clamp(p*2).toFixed(3)};}
+  // the athlete token holds at each station, then travels the line to the next; stations behind it are stamped done
+  jrFx(p){const b=this.fxQ('[data-jr-board]')[0];if(!b||!b.isConnected)return;let L=this.jrL;
+    if(!L||L.w!==b.clientWidth||L.h!==b.clientHeight||!L.st[0]||!L.st[0].isConnected){const st=[...b.querySelectorAll('[data-jr-st]')];if(st.length<7)return;
+      const narrow=b.clientWidth<520,pts=st.map(e=>narrow?[20,e.offsetTop+e.offsetHeight/2]:[e.offsetLeft+e.offsetWidth*0.62,e.offsetTop]);
+      const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+      const d='M'+pts.map(q=>q[0].toFixed(1)+' '+q[1].toFixed(1)).join('L'),paths=b.querySelectorAll('svg path');paths.forEach(x=>x.setAttribute('d',d));
+      const line=paths[1];line.style.strokeDasharray=cum[cum.length-1]+' '+cum[cum.length-1];
+      L=this.jrL={w:b.clientWidth,h:b.clientHeight,st,pts,cum,line,tok:b.querySelector('[data-jr-token]'),cnt:document.querySelector('[data-jr-count]'),last:''};}
+    const raw=clamp((p-0.06)/0.84)*6,k=Math.min(5,Math.floor(raw)),fr=raw-k,g=raw>=6?6:k+smooth(clamp((fr-0.45)/0.55)),i0=Math.min(5,Math.floor(g)),f=g-i0;
+    const A=L.pts[i0],B=L.pts[i0+1],x=A[0]+(B[0]-A[0])*f,y=A[1]+(B[1]-A[1])*f,len=L.cum[i0]+(L.cum[i0+1]-L.cum[i0])*f;
+    L.tok.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0)';L.line.style.strokeDashoffset=(L.cum[6]-len).toFixed(1);
+    const key=L.st.map((e,i)=>i<g-0.5?'d':Math.abs(i-g)<=0.5?'o':'n').join('');if(key!==L.last){L.last=key;L.st.forEach((e,i)=>e.setAttribute('data-st',key[i]==='d'?'done':key[i]==='o'?'on':'next'));
+      if(L.cnt)L.cnt.textContent=pad(Math.round(g)+1)+' / 07';}}
   // discrete state: when this changes the page re-renders once (text, counters, mounted elements)
   fxSig(P){const W=window.innerWidth,pe=REDUCED?1:(P.ev||0);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));
     const evS=pe<KICK.run0+0.01?0:pe<KICK.strike?1:pe<KICK.board0?2:3;
-    return stepIdx+'|'+evS+'|'+((P.close||0)>0.02);}
+    return stepIdx+'|'+evS+'|'+((P.close||0)>0.3);}
   scrollFx(P){const last=this.fxPrev||(this.fxPrev={}),ch=k=>{const v=P[k]||0;if(last[k]===v&&!this.fxForce)return false;last[k]=v;return true;};
     const force=this.fxForce;this.fxForce=false;
     if(ch('tv')){const e=ease(clamp((P.tv||0)*1.55)),W=window.innerWidth,H=window.innerHeight,mob=W<=760,t0=(mob?0.2:0.18)*H*(1-e),b0=(mob?0.22:0.12)*H*(1-e),x0=(mob?0.04:0.19)*W*(1-e),rr=(32*(1-e)).toFixed(1);
       const ins=t0.toFixed(1)+'px '+x0.toFixed(1)+'px '+b0.toFixed(1)+'px '+x0.toFixed(1)+'px';this.fxQ('[data-r=tv-cinema]').forEach(el=>{el.style.clipPath='inset('+ins+' round '+rr+'px)';});this.fxQ('[data-r=tv-ui]').forEach(el=>{el.style.inset=ins;});}
     if(ch('steps')){const A=this.fxArena(P.steps||0);this.fxQ('[data-r=steps-arena]').forEach(el=>{el.style.transform='translateY('+A.y+')';el.style.opacity=A.op;});}
-    if(ch('tiles')){this.fxQ('[data-tile]').forEach((el,i)=>{const X=this.fxTile(P.tiles||0,i);el.style.transform=X.tf;el.style.opacity=X.op;el.style.borderRadius=X.br;});}
-    if(ch('car')){const o=this.fxCarOp(P.car||0);this.fxQ('[data-car-text]').forEach(el=>{el.style.opacity=o;});}
-    if(ch('close')){const C=this.fxClose(P.close||0);this.fxQ('[data-close-win]').forEach(el=>{const st=el.style;st.width=C.w;st.height=C.h;st.borderRadius=C.r;st.background=C.bg;});
-      this.fxQ('[data-close-txt]').forEach(el=>{el.style.opacity=C.cop;});this.fxQ('[data-close-vid]').forEach(el=>{el.style.opacity=C.vop;});}}
+    if(ch('tiles'))this.jrFx(REDUCED?1:(P.tiles||0));
+    if(ch('close')){const p=REDUCED?1:(P.close||0),o=ease(clamp(p/0.42)),c=ease(clamp((p-0.28)/0.2)),t=clamp((p-0.46)/0.3),W=window.innerWidth,H=window.innerHeight,mob=W<=760;
+      const iy=((mob?0.17:0.2)*H*(1-o)).toFixed(1),ix=((mob?0.06:0.22)*W*(1-o)).toFixed(1),rr=(36*(1-o)).toFixed(1);
+      this.fxQ('[data-fn-win]').forEach(el=>{el.style.clipPath='inset('+iy+'px '+ix+'px round '+rr+'px)';el.style.setProperty('--c',c.toFixed(3));el.style.setProperty('--t',t.toFixed(3));});
+      this.fxQ('[data-fn-vid]').forEach(el=>{el.style.transform='scale('+(1.18-0.18*o).toFixed(4)+')';});}}
   // hand-over from the static first-paint hero: let clicks through at once, fade it after its entrance has finished
   shellHandoff(){const sh=document.getElementById('gms-shell');if(!sh)return;sh.style.pointerEvents='none';
     const t0=window.__gmsShellT0||0,wait=Math.max(0,1300-(performance.now()-t0));
@@ -1843,25 +1918,6 @@ class Component extends DCLogic {
     window.addEventListener('scroll',go,{passive:true,once:true});requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(go,wait)));}
   // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
   // Everything is a pure function of scroll progress, so scrolling back up rebuilds the cards.
-  paperFall(){const L=this.paperL||(this.paperL=document.querySelector('[data-paper-layer]'));if(!L||!L.isConnected){this.paperL=null;return;}
-    const p=(this.P||this.state.p).tiles||0;
-    if(p<PAPER.start-0.02){if(L.__on){L.__on=0;L.style.display='none';}return;}
-    const host=L.parentElement,W=host.clientWidth,H=host.clientHeight;
-    if(!L.__on){L.__on=1;L.style.display='block';}
-    if(L.__w!==W||L.__h!==H||!L.__pcs){this.buildPaper(L,host,W,H);L.__lp=-1;}
-    if(Math.abs(L.__lp-p)<1e-4)return;L.__lp=p;
-    const fallEase=t=>t<0.82?Math.pow(t/0.82,2):1-0.07*Math.sin((t-0.82)/0.18*Math.PI);
-    L.__pcs.forEach(q=>{const c=tileCrumple(p,q.card);const vis=clamp((c-0.35)/0.25);
-      if(vis<=0){if(q.shown){q.el.style.opacity='0';q.shown=0;}return;}
-      const t=clamp((p-PAPER.start-q.card*PAPER.stagger-PAPER.crumple*0.7-q.delay)/PAPER.fall);
-      const burst=ease(clamp((c-0.35)/0.65));
-      const sx=q.cx+(q.x0-q.cx)*burst*0.55,sy=q.cy+(q.y0-q.cy)*burst*0.55;
-      const fe=fallEase(t),xe=ease(t);
-      const x=sx+(q.xe-sx)*xe+Math.sin(t*Math.PI*2+q.ph)*q.drift*(1-t);
-      const y=sy+(q.ye-sy)*fe;
-      const rot=q.r0+q.spin*Math.min(1,t*1.15);
-      q.el.style.transform='translate3d('+(x-q.w/2).toFixed(1)+'px,'+(y-q.h/2).toFixed(1)+'px,0) rotate('+rot.toFixed(1)+'deg) scale('+(0.4+0.6*burst).toFixed(3)+')';
-      q.el.style.opacity=vis.toFixed(3);q.shown=1;});}
   buildPaper(L,host,W,H){L.innerHTML='';L.__w=W;L.__h=H;
     let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
     const tiles=[...host.querySelectorAll('[data-tile]')];
@@ -1894,7 +1950,7 @@ class Component extends DCLogic {
     if(c){c.style.translate='0 '+(-y*0.12).toFixed(1)+'px';c.style.opacity=Math.max(0,1-y/(vh*0.7)).toFixed(3);}}
   // Section videos push in slowly while their section scrolls past (desktop only).
   mediaDolly(){if(LITE||REDUCED)return;const y=window.scrollY;if(this.__my===y)return;this.__my=y;const vh=window.innerHeight;
-    document.querySelectorAll('video[data-dolly]').forEach(el=>{const sec=el.closest('section');if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;el.style.scale=(1.1-0.1*clamp((vh-r.top)/(r.height+vh))).toFixed(4);});}
+    this.fxQ('video[data-dolly]').forEach(el=>{const sec=el.closest('section');if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;el.style.scale=(1.1-0.1*clamp((vh-r.top)/(r.height+vh))).toFixed(4);});}
   // ---- Site motion: headings reveal line by line, blocks rise with a short stagger, numbers count up ----
   motionScan(){if(REDUCED)return;const vh=window.innerHeight;
     const io=this.mio||(this.mio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;this.mio.unobserve(el);el.classList.add('gms-in');if(el.__count)this.countUp(el);}),{threshold:0.14,rootMargin:'0px 0px -6% 0px'}));
@@ -1979,7 +2035,7 @@ class Component extends DCLogic {
   }
   // Render each 3D scene at the resolution it is actually shown at, and stop scenes that are off-screen.
   tuneSpline(app,v,url){const dpr=window.devicePixelRatio||1;
-    const pr=url.indexOf('wMuw2CRsxbceMWK0')>=0?Math.min(dpr,LITE?1.5:2):Math.min(dpr,1.25);
+    const pr=url.indexOf('wMuw2CRsxbceMWK0')>=0?Math.min(dpr,LITE?1.25:1.75):Math.min(dpr,1.25);if(url.indexOf('wMuw2CRsxbceMWK0')>=0)this.botApp=app;
     try{app._getPixelRatio=()=>pr;if(app._renderer&&app._renderer.getPixelRatio()!==pr){app._renderer.setPixelRatio(pr);app._resize&&app._resize();}}catch(e){}
     try{const io=new IntersectionObserver(es=>es.forEach(e=>{try{if(e.isIntersecting){if(app.isStopped||app._isPaused)app.play();}else if(!app._isPaused)app.stop();}catch(err){}}),{rootMargin:'200px'});io.observe(v);(this.sios||(this.sios=[])).push(io);}catch(e){}
     requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('gms-ready')));}
@@ -2082,18 +2138,16 @@ class Component extends DCLogic {
       
       
       
-      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),momentVideo:this.lazyVideo('mv','assets/moment.mp4'),
+      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),
       ...this.newVals(),...this.contactVals(),
-      showVideo:s.p.close>0.02,closingVideo:s.p.close>0.02?this.closingVideoEl():null,videoOp:this.fxClose(s.p.close).vop,botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
+      ...this.finVals(),botReady:!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
       groups:['08:00','10:00','10:27'].map(time=>({time,items:DAY1.filter(d=>d[0]===time).map(([tm,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;
         return {name:ev.name,code,cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'80px':'0px',
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'DIVISION',v:ev.cat.name},{k:'ROUND',v:tm==='08:00'?'Qualification':'Elimination'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
-      tiles:MODULES.map((m,i)=>{const [x,y,r]=SCATTER[i];const c=tileCrumple(s.p.tiles,i),dir=i%2?-1:1;return {...m,num:pad(i+1),gc:m.wide?'1 / -1':'auto',mh:m.wide?'clamp(76px,11vh,120px)':'clamp(92px,16vh,200px)',wide:!!m.wide,narrow:!m.wide,chips:(m.chips||[]).map(t=>({t})),...this.fxTile(s.p.tiles,i)};}),
-      carTextOp:this.fxCarOp(s.p.car),
-      ...(()=>{const C=this.fxClose(s.p.close);return {winW:C.w,winH:C.h,winR:C.r,winBg:C.bg,winContentOp:C.cop};})(),
+      journey:MODULES.map((m,i)=>({icon:m.icon,title:m.title.replace('Competition Management System','Competition & results'),desc:m.desc.split('. ').slice(0,2).join('. '),num:pad(i+1),stamp:JOURNEY[i][0],team:JOURNEY[i][1],gc:String(JOURNEY[i][2]),gr:String(JOURNEY[i][3])})),
       modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
       rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
