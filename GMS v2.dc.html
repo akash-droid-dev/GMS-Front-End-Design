@@ -369,6 +369,35 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 .gms-in .gms-w>span{transform:none}
 .gms-rv{opacity:0;translate:0 26px;filter:blur(6px);transition:opacity 1s var(--gms-soft) var(--d,0s),translate 1.2s var(--gms-ease) var(--d,0s),filter 1s var(--gms-soft) var(--d,0s)}
 .gms-rv.gms-in{opacity:1;translate:none;filter:none}
+/* Half-filled liquid (Back button): frosted glass with blue water up to the middle; it rises on hover */
+.gms-liquid--half{background:linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(236,241,252,.82) 100%)!important;color:#0B1A4A!important;border:1px solid rgba(47,91,255,.28)!important;-webkit-backdrop-filter:blur(12px) saturate(1.5);backdrop-filter:blur(12px) saturate(1.5);box-shadow:inset 0 1px 0 #fff,0 10px 26px rgba(15,20,40,.12)!important}
+.gms-liquid--half::before,.gms-liquid--half::after{background-size:72px 100%;animation-name:gmsWaterHalf}
+.gms-liquid--half::before{top:42%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(102,206,255,.55)'/%3E%3C/svg%3E")}
+.gms-liquid--half::after{top:52%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(47,91,255,.55)'/%3E%3C/svg%3E")}
+.gms-liquid--half:hover::before,.gms-liquid--half:hover::after,.gms-liquid--half:focus-visible::before,.gms-liquid--half:focus-visible::after{translate:0 -18%}
+@keyframes gmsWaterHalf{from{transform:translateX(0)}to{transform:translateX(-72px)}}
+[data-r=backwrap]{position:fixed;z-index:49;top:82px;left:max(16px,calc(50% - 620px));animation:gmsBackIn .7s var(--gms-ease) .15s both}
+[data-r=backbtn]{all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 14px 7px 10px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.01em}
+[data-r=backbtn] svg{transition:transform .45s var(--gms-ease)}[data-r=backbtn]:hover svg{transform:translateX(-3px)}
+[data-r=backbtn]:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
+@keyframes gmsBackIn{from{opacity:0;transform:translateX(-14px) scale(.92);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+main[data-screen-label]:not([data-screen-label="Home"]){padding-top:138px!important;animation:gmsPage .9s var(--gms-ease) both}
+@keyframes gmsPage{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@media (max-width:640px){[data-r=backwrap]{top:76px}main[data-screen-label]:not([data-screen-label="Home"]){padding-top:126px!important}}
+/* 15 events: the paragraph sits beside the heading, so the block stays above the player's run-in */
+[data-ev-head]{display:grid;grid-template-columns:max-content minmax(0,400px);column-gap:40px;row-gap:12px;align-items:start;max-width:100%}
+[data-ev-head]>span:first-child{grid-column:1/-1}[data-ev-head] h2{grid-column:1}[data-ev-head] [data-r=ev-p]{grid-column:2;grid-row:2;padding-top:2px}[data-ev-head]>span:last-child{grid-column:1}
+@media (max-width:900px){[data-ev-head]{grid-template-columns:minmax(0,1fr)}[data-ev-head] [data-r=ev-p]{grid-column:1;grid-row:auto}}
+/* Hover and press, site-wide: buttons and tabs rise on a soft spring, press in on click, and the small ones lean toward the pointer */
+button,[role=tab],a[href]{transition-property:translate,scale,transform,background,background-color,color,box-shadow,border-color,opacity,filter!important;transition-duration:.5s!important;transition-timing-function:var(--gms-ease)!important}
+@media (hover:hover) and (pointer:fine){
+ button:not(:disabled):not([data-mag]):hover,[role=tab]:not([data-mag]):hover{translate:0 -2px}
+ button:not(:disabled):hover{filter:brightness(1.04) saturate(1.06)}
+ .gms-liquid:hover{box-shadow:0 16px 34px rgba(47,91,255,.28),inset 0 1px 0 rgba(255,255,255,.6)!important}
+ [data-r=navlinks] button[data-on="0"]:hover{background:rgba(11,13,18,.06)!important}
+}
+button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.12s!important}
+@media (prefers-reduced-motion:reduce){button,[role=tab],a[href]{transition-duration:.01s!important}main[data-screen-label]{animation:none!important}[data-r=backwrap]{animation:none}}
 /* Event centre (Live Scores page) */
 [data-r=ec-top]{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
 [data-r=ec-filters]{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -647,7 +676,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
   </button>
   <div data-r="navlinks" data-open="{{ menuOpen }}" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-      <button onClick="{{ n.go }}" onMouseEnter="{{ n.enter }}" onMouseLeave="{{ n.leave }}" aria-expanded="{{ n.exp }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }};transition:background .2s ease,color .2s ease">{{ n.label }}<span style="font-family:'Material Symbols Rounded';font-size:18px;width:{{ n.cw }};overflow:hidden;transition:transform .3s ease;transform:rotate({{ n.rot }})">expand_more</span></button>
+      <button data-on="{{ n.on }}" onClick="{{ n.go }}" onMouseEnter="{{ n.enter }}" onMouseLeave="{{ n.leave }}" aria-expanded="{{ n.exp }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }};transition:background .2s ease,color .2s ease">{{ n.label }}<span style="font-family:'Material Symbols Rounded';font-size:18px;width:{{ n.cw }};overflow:hidden;transition:transform .3s ease;transform:rotate({{ n.rot }})">expand_more</span></button>
     </sc-for>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
@@ -676,6 +705,9 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
     </div>
   </div>
 </nav>
+<sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+  <div data-r="backwrap"><button type="button" class="gms-liquid gms-liquid--half" data-r="backbtn" onClick="{{ goBack }}" aria-label="Go back to the previous page"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Back</span></button></div>
+</sc-if>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <main data-screen-label="Home">
@@ -731,11 +763,11 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
   <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:380vh;background:#F6F7F9">
     <div data-ev-sticky style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(70% 60% at 70% 40%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
       <div data-kick aria-hidden="true" style="position:absolute;inset:0"></div>
-      <div data-r="ev-head" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:96px 32px 0;box-sizing:border-box;pointer-events:none">
-        <div data-ev-head style="display:flex;flex-direction:column;gap:14px;max-width:min(420px,100%)">
+      <div data-r="ev-head" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:78px 32px 0;box-sizing:border-box;pointer-events:none">
+        <div data-ev-head>
           <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF">PROGRAMME · 2026</span>
-          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(36px,min(4.6vw,8vh),72px);letter-spacing:-.05em;line-height:.95">15 events. One arena.</h2>
-          <p data-r="ev-p" style="margin:0;max-width:340px;font-size:16px;line-height:1.55;color:#4A505C">Three divisions, five medal events each. Keep scrolling: the strike opens up the full programme.</p>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(36px,min(4.6vw,8vh),72px);letter-spacing:-.05em;line-height:.95">15 events.<br>One arena.</h2>
+          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:#4A505C">Three divisions, five medal events each. Keep scrolling: the strike opens the full programme.</p>
           <span style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.12em;color:#5B6270"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span>{{ evStage }}</span>
         </div>
       </div>
@@ -1515,6 +1547,14 @@ class Component extends DCLogic {
     this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
     this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
+    try{if(!history.state||!history.state.gms)history.replaceState({gms:this.state.screen||this.props.startScreen||'home'},'');}catch(e){}
+    this.onPop=e=>{const sc=(e.state&&e.state.gms)||'home';this.setState({screen:sc,modal:null,regOpen:false,menuOpen:false});window.scrollTo(0,0);};window.addEventListener('popstate',this.onPop);
+    // magnetic hover: small buttons and tabs lean a few pixels toward the pointer (fine pointers only)
+    if(HOVER&&!REDUCED){let mag=null,raf=0;const rel=el=>{if(el){el.style.translate='';el.removeAttribute('data-mag');}};
+      this.onMag=e=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;const b=e.target.closest&&e.target.closest('button,[role=tab],a[href]');
+        if(b!==mag){rel(mag);mag=null;}if(!b||b.disabled)return;const r=b.getBoundingClientRect();if(r.width>280||r.height>72)return;
+        mag=b;b.setAttribute('data-mag','');const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;b.style.translate=(dx*7).toFixed(1)+'px '+(dy*5-2).toFixed(1)+'px';});};
+      this.onMagOut=()=>{rel(mag);mag=null;};window.addEventListener('pointermove',this.onMag,{passive:true});document.addEventListener('pointerleave',this.onMagOut);window.addEventListener('blur',this.onMagOut);}
     this.onScroll=()=>this.measure();this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;};
     window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.fxForce=true;this.fxDirty=true;this.shellHandoff();
@@ -1740,10 +1780,11 @@ class Component extends DCLogic {
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});io.observe(el);(this.vios||(this.vios=[])).push(io);},
       style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'0% 42%',display:'block'}});}
-  lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
-    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.style.opacity='0';el.style.transition='opacity 1.2s cubic-bezier(.2,.8,.2,1)';const show=()=>{el.style.opacity='1';};el.addEventListener('playing',show,{once:true});el.addEventListener('loadeddata',show,{once:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!el.getAttribute('src'))el.src=src;const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{rootMargin:'300px'});io.observe(el);(this.vios||(this.vios=[])).push(io);},
+  // muted loop that starts downloading about a screen and a half before it scrolls in; its first frame (poster) shows instantly
+  lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',poster:src.replace('.mp4','-poster.webp'),
+    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
@@ -1957,11 +1998,14 @@ class Component extends DCLogic {
       order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
     return h('div',{style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
   tick(){this.setState(s=>({live:liveStep(s.live)}));}
-  go(screen,after){this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
+  // every page change gets a browser history entry, so the Back button and the phone's back gesture both return to the last page
+  pushNav(screen){const cur=this.state.screen||'home';if(screen===cur)return;try{history.pushState({gms:screen},'');}catch(e){}}
+  go(screen,after){this.pushNav(screen);this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
+  goBack(){const st=history.state;if(st&&st.gms)history.back();else this.go('home');}
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
   closeRegSoon(){clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:false}),220);}
-  startReg(type,ev){this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
+  startReg(type,ev){this.pushNav('register');this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
   setF(k,v){this.setState(s=>({form:{...s.form,[k]:v},regError:''}));}
   docList(){return DOCS[this.state.regType]||DOCS._;}
   submitReg(){const s=this.state,f=s.form;
@@ -2008,8 +2052,8 @@ class Component extends DCLogic {
       navItems:nav.map(([label,go,k])=>({label,...(label==='Registration'?{
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
-        :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
-      goHome:()=>this.go('home'),goScores:()=>this.go('scores'),goTv:()=>{this.setState({chan:'finals'});this.go('tv');},
+        :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.go('scores'),goTv:()=>{this.setState({chan:'finals'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
