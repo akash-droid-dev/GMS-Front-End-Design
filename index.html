@@ -352,6 +352,40 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 .gms-in .gms-w>span{transform:none}
 .gms-rv{opacity:0;translate:0 26px;filter:blur(6px);transition:opacity 1s var(--gms-soft) var(--d,0s),translate 1.2s var(--gms-ease) var(--d,0s),filter 1s var(--gms-soft) var(--d,0s)}
 .gms-rv.gms-in{opacity:1;translate:none;filter:none}
+/* Live: split-flap stadium board */
+[data-r=flap-board]{border-radius:28px;background:#FFFFFF;border:1px solid #E6EAF0;box-shadow:0 30px 70px rgba(15,20,40,.07);padding:8px 12px 10px}
+[data-r=flap-head],[data-r=flap-row]{display:grid;grid-template-columns:104px minmax(0,1.25fr) minmax(0,1fr) auto minmax(0,1fr) 128px;align-items:center;gap:16px}
+[data-r=flap-head]{padding:12px 12px 10px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#8A909C;border-bottom:1px solid #EEF0F4}
+[data-r=flap-row]{appearance:none;-webkit-appearance:none;margin:0;border:0;background:none;font:inherit;color:inherit;text-align:left;box-sizing:border-box;cursor:pointer;width:100%;padding:14px 12px;border-bottom:1px solid #F0F2F6;border-radius:16px;transition:background .3s var(--gms-ease)}
+[data-r=flap-row]:last-child{border-bottom:0}
+[data-r=flap-row]:hover,[data-r=flap-row]:focus-visible{background:#F5F7FC}
+[data-r=flap-row]:focus-visible{outline:2px solid #2F5BFF;outline-offset:-2px}
+[data-fl=field]{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#4A505C}
+[data-fl=event]{min-width:0}[data-fl=event] b{display:block;font-weight:600;font-size:14px;line-height:1.25;color:#0B0D12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}[data-fl=event] small{display:block;margin-top:2px;font-size:12px;color:#8A909C}
+[data-fl=a],[data-fl=b]{display:flex;align-items:center;gap:8px;min-width:0}
+[data-fl=a] small,[data-fl=b] small{flex:none;padding:3px 6px;border-radius:6px;background:#F1F3F7;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C}
+[data-fl=a][data-win=true] small,[data-fl=b][data-win=true] small{background:#2F5BFF;color:#fff}
+[data-fl=score]{display:flex;align-items:center;gap:6px}
+[data-fl=dash]{font-family:'Bricolage Grotesque';font-weight:700;font-size:22px;color:#C3C8D2}
+[data-fl=status]{display:flex;align-items:center;gap:8px}
+[data-fl=dot]{width:7px;height:7px;border-radius:50%;flex:none;background:#E5484D;animation:gmsPulse 1.6s infinite}
+[data-r=flap-row][data-live="0"] [data-fl=dot]{background:#C3C8D2;animation:none}
+.flaps{display:inline-flex;gap:1px;white-space:nowrap}
+.flap{position:relative;display:inline-grid;place-items:center;min-width:.74em;height:1.36em;border-radius:.2em;background:linear-gradient(180deg,#FCFDFF 0 49%,#EDF1F7 51% 100%);box-shadow:0 1px 0 rgba(15,20,40,.07),inset 0 0 0 1px rgba(15,20,40,.05);font-family:'JetBrains Mono';font-weight:700;font-size:13px;color:#0B0D12;overflow:hidden;perspective:120px}
+.flap::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(15,20,40,.10)}
+.flap>i{font-style:normal;display:block;line-height:1;animation:gmsFlap .55s cubic-bezier(.3,.7,.3,1) var(--fd,0s) both}
+@keyframes gmsFlap{0%{transform:rotateX(95deg);opacity:0}55%{transform:rotateX(-16deg);opacity:1}100%{transform:none;opacity:1}}
+.flaps--score .flap{font-size:22px;color:#2F5BFF}
+.flaps--status .flap{font-size:10.5px;min-width:.7em}
+.flaps--short{display:none}
+@media (max-width:1100px){[data-r=flap-head],[data-r=flap-row]{grid-template-columns:92px minmax(0,1fr) minmax(0,.9fr) auto minmax(0,.9fr) 112px;gap:12px}}
+@media (max-width:860px){[data-r=flap-head]{display:none}
+ [data-r=flap-row]{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"fd st st" "a sc b" "ev ev ev";row-gap:10px;padding:14px 8px}
+ [data-fl=field]{grid-area:fd}[data-fl=status]{grid-area:st;justify-content:flex-end}[data-fl=a]{grid-area:a}[data-fl=score]{grid-area:sc}[data-fl=b]{grid-area:b;justify-content:flex-end;flex-direction:row-reverse}[data-fl=event]{grid-area:ev;text-align:center}
+ [data-fl=event] b{white-space:normal}.flaps--score .flap{font-size:20px}
+ [data-fl=a],[data-fl=b]{flex-direction:column;align-items:flex-start;gap:5px}[data-fl=b]{align-items:flex-end}
+ .flaps--long{display:none}.flaps--short{display:inline-flex}.flaps--short .flap{font-size:12px}}
+@media (max-width:420px){.flaps--short .flap{font-size:11px}.flaps--score .flap{font-size:18px}}
 /* Programme: a white-glass GOAL pill, then a medal podium with one glass step per division */
 [data-goal-board]{position:absolute;z-index:4;left:50%;top:30%;transform:translate(-50%,0);opacity:0;visibility:hidden;pointer-events:none;box-sizing:border-box;max-width:calc(100vw - 32px);display:flex;align-items:center;gap:12px;padding:8px 16px 8px 9px;border-radius:999px;background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.95);box-shadow:0 16px 40px rgba(15,20,40,.10),0 0 0 1px rgba(47,91,255,.10)}
 [data-goal-dot]{position:relative;width:30px;height:30px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#6E8EFF,#2F5BFF 60%,#1A3FD6);box-shadow:0 6px 14px rgba(47,91,255,.35)}
@@ -726,32 +760,50 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
     </div>
   </section>
 
-  <section data-r="live-section" style="background:#F4F5F7;padding:20px 32px 110px">
-    <div data-r="live-grid" data-rise style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px">
-      <button onClick="{{ goScores }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:22px;padding:32px;border-radius:28px;background:#fff;border:1px solid #E3E6EB">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>LIVE NOW</span>
-          <span style="font-family:'Material Symbols Rounded';font-size:24px">arrow_outward</span>
+  <section data-r="live-section" ref="{{ liveRef }}" style="background:#F4F5F7;padding:96px 32px 80px">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+      <div data-rise style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite"></span>LIVE NOW · {{ liveNowCount }} MATCHES ON 3 FIELDS</span>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Live from the field.</h2>
         </div>
-        <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.04em">Live scores</div>
-        <div style="display:flex;flex-direction:column">
-          <sc-for list="{{ liveTop }}" as="m" hint-placeholder-count="3">
-            <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #EEF0F3">
-              <span style="font-family:'Material Symbols Rounded';font-size:22px;color:#5B6270">{{ m.icon }}</span>
-              <span style="font-weight:500;font-size:15px">{{ m.a }} <span style="color:#8A909C">vs</span> {{ m.b }}</span>
-              <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">{{ m.scoreLine }}</span>
+        <button onClick="{{ goScores }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14px">Open the event centre<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_outward</span></button>
+      </div>
+      <div data-r="flap-board" data-in="{{ boardIn }}">
+        <div data-r="flap-head" aria-hidden="true"><span>FIELD</span><span>EVENT</span><span>ARCHER</span><span style="text-align:center">SCORE</span><span>ARCHER</span><span>STATUS</span></div>
+        <sc-for list="{{ board }}" as="b" hint-placeholder-count="6">
+          <button data-r="flap-row" data-live="{{ b.liveAttr }}" onClick="{{ b.open }}" aria-label="{{ b.aria }}">
+            <span data-fl="field"><span style="width:7px;height:7px;border-radius:50%;flex:none;background:{{ b.color }}"></span>{{ b.fieldShort }}</span>
+            <span data-fl="event"><b>{{ b.event }}</b><small>{{ b.round }}</small></span>
+            <span data-fl="a" data-win="{{ b.winA }}"><small>{{ b.A1 }}</small>{{ b.nameA }}{{ b.nameAs }}</span>
+            <span data-fl="score">{{ b.scoreA }}<span data-fl="dash">:</span>{{ b.scoreB }}</span>
+            <span data-fl="b" data-win="{{ b.winB }}"><small>{{ b.B1 }}</small>{{ b.nameB }}{{ b.nameBs }}</span>
+            <span data-fl="status"><span data-fl="dot"></span>{{ b.statusEl }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:220vh;background:#F4F5F7">
+    <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
+      <div data-r="tv-cinema" style="position:absolute;inset:0;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
+        {{ tvVideo }}
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.55) 0%,rgba(8,10,16,0) 32%,rgba(8,10,16,0) 52%,rgba(8,10,16,.82) 100%)"></div>
+        <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11.5px;font-weight:700;letter-spacing:.1em"><span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ tvNow.fieldName }}</span>
+            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em">{{ tvNow.status }} · {{ tvNow.A1 }} {{ tvNow.sa }} – {{ tvNow.sb }} {{ tvNow.B1 }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+            <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
+              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7)">{{ tvNow.event }} · {{ tvNow.round }}</span>
+              <span data-r="tv-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">{{ tvNow.A0 }} <span style="opacity:.55">vs</span> {{ tvNow.B0 }}</span>
             </div>
-          </sc-for>
+            <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px">play_arrow</span>Watch live</button>
+          </div>
         </div>
-      </button>
-      <button onClick="{{ goTv }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:32px;border-radius:28px;background:#0B0D12;color:#fff;min-height:340px">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#FF7A7E">STREAMING ON YOUTUBE</span>
-          <span style="font-family:'Material Symbols Rounded';font-size:24px">arrow_outward</span>
-        </div>
-        <div style="width:84px;height:84px;border-radius:50%;background:#E5484D;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:44px;align-self:center">play_arrow</div>
-        <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:40px;letter-spacing:-.04em">Live TV</div>
-      </button>
+      </div>
     </div>
   </section>
 
@@ -1251,6 +1303,47 @@ const STREAMS=[
 {title:'Compound Range',sub:'Compound Open Women Team · Semi-finals',icon:'adjust',tag:'LIVE'},
 {title:'W1 Range',sub:'W1 Men Individual · Quarter-finals',icon:'accessible_forward',tag:'LIVE'},
 {title:'Ceremony Stage',sub:'Medal ceremony · 17:30 IST',icon:'emoji_events',tag:'LATER'}];
+// ---- Live archery: matches on three fields, scored arrow by arrow. Recurve uses the set system (first to 6 set points,
+// 2 per end won, 1 for a tie); Compound and W1 are cumulative over 5 ends of 3 arrows. liveShoot() fires the next arrow. ----
+const FIELDS=[{id:'finals',name:'Finals Field',short:'FINALS',icon:'target'},{id:'compound',name:'Compound Range',short:'COMPOUND',icon:'adjust'},{id:'w1',name:'W1 Range',short:'W1 RANGE',icon:'accessible_forward'}];
+// field, division (CATS index), event, round, archer A [name, NPC], archer B, state, start time (IST)
+const LIVE_SEED=[
+['finals',0,'Men Individual','Gold medal match',['A. Verma','IND'],['S. Kim','KOR'],'live','16:10'],
+['compound',1,'Women Individual','Semi-final',['P. Sarlak','IRI'],['J. Carlson','USA'],'live','15:50'],
+['w1',2,'Men Individual','Quarter-final',['K. Tanaka','JPN'],['D. Novak','CZE'],'live','15:55'],
+['compound',1,'Men Individual','Semi-final',['R. Patel','IND'],['L. Bayer','GER'],'live','16:15'],
+['finals',0,'Women Individual','Bronze medal match',['H. Kaur','IND'],['M. Rossi','ITA'],'next','16:40'],
+['w1',2,'Women Individual','Semi-final',['L. Chen','CHN'],['E. Hughes','GBR'],'next','16:30'],
+['finals',0,'Mixed Team','Gold medal match',['India','IND'],['Korea','KOR'],'next','17:05'],
+['compound',1,'Mixed Team','Bronze medal match',['Türkiye','TUR'],['Great Britain','GBR'],'final','15:20'],
+['w1',2,'Men Individual','Quarter-final',['M. Silva','BRA'],['T. Okafor','NGR'],'final','15:10']];
+const arrowVal=v=>v==='X'?10:v;
+const endSum=a=>a.reduce((t,v)=>t+arrowVal(v),0);
+const liveArrow=fmt=>{const r=Math.random();return fmt==='total'?(r<.24?'X':r<.66?10:r<.93?9:8):(r<.12?'X':r<.42?10:r<.78?9:r<.94?8:7);};
+const liveScore=m=>{if(m.fmt==='total'){let A=0,B=0;m.ends.forEach(e=>{A+=endSum(e.a);B+=endSum(e.b);});return [A,B];}
+  let A=0,B=0;m.ends.forEach(e=>{if(e.a.length<3||e.b.length<3)return;const a=endSum(e.a),b=endSum(e.b);if(a>b)A+=2;else if(b>a)B+=2;else{A++;B++;}});return [A,B];};
+const liveDone=m=>{const full=m.ends.filter(e=>e.a.length===3&&e.b.length===3).length,[A,B]=liveScore(m);return m.fmt==='set'?(A>=6||B>=6):(full>=5&&A!==B);};
+const liveShoot=m=>{const ends=m.ends.map(e=>({a:e.a.slice(),b:e.b.slice()}));let cur=ends[ends.length-1];
+  if(!cur||(cur.a.length>=3&&cur.b.length>=3)){cur={a:[],b:[]};ends.push(cur);}
+  const side=cur.a.length<=cur.b.length?'a':'b';cur[side].push(liveArrow(m.fmt));return {...m,ends,last:side};};
+const liveInit=()=>LIVE_SEED.map(([field,div,ev,round,A,B,state,time],i)=>{let m={id:'m'+i,field,div,ev,round,A,B,state,time,fmt:div===0?'set':'total',ends:[],last:''};
+  const n=state==='live'?5+i*3:state==='final'?60:0;for(let k=0;k<n&&!liveDone(m);k++)m=liveShoot(m);
+  if(state==='live'&&liveDone(m))m={...m,ends:m.ends.slice(0,-1)};return m;});
+// one arrow in one live match; a finished match goes final, the next match on that field goes live,
+// and when a field runs out of matches its oldest result is reset as the next match (so the demo never stops)
+const liveStep=list=>{const live=list.filter(m=>m.state==='live');if(!live.length)return list;const pick=live[Math.floor(Math.random()*live.length)];
+  let out=list.map(m=>m.id===pick.id?liveShoot(m):m);const now=out.find(m=>m.id===pick.id);
+  if(liveDone(now)){out=out.map(m=>m.id===now.id?{...m,state:'final'}:m);
+    let nx=out.find(m=>m.field===now.field&&m.state==='next');
+    if(!nx){const old=out.find(m=>m.field===now.field&&m.state==='final'&&m.id!==now.id);if(old)out=out.map(m=>m.id===old.id?{...m,state:'next',ends:[],last:''}:m);nx=out.find(m=>m.field===now.field&&m.state==='next');}
+    if(nx)out=out.map(m=>m.id===nx.id?{...m,state:'live'}:m);}
+  return out;};
+// display helpers
+const liveView=m=>{const [A,B]=liveScore(m),done=m.state==='final',full=m.ends.filter(e=>e.a.length===3&&e.b.length===3).length,cur=m.ends.length,c=CATS[m.div];
+  const status=m.state==='next'?'NEXT '+m.time:done?'FINAL':(m.fmt==='set'?'SET ':'END ')+Math.max(1,cur);
+  return {...m,A0:m.A[0],A1:m.A[1],B0:m.B[0],B1:m.B[1],sa:m.state==='next'?'–':String(A),sb:m.state==='next'?'–':String(B),status,live:m.state==='live',color:c.color,tint:c.tint,divName:c.name,
+    event:c.name+' '+m.ev,winA:done&&A>B,winB:done&&B>A,fieldName:(FIELDS.find(f=>f.id===m.field)||FIELDS[0]).name,fieldShort:(FIELDS.find(f=>f.id===m.field)||FIELDS[0]).short,full};};
+const liveOrder=list=>list.slice().sort((a,b)=>({live:0,next:1,final:2}[a.state]-{live:0,next:1,final:2}[b.state])||a.time.localeCompare(b.time));
 const SEED=[
 {id:'GMS-26-0412',name:'Harvinder Kaur',type:'Athlete',status:'Pending'},
 {id:'GMS-26-0409',name:'Lee Seo-yeon',type:'Athlete',status:'Pending'},
@@ -1313,7 +1406,7 @@ const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',ev
 
 class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
-    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0},now:Date.now(),
+    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{topic:null,name:'',email:'',msg:'',errors:{},phase:'form',ref:'',sent:null},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m COCO! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
@@ -1335,7 +1428,7 @@ class Component extends DCLogic {
   refs={};
   ref(k){return this.refs[k]||(this.refs[k]=React.createRef());}
   componentDidMount(){
-    this.target={hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
+    this.target={hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0};this.sp={};this.tilt={x:0,y:0,sx:0,sy:0};this.ctilt={x:0,y:0,sx:0,sy:0};this.spin=null;this.postHover=-1;this.postLift=[0,0,0];this.mx=0;this.smx=0;this.t0=performance.now();this.splineDone=new WeakSet();
     this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
     this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});
@@ -1437,6 +1530,22 @@ class Component extends DCLogic {
   // touch tablets: tapping a row scrolls the pinned index to it
   roleGoTo(k){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect(),span=r.height-window.innerHeight;
     window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/12,behavior:REDUCED?'auto':'smooth'});}
+  // Live: split-flap board rows (live first), and the match shown on the home cinema (the live Finals Field match)
+  liveVals(){const s=this.state,h=React.createElement,fresh=s.boardIn&&performance.now()-(this.boardInAt||0)<2600;
+    const flap=(txt,len,row,cls,right)=>{const u=(s.boardIn?String(txt):'').toUpperCase().slice(0,len),t=right?u.padStart(len,' '):u.padEnd(len,' ');
+      return h('span',{className:'flaps'+(cls?' '+cls:'')},t.split('').map((ch,i)=>h('span',{key:i,className:'flap'},h('i',{key:ch,style:{'--fd':fresh?(row*0.08+i*0.025).toFixed(3)+'s':'0s'}},ch===' '?'\u00a0':ch))));};
+    const sur=n=>n.split(' ').pop();
+    const views=liveOrder(s.live).map(liveView),live=views.filter(v=>v.live),tv=views.find(v=>v.live&&v.field==='finals')||live[0]||views[0];
+    return {boardIn:s.boardIn?'1':'0',liveNowCount:String(live.length),
+      board:views.slice(0,6).map((v,row)=>({...v,liveAttr:v.live?'1':'0',winA:v.winA?'true':'false',winB:v.winB?'true':'false',aria:v.event+', '+v.round+': '+v.A0+' '+v.sa+', '+v.B0+' '+v.sb+', '+v.status,
+        nameA:flap(v.A0,11,row,'flaps--long'),nameB:flap(v.B0,11,row,'flaps--long'),nameAs:flap(sur(v.A0),8,row,'flaps--short'),nameBs:flap(sur(v.B0),8,row,'flaps--short'),scoreA:flap(v.sa,3,row,'flaps--score',1),scoreB:flap(v.sb,3,row,'flaps--score'),statusEl:flap(v.status,10,row,'flaps--status'),
+        open:()=>{this.setState({sel:v.id});this.go('scores');}})),
+      tvNow:tv,tvVideo:this.tvFeedEl()};}
+  // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
+  tvFeedEl(){const h=React.createElement,id=(this.props.youtubeVideoId||'jT9C2wBHn6c').trim(),cov={position:'absolute',left:'50%',top:'50%',width:'max(100%, 177.78vh)',height:'max(100%, 56.25vw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:'none'};
+    return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0D12'}},
+      h('img',{src:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',alt:'',decoding:'async',loading:'lazy',style:{...cov,objectFit:'cover',filter:'saturate(1.05)'}}),
+      this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&modestbranding=1&playsinline=1&rel=0',title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
   // Contact help desk: topic routing, live desk status on IST, validation, paper-plane send, reference ticket, admin enquiries
   contactVals(){const s=this.state,c=s.contact,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),h=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&h>=9&&h<19;
@@ -1486,9 +1595,9 @@ class Component extends DCLogic {
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
-  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events')};
+  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
-    if(near('events'))this.kvPreload();if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+    if(near('events'))this.kvPreload();if(!this.state.tvNear&&near('tv'))this.setState({tvNear:true});if(!this.state.boardIn){const lv=this.refs.live&&this.refs.live.current;if(lv&&lv.getBoundingClientRect().top<window.innerHeight*0.8){this.boardInAt=performance.now();this.setState({boardIn:true});}}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
   // (a step number, the programme caption, the ticket counter, the closing video mounting...).
@@ -1514,6 +1623,8 @@ class Component extends DCLogic {
     return stepIdx+'|'+evS+'|'+((P.close||0)>0.02);}
   scrollFx(P){const last=this.fxPrev||(this.fxPrev={}),ch=k=>{const v=P[k]||0;if(last[k]===v&&!this.fxForce)return false;last[k]=v;return true;};
     const force=this.fxForce;this.fxForce=false;
+    if(ch('tv')){const e=ease(clamp((P.tv||0)*1.55)),W=window.innerWidth,H=window.innerHeight,mob=W<=760,t0=(mob?0.2:0.18)*H*(1-e),b0=(mob?0.22:0.12)*H*(1-e),x0=(mob?0.04:0.19)*W*(1-e),rr=(32*(1-e)).toFixed(1);
+      const ins=t0.toFixed(1)+'px '+x0.toFixed(1)+'px '+b0.toFixed(1)+'px '+x0.toFixed(1)+'px';this.fxQ('[data-r=tv-cinema]').forEach(el=>{el.style.clipPath='inset('+ins+' round '+rr+'px)';});this.fxQ('[data-r=tv-ui]').forEach(el=>{el.style.inset=ins;});}
     if(ch('steps')){const A=this.fxArena(P.steps||0);this.fxQ('[data-r=steps-arena]').forEach(el=>{el.style.transform='translateY('+A.y+')';el.style.opacity=A.op;});}
     if(ch('tiles')){this.fxQ('[data-tile]').forEach((el,i)=>{const X=this.fxTile(P.tiles||0,i);el.style.transform=X.tf;el.style.opacity=X.op;el.style.borderRadius=X.br;});}
     if(ch('car')){const o=this.fxCarOp(P.car||0);this.fxQ('[data-car-text]').forEach(el=>{el.style.opacity=o;});}
@@ -1704,7 +1815,7 @@ class Component extends DCLogic {
       const ms=s.matches.slice();const i=Math.floor(Math.random()*ms.length);const m={...ms[i]};const side=Math.random()<.5?'sa':'sb';
       const inc={Basketball:2,Cricket:Math.ceil(Math.random()*4),Archery:m.id===1?9:0,Kabaddi:1,Badminton:1,'Table Tennis':1}[m.sport]||0;
       let flash={};if(inc){m[side]+=inc;ms[i]=m;flash={[m.id+side]:1};}
-      return {ends,turn,matches:ms,flash};
+      return {ends,turn,matches:ms,flash,live:liveStep(s.live)};
     });
     setTimeout(()=>this.setState({flash:{}}),900);
   }
@@ -1734,7 +1845,7 @@ class Component extends DCLogic {
     this.setState(s=>({draft:'',messages:s.messages.concat({from:'me',text:q})}));
     setTimeout(()=>this.setState(s=>({messages:s.messages.concat({from:'bot',text:this.reply(q)})})),450);}
   tickerEl(A,B){
-    const h=React.createElement;const items=[`ARCHERY · Recurve Open Men Individual · Gold medal match · IND ${A}–${B} KOR`].concat(this.state.matches.map(m=>`${m.sport.toUpperCase()} · ${m.a} ${m.sa}–${m.sb} ${m.b} · ${m.clock}`));
+    const h=React.createElement;const items=liveOrder(this.state.live).map(liveView).map(v=>`${v.fieldName.toUpperCase()} · ${v.event} · ${v.round} · ${v.A1} ${v.sa}–${v.sb} ${v.B1} · ${v.status}`);
     const row=items.concat(items);
     return h('div',{style:{display:'flex',gap:56,width:'max-content',animation:'gmsMarquee 80s linear infinite',fontSize:14,fontWeight:500,color:'#2A2F3A',whiteSpace:'nowrap'}},
       row.map((t,i)=>h('span',{key:i,style:{display:'flex',alignItems:'center',gap:10}},h('span',{style:{width:6,height:6,borderRadius:'50%',background:'#E5484D'}}),t)));
@@ -1762,7 +1873,7 @@ class Component extends DCLogic {
     const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live Scores',()=>this.go('scores'),'scores'],['Live TV',()=>this.go('tv'),'tv']];
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
-      overviewRef:this.ref('overview'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
+      overviewRef:this.ref('overview'),liveRef:this.ref('live'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
       menuOpen:s.menuOpen?'1':'0',menuIcon:s.menuOpen?'close':'menu',toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
       navItems:nav.map(([label,go,k])=>({label,...(label==='Registration'?{
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
@@ -1815,6 +1926,7 @@ class Component extends DCLogic {
       adminRows:s.admin.map(r=>{const done=r.status==='Accredited'||r.status==='Rejected';return {...r,sBg:ST[r.status][0],sFg:ST[r.status][1],actOp:done?'0.3':'1',
         approve:()=>!done&&setStatus(r.id,r.status==='Pending'?'Verified':'Accredited'),reject:()=>!done&&setStatus(r.id,'Rejected')};}),
       arch,liveCount:String(allM.length+1),
+      ...this.liveVals(),
       sportFilters:sports.map(k=>({label:k,icon:k==='All'?'apps':SPORT_ICON[k],pick:()=>this.setState({filter:k}),bg:s.filter===k?'#0B0D12':'#fff',fg:s.filter===k?'#fff':'#0B0D12'})),
       matchCards:s.filter==='All'?allM:allM.filter(m=>m.sport===s.filter),
       ytSrc:`https://www.youtube.com/embed/${(P.youtubeVideoId||'jT9C2wBHn6c').trim()}?autoplay=1&mute=1`,
