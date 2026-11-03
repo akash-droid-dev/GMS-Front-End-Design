@@ -266,56 +266,58 @@ html,body{background:#F4F5F7}
 .gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
 .gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
 .gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
-/* Help desk: a COCO-led chat. Two tap-to-answer questions, a short message, a summary, then the hand-off ticket */
-.hd-grid{position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,5vw,76px);align-items:center}
-.hd-intro{display:flex;flex-direction:column;gap:22px}
+/* Help desk relay: leg 1 is COCO's instant answers, the baton crosses the exchange zone to a desk specialist, leg 2 runs to the reply */
+.rl-grid{position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(36px,5vw,72px);align-items:start}
+.rl-intro{display:flex;flex-direction:column;gap:22px;position:sticky;top:110px}
 .hd-status{align-self:flex-start;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;border-radius:999px;background:#fff;border:1px solid #E6EAF0}
-.hd-desks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:520px}
-.hd-cap{grid-column:1/-1;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C;padding:2px 2px 4px}
-.hd-desk{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid #E6EAF0;transition:background .4s var(--gms-ease),border-color .4s,box-shadow .4s,transform .4s var(--gms-ease)}
-.hd-desk b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hd-desk small{font-size:11.5px;color:#8A909C}
-.hd-ico{width:32px;height:32px;flex:none;border-radius:10px;display:grid;place-items:center;background:#F1F3F7;color:#4A505C;font-family:'Material Symbols Rounded';font-size:18px;transition:background .4s,color .4s}
-.hd-tick{margin-left:auto;font-family:'Material Symbols Rounded';font-size:18px;color:#2F5BFF;opacity:0;transform:scale(.5);transition:opacity .3s,transform .4s var(--gms-ease)}
-.hd-desk[data-on="1"]{background:#fff;border-color:#2F5BFF;box-shadow:0 12px 28px rgba(47,91,255,.14);transform:translateY(-2px)}
-.hd-desk[data-on="1"] .hd-ico{background:#2F5BFF;color:#fff}.hd-desk[data-on="1"] .hd-tick{opacity:1;transform:none}
-.hd-chat{display:flex;flex-direction:column;border-radius:30px;background:rgba(255,255,255,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #fff;box-shadow:0 40px 90px rgba(15,20,40,.12),0 0 0 1px rgba(15,20,40,.04);overflow:hidden;min-width:0}
-.hd-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #EEF0F4;background:rgba(255,255,255,.7)}
-.hd-head img{width:44px;height:44px;border-radius:14px;object-fit:cover;background:#EEF2FF;flex:none}
-.hd-ghost{appearance:none;border:1px solid #E6EAF0;background:#fff;font:inherit;font-size:12.5px;font-weight:600;color:#4A505C;padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
-.hd-ghost:hover{background:#0B0D12;color:#fff}
-.hd-thread{display:flex;flex-direction:column;gap:10px;padding:20px 18px;height:380px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-.hd-thread>*{flex:none}
-.hd-msg{max-width:84%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.45;animation:gmsBubble .45s var(--gms-ease) both}
-.hd-msg--bot{align-self:flex-start;background:#F1F3F7;color:#0B0D12;border-bottom-left-radius:6px}
-.hd-msg--me{align-self:flex-end;background:#0B0D12;color:#fff;border-bottom-right-radius:6px}
-.hd-msg--me small{display:block;margin-top:6px;font-size:12px;color:rgba(255,255,255,.6)}
-@keyframes gmsBubble{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
-.hd-typing{align-self:flex-start;display:flex;gap:4px;padding:14px 16px;border-radius:18px;border-bottom-left-radius:6px;background:#F1F3F7}
-.hd-typing i{width:7px;height:7px;border-radius:50%;background:#8A909C;animation:gmsTyping 1s infinite}.hd-typing i:nth-child(2){animation-delay:.15s}.hd-typing i:nth-child(3){animation-delay:.3s}
-@keyframes gmsTyping{0%,60%,100%{transform:none;opacity:.45}30%{transform:translateY(-4px);opacity:1}}
-.hd-sum{align-self:flex-start;width:min(100%,380px);border-radius:18px;background:#fff;border:1px solid #E6EAF0;overflow:hidden;animation:gmsBubble .45s var(--gms-ease) both}
-.hd-sum>span{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;padding:10px 14px;border-top:1px solid #F0F2F6;font-size:13.5px}.hd-sum>span:first-child{border-top:0}
-.hd-sum em{font-style:normal;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#8A909C;padding-top:2px}
-.hd-ticket{--nx:66px;align-self:stretch;display:flex;border-radius:18px;background:linear-gradient(160deg,#FFFFFF 0%,#EEF3FF 100%);border:1px solid #DCE4FF;animation:gmsBubble .5s var(--gms-ease) both}
-.hd-compose{padding:14px 18px 18px;border-top:1px solid #EEF0F4;background:rgba(255,255,255,.75)}
-.hd-chips{display:flex;flex-wrap:wrap;gap:8px}
-.hd-chip{appearance:none;border:1px solid #E1E5EC;background:#fff;font:inherit;font-size:13.5px;font-weight:600;color:#0B0D12;display:flex;align-items:center;gap:7px;padding:9px 14px 9px 11px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s,border-color .25s,transform .3s var(--gms-ease)}
-.hd-chip:hover{border-color:#2F5BFF;color:#2F5BFF;transform:translateY(-1px)}
-.hd-chip span{font-family:'Material Symbols Rounded';font-size:18px;color:#2F5BFF}
-.hd-chip--quiet{background:transparent;border-style:dashed;color:#5B6270;padding-left:14px}
-.hd-chip:focus-visible,.hd-ghost:focus-visible,.hd-form button:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
-.hd-form{display:flex;flex-direction:column;gap:10px}
-.hd-form .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.hd-form input,.hd-form textarea{box-sizing:border-box;width:100%;font:inherit;font-size:14.5px;color:#0B0D12;padding:12px 14px;border-radius:14px;background:#F3F5F9;border:1.5px solid transparent;outline:none;transition:border-color .2s,background .2s}
-.hd-form textarea{resize:none;min-height:76px;line-height:1.45}
-.hd-form input:focus,.hd-form textarea:focus{border-color:#2F5BFF;background:#fff}
-.hd-form [aria-invalid=true]{border-color:#E5484D}
-.hd-form input::placeholder,.hd-form textarea::placeholder{color:#9AA0AC}
-.hd-err{font-size:12.5px;color:#D93D42}
-.hd-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.hd-go{appearance:none;border:0;font:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14.5px}
-@media (max-width:900px){[data-r=contact-section]{padding:90px 16px 100px!important}.hd-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:600px){.hd-desks{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hd-desk{padding:8px 10px}.hd-desk small{display:none}.hd-thread{height:340px;padding:16px 14px}.hd-compose{padding:12px 14px 14px}.hd-form .row{grid-template-columns:minmax(0,1fr)}.hd-chat{border-radius:24px}.hd-msg{max-width:90%}}
+.rl-trackbox{display:flex;flex-direction:column;gap:10px;max-width:440px;padding:18px;border-radius:22px;background:rgba(255,255,255,.75);border:1px solid #E6EAF0}
+.rl-trackbox input{box-sizing:border-box;width:100%;font:inherit;font-family:'JetBrains Mono';font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;border-radius:14px;background:#F3F5F9;border:1.5px solid transparent;outline:none;transition:border-color .25s,background .25s}
+.rl-trackbox input:focus{border-color:#2F5BFF;background:#fff}
+.rl-cap{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C}
+.rl-card{border-radius:32px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #fff;box-shadow:0 40px 90px rgba(15,20,40,.12),0 0 0 1px rgba(15,20,40,.04);overflow:hidden;min-width:0}
+.rl-track{position:relative;height:112px;margin:14px;border-radius:22px;background:linear-gradient(180deg,#E58466 0%,#D9603F 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -10px 20px rgba(120,30,10,.18);overflow:hidden}
+.rl-lane{position:absolute;left:0;right:0;height:50%;display:flex;align-items:center;padding-left:14px;box-sizing:border-box}
+.rl-lane:first-child{top:0;border-bottom:2px solid rgba(255,255,255,.75)}.rl-lane:nth-child(2){top:50%}
+.rl-tag{position:relative;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#fff;text-shadow:0 1px 2px rgba(90,20,5,.4);white-space:nowrap}
+.rl-fill{position:absolute;left:0;height:50%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.22));transition:width 1.1s var(--gms-ease),top .6s var(--gms-ease)}
+.rl-zone{position:absolute;top:0;bottom:0;left:52%;width:12%;background:repeating-linear-gradient(135deg,rgba(255,255,255,.16) 0 6px,transparent 6px 12px);border-left:1.5px dashed rgba(255,255,255,.7);border-right:1.5px dashed rgba(255,255,255,.7)}
+.rl-zone span{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono';font-size:8.5px;letter-spacing:.16em;color:rgba(255,255,255,.85)}
+.rl-finish{position:absolute;top:0;bottom:0;right:22px;width:12px;background:repeating-conic-gradient(#fff 0 25%,#1B1E24 0 50%) 0 0/12px 12px;opacity:.9}
+.rl-baton{position:absolute;z-index:3;width:38px;height:13px;margin:-6.5px 0 0 -19px;border-radius:7px;background:linear-gradient(90deg,#FFE27A,#F5A524);box-shadow:0 6px 14px rgba(90,30,5,.35),inset 0 1px 0 rgba(255,255,255,.7);transition:left 1.1s cubic-bezier(.5,0,.15,1),top .7s cubic-bezier(.34,1.56,.64,1) .25s}
+.rl-baton::after{content:'';position:absolute;right:100%;top:50%;width:40px;height:2px;margin-top:-1px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.75));opacity:var(--run,0);transition:opacity .4s}
+.rl-body{padding:6px 22px 22px;display:flex;flex-direction:column;gap:16px}
+.rl-q{position:relative}
+.rl-q input,.rl-form input,.rl-form textarea{box-sizing:border-box;width:100%;font:inherit;font-size:15px;color:#0B0D12;padding:15px 16px;border-radius:16px;background:#F3F5F9;border:1.5px solid transparent;outline:none;transition:border-color .25s,background .25s,box-shadow .25s}
+.rl-q input{padding-left:46px;font-size:16px}
+.rl-q>span{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-family:'Material Symbols Rounded';font-size:21px;color:#8A909C;pointer-events:none}
+.rl-q input:focus,.rl-form input:focus,.rl-form textarea:focus{border-color:#2F5BFF;background:#fff;box-shadow:0 0 0 5px rgba(47,91,255,.10)}
+.rl-form textarea{resize:none;min-height:84px;line-height:1.45}
+.rl-form [aria-invalid=true]{border-color:#E5484D}
+.rl-form .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rl-chips{display:flex;flex-wrap:wrap;gap:8px}
+.rl-chip{appearance:none;border:1px solid #E1E5EC;background:#fff;font:inherit;font-size:13px;font-weight:600;color:#0B0D12;padding:8px 13px;border-radius:999px;cursor:pointer}
+.rl-chip:hover{border-color:#2F5BFF;color:#2F5BFF}
+.rl-chip[data-on="1"]{background:#0B0D12;border-color:#0B0D12;color:#fff}
+.rl-chip--quiet{background:transparent;border-style:dashed;color:#5B6270}
+.rl-ans{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;background:#fff;border:1px solid #E6EAF0;animation:gmsBubble .5s var(--gms-ease) both}
+.rl-ans b{font-size:14.5px}.rl-ans p{margin:0;font-size:14px;line-height:1.5;color:#4A505C}
+.rl-ans button{align-self:flex-start;appearance:none;border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:#2F5BFF;padding:2px 0;cursor:pointer}
+@keyframes gmsBubble{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.rl-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid #F0F2F6}
+.rl-go{all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14.5px}
+.rl-who{display:flex;align-items:center;gap:14px;padding:14px;border-radius:20px;background:linear-gradient(160deg,#FFFFFF,#F4F7FF);border:1px solid #DCE4FF;animation:gmsBubble .6s var(--gms-ease) both}
+.rl-av{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;background:#2F5BFF;color:#fff;font-weight:700;font-size:15px;box-shadow:0 0 0 4px rgba(47,91,255,.15)}
+.rl-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));position:relative;padding:4px 0}
+.rl-steps::before{content:'';position:absolute;left:16.6%;right:16.6%;top:15px;height:3px;border-radius:2px;background:#E6EAF0}
+.rl-steps::after{content:'';position:absolute;left:16.6%;top:15px;height:3px;border-radius:2px;background:#1FA463;width:var(--fill,0%);transition:width 1.2s var(--gms-ease)}
+.rl-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:12.5px;color:#8A909C}
+.rl-step i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid #E1E5EC;font-style:normal;font-family:'Material Symbols Rounded';font-size:17px;color:transparent;transition:background .5s,border-color .5s,color .5s,transform .5s var(--gms-ease)}
+.rl-step[data-on="1"]{color:#0B0D12}.rl-step[data-on="1"] i{background:#1FA463;border-color:#1FA463;color:#fff;transform:scale(1.06)}
+.rl-step b{font-size:13px}
+.rl-ticket{--nx:66px;display:flex;border-radius:18px;background:linear-gradient(160deg,#FFFFFF 0%,#EEF3FF 100%);border:1px solid #DCE4FF;animation:gmsBubble .6s var(--gms-ease) both}
+.rl-err{font-size:12.5px;color:#D93D42}
+@media (max-width:960px){[data-r=contact-section]{padding:90px 16px 100px!important}.rl-grid{grid-template-columns:minmax(0,1fr)}.rl-intro{position:static}}
+@media (max-width:600px){.rl-card{border-radius:24px}.rl-track{height:96px;margin:10px}.rl-body{padding:4px 14px 16px}.rl-form .row{grid-template-columns:minmax(0,1fr)}.rl-zone span{display:none}.rl-step{font-size:11.5px}}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
 #gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg') 0% 42%/cover no-repeat}
@@ -995,29 +997,16 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
   </section>
 
   <section data-r="contact-section" ref="{{ contactRef }}" style="position:relative;overflow:hidden;background:#F4F5F7;padding:120px 32px 130px">
-    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 50% at 78% 40%,rgba(47,91,255,.10),rgba(47,91,255,0) 70%),radial-gradient(30% 40% at 8% 90%,rgba(63,169,245,.10),rgba(63,169,245,0) 70%)"></div>
-    <div data-r="contact-grid" class="hd-grid">
-      <div class="hd-intro">
-        <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#2F5BFF">HELP DESK · ASK COCO</span>
-        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Tell COCO.<br>The right desk answers.</h2>
-        <p style="margin:0;max-width:460px;font-size:16px;line-height:1.6;color:#5B6270">Two quick taps and a line about your question. COCO hands it to the team that handles it, with a summary and a reference number you can quote.</p>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 50% at 78% 40%,rgba(47,91,255,.10),rgba(47,91,255,0) 70%),radial-gradient(30% 40% at 8% 90%,rgba(224,122,95,.10),rgba(224,122,95,0) 70%)"></div>
+    <div data-r="contact-grid" class="rl-grid">
+      <div class="rl-intro">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#2F5BFF">HELP DESK · THE RELAY</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Ask once.<br>We pass it on.</h2>
+        <p style="margin:0;max-width:440px;font-size:16px;line-height:1.6;color:#5B6270">COCO runs the first leg with instant answers. If you still need a person, it hands your question like a baton to the desk that handles it, and your reference shows exactly where it is.</p>
         <span class="hd-status"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:{{ ctDot }};box-shadow:0 0 0 4px {{ ctDotRing }}"></span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:#0B0D12">{{ ctStatus }}</span><span style="font-size:12px;color:#5B6270">{{ ctStatusSub }}</span></span></span>
-        <div class="hd-desks" role="list" aria-label="Help desks">
-          <span class="hd-cap">COCO ROUTES YOU TO</span>
-          <sc-for list="{{ ctDesks }}" as="d" hint-placeholder-count="6">
-            <div role="listitem" class="hd-desk" data-on="{{ d.on }}"><span class="hd-ico">{{ d.icon }}</span><span style="display:flex;flex-direction:column;gap:1px;min-width:0"><b>{{ d.name }}</b><small>{{ d.reply }}</small></span><span class="hd-tick" aria-hidden="true">check</span></div>
-          </sc-for>
-        </div>
+        {{ ctTrackBox }}
       </div>
-      <div class="hd-chat" role="region" aria-label="Help desk chat with COCO">
-        <div class="hd-head">
-          <img src="assets/bot-still.webp" alt="" width="44" height="44" decoding="async" loading="lazy">
-          <span style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0"><b style="font-size:16px">COCO</b><small style="display:flex;align-items:center;gap:6px;font-size:12px;color:#5B6270"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463"></span>Help desk assistant · hands you to a person</small></span>
-          <button type="button" onClick="{{ ctRestart }}" class="hd-ghost">Start over</button>
-        </div>
-        {{ ctThread }}
-        {{ ctComposer }}
-      </div>
+      <div class="rl-card" role="region" aria-label="Help desk relay">{{ ctRelay }}</div>
     </div>
   </section>
 
@@ -1512,10 +1501,19 @@ const CONTACT_TOPICS=[['registration','Registration','how_to_reg','Registration 
 ['volunteer','Volunteering','volunteer_activism','Volunteer programme','volunteers@gms.example',24],
 ['technical','Technical & results','sports_score','Technical & results desk','results@gms.example',12],
 ['general','General','forum','General enquiries','hello@gms.example',24]];
-// the follow-up COCO asks once you've picked a topic
-const CONTACT_ISSUES={registration:['Haven\'t started yet','Stuck on documents','Change my details','Something else'],accreditation:['Card not received','Wrong details on my card','Access to a zone','Something else'],
-  media:['Media accreditation','Interview request','Footage & photos','Something else'],volunteer:['Apply to volunteer','My shift or role','Training','Something else'],
-  technical:['Score or ranking query','Results correction','Equipment check','Something else'],general:['Travel & venue','Spectators & tickets','Accessibility support','Something else']};
+// Leg 1 of the help desk: COCO's instant answers (k: keywords matched in the question, d: desk that owns the topic, act: a shortcut)
+const HELP_FAQ=[
+{q:'Which documents do I need to register?',k:['document','upload','passport','photo','file','classification','pdf'],d:'registration',a:'Usually a passport or ID scan, a recent photo and, for athletes, the classification card. Each role lists its own documents in the form. Files go up as PDF, JPG or PNG.',act:['Start registration','reg']},
+{q:'When is the Series?',k:['when','date','day','schedule','final','time','start'],d:'general',a:'05 to 09 Sep 2026 in Ahmedabad. Medal matches are on the last days on the Finals Field; the schedule has every session.',act:['See the schedule','schedule']},
+{q:'Where are live scores and results?',k:['score','result','ranking','points','standing'],d:'technical',a:'Every match is live arrow by arrow in the event centre, with results as soon as a match ends.',act:['Open Live Scores','scores']},
+{q:'How can I watch the matches?',k:['watch','stream','tv','broadcast','youtube','video'],d:'media',a:'Live TV has one channel per field with the score beside the picture.',act:['Open Live TV','tv']},
+{q:'How do I register?',k:['register','registration','sign up','apply','join','fee','payment'],d:'registration',a:'Pick your role in “Pick how you\'re taking part”, fill in your details and upload the documents. You get a reference straight away.',act:['Pick my role','reg']},
+{q:'Is the venue accessible?',k:['wheelchair','accessib','ramp','parking','assist','disab'],d:'general',a:'The Series is built for para athletes: step-free routes, accessible seating and support on request. Tell the General desk what you need.'},
+{q:'My accreditation card',k:['accreditation','card','badge','zone','access','lost'],d:'accreditation',a:'Cards are collected in person with photo ID. The Accreditation desk handles corrections, zone access and replacements.'},
+{q:'Media access and interviews',k:['media','press','interview','journalist','footage','camera'],d:'media',a:'Accredited media request interviews and photo positions through the Media & broadcast desk.'},
+{q:'Volunteer shifts and training',k:['volunteer','shift','training','uniform','roster'],d:'volunteer',a:'Volunteers get their roster and training details by email before the event; the Volunteer programme can change a shift.'}];
+// who picks up the baton on each desk (placeholder roster)
+const HELP_STAFF={registration:'Priya Shah',accreditation:'Arjun Mehta',media:'Neha Kapoor',volunteer:'Rohan Desai',technical:'Kavya Rao',general:'Aman Trivedi'};
 const HOVER=typeof matchMedia!=='undefined'&&matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp=v=>Math.max(0,Math.min(1,v));
 const ease=t=>1-Math.pow(1-t,3);
@@ -1537,7 +1535,7 @@ class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
     day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
-    contact:{step:'topic',topic:null,issue:'',name:'',email:'',msg:'',errors:{},typing:false,ref:'',sent:null},enquiries:[],
+    contact:{step:'ask',q:'',desk:null,name:'',email:'',msg:'',errors:{},stage:0,ref:'',sent:null,track:''},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m COCO! I can help with the Hyundai World Archery Para Series: events, schedule, registration and live scores.'}],
     chan:'finals'};
   refs={};
@@ -1717,61 +1715,76 @@ class Component extends DCLogic {
       schedule:onField(F.id).slice().sort((a,b)=>a.time.localeCompare(b.time)).map(v=>({...v,tag:v.live?'NOW':v.state==='next'?v.time:'FINAL',on:v.live?'1':'0',score:v.state==='next'?'':v.sa+'–'+v.sb,open:open(v)})),
       rail:views.filter(v=>v.live&&v.field!==F.id).map(v=>({...v,open:open(v)})),railAny:views.some(v=>v.live&&v.field!==F.id),
       scorecard:open(now)}};}
-  // Help desk: COCO asks for the topic and the issue (tap to answer), takes a short message and a reply address,
-  // shows the summary it will pass on, then hands over to the human desk with a reference (it also lands in the admin enquiries list)
-  contactVals(){const s=this.state,c=s.contact,h=React.createElement,T=CONTACT_TOPICS.find(t=>t[0]===c.topic),err=c.errors||{},sent=c.sent||{};
+  // Help desk relay. Leg 1: COCO matches your question against the FAQ as you type. Hand-off: the baton crosses the exchange zone to the
+  // desk that owns the topic (inferred from the best match, or picked). Leg 2: the message runs to the finish and becomes a tracked reference.
+  contactVals(){const s=this.state,c=s.contact,h=React.createElement,err=c.errors||{};
     const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),hr=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&hr>=9&&hr<19;
     const next=open?'':(d>=1&&d<=6&&hr<9?'opens today 09:00 IST':(d>=1&&d<=5?'opens tomorrow 09:00 IST':'opens Monday 09:00 IST'));
-    const clock=pad(ist.getHours())+':'+pad(ist.getMinutes()),eta=t=>'Usually replies within '+t[5]+' hours'+(open?'':' of opening');
-    const put=(patch,typing)=>{this.setState(x=>({contact:{...x.contact,...patch,typing:!!typing&&!REDUCED}}));
-      if(typing&&!REDUCED){clearTimeout(this.ctT1);this.ctT1=setTimeout(()=>this.setState(x=>({contact:{...x.contact,typing:false}})),700);}};
+    const clock=pad(ist.getHours())+':'+pad(ist.getMinutes());
+    const put=patch=>this.setState(x=>({contact:{...x.contact,...patch}}));
     const set=k=>e=>{const v=e.target.value;this.setState(x=>({contact:{...x.contact,[k]:v,errors:{...(x.contact.errors||{}),[k]:''}}}));};
-    const step=c.step,at=k=>['topic','issue','details','confirm','done'].indexOf(step)>=['topic','issue','details','confirm','done'].indexOf(k);
-    // the conversation so far, rebuilt from the answers; while COCO is "typing" its newest line is held back
-    const bot=(k,txt)=>h('div',{key:k,className:'hd-msg hd-msg--bot'},txt),me=(k,txt,sub)=>h('div',{key:k,className:'hd-msg hd-msg--me'},txt,sub?h('small',null,sub):null);
-    const lines=[bot('b0','Hi, I\'m COCO from the help desk. What do you need help with?')];
-    if(T&&at('issue')){lines.push(me('m1',T[1]),bot('b1',T[1]+' it is. What\'s it about?'));}
-    if(T&&at('details')&&c.issue){lines.push(me('m2',c.issue),bot('b2','Got it. Tell me a little more, and where the '+T[3]+' should reply.'));}
-    if(T&&at('confirm')){const msg=c.msg.trim();lines.push(me('m3',msg,c.name.trim()+' · '+c.email.trim()),bot('b3','Here\'s what I\'ll pass to the '+T[3]+':'),
-      h('div',{key:'sum',className:'hd-sum'},[['DESK',T[3]],['ABOUT',T[1]+' · '+c.issue],['REPLY TO',c.email.trim()],['TIMING',eta(T)]].map(([k,v])=>h('span',{key:k},h('em',null,k),h('span',null,v)))));}
-    if(T&&step==='done'){lines.push(me('m4','Send it'),bot('b4','Done. A person on the '+(sent.desk||T[3])+' now has your message.'),
-      h('div',{key:'tk',className:'hd-ticket','data-ticket':'',role:'status'},
+    const q=c.q.trim().toLowerCase(),hits=q.length<2?[]:HELP_FAQ.map(f=>({f,n:f.k.filter(k=>q.includes(k)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n).slice(0,3).map(x=>x.f);
+    const deskId=c.desk||(hits[0]&&hits[0].d)||'general',T=CONTACT_TOPICS.find(t=>t[0]===deskId),staff=HELP_STAFF[deskId],queue=1+((c.q.length+(s.enquiries||[]).length)%4);
+    const wait=open?'~'+(queue*2)+' min to pick up · '+queue+' ahead of you':'Queued until the desk '+next.replace('opens ','opens ');
+    const act=a=>a==='reg'?()=>this.scrollTo('reg'):a==='schedule'?()=>this.scrollTo('schedule'):()=>this.go(a);
+    // the track: baton position follows the leg you're on
+    const step=c.step,bx=step==='ask'?8+Math.min(36,c.q.length*0.9)+(hits.length?6:0):step==='desk'?60:91,by=step==='ask'?25:75;
+    const track=h('div',{className:'rl-track','aria-hidden':'true'},
+      h('div',{className:'rl-lane'},h('span',{className:'rl-tag'},'LEG 1 · COCO · INSTANT ANSWERS')),
+      h('div',{className:'rl-lane'},h('span',{className:'rl-tag'},'LEG 2 · '+(step==='ask'?'DESK SPECIALIST':T[3].toUpperCase()+' · '+staff.split(' ')[0].toUpperCase()))),
+      h('span',{className:'rl-fill',style:{top:by<50?0:'50%',width:bx+'%'}}),
+      h('span',{className:'rl-zone'},h('span',null,'EXCHANGE')),h('span',{className:'rl-finish'}),
+      h('span',{className:'rl-baton',style:{left:bx+'%',top:by+'%','--run':step==='ask'&&c.q.length?1:step==='done'?1:0}}));
+    const goBtn=(label,on,type,dis)=>h('button',{type:type||'button',onClick:on,disabled:!!dis,className:'rl-go gms-liquid gms-liquid--water',style:{opacity:dis?.5:1}},label);
+    let body;
+    if(step==='ask')body=[
+      h('label',{key:'q',className:'rl-q'},h('span',{'aria-hidden':'true'},'forum'),h('input',{value:c.q,onChange:set('q'),placeholder:'Ask COCO anything: documents, dates, scores, access…','aria-label':'Ask COCO a question',autoComplete:'off'})),
+      !q?h('div',{key:'pop',style:{display:'flex',flexDirection:'column',gap:10}},h('span',{className:'rl-cap'},'PEOPLE OFTEN ASK'),
+        h('div',{className:'rl-chips'},HELP_FAQ.slice(0,6).map(f=>h('button',{key:f.q,type:'button',className:'rl-chip',onClick:()=>put({q:f.q})},f.q)))):null,
+      hits.length?h('div',{key:'ans',style:{display:'flex',flexDirection:'column',gap:10}},h('span',{className:'rl-cap'},'COCO\'S ANSWERS'),
+        hits.map((f,i)=>h('div',{key:f.q,className:'rl-ans',style:{animationDelay:(i*70)+'ms'}},h('b',null,f.q),h('p',null,f.a),f.act?h('button',{type:'button',onClick:act(f.act[1])},f.act[0]+' →'):null))):null,
+      q.length>=2&&!hits.length?h('div',{key:'none',className:'rl-ans'},h('b',null,'No ready answer for that one.'),h('p',null,'Hand it to a person below: they will reply by email.')):null,
+      h('div',{key:'foot',className:'rl-foot'},h('span',{style:{fontSize:13.5,lineHeight:1.45,color:'#5B6270',flex:'1 1 200px'}},(q?'Still need a person? ':'Or skip straight to a person: ')+'COCO passes it to the ',h('b',{style:{color:'#0B0D12'}},T[3]),'.'),
+        goBtn('Pass the baton →',()=>put({step:'desk',msg:c.msg||c.q.trim(),desk:deskId,errors:{}})))];
+    else if(step==='desk')body=[
+      h('div',{key:'who',className:'rl-who'},h('span',{className:'rl-av'},staff.split(' ').map(w=>w[0]).join('')),
+        h('span',{style:{display:'flex',flexDirection:'column',gap:3,minWidth:0}},h('b',{style:{fontSize:16}},staff+' · '+T[3]),h('span',{style:{fontSize:13,color:'#5B6270'}},(open?'On duty now · ':'Off duty · ')+wait))),
+      h('div',{key:'chg',style:{display:'flex',flexDirection:'column',gap:8}},h('span',{className:'rl-cap'},'NOT THE RIGHT DESK?'),
+        h('div',{className:'rl-chips'},CONTACT_TOPICS.map(t=>h('button',{key:t[0],type:'button',className:'rl-chip','data-on':t[0]===deskId?'1':'0','aria-pressed':String(t[0]===deskId),onClick:()=>put({desk:t[0]})},t[1])))),
+      h('form',{key:'f',className:'rl-form',noValidate:true,style:{display:'flex',flexDirection:'column',gap:10},onSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
+          if(x.msg.trim().length<10)er.msg='Add a little more detail (at least 10 characters).';else if(x.msg.length>600)er.msg='Please keep it under 600 characters.';
+          if(x.name.trim().length<2)er.name='Please enter your name.';if(!/^\S+@\S+\.\S+$/.test(x.email.trim()))er.email='Enter a valid email so the desk can reply.';
+          if(Object.keys(er).length){put({errors:er});return;}
+          const ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length),enq={ref,name:x.name.trim(),email:x.email.trim(),topic:T[1],desk:T[3],assignee:staff,time:clock+' IST',
+            reply:'Reply within '+T[5]+' hours'+(open?'':' of opening'),msg:x.msg.trim(),status:'New'};
+          this.setState(st=>({enquiries:[enq,...(st.enquiries||[])],contact:{...st.contact,step:'done',ref,sent:enq,stage:0,errors:{}}}));
+          clearTimeout(this.ctT1);this.ctT1=setTimeout(()=>put({stage:1}),REDUCED?0:1500);}},
+        h('textarea',{value:c.msg,onChange:set('msg'),rows:3,placeholder:'What do you need from the '+T[3]+'?','aria-label':'Your message','aria-invalid':String(!!err.msg)}),
+        h('div',{className:'row'},h('input',{value:c.name,onChange:set('name'),autoComplete:'name',placeholder:'Your name','aria-label':'Your name','aria-invalid':String(!!err.name)}),
+          h('input',{value:c.email,onChange:set('email'),type:'email',autoComplete:'email',placeholder:'Email for the reply','aria-label':'Email for the reply','aria-invalid':String(!!err.email)})),
+        (err.msg||err.name||err.email)?h('span',{className:'rl-err',role:'alert'},err.msg||err.name||err.email):null,
+        h('div',{className:'rl-foot'},h('button',{type:'button',className:'rl-chip rl-chip--quiet',onClick:()=>put({step:'ask'})},'← Back to answers'),goBtn('Hand over to '+staff.split(' ')[0],null,'submit')))];
+    else{const x=c.sent||{},st=c.stage||0;body=[
+      h('div',{key:'tk',className:'rl-ticket','data-ticket':'',role:'status'},
         h('span',{style:{width:66,flex:'none',display:'grid',placeItems:'center',borderRight:'1.5px dashed rgba(11,13,18,.16)'}},h('span',{style:{width:38,height:38,borderRadius:'50%',display:'grid',placeItems:'center',background:'#1FA463',color:'#fff',fontFamily:"'Material Symbols Rounded'",fontSize:22}},'check')),
         h('span',{style:{flex:1,minWidth:0,display:'flex',flexDirection:'column',gap:5,padding:'16px 16px 16px 14px'}},
-          h('span',{style:{fontFamily:"'JetBrains Mono'",fontSize:10.5,letterSpacing:'.14em',color:'#1C8A53'}},'REFERENCE · '+(sent.time||'')),
-          h('span',{style:{fontFamily:"'Bricolage Grotesque'",fontWeight:700,fontSize:26,letterSpacing:'-.03em',lineHeight:1}},c.ref),
-          h('span',{style:{fontSize:13,lineHeight:1.45,color:'#4A505C'}},(sent.reply||'')+'. Quote this reference if you follow up.'))));}
-    const shown=c.typing?lines.slice(0,lines.map(l=>/^b|^sum|^tk/.test(l.key)).lastIndexOf(true)):lines;
-    const thread=h('div',{className:'hd-thread','aria-live':'polite',ref:el=>{if(el)requestAnimationFrame(()=>el.scrollTo({top:el.scrollHeight,behavior:REDUCED?'auto':'smooth'}));}},
-      shown,c.typing?h('div',{key:'typing',className:'hd-typing','aria-label':'COCO is typing'},h('i'),h('i'),h('i')):null);
-    // what you can answer right now
-    const chip=(k,label,on,icon,quiet)=>h('button',{key:k,type:'button',className:'hd-chip'+(quiet?' hd-chip--quiet':''),onClick:on},icon?h('span',{'aria-hidden':'true'},icon):null,label);
-    const goBtn=(label,on,type)=>h('button',{type:type||'button',onClick:on,className:'hd-go gms-liquid gms-liquid--water',style:{all:'unset',cursor:'pointer',display:'flex',alignItems:'center',gap:8,padding:'13px 20px',borderRadius:999,fontWeight:600,fontSize:14.5}},label);
-    let comp=null;
-    if(c.typing)comp=null;
-    else if(step==='topic')comp=h('div',{className:'hd-chips',role:'group','aria-label':'Pick a topic'},CONTACT_TOPICS.map(t=>chip(t[0],t[1],()=>put({topic:t[0],issue:'',step:'issue',errors:{}},1),t[2])));
-    else if(step==='issue'&&T)comp=h('div',{className:'hd-chips',role:'group','aria-label':'What is it about?'},(CONTACT_ISSUES[T[0]]||[]).map(i=>chip(i,i,()=>put({issue:i,step:'details'},1))),chip('back','Different topic',()=>put({step:'topic',topic:null,issue:''}),null,1));
-    else if(step==='details'&&T)comp=h('form',{className:'hd-form',noValidate:true,'aria-label':'Your message for the '+T[3],onSubmit:e=>{e.preventDefault();const x=this.state.contact,er={};
-        if(x.msg.trim().length<10)er.msg='Add a little more detail (at least 10 characters).';else if(x.msg.length>600)er.msg='Please keep it under 600 characters.';
-        if(x.name.trim().length<2)er.name='Please enter your name.';
-        if(!/^\S+@\S+\.\S+$/.test(x.email.trim()))er.email='Enter a valid email so the desk can reply.';
-        if(Object.keys(er).length){this.setState({contact:{...x,errors:er}});return;}put({step:'confirm',errors:{}},1);}},
-      h('textarea',{value:c.msg,onChange:set('msg'),rows:3,placeholder:'Your question, in a line or two',maxLength:700,'aria-label':'Your question','aria-invalid':String(!!err.msg)}),
-      h('div',{className:'row'},h('input',{value:c.name,onChange:set('name'),autoComplete:'name',placeholder:'Your name','aria-label':'Your name','aria-invalid':String(!!err.name)}),
-        h('input',{value:c.email,onChange:set('email'),type:'email',autoComplete:'email',placeholder:'Email for the reply','aria-label':'Email for the reply','aria-invalid':String(!!err.email)})),
-      (err.msg||err.name||err.email)?h('span',{className:'hd-err',role:'alert'},err.msg||err.name||err.email):null,
-      h('div',{className:'hd-actions'},h('span',{style:{fontSize:12.5,color:c.msg.length>600?'#D93D42':'#8A909C',fontFamily:"'JetBrains Mono'"}},c.msg.length+' / 600'),goBtn('Continue',null,'submit')));
-    else if(step==='confirm'&&T)comp=h('div',{className:'hd-actions'},chip('edit','Edit my message',()=>put({step:'details'}),null,1),
-      goBtn('Send to the '+T[3],()=>{const x=this.state.contact,ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length);
-        const enq={ref,name:x.name.trim(),email:x.email.trim(),topic:T[1]+' · '+x.issue,desk:T[3],time:clock+' IST',reply:eta(T),msg:x.msg.trim(),status:'New'};
-        this.setState(st=>({enquiries:[enq,...(st.enquiries||[])]}));put({step:'done',ref,sent:enq},1);}));
-    else if(step==='done')comp=h('div',{className:'hd-actions'},chip('ask','Ask COCO something else',()=>this.setState({chatOpen:true}),null,1),goBtn('Start a new request',()=>put({step:'topic',topic:null,issue:'',msg:'',errors:{},ref:'',sent:null})));
+          h('span',{style:{fontFamily:"'JetBrains Mono'",fontSize:10.5,letterSpacing:'.14em',color:'#1C8A53'}},'HANDED OVER · '+(x.time||'')),
+          h('span',{style:{fontFamily:"'Bricolage Grotesque'",fontWeight:700,fontSize:28,letterSpacing:'-.03em',lineHeight:1}},c.ref),
+          h('span',{style:{fontSize:13,lineHeight:1.45,color:'#4A505C'}},x.assignee+' on the '+x.desk+' has it. '+x.reply+' to '+x.email+'.'))),
+      h('div',{key:'steps',className:'rl-steps',style:{'--fill':st?'33.4%':'0%'}},
+        [['Received',x.time],['Assigned',x.assignee],['Replied',x.reply]].map(([t,sub],i)=>h('span',{key:t,className:'rl-step','data-on':i<=st?'1':'0'},h('i',null,'check'),h('b',null,t),h('span',null,sub)))),
+      h('div',{key:'foot',className:'rl-foot'},h('span',{style:{fontSize:13.5,color:'#5B6270'}},'Quote '+c.ref+' if you follow up.'),
+        goBtn('Ask something else',()=>{clearTimeout(this.ctT1);put({step:'ask',q:'',msg:'',desk:null,errors:{},stage:0});}))];}
+    // anyone can look up a reference later
+    const tq=(c.track||'').trim().toUpperCase(),found=(s.enquiries||[]).find(e=>e.ref===tq);
+    const trackBox=h('div',{className:'rl-trackbox'},h('span',{className:'rl-cap'},'TRACK A REQUEST'),
+      h('input',{value:c.track||'',onChange:set('track'),placeholder:'GMS-Q-0000','aria-label':'Your reference number',autoComplete:'off',spellCheck:false}),
+      tq.length>=8?h('span',{role:'status',style:{fontSize:13.5,lineHeight:1.5,color:found?'#0B0D12':'#5B6270'}},found?'● '+found.desk+' · with '+found.assignee+' since '+found.time+'. '+found.reply+'.':'No request with that reference yet.')
+        :h('span',{style:{fontSize:12.5,color:'#8A909C'}},'Your reference arrives the moment the baton is handed over.'));
     return {contactRef:this.ref('contact'),toContact:()=>this.scrollTo('contact'),
       ctDot:open?'#1FA463':'#E3A008',ctDotRing:open?'rgba(31,164,99,.18)':'rgba(227,160,8,.2)',
-      ctStatus:open?'DESKS OPEN · '+clock+' IST':'DESKS CLOSED · '+next.toUpperCase(),ctStatusSub:'Mon–Sat · 09:00–19:00 IST'+(open?' · replies today':' · COCO queues your message'),
-      ctDesks:CONTACT_TOPICS.map(t=>({name:t[3],icon:t[2],reply:'~'+t[5]+' h reply',on:c.topic===t[0]&&step!=='topic'?'1':'0'})),
-      ctThread:thread,ctComposer:h('div',{className:'hd-compose'},comp||h('span',{style:{fontSize:13,color:'#8A909C'}},'COCO is typing…')),
-      ctRestart:()=>{clearTimeout(this.ctT1);put({step:'topic',topic:null,issue:'',msg:'',errors:{},ref:'',sent:null});},
+      ctStatus:open?'DESKS OPEN · '+clock+' IST':'DESKS CLOSED · '+next.toUpperCase(),ctStatusSub:'Mon–Sat · 09:00–19:00 IST'+(open?' · six desks on duty':' · COCO still answers instantly'),
+      ctRelay:h('div',null,track,h('div',{className:'rl-body'},body)),ctTrackBox:trackBox,
       enqCount:String((s.enquiries||[]).length),hasEnq:(s.enquiries||[]).length>0,noEnq:!(s.enquiries||[]).length,
       adminEnq:(s.enquiries||[]).map(q=>({...q,snip:q.msg.length>90?q.msg.slice(0,90)+'…':q.msg}))};}
   closingVideoEl(){return this.lazyVideo('cv','assets/closing.mp4');}
