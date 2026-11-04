@@ -11,13 +11,12 @@
 <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/material-symbols-rounded-subset.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 /* Lite mode (phones, tablets, touch-first): lighter effects. The hero is a video, so its poster is preloaded first;
    the Spline viewer is only used by the chat robot and loads once the page has finished; a still of the robot shows until then. */
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
-var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.jpg?v=ms2';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
+var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.webp?v=ms3';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
 if(!lite)addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?500:0);});})();
 </script>
 <style>
@@ -198,13 +197,7 @@ if(!lite)addEventListener('load',function(){setTimeout(function(){var sc=documen
   src: url("assets/fonts/jetbrains-mono-latin.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: 'Material Symbols Rounded';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("assets/fonts/material-symbols-rounded-subset.woff2") format('woff2');
-}
+
 
 x-dc{display:none!important}
 @keyframes gmsSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -288,6 +281,38 @@ html,body{background:#F4F5F7}
 html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!important}
 @media (max-width:760px){.hero-pill{font-size:11.5px;gap:8px;padding:6px 12px 6px 9px}[data-r=hero-ch]{top:84px;right:16px;gap:9px;padding:8px 11px;border-radius:var(--r-s)}.hch-m{min-width:92px}.hch-m b{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.hch-bar i{animation:none;transform:scaleX(1)}}
+[data-gi="home"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H5.5A1.5 1.5 0 0 1 4 19z'/%3E%3C/svg%3E")}
+[data-gi="live_tv"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6.5' width='18' height='13' rx='2.5'/%3E%3Cpath d='m8.5 3 3.5 3.5L15.5 3M10.3 10.3v5.4l4.5-2.7z'/%3E%3C/svg%3E")}
+/* Register dock (desktop and tablets): a slim bar that appears after the hero and steps aside in the roles section and near the end */
+[data-r=regdock]{all:unset;box-sizing:border-box;position:fixed;left:50%;bottom:22px;z-index:72;display:flex;align-items:center;gap:12px;height:44px;padding:0 5px 0 16px;border-radius:999px;cursor:pointer;
+ background:rgba(11,13,18,.88);color:#fff;border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 18px 44px rgba(15,20,40,.28);
+ font-family:'Instrument Sans',system-ui,sans-serif;font-size:13px;white-space:nowrap;transform:translate(-50%,0);transition:transform .6s var(--gms-ease),opacity .45s ease,background .3s}
+[data-r=regdock] .rd-dot{width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite}
+[data-r=regdock] .rd-k{color:rgba(255,255,255,.62)}
+[data-r=regdock] .rd-sep{width:1px;height:16px;background:rgba(255,255,255,.18)}
+[data-r=regdock] b{font-weight:600}
+[data-r=regdock] .rd-go{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2F5BFF;color:#fff;font-size:15px;transition:background .3s}
+[data-r=regdock] .rd-go .gi{transition:transform .45s var(--gms-ease)}
+[data-r=regdock]:hover{background:#0B0D12}[data-r=regdock]:hover .rd-go .gi{transform:translateX(2px)}
+[data-r=regdock]:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
+[data-r=regdock][data-show="0"],[data-r=regdock][data-hide="1"]{transform:translate(-50%,170%);opacity:0;pointer-events:none}
+/* Phones: a thumb-reachable tab bar (Home, Schedule, Live, Register) */
+[data-r=tabbar]{display:none}
+@media (max-width:760px){
+ [data-r=regdock]{display:none!important}
+ [data-r=tabbar]{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:72;display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;align-items:center;gap:2px;padding:5px;border-radius:22px;
+  background:rgba(255,255,255,.94);border:1px solid rgba(11,13,18,.06);box-shadow:0 2px 6px rgba(15,20,40,.06),0 16px 40px rgba(15,20,40,.16);transition:transform .55s var(--gms-ease),opacity .4s}
+ [data-r=tabbar][data-show="0"]{transform:translateY(150%);opacity:0;pointer-events:none}
+ [data-r=tabbar] button{all:unset;box-sizing:border-box;cursor:pointer;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:17px;color:#6B7180;
+  font-family:'Instrument Sans',system-ui,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.01em;transition:color .3s,background .3s;-webkit-tap-highlight-color:transparent}
+ [data-r=tabbar] button .gi{font-size:20px}
+ [data-r=tabbar] button[data-on="1"]{color:#0B0D12;background:rgba(11,13,18,.05)}
+ [data-r=tabbar] button:active{transform:scale(.96)}
+ [data-r=tabbar] .tb-reg{flex-direction:row;gap:6px;height:44px;margin-left:3px;background:#2F5BFF;color:#fff!important;font-size:13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px rgba(47,91,255,.32)}
+ [data-r=tabbar] .tb-reg .gi{font-size:15px}
+ [data-r=bot]{bottom:calc(72px + env(safe-area-inset-bottom))!important;right:6px!important;transform:scale(.82);transform-origin:100% 100%}
+ footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))!important}
+}
 /* GMS icon set: one family of 24-unit line icons (rounded strokes) drawn as masks, so they take the text colour */
 .gi{display:inline-block;width:1em;height:1em;vertical-align:-.14em;font-style:normal;flex:none;background:currentColor;-webkit-mask:var(--gi) center/contain no-repeat;mask:var(--gi) center/contain no-repeat}
 [data-gi="arrow_forward"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")}
@@ -325,7 +350,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-gi="volunteer_activism"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 12.8s-4.4-2.6-4.4-5.5A2.3 2.3 0 0 1 12 6.1a2.3 2.3 0 0 1 4.4 1.2c0 2.9-4.4 5.5-4.4 5.5z'/%3E%3Cpath d='M3 15.5h2.5l3.6 2.2h5l5.9-3.3M5.5 15.5v5M10.5 15.5h3.2'/%3E%3C/svg%3E")}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
-#gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg?v=ms2') 0% 42%/cover no-repeat}
+#gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.webp?v=ms3') 0% 42%/cover no-repeat}
 @media (max-aspect-ratio:11/10){#gms-shell [data-r=hero-media]{background-position:57% 50%}}
 /* Registration: pinned index (desktop + tablet) that glides role by role beside a live figure; phones open rows in place */
 [data-r=roles-pin]{position:relative;padding:130px 32px 140px}
@@ -1535,6 +1560,13 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
       </form>
     </div>
   </sc-if>
+  <nav data-r="tabbar" aria-label="Quick links" data-show="{{ dockShow }}">
+    <button type="button" data-tab="overview" data-on="1" onClick="{{ tabHome }}"><i class="gi" data-gi="home"></i><span>Home</span></button>
+    <button type="button" data-tab="schedule" onClick="{{ tabSchedule }}"><i class="gi" data-gi="event_available"></i><span>Schedule</span></button>
+    <button type="button" data-tab="tv" onClick="{{ tabLive }}"><i class="gi" data-gi="live_tv"></i><span>Live</span></button>
+    <button type="button" data-tab="reg" class="tb-reg" onClick="{{ tabReg }}"><span>Register</span><i class="gi" data-gi="arrow_forward"></i></button>
+  </nav>
+  <button type="button" data-r="regdock" data-show="{{ dockShow }}" data-hide="1" onClick="{{ tabReg }}"><span class="rd-dot"></span><span class="rd-k">Registration open</span><span class="rd-sep"></span><b>Register for the Games</b><span class="rd-go"><i class="gi" data-gi="arrow_forward"></i></span></button>
   <div data-r="bot" data-zoop="{{ visionZoop }}" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;transition:opacity .25s ease;opacity:{{ botOp }};pointer-events:{{ botPe }}">
     <img src="assets/bot-still.webp" alt="" width="120" height="120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:{{ botStillOp }};transition:opacity .7s ease .15s">
     <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
@@ -1716,7 +1748,7 @@ const pad=n=>String(n).padStart(2,'0');
 // real kick footage scrubbed by scroll, then the 15 event chips bursting out of the net. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-// Kick clip as a frame sequence (assets/kickfull/d|m/NNN.webp, 1920 / 1280 wide): every frame up to 6 s, then every
+// Kick clip as a frame sequence on desktop (assets/kickfull/d/NNN.webp, 1920 wide); phones scrub the 720p clip instead: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
 const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],ball:[0.547,0.349],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
@@ -1742,8 +1774,9 @@ class Component extends DCLogic {
     this.onKey=e=>{if(e.key==='Escape'&&(this.state.regOpen||this.state.menuOpen))this.setState({regOpen:false,menuOpen:false});};
     this.onDown=e=>{if((this.state.regOpen||this.state.menuOpen)&&!(e.target.closest&&e.target.closest('nav')))this.setState({regOpen:false,menuOpen:false});};
     window.addEventListener('keydown',this.onKey);window.addEventListener('pointerdown',this.onDown,{passive:true});if(/[?&]debug/.test(location.search))window.__gms=this;
-    // start the footballer's frames (and Vision's opening animation) quietly once the page has loaded, so the scene is ready long before you reach it
-    const warm=()=>setTimeout(()=>{(window.requestIdleCallback||(f=>setTimeout(f,1)))(()=>{this.kvPreload();});},LITE?1800:700);
+    // start the footballer's frames (or the phone clip) once the visitor starts scrolling, or after a few idle seconds, so the hero video gets the bandwidth first
+    const warm=()=>{let done=false;const go=()=>{if(done)return;done=true;window.removeEventListener('scroll',go);(window.requestIdleCallback||(f=>setTimeout(f,1)))(()=>{this.kvPreload();});};
+      window.addEventListener('scroll',go,{passive:true,once:true});setTimeout(go,LITE?6000:4000);};
     if(document.readyState==='complete')warm();else window.addEventListener('load',warm,{once:true});
     // phones: inside the pinned roles section each swipe moves exactly one role. The page follows the finger a little,
     // then eases onto the next role; a fling from outside stops at the first or last role instead of flying through.
@@ -1997,7 +2030,7 @@ class Component extends DCLogic {
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
   heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
-    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/hero-poster.jpg?v=ms2',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4?v=ms2','aria-hidden':'true',
+    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/hero-poster.webp?v=ms3',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4?v=ms2','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         el.addEventListener('timeupdate',()=>this.heroChapter(el));el.addEventListener('pause',()=>this.heroChapter(el,'paused'));el.addEventListener('play',()=>this.heroChapter(el,'running'));
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});const go=()=>io.observe(el);if(LITE&&document.readyState!=='complete')window.addEventListener('load',()=>setTimeout(go,350),{once:true});else go();(this.vios||(this.vios=[])).push(io);},
@@ -2018,7 +2051,15 @@ class Component extends DCLogic {
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
-  measure(){this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
+  // register dock hides over the hero, in the roles section and near the end; the phone tab bar lights the section you are in
+  dockFx(){const vh=window.innerHeight,y=window.scrollY,rt=k=>{const el=this.refs[k]&&this.refs[k].current;return el?el.getBoundingClientRect():null;};
+    const reg=rt('reg'),inReg=!!reg&&reg.top<vh*0.7&&reg.bottom>vh*0.3,end=y+vh>document.documentElement.scrollHeight-vh*0.9,hide=y<vh*0.85||inReg||end?'1':'0';
+    const dk=this.dockEl&&this.dockEl.isConnected?this.dockEl:(this.dockEl=document.querySelector('[data-r=regdock]'));if(dk&&dk.getAttribute('data-hide')!==hide)dk.setAttribute('data-hide',hide);
+    const tb=this.tabEl&&this.tabEl.isConnected?this.tabEl:(this.tabEl=document.querySelector('[data-r=tabbar]'));if(!tb||window.innerWidth>760)return;
+    let cur='overview';[['tv','tv'],['ecx','tv'],['events','schedule'],['schedule','schedule'],['reg','reg']].forEach(([k,t])=>{const r=rt(k);if(r&&r.top<vh*0.5)cur=t;});
+    const rc=rt('close');if(rc&&rc.top<vh*0.5)cur='';
+    if(cur!==this.tabCur){this.tabCur=cur;tb.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('data-on',b.getAttribute('data-tab')===cur?'1':'0'));}}
+  measure(){this.dockFx();this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     if(near('events'))this.kvPreload();
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
@@ -2135,8 +2176,8 @@ class Component extends DCLogic {
   // what to draw for frame fi: a pre-decoded bitmap when ready (no image decode on the main thread mid-scroll), else the nearest
   // decoded neighbour, else the loaded image; if too few frames are in when the scene starts, the plain kick video plays for that pass
   kvSource(fi){const kv=this.kv;if(!kv)return null;
-    const enough=(kv.loaded||0)/KV.n>=(LITE?0.42:0.6);if(this.kvMode==null||(this.kvMode==='video'&&enough))this.kvMode=enough?'frames':'video';
-    if(this.kvMode==='video'){let v=this.kvVid;if(!v){v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.src='assets/kick-fallback-'+VRES()+'.mp4';}
+    const enough=!kv.video&&(kv.loaded||0)/KV.n>=(LITE?0.42:0.6);if(this.kvMode==null||(this.kvMode==='video'&&enough))this.kvMode=enough?'frames':'video';
+    if(this.kvMode==='video'){const v=this.kvVideoLoad();
       if(!v.paused)v.pause();const tt=this.kvT||0;if(!v.seeking&&v.readyState>=1&&Math.abs(v.currentTime-tt)>0.03)v.currentTime=tt;
       return v.readyState>=2?{img:v,t:v.currentTime}:null;}
     let j=fi;while(j>0&&!kv.ok[j])j--;if(!kv.ok[j])return null;
@@ -2148,7 +2189,10 @@ class Component extends DCLogic {
     if(bm.has(j))return {img:bm.get(j)};
     for(let dd=1;dd<=3;dd++){if(bm.has(j-dd))return {img:bm.get(j-dd)};if(bm.has(j+dd))return {img:bm.get(j+dd)};}
     return {img:kv.imgs[j]};}
-  kvPreload(){if(this.kv)return;const mob=window.innerWidth<=760,dir='assets/kickfull/'+(mob?'m':'d')+'/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false)};
+  kvVideoLoad(){if(this.kvVid)return this.kvVid;const v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.preload='auto';
+    const src='assets/kick-fallback-'+VRES()+'.mp4',use=u=>{v.src=u;v.load();const pp=v.play();if(pp&&pp.then)pp.then(()=>v.pause()).catch(()=>{});v.addEventListener('loadeddata',()=>{this.kickLast=-1;},{once:true});};
+    fetch(src).then(r=>r.ok?r.blob():Promise.reject()).then(b=>use(URL.createObjectURL(b))).catch(()=>use(src));return v;}
+  kvPreload(){if(this.kv)return;if(window.innerWidth<=760){this.kv={imgs:[],ok:[],loaded:0,video:true};this.kvVideoLoad();return;}const dir='assets/kickfull/d/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false)};
     const load=i=>new Promise(res=>{const im=new Image();im.decoding='async';im.onload=()=>{kv.ok[i]=true;kv.loaded=(kv.loaded||0)+1;res();};im.onerror=res;im.src=dir+String(i+1).padStart(3,'0')+'.webp?v=hd';kv.imgs[i]=im;});
     // first frame, the strike and the goal first, then everything else in order, six at a time
     const order=[0,KV.idx(2),KV.idx(KV.hitT)];for(let i=0;i<KV.n;i+=LITE?2:1)if(!order.includes(i))order.push(i);let q=0;
@@ -2248,7 +2292,7 @@ class Component extends DCLogic {
                 style:{all:'unset',pointerEvents:'auto',cursor:'pointer',position:'absolute',transform:'translate(-50%,-24px)',width:96,display:'flex',flexDirection:'column',alignItems:'center',gap:6}},
                 h('span',{style:{width:48,height:48,borderRadius:16,display:'grid',placeItems:'center',background:on?'rgba(47,91,255,.9)':'rgba(255,255,255,.55)',color:on?'#fff':'#2F5BFF',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',border:'1px solid rgba(255,255,255,.95)',boxShadow:'0 12px 30px rgba(15,20,40,.12), inset 0 1px 0 rgba(255,255,255,.9)',fontSize:23,transition:'background .3s ease, color .3s ease, transform .35s cubic-bezier(.2,.8,.2,1)',transform:on?'scale(1.12)':'none'}},h('i',{className:'gi','data-gi':r.icon})),
                 h('span',{style:{fontFamily:'Instrument Sans',fontSize:11,fontWeight:600,textAlign:'center',lineHeight:1.2,color:'#0B0D12'}},r.name))));})));}
-  photoLoopEl(){const h=React.createElement,imgs=['assets/stadium-football-sm.jpg','assets/stadium-tennis-sm.jpg'];
+  photoLoopEl(){const h=React.createElement,imgs=['assets/stadium-football-sm.webp','assets/stadium-tennis-sm.jpg'];
     const col=(order,anim)=>h('div',{style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
       order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:22,display:'block'}}))));
     return h('div',{style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
@@ -2306,7 +2350,7 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
-      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
@@ -2334,7 +2378,7 @@ class Component extends DCLogic {
       bento:BENTO_ORDER.map((mi,k)=>{const m=MODULES[mi],T=TEAMS[mi],open=s.btOpen===mi;return {icon:m.icon,title:m.title.replace('Competition Management System','Competition & results'),desc:m.desc.split('. ').slice(0,2).join('. '),
         num:pad(mi+1),area:T[0],team:T[1],items:T[2].map(t=>({t})),open:String(open),toggle:()=>this.setState({btOpen:open?-1:mi})};}),
       // background film: "People works on a broadcast of an event", Pexels video 2890236 (Pexels licence, free to use); phones get its still frame
-      crewMedia:LITE?React.createElement('img',{key:'cp',src:'assets/crew-poster.webp',alt:'',loading:'lazy',decoding:'async'}):this.lazyVideo('cr','assets/crew-1080.mp4'),
+      
       modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
       rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
