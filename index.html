@@ -843,6 +843,48 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-r=regmenu-head] [data-r=regmenu-all]{display:none!important}
  [data-r=regmenu-desc]{display:none!important}
 }
+
+/* Buttons: ink & hairline. Compact 36px pills (32 in the nav, 34 on phones). Primary is solid (royal blue on light, white on dark and over video),
+   secondary is a 1px hairline; on hover a fill sweeps in from the left and any arrow slides. Register actions are text with a small arrow chip. */
+.gms-liquid{height:36px!important;min-height:36px!important;padding:0 16px!important;gap:7px!important;border-radius:999px!important;font-size:13.5px!important;font-weight:600!important;letter-spacing:-.005em!important;
+ text-shadow:none!important;overflow:visible!important;-webkit-mask-image:none!important;isolation:isolate!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+ transition:color .4s var(--gms-ease),border-color .4s var(--gms-ease),box-shadow .4s var(--gms-ease),transform .4s var(--gms-ease),background-color .4s!important}
+.gms-liquid::before{content:''!important;position:absolute!important;inset:0!important;left:0!important;top:0!important;width:auto!important;height:auto!important;z-index:-1!important;border-radius:inherit!important;
+ background:var(--bt-fill)!important;background-image:none!important;animation:none!important;translate:none!important;transform:scaleX(0)!important;transform-origin:0 50%!important;transition:transform .5s var(--gms-ease)!important;opacity:1!important}
+.gms-liquid::after{content:''!important;position:absolute!important;inset:-5px -2px!important;width:auto!important;height:auto!important;background:none!important;animation:none!important;translate:none!important}
+.gms-liquid:hover::before,.gms-liquid:focus-visible::before{transform:scaleX(1)!important}
+.gms-liquid .gi{transition:transform .45s var(--gms-ease)}.gms-liquid:hover .gi[data-gi^=arrow],.gms-liquid:focus-visible .gi[data-gi^=arrow]{transform:translateX(2px)}
+.gms-liquid:active{transform:scale(.97)!important}
+.gms-liquid:focus-visible{outline:2px solid #2F5BFF!important;outline-offset:3px!important}
+/* primary */
+.gms-liquid--water,.gms-liquid--blue{--bt-fill:#1E44DA;background:#2F5BFF!important;color:#fff!important;border:1px solid #2F5BFF!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 1px 2px rgba(15,20,40,.14),0 8px 22px rgba(47,91,255,.26)!important}
+.gms-liquid--water:hover,.gms-liquid--blue:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(15,20,40,.14),0 12px 28px rgba(47,91,255,.34)!important}
+/* secondary */
+.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark{--bt-fill:#0B0D12;background:transparent!important;color:#0B0D12!important;border:1px solid rgba(11,13,18,.2)!important;box-shadow:none!important}
+.gms-liquid--clear:hover,.gms-liquid--glass:hover,.gms-liquid--half:hover,.gms-liquid--dark:hover,.gms-liquid--clear:focus-visible,.gms-liquid--glass:focus-visible,.gms-liquid--half:focus-visible{color:#fff!important;border-color:#0B0D12!important}
+/* on dark sections and over video: white primary, white hairline secondary */
+:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--water,:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--blue{--bt-fill:#DCE4FF;background:#fff!important;color:#0B0D12!important;border-color:#fff!important;box-shadow:0 1px 2px rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.28)!important}
+:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark){--bt-fill:#fff;color:#fff!important;border-color:rgba(255,255,255,.34)!important;background:rgba(255,255,255,.04)!important}
+:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark):hover{color:#0B0D12!important;border-color:#fff!important}
+/* the nav sits on light glass */
+[data-r=nav] .gms-liquid{height:32px!important;min-height:32px!important;padding:0 14px!important;font-size:13px!important}
+[data-r=nav] .gms-liquid--clear{background:rgba(255,255,255,.5)!important}
+@media (max-width:760px){.gms-liquid{height:34px!important;min-height:34px!important;padding:0 14px!important;font-size:13px!important}[data-r=nav] .gms-liquid{height:32px!important;min-height:32px!important;padding:0 12px!important}}
+/* Register: text with a small arrow chip; the chip fills and the arrow slides on hover */
+.gms-glow,.gms-cta{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:inline-flex!important;align-items:center;justify-content:flex-start!important;gap:10px!important;width:auto!important;height:36px!important;padding:0 2px 0 0!important;
+ background:none!important;border:0!important;box-shadow:none!important;color:#0B0D12;font-family:'Instrument Sans',system-ui,sans-serif;font-size:13.5px!important;font-weight:600;letter-spacing:-.005em;white-space:nowrap;overflow:visible!important;transition:color .4s var(--gms-ease)}
+.gms-glow::before,.gms-glow::after,.gms-cta::before,.gms-cta::after{content:none!important;animation:none!important}
+.gms-glow>span,.gms-cta>span{position:relative;overflow:hidden;text-overflow:ellipsis;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s var(--gms-ease);padding-bottom:1px}
+.gms-glow>i,.gms-cta>i{position:relative;flex:none;width:28px!important;height:28px!important;border-radius:50%;display:grid;place-items:center;background:transparent!important;color:#2F5BFF!important;box-shadow:inset 0 0 0 1px rgba(47,91,255,.38)!important;animation:none!important;transition:background-color .45s var(--gms-ease),color .45s,box-shadow .45s}
+.gms-glow svg,.gms-cta svg{width:13px;height:13px;transition:transform .45s var(--gms-ease)}
+.gms-glow:hover,.gms-glow:focus-visible,.gms-cta:hover,.gms-cta:focus-visible{color:#2F5BFF}
+.gms-glow:hover>span,.gms-glow:focus-visible>span,.gms-cta:hover>span,.gms-cta:focus-visible>span{background-size:100% 1px}
+.gms-glow:hover>i,.gms-glow:focus-visible>i,.gms-cta:hover>i,.gms-cta:focus-visible>i{background:#2F5BFF!important;color:#fff!important;box-shadow:0 6px 16px rgba(47,91,255,.35)!important}
+.gms-glow:hover svg,.gms-glow:focus-visible svg,.gms-cta:hover svg,.gms-cta:focus-visible svg{transform:translateX(2px)}
+.gms-glow:focus-visible,.gms-cta:focus-visible{outline:2px solid #2F5BFF;outline-offset:4px;border-radius:8px}
+.rc-go{width:auto!important;display:inline-flex!important;align-self:flex-start}
+.ecx-cta{height:36px!important;font-size:13.5px!important;padding:0 6px 0 16px!important}
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script defer src="./vendor/react.production.min.js"></script>
@@ -1222,33 +1264,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
 
 
-  <div class="seam seam-ld" aria-hidden="true"></div>
-  <section ref="{{ tilesRef }}" data-r="bt-section">
-    <div data-r="bt-sticky">
-      <div class="bt-media" data-bt-media aria-hidden="true">{{ crewMedia }}</div>
-      <div class="bt-scrim" aria-hidden="true"></div>
-      <div class="bt-inner">
-        <div class="bt-head" data-bt-head>
-          <div style="display:flex;flex-direction:column;gap:12px;min-width:0"><span class="bt-eyebrow">A COMPLETE GAMES ECOSYSTEM</span><h2>Built for every team behind the Games.</h2></div>
-          <p>Seven modules share one record for every person, so each team sees exactly what it needs the moment it changes.</p>
-        </div>
-        <div class="bt-grid" data-bt-grid>
-          <sc-for list="{{ bento }}" as="t" hint-placeholder-count="7">
-            <button type="button" class="bt-tile" data-bt-tile data-open="{{ t.open }}" onClick="{{ t.toggle }}" aria-expanded="{{ t.open }}" style="grid-area:{{ t.area }}">
-              <span class="bt-top"><span class="bt-ico"><i class="gi" data-gi="{{ t.icon }}"></i></span><span class="bt-num">{{ t.num }}</span></span>
-              <span class="bt-body">
-                <span class="bt-title">{{ t.title }}</span>
-                <span class="bt-front">{{ t.desc }}</span>
-                <span class="bt-back"><span class="bt-team">RUN BY · {{ t.team }}</span><span class="bt-items"><sc-for list="{{ t.items }}" as="i" hint-placeholder-count="3"><span>{{ i.t }}</span></sc-for></span></span>
-              </span>
-            </button>
-          </sc-for>
-          <div class="bt-core" data-bt-core aria-hidden="true"><i data-bt-orb></i><b data-bt-txt>One system.</b><b data-bt-txt>Every team.</b><small data-bt-txt>GMS · GAMES MANAGEMENT SYSTEM</small></div>
-        </div>
-      </div>
-      <div class="bt-dim" data-bt-dim aria-hidden="true"></div>
-    </div>
-  </section>
   <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:260vh;background:#F4F5F7">
     <div style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden">
       <div data-fn-win class="fn-win">
@@ -1876,10 +1891,13 @@ class Component extends DCLogic {
         open:()=>{this.setState({sel:v.id});this.go('scores');}})),
       tvNow:tv,tvVideo:this.tvFeedEl()};}
   // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
+  // captions off and HD asked for through the player's message channel (the URL flags alone are not always honoured)
+  ytQuiet(f){if(!f)return;const send=(func,args)=>{try{f.contentWindow.postMessage(JSON.stringify({event:'command',func,args:args||[]}),'*');}catch(e){}};
+    [600,1800,4000,9000].forEach(t=>setTimeout(()=>{send('unloadModule',['captions']);send('unloadModule',['cc']);send('setPlaybackQuality',['hd1080']);},t));}
   tvFeedEl(){const h=React.createElement,id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),cov={position:'absolute',left:'50%',top:'50%',width:'max(100%, 177.78vh)',height:'max(100%, 56.25vw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:'none'};
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0D12'}},
       h('img',{src:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',alt:'',decoding:'async',loading:'lazy',style:{...cov,objectFit:'cover',filter:'saturate(1.05)'}}),
-      this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&vq=hd1080&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&cc_load_policy=0',title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
+      this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&vq=hd1080&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1',onLoad:e=>this.ytQuiet(e.currentTarget),title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
   // Event centre: sport and status filters, live-first match list, and the picked match period by period with a momentum chart
   ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
     const list=byDiv.filter(v=>s.liveState==='all'||v.state===s.liveState),d=views.find(v=>v.id===s.sel)||views[0],m=s.live.find(x=>x.id===d.id),F=SPORT_FMT[m.div];
@@ -1909,7 +1927,7 @@ class Component extends DCLogic {
     const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),up=x=>String(x).toUpperCase();
     const open=v=>()=>{this.setState({sel:v.id});this.go('scores');};
     return {tv:{
-      player:screen==='tv'?h('iframe',{key:'ytp',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist='+id+'&vq=hd1080&cc_load_policy=0',title:'Live TV: '+F.name,allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true}):null,
+      player:screen==='tv'?h('iframe',{key:'ytp',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist='+id+'&vq=hd1080&cc_load_policy=0&enablejsapi=1',onLoad:e=>this.ytQuiet(e.currentTarget),title:'Live TV: '+F.name,allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true}):null,
       flash:REDUCED?null:h('div',{key:'sw'+chan,className:'tvh-flash','aria-hidden':'true'}),
       now:{...now,num:'CH 0'+(FIELDS.indexOf(F)+1),fieldName:F.name,fieldUp:up(F.name),eventUp:up(now.event),roundUp:up(now.round),liveAttr:now.live?'1':'0'},
       channels:FIELDS.map((f,i)=>{const c=cur(f.id);return {num:'0'+(i+1),name:f.name,icon:f.icon,on:f.id===chan?'1':'0',pressed:String(f.id===chan),live:c&&c.live?'1':'0',
