@@ -308,6 +308,8 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
  [data-r=tabbar] button .gi{font-size:20px}
  [data-r=tabbar] button[data-on="1"]{color:#0B0D12;background:rgba(11,13,18,.05)}
  [data-r=tabbar] button:active{transform:scale(.96)}
+ [data-r=tabbar] button.tb-reg{background:#2F5BFF!important;color:#fff!important}
+ [data-r=tabbar] button.tb-reg[data-on="1"]{box-shadow:0 0 0 3px rgba(47,91,255,.22),0 8px 18px rgba(47,91,255,.32)!important}
  [data-r=tabbar] .tb-reg{flex-direction:row;gap:6px;height:44px;margin-left:3px;background:#2F5BFF;color:#fff!important;font-size:13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px rgba(47,91,255,.32)}
  [data-r=tabbar] .tb-reg .gi{font-size:15px}
  [data-r=bot]{bottom:calc(72px + env(safe-area-inset-bottom))!important;right:6px!important;transform:scale(.82);transform-origin:100% 100%}
@@ -910,6 +912,45 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .gms-glow:focus-visible,.gms-cta:focus-visible{outline:2px solid #2F5BFF;outline-offset:4px;border-radius:8px}
 .rc-go{width:auto!important;display:inline-flex!important;align-self:flex-start}
 .ecx-cta{height:36px!important;font-size:13.5px!important;padding:0 6px 0 16px!important}
+
+/* Athlete stories: portrait cards with the quote over the photo; arrows, drag and a progress line */
+[data-r=stories]{position:relative;background:#F4F5F7;padding:112px 0 120px;overflow:hidden}
+.st-head{max-width:1240px;margin:0 auto 40px;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.st-l{display:flex;flex-direction:column;gap:14px;max-width:640px}
+.st-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF}
+.st-h{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96}
+.st-p{margin:0;font-size:15px;line-height:1.55;color:#4A505C;max-width:460px}
+.st-nav{display:flex;gap:8px}
+.st-arw{all:unset;box-sizing:border-box;cursor:pointer;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(11,13,18,.18);color:#0B0D12;font-size:16px;transition:background .35s var(--gms-ease),color .35s,border-color .35s}
+.st-arw:hover{background:#0B0D12;color:#fff;border-color:#0B0D12}.st-arw:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
+.st-back{transform:rotate(180deg)}
+.st-track{--st-pad:max(32px,calc((100vw - 1240px) / 2 + 32px));display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--st-pad);padding:6px var(--st-pad) 12px;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab;user-select:none}
+.st-track::-webkit-scrollbar{display:none}.st-track.drag{scroll-snap-type:none;cursor:grabbing}
+.st-card{position:relative;flex:0 0 clamp(260px,24vw,340px);aspect-ratio:3/4;margin:0;border-radius:var(--r-l);overflow:hidden;scroll-snap-align:start;background:#0B0D12;box-shadow:var(--sh-2);isolation:isolate}
+.st-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--gms-ease);-webkit-user-drag:none}
+.st-card:hover img{transform:scale(1.045)}
+.st-card::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,10,16,.18) 0%,rgba(8,10,16,0) 24%,rgba(8,10,16,0) 42%,rgba(8,10,16,.86) 100%)}
+.st-card figcaption{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px 20px;color:#fff}
+.st-chip{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px 0 9px;border-radius:999px;background:rgba(8,10,16,.38);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:12px;font-weight:600}
+.st-chip .gi{font-size:15px}
+.st-q{display:flex;flex-direction:column;gap:12px}
+.st-card blockquote{margin:0;font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(19px,1.55vw,23px);letter-spacing:-.02em;line-height:1.18}
+.st-who{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.st-prog{max-width:1240px;margin:26px auto 0;padding:0 32px}.st-prog>span{display:block;height:2px;border-radius:2px;background:rgba(11,13,18,.1);overflow:hidden}
+.st-prog i{display:block;height:100%;width:30%;background:#0B0D12;border-radius:2px;transition:transform .15s linear}
+@media (max-width:760px){[data-r=stories]{padding:80px 0 88px}.st-head{padding:0 20px;margin-bottom:26px}.st-nav{display:none}.st-track{--st-pad:20px;gap:12px}.st-card{flex-basis:76vw}.st-prog{padding:0 20px}}
+/* Add to calendar inside a schedule row */
+.cal-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:0 16px 16px}
+.cal-k{display:inline-flex;align-items:center;gap:6px;margin-right:4px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.08em;color:#8A909C}.cal-k .gi{font-size:14px}
+.cal-a{all:unset;box-sizing:border-box;cursor:pointer;height:30px;padding:0 13px;border-radius:999px;border:1px solid rgba(11,13,18,.16);display:inline-flex;align-items:center;font-size:12.5px;font-weight:600;color:#0B0D12;transition:background .3s var(--gms-ease),color .3s,border-color .3s}
+.cal-a:hover{background:#0B0D12;color:#fff;border-color:#0B0D12}.cal-a:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
+/* Cursor bubble (desktop) */
+.gms-cur{position:fixed;left:0;top:0;z-index:9998;width:0;height:0;pointer-events:none}
+.gms-cur>span{position:absolute;left:-36px;top:-36px;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:rgba(11,13,18,.9);color:#fff;font:600 12px 'Instrument Sans',system-ui,sans-serif;letter-spacing:.01em;
+ box-shadow:0 10px 30px rgba(15,20,40,.25);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transform:scale(0);opacity:0;transition:transform .45s var(--gms-ease),opacity .3s ease}
+.gms-cur[data-on="1"]>span{transform:scale(1);opacity:1}
+.gms-cur[data-tone=light]>span{background:rgba(255,255,255,.94);color:#0B0D12}
+@media (hover:hover) and (pointer:fine){[data-cursor]{cursor:none!important}[data-cursor] :is(button,a,input){cursor:pointer!important}}
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script defer src="./vendor/react.production.min.js"></script>
@@ -1052,7 +1093,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
   <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:220vh;background:#FFFFFF">
     <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
-      <div data-r="tv-cinema" style="position:absolute;inset:0;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
+      <div data-r="tv-cinema" data-cursor="Watch" data-cursor-tone="light" onClick="{{ goTv }}" style="position:absolute;inset:0;cursor:pointer;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
         {{ tvVideo }}
         <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.55) 0%,rgba(8,10,16,0) 32%,rgba(8,10,16,0) 52%,rgba(8,10,16,.82) 100%)"></div>
         <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
@@ -1099,7 +1140,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
           <div data-r="ec-grid">
             <div data-r="ec-list">
               <sc-for list="{{ ec.list }}" as="m" hint-placeholder-count="6">
-                <button data-r="ec-row" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
+                <button data-r="ec-row" data-cursor="Open" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
                   <span class="ec-meta"><span>{{ m.fieldShort }} · {{ m.time }} IST</span><span class="pill" data-live="{{ m.liveAttr }}"><span class="pd"></span>{{ m.status }}</span></span>
                   <span class="ec-ev">{{ m.event }} <span style="color:#8A909C;font-weight:500">· {{ m.round }}</span></span>
                   <span class="ec-nm" data-win="{{ m.winA }}"><small>{{ m.A1 }}</small>{{ m.A0 }}</span><span class="ec-sc">{{ m.sa }}</span>
@@ -1201,7 +1242,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
               <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid #E8EAEE;padding-left:14px">
                 <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="3">
                   <div style="display:flex;flex-direction:column;border-radius:var(--r-s);background:{{ r.bg }};transition:background .3s ease">
-                    <button onClick="{{ r.toggle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:var(--r-s)" style-hover="background:#F6F7F9">
+                    <button onClick="{{ r.toggle }}" data-cursor="Details" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:var(--r-s)" style-hover="background:#F6F7F9">
                       <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#8A909C">{{ r.sport }} · {{ r.code }}</span></span>
                       <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8A909C;transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
                     </button>
@@ -1211,6 +1252,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
                           <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C">{{ x.k }}</span>{{ x.v }}</span>
                         </sc-for>
                       </div>
+                      <div class="cal-row"><span class="cal-k"><i class="gi" data-gi="event_available"></i>ADD TO CALENDAR</span><a class="cal-a" href="{{ r.gcal }}" target="_blank" rel="noopener">Google</a><button type="button" class="cal-a" onClick="{{ r.ics }}">Apple</button><a class="cal-a" href="{{ r.outlook }}" target="_blank" rel="noopener">Outlook</a></div>
                     </div>
                   </div>
                 </sc-for>
@@ -1240,7 +1282,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
                   <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#0B0D12"><span style="width:9px;height:9px;border-radius:50%;flex:none;background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:#8A909C">{{ g.count }}</span></div>
                   <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
                     <div data-role-row data-k="{{ r.k }}" data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid #E8EBF0">
-                      <button onClick="{{ r.click }}" onMouseMove="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:var(--row-pad,17px) 6px">
+                      <button onClick="{{ r.click }}" data-cursor="Register" onMouseMove="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:var(--row-pad,17px) 6px">
                         <span style="font-family:'JetBrains Mono';font-size:12px;color:#8A909C">{{ r.num }}</span>
                         <span data-role-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(19px,min(1.9vw,3.4vh),27px);letter-spacing:-.03em;line-height:1.08;color:#0B0D12;overflow-wrap:anywhere">{{ r.name }}</span>
                         <span data-role-arrow aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_outward"></i></span>
@@ -1288,6 +1330,19 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
   </section>
 
 
+
+  <section data-r="stories" ref="{{ storiesRef }}">
+    <div class="st-head">
+      <div class="st-l"><span class="st-eyebrow">ATHLETE STORIES</span><h2 class="st-h">In their own words.</h2><p class="st-p">What a week at the Games feels like when every step runs through one platform. Illustrative stories.</p></div>
+      <div class="st-nav"><button type="button" class="st-arw" onClick="{{ storyPrev }}" aria-label="Previous story"><i class="gi st-back" data-gi="arrow_forward"></i></button><button type="button" class="st-arw" onClick="{{ storyNext }}" aria-label="Next story"><i class="gi" data-gi="arrow_forward"></i></button></div>
+    </div>
+    <div class="st-track" data-cursor="Drag" role="list" aria-label="Athlete stories">
+      <sc-for list="{{ stories }}" as="t" hint-placeholder-count="6">
+        <figure class="st-card" role="listitem"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><blockquote>“{{ t.q }}”</blockquote><span class="st-who">{{ t.who }}</span></span></figcaption></figure>
+      </sc-for>
+    </div>
+    <div class="st-prog" aria-hidden="true"><span><i></i></span></div>
+  </section>
 
   <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:260vh;background:#F4F5F7">
     <div style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden">
@@ -1594,6 +1649,21 @@ const CATS=[
 {name:'Volleyball',icon:'sports_volleyball',color:'#A9741E',tint:'#FBF1DF',outdoor:false,events:[['Volleyball Men\'s Tournament','MEN','VBM','Men'],['Volleyball Women\'s Tournament','WOMEN','VBW','Women'],['Volleyball Beach Mixed','MIXED','VBB','Beach Mixed']]},
 {name:'Tennis',icon:'sports_tennis',color:'#7A4FD6',tint:'#EFE9FC',outdoor:true,events:[['Tennis Men\'s Singles','MEN','TNM','Men\'s Singles'],['Tennis Women\'s Singles','WOMEN','TNW','Women\'s Singles'],['Tennis Mixed Doubles','MIXED','TNX','Mixed Doubles']]}];
 const ALL_EVENTS=CATS.flatMap(c=>c.events.map(e=>({name:e[0],gender:e[1],code:e[2],cat:c})));
+// Athlete stories: portraits cut from the hero footage; the quotes are illustrative, not real people
+const STORIES=[
+{img:'basketball',sport:'Basketball',icon:'sports_basketball',q:'Accreditation took one evening. The rest of my week was about the rim.',who:'Basketball · Delegation athlete'},
+{img:'athletics',sport:'Athletics',icon:'directions_run',q:'My heat, lane and call time were on my phone the minute the draw landed.',who:'Athletics · 100 m sprinter'},
+{img:'swimming',sport:'Swimming',icon:'pool',q:'The result was waiting for me before I had climbed out of the pool.',who:'Swimming · Freestyle'},
+{img:'volleyball',sport:'Volleyball',icon:'sports_volleyball',q:'The whole squad registered from one link. No paper, no queues.',who:'Volleyball · Team captain'},
+{img:'tennis',sport:'Tennis',icon:'sports_tennis',q:'Practice courts, transport and match times, all in one place.',who:'Tennis · Singles'},
+{img:'football',sport:'Football',icon:'sports_soccer',q:'My family followed every match live from home.',who:'Football · Youth squad'}];
+// calendar links for a day-one session (14 Nov 2026, IST, two hours): Google and Outlook open prefilled, Apple downloads an .ics file
+const calLinks=(title,tm,desc)=>{const [h,m]=tm.split(':').map(Number),e=String(h+2).padStart(2,'0')+':'+String(m).padStart(2,'0'),loc='GMS Games 2026, Ahmedabad',enc=encodeURIComponent;
+  const utc=(hh,mm)=>{const d=new Date(Date.UTC(2026,10,14,hh,mm)-330*60000);return d.toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';};
+  return {gcal:'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+enc(title)+'&dates=20261114T'+tm.replace(':','')+'00/20261114T'+e.replace(':','')+'00&ctz=Asia/Kolkata&details='+enc(desc)+'&location='+enc(loc),
+    outlook:'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject='+enc(title)+'&startdt=2026-11-14T'+tm+':00%2B05:30&enddt=2026-11-14T'+e+':00%2B05:30&body='+enc(desc)+'&location='+enc(loc),
+    ics:()=>{const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GMS//Games 2026//EN','BEGIN:VEVENT','UID:'+title.replace(/\W+/g,'-')+'-'+tm.replace(':','')+'@gms','DTSTAMP:'+utc(h,m),'DTSTART:'+utc(h,m),'DTEND:'+utc(h+2,m),'SUMMARY:'+title,'DESCRIPTION:'+desc,'LOCATION:'+loc,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+      const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=title.split(' · ')[0].replace(/\W+/g,'-').toLowerCase()+'.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}};};
 const REG=[
 {id:'athlete',name:'Athlete',icon:'directions_run',desc:'Athletes competing in any sport at the Games, as individuals or in a team.'},
 {id:'staff',name:'Support Staff',icon:'groups',desc:'Coaches, team managers, physios and technicians travelling with a delegation.'},
@@ -2057,9 +2127,27 @@ class Component extends DCLogic {
     const dk=this.dockEl&&this.dockEl.isConnected?this.dockEl:(this.dockEl=document.querySelector('[data-r=regdock]'));if(dk&&dk.getAttribute('data-hide')!==hide)dk.setAttribute('data-hide',hide);
     const tb=this.tabEl&&this.tabEl.isConnected?this.tabEl:(this.tabEl=document.querySelector('[data-r=tabbar]'));if(!tb||window.innerWidth>760)return;
     let cur='overview';[['tv','tv'],['ecx','tv'],['events','schedule'],['schedule','schedule'],['reg','reg']].forEach(([k,t])=>{const r=rt(k);if(r&&r.top<vh*0.5)cur=t;});
-    const rc=rt('close');if(rc&&rc.top<vh*0.5)cur='';
+    const rc=rt('close'),rs=rt('stories');if((rc&&rc.top<vh*0.5)||(rs&&rs.top<vh*0.5))cur='';
     if(cur!==this.tabCur){this.tabCur=cur;tb.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('data-on',b.getAttribute('data-tab')===cur?'1':'0'));}}
-  measure(){this.dockFx();this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
+  storyStep(d){const t=document.querySelector('.st-track'),c=t&&t.querySelector('.st-card');if(c)t.scrollBy({left:d*(c.offsetWidth+18),behavior:REDUCED?'auto':'smooth'});}
+  storyBind(){const t=document.querySelector('.st-track');if(!t||t.__st)return;t.__st=1;const bar=t.parentNode.querySelector('.st-prog i');
+    const prog=()=>{const w=t.clientWidth/t.scrollWidth,m=t.scrollWidth-t.clientWidth;if(bar){bar.style.width=(w*100).toFixed(1)+'%';bar.style.transform='translateX('+(m>0?t.scrollLeft/m*(1/w-1)*100:0).toFixed(1)+'%)';}};
+    t.addEventListener('scroll',prog,{passive:true});prog();let down=null,moved=0;
+    t.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down={x:e.clientX,l:t.scrollLeft};moved=0;t.classList.add('drag');t.setPointerCapture(e.pointerId);});
+    t.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-down.x;moved=Math.max(moved,Math.abs(dx));t.scrollLeft=down.l-dx;});
+    const up=()=>{if(!down)return;down=null;t.classList.remove('drag');const c=t.querySelector('.st-card');if(c){const s=c.offsetWidth+18;t.scrollTo({left:Math.round(t.scrollLeft/s)*s,behavior:'smooth'});}};
+    t.addEventListener('pointerup',up);t.addEventListener('pointercancel',up);t.addEventListener('click',e=>{if(moved>6){e.preventDefault();e.stopPropagation();}},true);}
+  // desktop cursor: over videos and cards a small bubble follows the pointer and says what a click does (Watch, Open, Details, Register, Drag)
+  cursorInit(){if(this.curOn||REDUCED||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;this.curOn=1;
+    const c=document.createElement('div');c.className='gms-cur';c.setAttribute('aria-hidden','true');c.innerHTML='<span></span>';document.body.appendChild(c);const lab=c.firstChild;
+    let x=0,y=0,cx=0,cy=0,raf=0,on=false;const loop=()=>{cx+=(x-cx)*0.24;cy+=(y-cy)*0.24;c.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0)';raf=on||Math.abs(x-cx)+Math.abs(y-cy)>1?requestAnimationFrame(loop):0;};
+    const upd=el=>{el=el&&el.closest?el:null;const t=el&&el.closest('[data-cursor]'),ctl=el&&el.closest('button,a,input,select,textarea'),want=t&&!(ctl&&ctl!==t&&t.contains(ctl))?t.getAttribute('data-cursor'):'';
+      if(want!==this.curLab){this.curLab=want;if(want){lab.textContent=want;c.setAttribute('data-tone',t.getAttribute('data-cursor-tone')||'dark');if(!on){cx=x;cy=y;}}on=!!want;c.setAttribute('data-on',on?'1':'0');}
+      if(!raf)raf=requestAnimationFrame(loop);};
+    window.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;upd(e.target);},{passive:true});
+    let st=0;window.addEventListener('scroll',()=>{if(st||(!x&&!y))return;st=requestAnimationFrame(()=>{st=0;upd(document.elementFromPoint(x,y));});},{passive:true});
+    document.addEventListener('pointerleave',()=>{on=false;this.curLab='';c.setAttribute('data-on','0');});}
+  measure(){this.dockFx();this.storyBind();this.cursorInit();this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     if(near('events'))this.kvPreload();
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
@@ -2350,7 +2438,7 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
-      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/stories/'+t.img+'.webp',alt:t.sport+' athlete'})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
@@ -2371,7 +2459,7 @@ class Component extends DCLogic {
       ...this.finVals(),botReady:!LITE&&!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
       groups:['08:00','10:00','14:00'].map(time=>({time,part:time<'12'?'MORNING':'AFTERNOON',items:DAY1.filter(d=>d[0]===time).map(([tm,code])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;
-        return {name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'80px':'0px',
+        return {name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'150px':'0px',...calLinks(ev.name+' · GMS Games 2026',tm,ev.cat.name+' · '+ev.gender),
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'SPORT',v:ev.cat.name},{k:'ROUND',v:tm==='08:00'?'Heats':'Group stage'},{k:'CATEGORY',v:ev.gender+' · SENIOR'},{k:'STATUS',v:'Scheduled'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
