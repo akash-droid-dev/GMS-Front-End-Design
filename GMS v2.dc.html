@@ -677,7 +677,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .seam-ld{background:linear-gradient(180deg,rgb(255,255,255) 0%,rgb(244,244,245) 12%,rgb(216,216,217) 25%,rgb(176,177,178) 38%,rgb(130,132,134) 50%,rgb(85,86,90) 62%,rgb(45,47,51) 75%,rgb(17,19,23) 88%,rgb(6,8,13) 100%)}
 /* Film grain and depth on the dark sections (desktop; phones skip the extra layer) */
 @media (hover:hover) and (pointer:fine){
- [data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.09;mix-blend-mode:soft-light;
+ [data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
  footer{position:relative}
 }
@@ -1818,7 +1818,7 @@ const pad=n=>String(n).padStart(2,'0');
 // real kick footage scrubbed by scroll, then the 15 event chips bursting out of the net. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-// Kick clip as a frame sequence on desktop (assets/kickfull/d/NNN.webp, 1920 wide); phones scrub the 720p clip instead: every frame up to 6 s, then every
+// Kick clip: one video scrubbed by the scroll (1080p on desktop, 720p on phones); KV maps clip time to the old 192-step timeline: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
 const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],ball:[0.547,0.349],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
@@ -2261,35 +2261,21 @@ class Component extends DCLogic {
     const step=now=>{const k=Math.min(1,(now-t0)/d);tn.nodeValue=k<1?String(Math.round(n*ease(k))):fin;if(k<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
   // ---- Programme, real footage: a 10 s clip (run-up from the left, strike, ball into the net, celebration) shown full-screen as
   // a frame sequence that scrubs with the pinned scroll; then the net dissolves and the 18 events float up into the goal ----
-  // what to draw for frame fi: a pre-decoded bitmap when ready (no image decode on the main thread mid-scroll), else the nearest
-  // decoded neighbour, else the loaded image; if too few frames are in when the scene starts, the plain kick video plays for that pass
-  kvSource(fi){const kv=this.kv;if(!kv)return null;
-    const enough=!kv.video&&(kv.loaded||0)/KV.n>=(LITE?0.42:0.6);if(this.kvMode==null||(this.kvMode==='video'&&enough))this.kvMode=enough?'frames':'video';
-    if(this.kvMode==='video'){const v=this.kvVideoLoad();
-      if(!v.paused)v.pause();const tt=this.kvT||0;if(!v.seeking&&v.readyState>=1&&Math.abs(v.currentTime-tt)>0.03)v.currentTime=tt;
-      return v.readyState>=2?{img:v,t:v.currentTime}:null;}
-    let j=fi;while(j>0&&!kv.ok[j])j--;if(!kv.ok[j])return null;
-    const bm=kv.bm||(kv.bm=new Map()),pend=kv.pend||(kv.pend=new Set());this.kvCur=j;
-    const want=i=>{if(i<0||i>=KV.n||!kv.ok[i]||bm.has(i)||pend.has(i)||typeof createImageBitmap!=='function')return;pend.add(i);
-      createImageBitmap(kv.imgs[i]).then(b=>{pend.delete(i);bm.set(i,b);if(Math.abs(i-this.kvCur)<3)this.kickLast=-1;
-        if(bm.size>28)for(const [k2,v2] of bm){if(Math.abs(k2-this.kvCur)>16){if(v2.close)v2.close();bm.delete(k2);}if(bm.size<=22)break;}}).catch(()=>pend.delete(i));};
-    for(let dd=0;dd<=10;dd++){want(j+dd);if(dd&&dd<=4)want(j-dd);}
-    if(bm.has(j))return {img:bm.get(j)};
-    for(let dd=1;dd<=3;dd++){if(bm.has(j-dd))return {img:bm.get(j-dd)};if(bm.has(j+dd))return {img:bm.get(j+dd)};}
-    return {img:kv.imgs[j]};}
+  // what to draw: the kick clip itself, scrubbed to the scroll's clip time (one video decoder instead of hundreds of decoded frames,
+  // which kept the page well under the browser's memory limits)
+  kvSource(fi){if(!this.kv)return null;const v=this.kvVideoLoad();this.kvMode='video';
+    if(!v.paused)v.pause();const tt=this.kvT||0;if(!v.seeking&&v.readyState>=1&&Math.abs(v.currentTime-tt)>0.03)v.currentTime=tt;
+    return v.readyState>=2?{img:v,t:v.currentTime}:null;}
   kvVideoLoad(){if(this.kvVid)return this.kvVid;const v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.preload='auto';
-    const src='assets/kick-fallback-'+VRES()+'.mp4',use=u=>{v.src=u;v.load();const pp=v.play();if(pp&&pp.then)pp.then(()=>v.pause()).catch(()=>{});v.addEventListener('loadeddata',()=>{this.kickLast=-1;},{once:true});};
+    const src='assets/kick-fallback-'+VRES()+'.mp4?v=k3',use=u=>{v.src=u;v.load();const pp=v.play();if(pp&&pp.then)pp.then(()=>v.pause()).catch(()=>{});v.addEventListener('loadeddata',()=>{this.kickLast=-1;},{once:true});};
+    v.addEventListener('seeked',()=>{this.kickLast=-1;this.awake=Math.max(this.awake||0,20);});
     fetch(src).then(r=>r.ok?r.blob():Promise.reject()).then(b=>use(URL.createObjectURL(b))).catch(()=>use(src));return v;}
-  kvPreload(){if(this.kv)return;if(window.innerWidth<=760){this.kv={imgs:[],ok:[],loaded:0,video:true};this.kvVideoLoad();return;}const dir='assets/kickfull/d/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false)};
-    const load=i=>new Promise(res=>{const im=new Image();im.decoding='async';im.onload=()=>{kv.ok[i]=true;kv.loaded=(kv.loaded||0)+1;res();};im.onerror=res;im.src=dir+String(i+1).padStart(3,'0')+'.webp?v=hd';kv.imgs[i]=im;});
-    // first frame, the strike and the goal first, then everything else in order, six at a time
-    const order=[0,KV.idx(2),KV.idx(KV.hitT)];for(let i=0;i<KV.n;i+=LITE?2:1)if(!order.includes(i))order.push(i);let q=0;
-    const next=()=>{if(q>=order.length)return;const i=order[q++];load(i).then(()=>{this.kickLast=-1;next();});};for(let k=0;k<6;k++)next();}
+  kvPreload(){if(this.kv)return;this.kv={video:true};this.kvVideoLoad();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/9.8)),dw=KV.w*s,dh=KV.h*s,fx=L.port?(t<2.2?0.32+0.18*smooth(t/2.2):0.5):0.5;
     const ox=Math.min(0,Math.max(L.W-dw,L.W/2-fx*dw)),oy=L.port?L.H*0.17:(L.H-dh)*0.5;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
   kvBuild(host,box){const W=host.clientWidth,H=host.clientHeight,L=this.kickL={W,H,port:W/H<1.1};box.innerHTML='';
-    const c=document.createElement('canvas'),dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
+    const c=document.createElement('canvas'),dpr=Math.min(1.5,window.devicePixelRatio||1);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
     // soft white wash behind the heading, the frosted veil that dissolves the net, and a clean goal frame that stays as the menu's frame
     const wash=document.createElement('div');wash.setAttribute('data-kv-wash','');box.appendChild(wash);
     const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
