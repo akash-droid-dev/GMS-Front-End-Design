@@ -601,6 +601,8 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ec-sp{grid-area:sp;text-align:right;font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
 @media (max-width:1100px){.ec-body{grid-template-columns:1fr}.ec-target{max-width:260px;margin:0 auto;width:100%}}
 @media (max-width:960px){[data-r=ec-grid]{grid-template-columns:1fr}[data-r=ec-detail]{position:static;order:-1}}
+/* Live TV: keep the Watch live button clear of the floating Vision robot in the corner */
+@media (min-width:761px){[data-r=tv-ui]>div:last-child{padding-right:clamp(0px,9vw,140px)}}
 /* Event centre under the TV: one wide toggle card that opens the full centre inline */
 [data-r=ecx]{background:#F4F5F7;padding:36px 32px 104px}
 .ecx-wrap{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:0}
@@ -1478,7 +1480,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
   </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;jT9C2wBHn6c&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sy6emSOKlQY&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
 const BLUE='#2F5BFF';
 // Set in <head> before render: phones, tablets and touch-first devices use CSS stand-ins for the Spline scenes.
 const LITE=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-lite');
@@ -1820,10 +1822,10 @@ class Component extends DCLogic {
         open:()=>{this.setState({sel:v.id});this.go('scores');}})),
       tvNow:tv,tvVideo:this.tvFeedEl()};}
   // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
-  tvFeedEl(){const h=React.createElement,id=(this.props.youtubeVideoId||'jT9C2wBHn6c').trim(),cov={position:'absolute',left:'50%',top:'50%',width:'max(100%, 177.78vh)',height:'max(100%, 56.25vw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:'none'};
+  tvFeedEl(){const h=React.createElement,id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),cov={position:'absolute',left:'50%',top:'50%',width:'max(100%, 177.78vh)',height:'max(100%, 56.25vw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:'none'};
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0D12'}},
       h('img',{src:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',alt:'',decoding:'async',loading:'lazy',style:{...cov,objectFit:'cover',filter:'saturate(1.05)'}}),
-      this.state.tvNear&&!REDUCED&&!LITE?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&modestbranding=1&playsinline=1&rel=0',title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
+      this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&vq=hd1080&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&cc_load_policy=0',title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
   // Event centre: sport and status filters, live-first match list, and the picked match period by period with a momentum chart
   ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
     const list=byDiv.filter(v=>s.liveState==='all'||v.state===s.liveState),d=views.find(v=>v.id===s.sel)||views[0],m=s.live.find(x=>x.id===d.id),F=SPORT_FMT[m.div];
@@ -1850,10 +1852,10 @@ class Component extends DCLogic {
   // Broadcast hub: one channel per field, the picked channel's match under the player, its now/next running order, and live matches elsewhere
   tvVals(screen){const s=this.state,h=React.createElement,views=liveOrder(s.live).map(liveView),chan=s.chan||'stadium';
     const onField=f=>views.filter(v=>v.field===f),cur=f=>{const l=onField(f);return l.find(v=>v.live)||l.find(v=>v.state==='next')||l[0];};
-    const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'jT9C2wBHn6c').trim(),up=x=>String(x).toUpperCase();
+    const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),up=x=>String(x).toUpperCase();
     const open=v=>()=>{this.setState({sel:v.id});this.go('scores');};
     return {tv:{
-      player:screen==='tv'?h('iframe',{key:'ytp',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1',title:'Live TV: '+F.name,allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true}):null,
+      player:screen==='tv'?h('iframe',{key:'ytp',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist='+id+'&vq=hd1080&cc_load_policy=0',title:'Live TV: '+F.name,allow:'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',allowFullScreen:true}):null,
       flash:REDUCED?null:h('div',{key:'sw'+chan,className:'tvh-flash','aria-hidden':'true'}),
       now:{...now,num:'CH 0'+(FIELDS.indexOf(F)+1),fieldName:F.name,fieldUp:up(F.name),eventUp:up(now.event),roundUp:up(now.round),liveAttr:now.live?'1':'0'},
       channels:FIELDS.map((f,i)=>{const c=cur(f.id);return {num:'0'+(i+1),name:f.name,icon:f.icon,on:f.id===chan?'1':'0',pressed:String(f.id===chan),live:c&&c.live?'1':'0',
@@ -1950,7 +1952,7 @@ class Component extends DCLogic {
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
     this.secNeed=window.scrollY<vh*1.2||inView('close');this.liveNeed=window.scrollY<vh*1.2||inView('ecx')||inView('tv');
     // the home stream only exists while its section is near, so it stops downloading and decoding once you've scrolled past
-    const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose!==!!this.state.tvNear)this.setState({tvNear:tvClose});
+    const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose&&!this.state.tvNear)this.setState({tvNear:true});
     // the chat robot is WebGL: let it rest while the page scrolls, resume once scrolling settles
     const bot=this.botApp;if(bot){try{if(!bot._isPaused&&!this.botScrollStop){bot.stop();this.botScrollStop=true;}}catch(e){}clearTimeout(this.botResumeT);
       this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},260);}if(!this.state.boardIn){const lv=this.refs.live&&this.refs.live.current;if(lv&&lv.getBoundingClientRect().top<window.innerHeight*0.8){this.boardInAt=performance.now();this.setState({boardIn:true});}}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
