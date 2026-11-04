@@ -268,6 +268,26 @@ html,body{background:#F4F5F7}
 .gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
 .gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
 .gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
+/* Hero: registration status as one glass pill, sport chapter label synced to the montage, the dot pops after the title */
+.hero-pill{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:7px 15px 7px 11px;border-radius:999px;background:rgba(8,10,16,.34);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);font-size:12.5px;color:rgba(255,255,255,.82);white-space:nowrap}
+.hero-pill b{font-weight:600;color:#fff}
+.hp-dot{width:8px;height:8px;border-radius:50%;background:#1FA463;flex:none;animation:gmsLive 1.8s infinite}
+.hp-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.42);flex:none}
+.hp-mono{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em}
+.hero-dot{display:inline-block;color:#5B84FF;font-weight:700;animation:heroDot .7s 1.05s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes heroDot{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+[data-r=hero-ch]{position:absolute;right:clamp(24px,5vw,72px);top:max(104px,13vh);z-index:3;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:16px;background:rgba(8,10,16,.34);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);color:#fff;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;pointer-events:none;animation:gmsRise 1s 1.2s cubic-bezier(.2,.8,.2,1) both}
+.hch-m{display:flex;flex-direction:column;gap:7px;min-width:128px}
+.hch-m b{font-family:'Bricolage Grotesque';font-weight:600;font-size:16px;letter-spacing:-.01em;line-height:1}
+.hch-m b[data-swap]{animation:hchSwap .6s cubic-bezier(.2,.8,.2,1) both}
+.hch-bar{height:2px;border-radius:2px;background:rgba(255,255,255,.24);overflow:hidden}
+.hch-bar i{display:block;height:100%;background:#fff;transform-origin:0 50%;transform:scaleX(0);animation:hchFill 2.2s linear both}
+.hch-n{color:rgba(255,255,255,.55)}
+@keyframes hchFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes hchSwap{from{transform:translateY(70%);opacity:0}to{transform:none;opacity:1}}
+html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!important}
+@media (max-width:760px){.hero-pill{font-size:11.5px;gap:8px;padding:6px 12px 6px 9px}[data-r=hero-ch]{top:84px;right:16px;gap:9px;padding:8px 11px;border-radius:14px}.hch-m{min-width:92px}.hch-m b{font-size:14px}}
+@media (prefers-reduced-motion:reduce){.hch-bar i{animation:none;transform:scaleX(1)}}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
 #gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.jpg?v=ms2') 0% 42%/cover no-repeat}
@@ -458,28 +478,29 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 @keyframes gmsSheen{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
 @keyframes gmsNudge{0%,70%,100%{transform:none}80%{transform:translateX(4px)}90%{transform:translateX(-1px)}}
 @media (prefers-reduced-motion:reduce){.gms-glow::before,.gms-glow::after,.gms-glow>i{animation:none}}
-/* Roles on phones: the section holds while the page scroll slides the role cards from left to right, then releases */
+/* Roles on phones: the section scrolls normally and the role cards are a swipe carousel, one card per swipe */
 .rc-wrap{display:none}
 @media (max-width:760px){
- [data-r=roles-section]{height:calc(100svh + 11 * 46svh)}
- [data-r=roles-pin]{position:sticky;top:0;height:100svh;box-sizing:border-box;padding:76px 16px 12px!important;display:flex;flex-direction:column}
+ [data-r=roles-section]{height:auto}
+ [data-r=roles-pin]{position:relative;height:auto;box-sizing:border-box;padding:88px 16px 56px!important;display:flex;flex-direction:column}
  [data-r=roles-grid]{flex:1;min-height:0;width:100%;grid-template-columns:minmax(0,1fr)!important;gap:0!important}
  [data-r=roles-left]{min-height:0}
  [data-r=roles-window],[data-r=roles-preview],[data-r=roles-progress]{display:none!important}
  [data-r=roles-left] h2{font-size:26px!important;margin-top:8px!important}
  [data-r=roles-p]{font-size:13.5px!important;margin-top:8px!important}
  .rc-wrap{display:flex;flex-direction:column;gap:10px;margin:14px -16px 0;overflow:hidden}
- .rc-rail{display:flex;gap:12px;padding:4px 16px 8px;will-change:transform}
- .rc-card{flex:0 0 84%;border-radius:26px;background:#fff;border:1px solid #E8EBF0;box-shadow:0 24px 50px rgba(15,20,40,.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
+ .rc-rail{display:flex;gap:12px;padding:4px 32px 10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 32px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ .rc-rail::-webkit-scrollbar{display:none}
+ .rc-card{flex:0 0 calc(100vw - 64px);scroll-snap-align:center;scroll-snap-stop:always;border-radius:26px;background:#fff;border:1px solid #E8EBF0;box-shadow:0 24px 50px rgba(15,20,40,.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
  .rc-card[data-on="0"]{transform:scale(.95);opacity:.6;box-shadow:0 10px 24px rgba(15,20,40,.05)}
- .rc-art{position:relative;height:max(200px,calc(100svh - 470px));width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
+ .rc-art{position:relative;height:clamp(220px,44svh,360px);width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
  .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C}
  .rc-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
  .rc-group{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em}
  .rc-copy h3{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;letter-spacing:-.03em;line-height:1.1}
  .rc-copy p{margin:0 0 6px;font-size:13.5px;line-height:1.5;color:#4A505C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
  .rc-go{display:flex;width:100%;font-size:14px}
- .rc-dots{display:flex;justify-content:center;gap:6px}.rc-dots i{width:6px;height:6px;border-radius:3px;background:#D5D9E1;transition:width .45s var(--gms-ease),background .45s}.rc-dots i[data-on="1"]{width:22px;background:#2F5BFF}
+ .rc-dots{display:flex;justify-content:center;gap:6px}.rc-dots i{width:6px;height:6px;border-radius:3px;background:#D5D9E1;cursor:pointer;transition:width .45s var(--gms-ease),background .45s}.rc-dots i[data-on="1"]{width:22px;background:#2F5BFF}
 }
 /* Vision: the reactor flares on open and the chat grows out of it */
 .vz-glow{position:absolute;left:50%;top:60%;width:34px;height:34px;margin:-17px 0 0 -14px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,236,224,.95) 0%,rgba(255,170,130,.6) 35%,rgba(255,140,90,0) 70%);mix-blend-mode:screen;opacity:0}
@@ -580,7 +601,33 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ec-sp{grid-area:sp;text-align:right;font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
 @media (max-width:1100px){.ec-body{grid-template-columns:1fr}.ec-target{max-width:260px;margin:0 auto;width:100%}}
 @media (max-width:960px){[data-r=ec-grid]{grid-template-columns:1fr}[data-r=ec-detail]{position:static;order:-1}}
-@media (max-width:600px){[data-r=ec]{padding:100px 16px 64px!important}.ec-card{padding:18px;border-radius:24px}.ec-seg{width:100%}.ec-vs{gap:10px}.ec-end{grid-template-columns:30px minmax(0,1fr) 30px 50px;gap:6px 6px;padding:9px 10px}.ec-arw>span{width:23px;height:23px;font-size:11px}.ec-arw small{width:26px;font-size:9px}}
+/* Event centre under the TV: one wide toggle card that opens the full centre inline */
+[data-r=ecx]{background:#F4F5F7;padding:36px 32px 104px}
+.ecx-wrap{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:0}
+.ecx-toggle{appearance:none;border:1px solid #E3E7EE;background:#fff;font:inherit;color:#0B0D12;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;padding:24px 28px;border-radius:28px;box-shadow:0 10px 30px rgba(15,20,40,.05);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease}
+.ecx-toggle:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(15,20,40,.09)}
+.ecx-toggle:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
+.ecx-toggle[data-open="1"]{border-color:#0B0D12}
+.ecx-l{display:flex;flex-direction:column;gap:8px;min-width:0}
+.ecx-live{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#E5484D}
+.ecx-dot{width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none}
+.ecx-title{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.4vw,48px);letter-spacing:-.045em;line-height:1}
+.ecx-sub{font-size:15px;line-height:1.5;color:#5B6270}
+.ecx-cta{display:flex;align-items:center;gap:10px;flex:none;padding:0 8px 0 18px;height:46px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px}
+.ecx-chev{font-family:'Material Symbols Rounded';font-size:22px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.ecx-toggle[data-open="1"] .ecx-chev{transform:rotate(180deg)}
+.ecx-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s cubic-bezier(.2,.8,.2,1)}
+.ecx-panel[data-open="1"]{grid-template-rows:1fr}
+.ecx-inner{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:22px;opacity:0;transform:translateY(-10px);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.ecx-panel[data-open="1"] .ecx-inner{opacity:1;transform:none;padding-top:24px}
+.ecx-panel[data-done="1"] .ecx-inner{overflow:visible}
+.ecx-wrap,.ecx-panel,.ecx-inner,.ecx-inner>*{min-width:0;max-width:100%}
+.ecx-inner .ec-seg{max-width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+.ecx-inner .ec-seg::-webkit-scrollbar{display:none}
+.ecx-inner .ec-seg button{flex:none}
+@media (max-width:600px){[data-r=ecx]{padding:24px 16px 72px}.ecx-toggle{padding:20px;border-radius:24px;flex-direction:column;align-items:flex-start;gap:16px}.ecx-cta{align-self:stretch;justify-content:space-between;padding:0 10px 0 20px}}
+
+@media (max-width:600px){.ec-card{padding:18px;border-radius:24px}.ec-seg{width:100%}.ec-vs{gap:10px}.ec-end{grid-template-columns:30px minmax(0,1fr) 30px 50px;gap:6px 6px;padding:9px 10px}.ec-arw>span{width:23px;height:23px;font-size:11px}.ec-arw small{width:26px;font-size:9px}}
 /* Broadcast hub (Live TV page) */
 [data-r=tvh]{position:relative;min-height:100vh;background:radial-gradient(70% 45% at 50% 0%,#1B2346 0%,#0B0D12 62%);color:#fff;padding:112px 32px 80px;box-sizing:border-box;overflow:hidden}
 .tvh-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
@@ -645,11 +692,12 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-fl=a],[data-fl=b]{flex-direction:column;align-items:flex-start;gap:5px}[data-fl=b]{align-items:flex-end}
  .flaps--long{display:none}.flaps--short{display:inline-flex}.flaps--short .flap{font-size:12px}}
 @media (max-width:420px){.flaps--short .flap{font-size:11px}.flaps--score .flap{font-size:18px}}
-/* Programme: at the moment of the goal a big GOAL stamps onto the net mouth, then dissolves as the events rise */
-[data-goal-board]{position:absolute;z-index:4;left:50%;top:40%;transform:translate(-50%,-50%);opacity:0;visibility:hidden;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:10px;will-change:transform,opacity}
-[data-goal-led]{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(72px,12vw,190px);line-height:.86;letter-spacing:-.065em;padding:0 .04em;
- background:linear-gradient(180deg,#6F90FF 0%,#2F5BFF 55%,#1B3FD0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 18px 40px rgba(47,91,255,.35))}
-[data-goal-board]>[data-goal-sub]{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.2em;color:#4A505C;white-space:nowrap;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.75)}
+/* Programme: where the ball hits, a shockwave ripples across the net and a small GOAL bursts out of the impact point with a few sparks */
+[data-goal-board]{position:absolute;z-index:4;left:50%;top:40%;width:0;height:0;visibility:hidden;pointer-events:none}
+[data-goal-ring]{position:absolute;left:-90px;top:-90px;width:180px;height:180px;border-radius:50%;border:2px solid rgba(255,255,255,.95);box-shadow:0 0 22px rgba(47,91,255,.45),inset 0 0 16px rgba(47,91,255,.28);opacity:0;will-change:transform,opacity}
+[data-goal-spark]{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#5B84FF;box-shadow:0 0 10px rgba(91,132,255,.9);opacity:0;will-change:transform,opacity}
+[data-goal-led]{position:absolute;left:0;top:0;white-space:nowrap;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(34px,4.4vw,66px);line-height:.9;letter-spacing:-.06em;padding:0 .05em;opacity:0;will-change:transform,opacity;
+ background:linear-gradient(180deg,#7C9BFF 0%,#2F5BFF 58%,#1B3FD0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 22px rgba(47,91,255,.38))}
 [data-kv-veil]{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(246,248,252,.5),rgba(240,244,251,.72));-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15)}
 [data-kv-wash]{position:absolute;left:0;top:0;width:min(640px,70%);height:min(420px,55%);pointer-events:none;background:radial-gradient(90% 85% at 0% 0%,rgba(246,247,249,.92) 30%,rgba(246,247,249,0) 100%)}
 [data-goal-cols][data-mode=burst]{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3vh,30px);pointer-events:none}
@@ -678,7 +726,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-panel][data-compact="1"] [data-goal-ev]:last-child:nth-child(odd){grid-column:1 / -1}
 [data-goal-panel][data-compact="1"] [data-goal-ch]{padding-left:2px}
 [data-goal-panel][data-compact="1"] [data-goal-g],[data-goal-panel][data-compact="1"] [data-goal-nm] [data-goal-sub]{display:none}
-@media (max-width:600px){[data-goal-led]{font-size:clamp(64px,22vw,110px)}[data-goal-board]>[data-goal-sub]{font-size:9.5px;letter-spacing:.14em}}
+@media (max-width:600px){[data-goal-led]{font-size:clamp(34px,11vw,48px)}[data-goal-ring]{left:-70px;top:-70px;width:140px;height:140px}}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
  .gms-rv{opacity:1!important;translate:none!important;filter:none!important}[data-art]{filter:none!important}.gms-w>span{transform:none!important}
@@ -690,7 +738,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-r=navburger]{display:grid!important}
  [data-r=steps-grid]{grid-template-columns:minmax(0,1fr)!important;align-content:center;gap:16px!important;padding:84px 18px 22px!important}
  [data-r=steps-photo]{height:24vh!important;border-radius:24px!important}
- [data-r=steps-arena]{left:18px!important;right:18px!important;top:84px!important;bottom:22px!important;border-radius:24px!important}
  [data-r=ev-head]{padding:84px 18px 0!important}
  [data-r=reg-p]{font-size:13.5px!important}
  [data-r=sch-section]{padding:80px 18px!important}
@@ -767,21 +814,21 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
   </div>
 <div data-r="hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
     <div data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform"></div>
-    <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,10,16,.9) 0%,rgba(8,10,16,.72) 30%,rgba(8,10,16,.28) 56%,rgba(8,10,16,0) 74%),linear-gradient(180deg,rgba(8,10,16,.5) 0%,rgba(8,10,16,0) 22%,rgba(8,10,16,0) 62%,rgba(8,10,16,.66) 100%)"></div>
+    <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
     <div data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
-      <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.72);animation:gmsRise .8s .15s cubic-bezier(.2,.8,.2,1) both"><span style="display:flex;align-items:center;gap:8px;color:#7BE0A6"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>REGISTRATION OPEN</span><span style="opacity:.45">/</span><span><span data-shell-clock>--:--:--</span> IST</span><span style="opacity:.45">/</span><span>GMS · 2026</span></span>
-      <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.22s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.3s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.38s">System<b style="color:#5B84FF;font-weight:700">.</b></span></span></h1>
-      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .5s cubic-bezier(.2,.8,.2,1) both">One platform for every sport, venue and team.</p>
-      <div style="height:1px;max-width:560px;background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0));transform-origin:0 50%;animation:gmsLine 1.2s .6s cubic-bezier(.2,.8,.2,1) both"></div>
-      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise 1s .66s cubic-bezier(.2,.8,.2,1) both">
+      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><span class="hp-dot"></span><b>Registration open</b><span class="hp-sep"></span><span>GMS 2026</span><span class="hp-sep"></span><span class="hp-mono"><span data-shell-clock>--:--:--</span> IST</span></span>
+      <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.61s">System<b class="hero-dot">.</b></span></span></h1>
+      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">One platform for every sport, venue and team.</p>
+      <div style="height:1px;max-width:560px;background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0));transform-origin:0 50%;animation:gmsLine 1.2s .9s cubic-bezier(.2,.8,.2,1) both"></div>
+      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both">
         <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">DATES</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">14 — 18 Nov 2026</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">HOST CITY</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">Ahmedabad</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">SPORTS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">6</span></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">MEDAL EVENTS</span><span style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">18</span></div>
       </div>
-      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
+      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
         <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Athlete</button>
-        <button class="gms-liquid gms-liquid--glass" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease">Explore the programme</button>
         <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
     </div>
+    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0"></div>
   </div>
@@ -835,30 +882,30 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <main data-screen-label="Home">
 
-  <section ref="{{ overviewRef }}" data-r="hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
+  <section ref="{{ overviewRef }}" data-r="hero" data-hero-sec style="position:relative;z-index:1;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
     <div data-hero-media data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform">{{ heroVideo }}</div>
-    <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,10,16,.9) 0%,rgba(8,10,16,.72) 30%,rgba(8,10,16,.28) 56%,rgba(8,10,16,0) 74%),linear-gradient(180deg,rgba(8,10,16,.5) 0%,rgba(8,10,16,0) 22%,rgba(8,10,16,0) 62%,rgba(8,10,16,.66) 100%)"></div>
+    <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
     <div data-hero-copy data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
-      <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.72);animation:gmsRise .8s .15s cubic-bezier(.2,.8,.2,1) both"><span style="display:flex;align-items:center;gap:8px;color:#7BE0A6"><span style="width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite"></span>REGISTRATION OPEN</span><span style="opacity:.45">/</span><span>{{ clock }} IST</span><span style="opacity:.45">/</span><span>GMS · 2026</span></span>
-      <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.22s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.3s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.38s">System<b style="color:#5B84FF;font-weight:700">.</b></span></span></h1>
-      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .5s cubic-bezier(.2,.8,.2,1) both">One platform for every sport, venue and team.</p>
-      <div style="height:1px;max-width:560px;background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0));transform-origin:0 50%;animation:gmsLine 1.2s .6s cubic-bezier(.2,.8,.2,1) both"></div>
-      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise 1s .66s cubic-bezier(.2,.8,.2,1) both">
+      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><span class="hp-dot"></span><b>Registration open</b><span class="hp-sep"></span><span>GMS 2026</span><span class="hp-sep"></span><span class="hp-mono">{{ clock }} IST</span></span>
+      <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.61s">System<b class="hero-dot">.</b></span></span></h1>
+      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">One platform for every sport, venue and team.</p>
+      <div style="height:1px;max-width:560px;background:linear-gradient(90deg,rgba(255,255,255,.5),rgba(255,255,255,0));transform-origin:0 50%;animation:gmsLine 1.2s .9s cubic-bezier(.2,.8,.2,1) both"></div>
+      <div data-r="hero-facts" style="display:flex;flex-wrap:wrap;gap:14px clamp(18px,2.4vw,36px);animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both">
         <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="4">
           <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:rgba(255,255,255,.55)">{{ f.k }}</span><span data-count="{{ f.n }}" style="font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(17px,1.4vw,21px);letter-spacing:-.02em;color:#fff">{{ f.v }}</span></div>
         </sc-for>
       </div>
-      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s .78s cubic-bezier(.2,.8,.2,1) both">
+      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
         <button class="gms-liquid gms-liquid--water" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 14px 34px rgba(47,91,255,.42);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px rgba(47,91,255,.55)">Register as Athlete</button>
-        <button class="gms-liquid gms-liquid--glass" onClick="{{ toEvents }}" style="all:unset;cursor:pointer;padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.34);font-weight:600;font-size:15px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s ease" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.2)">Explore the programme</button>
         <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></button>
       </div>
     </div>
+    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0">{{ ticker }}</div>
   </section>
 
-  <section ref="{{ stepsRef }}" style="position:relative;height:320vh;background:#FFFFFF">
+  <section ref="{{ stepsRef }}" style="position:relative;z-index:2;height:320vh;background:#FFFFFF">
     <div data-r="steps-grid" style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
       <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:32px;background:#F1F3F7;overflow:hidden">
         {{ photoLoop }}
@@ -879,7 +926,104 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
           </div>
         </sc-for>
       </div>
-      <div data-r="steps-arena" style="position:absolute;left:32px;right:32px;top:100px;bottom:40px;border-radius:32px;overflow:hidden;background:#0B0D12;transform:translateY({{ arenaY }});opacity:{{ arenaOp }};will-change:transform;box-shadow:0 -20px 60px rgba(15,20,40,.12)">{{ arenaVideo }}</div>
+    </div>
+  </section>
+
+  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:220vh;background:#F4F5F7">
+    <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
+      <div data-r="tv-cinema" style="position:absolute;inset:0;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
+        {{ tvVideo }}
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.55) 0%,rgba(8,10,16,0) 32%,rgba(8,10,16,0) 52%,rgba(8,10,16,.82) 100%)"></div>
+        <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11.5px;font-weight:700;letter-spacing:.1em"><span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ tvNow.fieldName }}</span>
+            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em">{{ tvNow.status }} · {{ tvNow.A1 }} {{ tvNow.sa }} – {{ tvNow.sb }} {{ tvNow.B1 }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+            <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
+              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7)">{{ tvNow.event }} · {{ tvNow.round }}</span>
+              <span data-r="tv-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">{{ tvNow.A0 }} <span style="opacity:.55">vs</span> {{ tvNow.B0 }}</span>
+            </div>
+            <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px">play_arrow</span>Watch live</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-r="ecx" ref="{{ ecxRef }}">
+    <div class="ecx-wrap">
+      <button class="ecx-toggle" onClick="{{ ecToggle }}" aria-expanded="{{ ecAria }}" data-open="{{ ecOpenAttr }}">
+        <span class="ecx-l">
+          <span class="ecx-live"><span class="ecx-dot"></span>LIVE · {{ liveNowCount }} MATCHES AT 3 VENUES</span>
+          <span class="ecx-title">Event centre</span>
+          <span class="ecx-sub">Every match at every venue, live. Pick one to follow it period by period.</span>
+        </span>
+        <span class="ecx-cta"><span class="ecx-word">{{ ecWord }}</span><span class="ecx-chev" aria-hidden="true">expand_more</span></span>
+      </button>
+      <div class="ecx-panel" data-open="{{ ecOpenAttr }}" data-done="{{ ecDoneAttr }}">
+        <div class="ecx-inner">
+          <div data-r="ec-filters">
+            <div class="ec-seg" role="group" aria-label="Division">
+              <sc-for list="{{ ec.divs }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}"><span class="dot" style="background:{{ f.color }}"></span>{{ f.label }}</button>
+              </sc-for>
+            </div>
+            <div class="ec-seg" role="group" aria-label="Match status">
+              <sc-for list="{{ ec.states }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}">{{ f.label }}<i>{{ f.n }}</i></button>
+              </sc-for>
+            </div>
+          </div>
+          <div data-r="ec-grid">
+            <div data-r="ec-list">
+              <sc-for list="{{ ec.list }}" as="m" hint-placeholder-count="6">
+                <button data-r="ec-row" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
+                  <span class="ec-meta"><span>{{ m.fieldShort }} · {{ m.time }} IST</span><span class="pill" data-live="{{ m.liveAttr }}"><span class="pd"></span>{{ m.status }}</span></span>
+                  <span class="ec-ev">{{ m.event }} <span style="color:#8A909C;font-weight:500">· {{ m.round }}</span></span>
+                  <span class="ec-nm" data-win="{{ m.winA }}"><small>{{ m.A1 }}</small>{{ m.A0 }}</span><span class="ec-sc">{{ m.sa }}</span>
+                  <span class="ec-nm" data-win="{{ m.winB }}"><small>{{ m.B1 }}</small>{{ m.B0 }}</span><span class="ec-sc">{{ m.sb }}</span>
+                </button>
+              </sc-for>
+              <sc-if value="{{ ec.empty }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:34px 20px;border-radius:20px;border:1px dashed #D5D9E1;text-align:center;color:#5B6270;font-size:14px">No matches in this view yet. Try another division or status.</div>
+              </sc-if>
+            </div>
+            <div data-r="ec-detail" ref="{{ ecdRef }}">
+              <div class="ec-card">
+                <div class="ec-head">
+                  <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#8A909C">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
+                  <span class="pill" data-live="{{ ec.d.liveAttr }}"><span class="pd"></span>{{ ec.d.status }}</span>
+                </div>
+                <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#8A909C">· {{ ec.d.round }}</span></h2>
+                <div class="ec-vs">
+                  <div class="ec-pl" data-win="{{ ec.d.winA }}"><small>{{ ec.d.A1 }}</small><b>{{ ec.d.A0 }}</b></div>
+                  <div class="ec-big"><span>{{ ec.d.sa }}</span><span>:</span><span>{{ ec.d.sb }}</span></div>
+                  <div class="ec-pl" data-win="{{ ec.d.winB }}"><small>{{ ec.d.B1 }}</small><b>{{ ec.d.B0 }}</b></div>
+                </div>
+                <sc-if value="{{ ec.d.hasEnds }}" hint-placeholder-val="{{ true }}">
+                  <div class="ec-body">
+                    <div class="ec-target"><span class="ec-cap">MOMENTUM</span><div>{{ ec.target }}</div><div class="ec-legend"><span><i style="background:#2F5BFF"></i>{{ ec.d.A1 }}</span><span><i style="background:#FF8A3D"></i>{{ ec.d.B1 }}</span><span style="color:#8A909C">{{ ec.d.endNote }}</span></div></div>
+                    <div class="ec-ends">
+                      <div class="ec-per ec-perh"><span>PERIOD</span><span>{{ ec.d.A1 }}</span><span>{{ ec.d.B1 }}</span><span>{{ ec.d.spLabel }}</span></div>
+                      <sc-for list="{{ ec.ends }}" as="e" hint-placeholder-count="4">
+                        <div class="ec-per" data-cur="{{ e.cur }}"><span class="ec-l">{{ e.label }}</span><span class="ec-sum" data-win="{{ e.winA }}">{{ e.sa }}</span><span class="ec-sum" data-win="{{ e.winB }}">{{ e.sb }}</span><span class="ec-sp">{{ e.sp }}</span></div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ ec.d.noEnds }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:30px 20px;border-radius:20px;background:#F7F8FA;text-align:center;color:#5B6270;font-size:14px;line-height:1.5">This match starts at {{ ec.d.time }} IST on the {{ ec.d.fieldName }}.<br>Scores appear here period by period.</div>
+                </sc-if>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px;border-top:1px solid #F0F2F6">
+                  <span style="font-size:13px;color:#5B6270;padding-top:14px">{{ ec.d.fmtHelp }}</span>
+                  <button onClick="{{ ec.watch }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;margin-top:12px;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px"><span style="font-family:'Material Symbols Rounded';font-size:18px">play_arrow</span><span>Watch the {{ ec.d.fieldName }}</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -894,7 +1038,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
           <span style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.12em;color:#5B6270"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span>{{ evStage }}</span>
         </div>
       </div>
-      <div data-goal-board aria-hidden="true"><span data-goal-led>GOAL</span><span data-goal-sub>18 EVENTS · 6 SPORTS · 14—18 NOV 2026</span></div>
+      <div data-goal-board aria-hidden="true"><span data-goal-ring></span><span data-goal-ring></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-led>GOAL</span></div>
       <div data-goal-panel data-compact="0" style="position:absolute;left:0;top:0;width:0;height:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none">
         <div data-goal-cols data-mode="ring" style="position:absolute">
           <sc-for list="{{ goalCats }}" as="c" hint-placeholder-count="3">
@@ -1021,52 +1165,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </div>
   </section>
 
-  <section data-r="live-section" ref="{{ liveRef }}" style="background:#F4F5F7;padding:96px 32px 80px">
-    <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
-      <div data-rise style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none"></span><span>LIVE NOW · {{ liveNowCount }} MATCHES AT 3 VENUES</span></span>
-          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(38px,4.6vw,66px);letter-spacing:-.045em;line-height:.98">Live from the field.</h2>
-        </div>
-        <button onClick="{{ goScores }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14px">Open the event centre<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_outward</span></button>
-      </div>
-      <div data-r="flap-board" data-in="{{ boardIn }}">
-        <div data-r="flap-head" aria-hidden="true"><span>VENUE</span><span>EVENT</span><span>HOME</span><span style="text-align:center">SCORE</span><span>AWAY</span><span>STATUS</span></div>
-        <sc-for list="{{ board }}" as="b" hint-placeholder-count="6">
-          <button data-r="flap-row" data-live="{{ b.liveAttr }}" onClick="{{ b.open }}" aria-label="{{ b.aria }}">
-            <span data-fl="field"><span style="width:7px;height:7px;border-radius:50%;flex:none;background:{{ b.color }}"></span>{{ b.fieldShort }}</span>
-            <span data-fl="event"><b>{{ b.event }}</b><small>{{ b.round }}</small></span>
-            <span data-fl="a" data-win="{{ b.winA }}"><small>{{ b.A1 }}</small>{{ b.nameA }}{{ b.nameAs }}</span>
-            <span data-fl="score">{{ b.scoreA }}<span data-fl="dash">:</span>{{ b.scoreB }}</span>
-            <span data-fl="b" data-win="{{ b.winB }}"><small>{{ b.B1 }}</small>{{ b.nameB }}{{ b.nameBs }}</span>
-            <span data-fl="status"><span data-fl="dot"></span>{{ b.statusEl }}</span>
-          </button>
-        </sc-for>
-      </div>
-    </div>
-  </section>
 
-  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:220vh;background:#F4F5F7">
-    <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
-      <div data-r="tv-cinema" style="position:absolute;inset:0;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
-        {{ tvVideo }}
-        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.55) 0%,rgba(8,10,16,0) 32%,rgba(8,10,16,0) 52%,rgba(8,10,16,.82) 100%)"></div>
-        <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11.5px;font-weight:700;letter-spacing:.1em"><span style="width:7px;height:7px;border-radius:50%;background:#fff;animation:gmsPulse 1.4s infinite"></span>LIVE · {{ tvNow.fieldName }}</span>
-            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em">{{ tvNow.status }} · {{ tvNow.A1 }} {{ tvNow.sa }} – {{ tvNow.sb }} {{ tvNow.B1 }}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
-            <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
-              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7)">{{ tvNow.event }} · {{ tvNow.round }}</span>
-              <span data-r="tv-title" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">{{ tvNow.A0 }} <span style="opacity:.55">vs</span> {{ tvNow.B0 }}</span>
-            </div>
-            <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px">play_arrow</span>Watch live</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section ref="{{ tilesRef }}" data-r="bt-section">
     <div data-r="bt-sticky">
@@ -1263,79 +1362,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 </main>
 </sc-if>
 
-<sc-if value="{{ isScores }}" hint-placeholder-val="{{ false }}">
-<main data-screen-label="Live Scores" data-r="ec" style="position:relative;min-height:100vh;background:#F4F5F7;padding:112px 32px 80px;box-sizing:border-box">
-  <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
-    <div data-r="ec-top" style="animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#E5484D"><span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none"></span><span>LIVE · {{ liveNowCount }} MATCHES AT 3 VENUES · {{ clock }} IST</span></span>
-        <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Event centre</h1>
-        <p style="margin:0;font-size:16px;line-height:1.5;color:#5B6270;max-width:520px">Every match at every venue, live. Pick one to follow it period by period.</p>
-      </div>
-      <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px">play_arrow</span>Watch live</button>
-    </div>
-    <div data-r="ec-filters" style="animation:gmsRise .7s .06s cubic-bezier(.2,.8,.2,1) both">
-      <div class="ec-seg" role="group" aria-label="Division">
-        <sc-for list="{{ ec.divs }}" as="f" hint-placeholder-count="4">
-          <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}"><span class="dot" style="background:{{ f.color }}"></span>{{ f.label }}</button>
-        </sc-for>
-      </div>
-      <div class="ec-seg" role="group" aria-label="Match status">
-        <sc-for list="{{ ec.states }}" as="f" hint-placeholder-count="4">
-          <button onClick="{{ f.pick }}" data-on="{{ f.on }}" aria-pressed="{{ f.pressed }}">{{ f.label }}<i>{{ f.n }}</i></button>
-        </sc-for>
-      </div>
-    </div>
-    <div data-r="ec-grid">
-      <div data-r="ec-list" style="animation:gmsRise .8s .12s cubic-bezier(.2,.8,.2,1) both">
-        <sc-for list="{{ ec.list }}" as="m" hint-placeholder-count="6">
-          <button data-r="ec-row" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
-            <span class="ec-meta"><span>{{ m.fieldShort }} · {{ m.time }} IST</span><span class="pill" data-live="{{ m.liveAttr }}"><span class="pd"></span>{{ m.status }}</span></span>
-            <span class="ec-ev">{{ m.event }} <span style="color:#8A909C;font-weight:500">· {{ m.round }}</span></span>
-            <span class="ec-nm" data-win="{{ m.winA }}"><small>{{ m.A1 }}</small>{{ m.A0 }}</span><span class="ec-sc">{{ m.sa }}</span>
-            <span class="ec-nm" data-win="{{ m.winB }}"><small>{{ m.B1 }}</small>{{ m.B0 }}</span><span class="ec-sc">{{ m.sb }}</span>
-          </button>
-        </sc-for>
-        <sc-if value="{{ ec.empty }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:34px 20px;border-radius:20px;border:1px dashed #D5D9E1;text-align:center;color:#5B6270;font-size:14px">No matches in this view yet. Try another division or status.</div>
-        </sc-if>
-      </div>
-      <div data-r="ec-detail" ref="{{ ecdRef }}" style="animation:gmsRise .8s .18s cubic-bezier(.2,.8,.2,1) both">
-        <div class="ec-card">
-          <div class="ec-head">
-            <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#8A909C">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
-            <span class="pill" data-live="{{ ec.d.liveAttr }}"><span class="pd"></span>{{ ec.d.status }}</span>
-          </div>
-          <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#8A909C">· {{ ec.d.round }}</span></h2>
-          <div class="ec-vs">
-            <div class="ec-pl" data-win="{{ ec.d.winA }}"><small>{{ ec.d.A1 }}</small><b>{{ ec.d.A0 }}</b></div>
-            <div class="ec-big"><span>{{ ec.d.sa }}</span><span>:</span><span>{{ ec.d.sb }}</span></div>
-            <div class="ec-pl" data-win="{{ ec.d.winB }}"><small>{{ ec.d.B1 }}</small><b>{{ ec.d.B0 }}</b></div>
-          </div>
-          <sc-if value="{{ ec.d.hasEnds }}" hint-placeholder-val="{{ true }}">
-            <div class="ec-body">
-              <div class="ec-target"><span class="ec-cap">MOMENTUM</span><div>{{ ec.target }}</div><div class="ec-legend"><span><i style="background:#2F5BFF"></i>{{ ec.d.A1 }}</span><span><i style="background:#FF8A3D"></i>{{ ec.d.B1 }}</span><span style="color:#8A909C">{{ ec.d.endNote }}</span></div></div>
-              <div class="ec-ends">
-                <div class="ec-per ec-perh"><span>PERIOD</span><span>{{ ec.d.A1 }}</span><span>{{ ec.d.B1 }}</span><span>{{ ec.d.spLabel }}</span></div>
-                <sc-for list="{{ ec.ends }}" as="e" hint-placeholder-count="4">
-                  <div class="ec-per" data-cur="{{ e.cur }}"><span class="ec-l">{{ e.label }}</span><span class="ec-sum" data-win="{{ e.winA }}">{{ e.sa }}</span><span class="ec-sum" data-win="{{ e.winB }}">{{ e.sb }}</span><span class="ec-sp">{{ e.sp }}</span></div>
-                </sc-for>
-              </div>
-            </div>
-          </sc-if>
-          <sc-if value="{{ ec.d.noEnds }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:30px 20px;border-radius:20px;background:#F7F8FA;text-align:center;color:#5B6270;font-size:14px;line-height:1.5">This match starts at {{ ec.d.time }} IST on the {{ ec.d.fieldName }}.<br>Scores appear here period by period.</div>
-          </sc-if>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px;border-top:1px solid #F0F2F6">
-            <span style="font-size:13px;color:#5B6270;padding-top:14px">{{ ec.d.fmtHelp }}</span>
-            <button onClick="{{ ec.watch }}" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;margin-top:12px;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px"><span style="font-family:'Material Symbols Rounded';font-size:18px">play_arrow</span><span>Watch the {{ ec.d.fieldName }}</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-</sc-if>
 
 <sc-if value="{{ isTv }}" hint-placeholder-val="{{ false }}">
 <main data-screen-label="Live TV" data-r="tvh">
@@ -1602,7 +1628,7 @@ const HELP_FAQ=[
 {q:'Which documents do I need to register?',k:['document','upload','passport','photo','file','certificate','pdf','id'],d:'registration',a:'Usually a passport or national ID, a recent photo and, for athletes, a sport eligibility certificate. Each role lists its own documents in the form. Files go up as PDF, JPG or PNG.',act:['Start registration','reg']},
 {q:'When are the Games?',k:['when','date','day','schedule','final','time','start'],d:'general',a:'14 to 18 Nov 2026 in Ahmedabad. The schedule has every session for every sport.',act:['See the schedule','schedule']},
 {q:'Which sports are on?',k:['sport','events','which','programme','program','athletics','swimming','football','basketball','volleyball','tennis'],d:'general',a:'Six sports with 18 medal events: athletics, swimming, football, basketball, volleyball and tennis.'},
-{q:'Where are live scores and results?',k:['score','result','ranking','points','standing','live'],d:'technical',a:'Every match at every venue is live in the event centre, with results as soon as it ends.',act:['Open Live Scores','scores']},
+{q:'Where are live scores and results?',k:['score','result','ranking','points','standing','live'],d:'technical',a:'Every match at every venue is live in the event centre, with results as soon as it ends.',act:['Open the event centre','scores']},
 {q:'How can I watch?',k:['watch','stream','tv','broadcast','youtube','video'],d:'media',a:'Live TV has one channel per venue with the score beside the picture.',act:['Open Live TV','tv']},
 {q:'How do I register?',k:['register','registration','sign up','apply','join','fee','payment'],d:'registration',a:'Pick your role in “Pick how you\'re taking part”, fill in your details and upload the documents. You get a reference straight away.',act:['Pick my role','reg']},
 {q:'Is the venue accessible?',k:['wheelchair','accessib','ramp','parking','assist','disab'],d:'general',a:'Every venue has step-free routes, accessible seating and support on request. Tell the General desk what you need.'},
@@ -1619,18 +1645,21 @@ const pad=n=>String(n).padStart(2,'0');
 // real kick footage scrubbed by scroll, then the 15 event chips bursting out of the net. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D2R=Math.PI/180;
-// Kick clip as a frame sequence (assets/kickfull/d|m/NNN.webp, 1280 / 720 wide): every frame up to 6 s, then every
-// second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1).
-const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
+// Kick clip as a frame sequence (assets/kickfull/d|m/NNN.webp, 1920 / 1280 wide): every frame up to 6 s, then every
+// second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
+const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],ball:[0.547,0.349],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
 const smooth=t=>t*t*(3-2*t);
+// background videos: 1080p on desktop, 720p on phones
+const VRES=()=>window.innerWidth<=760?'720':'1080';
+const HERO_SPORTS=['Basketball','Swimming','Athletics','Volleyball','Tennis','Football'];
 const backOut=t=>{const c=1.25;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2);};
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
 const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',events:[],docs:{}});
 
 class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
-    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
+    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,ecOpen:false,ecDone:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{step:'ask',q:'',desk:null,name:'',email:'',msg:'',errors:{},stage:0,ref:'',sent:null,track:''},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m Vision. Ask me anything about the Games or GMS: registration, accreditation, schedules, venues, scores. If I can\'t settle it, I\'ll hand you to the right person.'}],coco:{mode:null,desk:null,name:'',email:'',msg:'',err:{}},cocoTyping:false,btOpen:-1,
@@ -1692,7 +1721,7 @@ class Component extends DCLogic {
       goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.rolesVals(),
       
-      arenaY:this.fxArena(s.p.steps).y,arenaOp:this.fxArena(s.p.steps).op,
+      
       
       
       
@@ -1712,7 +1741,7 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':'Keep scrolling: the twelve roles slide past one by one.',
+    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=760?'Swipe through the twelve roles and register from any card.':'Keep scrolling: the twelve roles slide past one by one.'),
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
@@ -1738,12 +1767,18 @@ class Component extends DCLogic {
     n.connect(bp);bp.connect(ng);ng.connect(C.destination);n.start(t);}catch(e){}}
   roleRailEl(){const h=React.createElement,sel=this.railK??0;
     return h('div',{className:'rc-wrap'},
-      h('div',{className:'rc-rail',role:'list','aria-label':'Ways to take part'},REG_ORDER.map((ri,k)=>{const r=REG[ri],g=REG_GROUP_OF[r.id],on=k===sel?'1':'0';
+      h('div',{className:'rc-rail',role:'list','aria-label':'Ways to take part',ref:el=>this.railMount(el)},REG_ORDER.map((ri,k)=>{const r=REG[ri],g=REG_GROUP_OF[r.id],on=k===sel?'1':'0';
         return h('article',{key:r.id,className:'rc-card',role:'listitem','data-on':on},
           h('div',{className:'rc-art'},h('span',{'data-cart':'','data-on':on,style:{position:'absolute',inset:0}},h('span',{style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)})),h('span',{className:'rc-num'},pad(k+1)+' / 12')),
           h('div',{className:'rc-copy'},h('span',{className:'rc-group',style:{color:REG_GC[g][0]}},REG_GROUPS[g][0]),h('h3',null,r.name),h('p',null,r.desc),
             h('button',{type:'button',className:'gms-glow rc-go',onClick:()=>this.startReg(r.id)},h('span',null,'Register as '+r.name),h('i',{'aria-hidden':'true'},h('svg',{width:15,height:15,viewBox:'0 0 16 16'},h('path',{d:'M3 8h10M9 4l4 4-4 4',fill:'none',stroke:'currentColor',strokeWidth:2.2,strokeLinecap:'round',strokeLinejoin:'round'}))))));})),
-      h('div',{className:'rc-dots','aria-hidden':'true'},REG_ORDER.map((_,k)=>h('i',{key:k,'data-on':k===sel?'1':'0'}))));}
+      h('div',{className:'rc-dots','aria-hidden':'true'},REG_ORDER.map((_,k)=>h('i',{key:k,'data-on':k===sel?'1':'0',onClick:()=>this.railGo(k)}))));}
+  railMount(el){if(!el||el.__rail)return;el.__rail=1;let raf=0;
+    const sync=()=>{raf=0;const c0=el.firstChild;if(!c0)return;const k=Math.max(0,Math.min(REG_ORDER.length-1,Math.round(el.scrollLeft/(c0.offsetWidth+12))));if(k===this.railK)return;this.railK=k;
+      el.querySelectorAll('.rc-card').forEach((c,i)=>{const on=i===k?'1':'0';c.setAttribute('data-on',on);const a=c.querySelector('[data-cart]');if(a)a.setAttribute('data-on',on);});
+      const d=el.parentNode&&el.parentNode.querySelectorAll('.rc-dots i');if(d)d.forEach((x,i)=>x.setAttribute('data-on',i===k?'1':'0'));};
+    el.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(sync);},{passive:true});}
+  railGo(k){const el=document.querySelector('.rc-rail'),c0=el&&el.firstChild;if(c0)el.scrollTo({left:k*(c0.offsetWidth+12),behavior:REDUCED?'auto':'smooth'});}
   figMount(el,k){if(!el||el.__fig)return;const r=REG[REG_ORDER[k]];const fg=el.__fig=mountRolePhoto(el,r.id);fg.k=k;fg.want='idle';(this.figs||(this.figs=new Set())).add(fg);}
   // animate only the figures on show: the preview's current role (desktop/tablet) or an open row (phones)
   figTick(now){if(!this.figs||!this.figs.size)return;const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<-80||r.top>window.innerHeight+80)return;
@@ -1758,17 +1793,13 @@ class Component extends DCLogic {
   // pinned index: smoothed progress -> a role position that holds on each role, then glides to the next
   rolesGlide(){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const W=window.innerWidth,vh=window.innerHeight;
     const ix=sec.querySelector('[data-r=roles-index]'),win=sec.querySelector('[data-r=roles-window]');if(!ix||!win)return;
-    const mob=W<=760;
+    const mob=W<=760;if(mob)return;
     const r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;this.rgOn=1;
     const span=r.height-vh,tg=span>0?clamp(-r.top/span):0;this.rgP=this.rgP==null?tg:this.rgP+(tg-this.rgP)*(REDUCED?1:mob?0.3:0.085);if(Math.abs(tg-this.rgP)<0.00015)this.rgP=tg;
     const key=this.rgP.toFixed(5)+'|'+W+'|'+vh;if(key===this.rgKey)return;this.rgKey=key;
     const c=Math.min(11.999,this.rgP*12),k=Math.floor(c),fr=c-k,g=k+(k<11?smooth(clamp((fr-0.56)/0.44)):0);
     let R=this.rgRows;if(!R||R.W!==W||R.H!==vh||!R.el[0]||!R.el[0].isConnected){const el=[...ix.querySelectorAll('[data-role-row]')];R=this.rgRows={W,H:vh,el,y:el.map(e=>e.offsetTop+e.offsetHeight/2)};}
     if(!mob&&R.el.length<12)return;
-    if(mob){const rail=sec.querySelector('.rc-rail'),c0=rail&&rail.firstChild;if(rail&&c0)rail.style.transform='translate3d('+(-g*(c0.offsetWidth+12)).toFixed(1)+'px,0,0)';
-      const rk=Math.round(g);if(rk!==this.railK&&rail){this.railK=rk;rail.querySelectorAll('.rc-card').forEach((el,i)=>{const on=i===rk?'1':'0';el.setAttribute('data-on',on);const a=el.querySelector('[data-cart]');if(a)a.setAttribute('data-on',on);});
-        sec.querySelectorAll('.rc-dots i').forEach((el,i)=>el.setAttribute('data-on',i===rk?'1':'0'));}
-      return;}
     if(!mob){const i0=Math.floor(g),i1=Math.min(11,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
       const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
       R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});}
@@ -1835,7 +1866,7 @@ class Component extends DCLogic {
     const left=Math.max(0,this.fnEnd-s.now),inn=REDUCED||s.p.close>0.3;if(inn&&!this.finAt)this.finAt=performance.now();
     const units=[['DAYS',String(Math.floor(left/864e5)).padStart(2,'0')],['HRS',pad(Math.floor(left/36e5)%24)],['MIN',pad(Math.floor(left/6e4)%60)],['SEC',pad(Math.floor(left/1e3)%60)]];
     const first=performance.now()-(this.finAt||0)<2000;
-    return {finaleVideo:this.lazyVideo('fv','assets/finale.mp4'),
+    return {finaleVideo:this.lazyVideo('fv','assets/finale-'+VRES()+'.mp4'),
       fnLabel:'THE NEXT GAMES BEGIN IN',
       fnCount:units.map(([l,v],u)=>h('div',{key:l,className:'fn-unit'},h('span',{className:'flaps flaps--fin'},(inn?v:'  ').split('').map((ch,i)=>h('span',{key:i,className:'flap'},
         h('i',{key:ch,style:{'--fd':first?(u*0.12+i*0.05).toFixed(2)+'s':'0s'}},ch===' '?'\u00a0':ch)))),h('small',null,l))),
@@ -1891,14 +1922,23 @@ class Component extends DCLogic {
       chatSub:open?'Help desks open · '+clock+' IST':'Desks open 09:00 IST · I answer any time',chatDot:open?'#1FA463':'#E3A008',
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
-  heroVideoEl(){const small=typeof window!=='undefined'&&(window.innerWidth<=900||LITE);if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
+  heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
     return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/hero-poster.jpg?v=ms2',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4?v=ms2','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
+        el.addEventListener('timeupdate',()=>this.heroChapter(el));el.addEventListener('pause',()=>this.heroChapter(el,'paused'));el.addEventListener('play',()=>this.heroChapter(el,'running'));
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});const go=()=>io.observe(el);if(LITE&&document.readyState!=='complete')window.addEventListener('load',()=>setTimeout(go,350),{once:true});else go();(this.vios||(this.vios=[])).push(io);},
       style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'0% 42%',display:'block'}});}
+  // sport chapter label: which sport the montage is on (cross-fades centred at 1.8 s, 3.8 s ... and the loop seam at 11.6 s) and how far through it
+  heroChapter(v,state){const root=this.hchRoot&&this.hchRoot.isConnected?this.hchRoot:(this.hchRoot=document.querySelector('section[data-r=hero] [data-r=hero-ch]'));if(!root)return;
+    const f=root.querySelector('[data-hch-fill]');if(state){if(f)f.style.animationPlayState=state;if(state==='paused')return;}
+    const LEN=[2.2,2,2,2,2,1.8],t=v.currentTime;let k,st;
+    if(t>=11.6){k=0;st=t-11.6;}else if(t<1.8){k=0;st=t+0.4;}else{k=Math.min(5,Math.floor((t+0.2)/2));st=t-(2*k-0.2);}
+    if(k===this.hchK&&!state)return;this.hchK=k;const nm=root.querySelector('[data-hch-name]'),kk=root.querySelector('[data-hch-k]');
+    if(nm&&nm.textContent!==HERO_SPORTS[k]){nm.textContent=HERO_SPORTS[k];nm.removeAttribute('data-swap');void nm.offsetWidth;nm.setAttribute('data-swap','');}if(kk)kk.textContent=pad(k+1);
+    if(f){f.style.animation='none';void f.offsetWidth;f.style.animation='hchFill '+LEN[k]+'s linear '+(-st).toFixed(2)+'s both';f.style.animationPlayState=v.paused?'paused':'running';}}
   // muted loop that starts downloading about a screen and a half before it scrolls in; its first frame (poster) shows instantly
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
-    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.poster=src.replace('.mp4','-poster.webp');el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
+    ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.poster=src.replace(/(-1080|-720)?\.mp4$/,'-poster.webp');el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
   componentWillUnmount(){window.removeEventListener('touchstart',this.onTS);window.removeEventListener('touchmove',this.onTM);window.removeEventListener('touchend',this.onTE);window.removeEventListener('scroll',this.onSwScroll);cancelAnimationFrame(this.swRaf);window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
@@ -1908,7 +1948,7 @@ class Component extends DCLogic {
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     if(near('events'))this.kvPreload();
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
-    this.secNeed=window.scrollY<vh*1.2||inView('close');this.liveNeed=window.scrollY<vh*1.2||inView('live')||inView('tv');
+    this.secNeed=window.scrollY<vh*1.2||inView('close');this.liveNeed=window.scrollY<vh*1.2||inView('ecx')||inView('tv');
     // the home stream only exists while its section is near, so it stops downloading and decoding once you've scrolled past
     const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose!==!!this.state.tvNear)this.setState({tvNear:tvClose});
     // the chat robot is WebGL: let it rest while the page scrolls, resume once scrolling settles
@@ -1928,7 +1968,6 @@ class Component extends DCLogic {
     this.figTick(performance.now());
   }
   fxQ(sel){const c=this.fxC||(this.fxC={});let a=c[sel];if(!a||!a.length||!a[0].isConnected){a=[...document.querySelectorAll(sel)];c[sel]=a;}return a;}
-  fxArena(p){return {y:((1-ease(clamp((p-0.74)/0.22)))*110).toFixed(2)+'%',op:p>0.7?'1':'0'};}
   // bento: the film settles from a slight zoom while the tiles rise in turn (desktop pins the section; phones simply show it)
   btFx(p){const tiles=this.fxQ('[data-bt-tile]'),m=this.fxQ('[data-bt-media]')[0],hd=this.fxQ('[data-bt-head]')[0],core=this.fxQ('[data-bt-core]')[0],dim=this.fxQ('[data-bt-dim]')[0],grid=this.fxQ('[data-bt-grid]')[0];if(!tiles.length)return;
     if(window.innerWidth<=900||REDUCED){if(this.btFlat)return;this.btFlat=1;tiles.forEach(el=>{el.style.opacity='';el.style.transform='';});if(m)m.style.transform='';if(hd)hd.style.opacity='';return;}this.btFlat=0;
@@ -1952,7 +1991,7 @@ class Component extends DCLogic {
     const force=this.fxForce;this.fxForce=false;
     if(ch('tv')){const e=ease(clamp((P.tv||0)*1.55)),W=window.innerWidth,H=window.innerHeight,mob=W<=760,t0=(mob?0.2:0.18)*H*(1-e),b0=(mob?0.22:0.12)*H*(1-e),x0=(mob?0.04:0.19)*W*(1-e),rr=(32*(1-e)).toFixed(1);
       const ins=t0.toFixed(1)+'px '+x0.toFixed(1)+'px '+b0.toFixed(1)+'px '+x0.toFixed(1)+'px';this.fxQ('[data-r=tv-cinema]').forEach(el=>{el.style.clipPath='inset('+ins+' round '+rr+'px)';});this.fxQ('[data-r=tv-ui]').forEach(el=>{el.style.inset=ins;});}
-    if(ch('steps')){const si=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));if(si!==this.stepOn){this.stepOn=si;this.fxQ('[data-step]').forEach((el,i)=>el.setAttribute('data-on',i===si?'1':'0'));const sn=this.fxQ('[data-step-num]')[0];if(sn)sn.textContent=String(si+1).padStart(2,'0');}const A=this.fxArena(P.steps||0);this.fxQ('[data-r=steps-arena]').forEach(el=>{el.style.transform='translateY('+A.y+')';el.style.opacity=A.op;});}
+    if(ch('steps')){const si=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));if(si!==this.stepOn){this.stepOn=si;this.fxQ('[data-step]').forEach((el,i)=>el.setAttribute('data-on',i===si?'1':'0'));const sn=this.fxQ('[data-step-num]')[0];if(sn)sn.textContent=String(si+1).padStart(2,'0');}}
     if(ch('tiles'))this.btFx(P.tiles||0);
     if(ch('close')){const p=REDUCED?1:(P.close||0),o=ease(clamp(p/0.42)),c=ease(clamp((p-0.28)/0.2)),t=clamp((p-0.46)/0.3),W=window.innerWidth,H=window.innerHeight,mob=W<=760;
       const iy=((mob?0.17:0.2)*H*(1-o)).toFixed(1),ix=((mob?0.06:0.22)*W*(1-o)).toFixed(1),rr=(36*(1-o)).toFixed(1);
@@ -1993,8 +2032,12 @@ class Component extends DCLogic {
   // Hero: calm parallax - the copy drifts up and fades, the video eases back. Compositor-only transforms.
   heroParallax(){const y=window.scrollY;if(this.__py===y)return;this.__py=y;const vh=window.innerHeight;if(y>vh*1.6&&this.__pdone)return;this.__pdone=y>vh*1.6;
     const c=document.querySelector('[data-hero-copy]'),m=document.querySelector('[data-hero-media]');const k=Math.min(1,y/vh);
-    if(m&&!LITE&&!REDUCED)m.style.transform='translate3d(0,'+(y*0.3).toFixed(1)+'px,0) scale('+(1+k*0.06).toFixed(4)+')';
-    if(c){c.style.translate='0 '+(-y*0.12).toFixed(1)+'px';c.style.opacity=Math.max(0,1-y/(vh*0.7)).toFixed(3);}}
+    if(m&&!LITE&&!REDUCED)m.style.transform='translate3d(0,'+(y*0.16).toFixed(1)+'px,0) scale('+(1+k*0.06).toFixed(4)+')';
+    const sec=this.heroSec&&this.heroSec.isConnected?this.heroSec:(this.heroSec=document.querySelector('section[data-hero-sec]'));
+    if(sec&&!REDUCED){const e=k*k*(3-2*k),side=(window.innerWidth<=760?14:Math.min(56,window.innerWidth*0.035))*e;
+      sec.style.transform=y>0?'translate3d(0,'+(y*0.42).toFixed(1)+'px,0) scale('+(1-0.04*e).toFixed(4)+')':'';
+      sec.style.clipPath=y>0?'inset(0 '+side.toFixed(1)+'px 0 '+side.toFixed(1)+'px round '+(36*e).toFixed(1)+'px)':'';}
+    if(c){c.style.translate='0 '+(-y*0.22).toFixed(1)+'px';c.style.opacity=Math.max(0,1-y/(vh*0.5)).toFixed(3);}}
   // Section videos push in slowly while their section scrolls past (desktop only).
   mediaDolly(){if(LITE||REDUCED)return;const y=window.scrollY;if(this.__my===y)return;this.__my=y;const vh=window.innerHeight;
     this.fxQ('video[data-dolly]').forEach(el=>{const sec=el.closest('section');if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;el.style.scale=(1.1-0.1*clamp((vh-r.top)/(r.height+vh))).toFixed(4);});}
@@ -2018,9 +2061,10 @@ class Component extends DCLogic {
   // what to draw for frame fi: a pre-decoded bitmap when ready (no image decode on the main thread mid-scroll), else the nearest
   // decoded neighbour, else the loaded image; if too few frames are in when the scene starts, the plain kick video plays for that pass
   kvSource(fi){const kv=this.kv;if(!kv)return null;
-    if(this.kvMode==null)this.kvMode=(kv.loaded||0)/KV.n<(LITE?0.42:0.6)?'video':'frames';
-    if(this.kvMode==='video'){let v=this.kvVid;if(!v){v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.src='assets/kick-fallback.mp4';}
-      if(v.paused&&!v.ended){const pp=v.play();if(pp&&pp.catch)pp.catch(()=>{});}return v.readyState>=2?{img:v,t:v.currentTime}:null;}
+    const enough=(kv.loaded||0)/KV.n>=(LITE?0.42:0.6);if(this.kvMode==null||(this.kvMode==='video'&&enough))this.kvMode=enough?'frames':'video';
+    if(this.kvMode==='video'){let v=this.kvVid;if(!v){v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.src='assets/kick-fallback-'+VRES()+'.mp4';}
+      if(!v.paused)v.pause();const tt=this.kvT||0;if(!v.seeking&&v.readyState>=1&&Math.abs(v.currentTime-tt)>0.03)v.currentTime=tt;
+      return v.readyState>=2?{img:v,t:v.currentTime}:null;}
     let j=fi;while(j>0&&!kv.ok[j])j--;if(!kv.ok[j])return null;
     const bm=kv.bm||(kv.bm=new Map()),pend=kv.pend||(kv.pend=new Set());this.kvCur=j;
     const want=i=>{if(i<0||i>=KV.n||!kv.ok[i]||bm.has(i)||pend.has(i)||typeof createImageBitmap!=='function')return;pend.add(i);
@@ -2031,7 +2075,7 @@ class Component extends DCLogic {
     for(let dd=1;dd<=3;dd++){if(bm.has(j-dd))return {img:bm.get(j-dd)};if(bm.has(j+dd))return {img:bm.get(j+dd)};}
     return {img:kv.imgs[j]};}
   kvPreload(){if(this.kv)return;const mob=window.innerWidth<=760,dir='assets/kickfull/'+(mob?'m':'d')+'/',kv=this.kv={imgs:new Array(KV.n),ok:new Array(KV.n).fill(false)};
-    const load=i=>new Promise(res=>{const im=new Image();im.decoding='async';im.onload=()=>{kv.ok[i]=true;kv.loaded=(kv.loaded||0)+1;res();};im.onerror=res;im.src=dir+String(i+1).padStart(3,'0')+'.webp';kv.imgs[i]=im;});
+    const load=i=>new Promise(res=>{const im=new Image();im.decoding='async';im.onload=()=>{kv.ok[i]=true;kv.loaded=(kv.loaded||0)+1;res();};im.onerror=res;im.src=dir+String(i+1).padStart(3,'0')+'.webp?v=hd';kv.imgs[i]=im;});
     // first frame, the strike and the goal first, then everything else in order, six at a time
     const order=[0,KV.idx(2),KV.idx(KV.hitT)];for(let i=0;i<KV.n;i+=LITE?2:1)if(!order.includes(i))order.push(i);let q=0;
     const next=()=>{if(q>=order.length)return;const i=order[q++];load(i).then(()=>{this.kickLast=-1;next();});};for(let k=0;k<6;k++)next();}
@@ -2059,18 +2103,19 @@ class Component extends DCLogic {
         const hr=host.getBoundingClientRect();C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
         const items=[...C.querySelectorAll('[data-goal-ch],[data-goal-ev]')];items.forEach(el=>{el.style.transform='';el.style.opacity='';});
         items.forEach((el,i)=>{const b=el.getBoundingClientRect();L.chips.push({el,rise:H-(b.top-hr.top)+40+((i*37)%60),spin:((i*53)%24)-12,delay:i*0.055,head:el.hasAttribute('data-goal-ch')});});}}
-    const B=host.querySelector('[data-goal-board]');if(B){const hb=this.kvView(L,KV.hitT).pt(KV.goal[0]/2+KV.goal[2]/2,KV.goal[1]*0.45+KV.goal[3]*0.55);const hd=host.querySelector('[data-ev-head]'),hdB=hd?hd.getBoundingClientRect().bottom-host.getBoundingClientRect().top:120;
+    const B=host.querySelector('[data-goal-board]');if(B){const hb=this.kvView(L,KV.hitT).pt(KV.ball[0],KV.ball[1]);const hd=host.querySelector('[data-ev-head]'),hdB=hd?hd.getBoundingClientRect().bottom-host.getBoundingClientRect().top:120;
       // centred on the net, but never over the heading: on tall phone screens it drops just below it
-      Object.assign(B.style,{left:hb[0]+'px',top:Math.max(hdB+B.offsetHeight/2+18,hb[1])+'px'});}}
+      const ld=B.querySelector('[data-goal-led]'),lh=ld?ld.offsetHeight:60;Object.assign(B.style,{left:hb[0]+'px',top:Math.max(hdB+lh/2+18,hb[1])+'px'});}}
   kickAnim(){const box=document.querySelector('[data-kick]');if(!box){this.kickBox=null;return;}
     const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50){if(this.kvMode){this.kvMode=null;if(this.kvVid){this.kvVid.pause();try{this.kvVid.currentTime=0;}catch(e){}}}return;}
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     if(this.kickBox!==box||this.kickDirty||!this.kickL||this.kickL.W!==W||this.kickL.H!==H){this.kickBox=box;this.kickDirty=false;this.kvBuild(host,box);}
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),now=performance.now();
     // scroll -> clip time: run-up, strike and flight take most of the scroll; the drop and celebration move quicker
-    const t=p<KICK.run0?0:p<KICK.hit?KV.hitT*seg(p,KICK.run0,KICK.hit):p<KICK.board0?KV.hitT+(6-KV.hitT)*seg(p,KICK.hit,KICK.board0):6+3.8*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);
+    const t=p<KICK.run0?0:p<KICK.hit?KV.hitT*seg(p,KICK.run0,KICK.hit):p<KICK.board0?KV.hitT+(6-KV.hitT)*seg(p,KICK.hit,KICK.board0):6+3.8*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);this.kvT=t;
     // the reveal runs on its own clock once it starts, so the float-up and jiggle play out even if scrolling stops
-    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=this.kvRevealT&&rt<3.4&&!REDUCED;
+    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0;
+    if(p>=KICK.score0&&!this.kvGoalT)this.kvGoalT=now;if(p<KICK.score0-0.005)this.kvGoalT=0;const live=!REDUCED&&((this.kvRevealT&&rt<3.4)||(this.kvGoalT&&now-this.kvGoalT<1400));
     const key=fi+'|'+p.toFixed(4)+'|'+(live?Math.round(now/16):'')+(this.kvMode==='video'&&this.kvVid?'|'+this.kvVid.currentTime.toFixed(2):'');if(key===this.kickLast)return;this.kickLast=key;
     const src=this.kvSource(fi);if(src){const V=this.kvView(L,src.t!=null?src.t:t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
       if(L.port){const bg=x.createLinearGradient(0,0,0,L.H);bg.addColorStop(0,'#DCE4EE');bg.addColorStop(1,'#EDF0F4');x.fillStyle=bg;x.fillRect(0,0,L.W,L.H);}
@@ -2082,8 +2127,11 @@ class Component extends DCLogic {
     if(!L.port){const m=REDUCED?1:ease(clamp((rt-0.25)/0.9)),G=L.goal,M=L.menu,lx=G[0]+(M[0]-G[0])*m,ty=G[1]+(M[1]-G[1])*m,rx=G[2]+(M[2]-G[2])*m,by=G[3]+(M[3]-G[3])*m;
       K.frame.setAttribute('d','M'+lx.toFixed(1)+' '+by.toFixed(1)+'V'+ty.toFixed(1)+'H'+rx.toFixed(1)+'V'+by.toFixed(1));}
     const fo=(1-nf).toFixed(3);host.querySelectorAll('[data-r=ev-p]').forEach(el=>{el.style.opacity=fo;});
-    const Bd=host.querySelector('[data-goal-board]');if(Bd){const bi=ease(seg(p,KICK.score0,KICK.score0+0.025)),bo2=ease(seg(p,KICK.score1-0.04,KICK.score1)),bv=bi*(1-bo2);
-      Bd.style.opacity=bv.toFixed(3);Bd.style.visibility=bv>0.01?'visible':'hidden';Bd.style.transform='translate(-50%,-50%) scale('+(1.45-0.45*bi+0.18*bo2).toFixed(3)+')';Bd.style.filter=bo2>0.01?'blur('+(bo2*10).toFixed(1)+'px)':'';}
+    const Bd=host.querySelector('[data-goal-board]');if(Bd){const gt=REDUCED?9:this.kvGoalT?(now-this.kvGoalT)/1000:-1,out=ease(seg(p,KICK.score1-0.04,KICK.score1)),on=gt>=0&&out<0.999;
+      Bd.style.visibility=on?'visible':'hidden';if(on){const el=this.kvGoalEls||(this.kvGoalEls={r:[...Bd.querySelectorAll('[data-goal-ring]')],s:[...Bd.querySelectorAll('[data-goal-spark]')],t:Bd.querySelector('[data-goal-led]')});
+        el.r.forEach((r,i)=>{const u=clamp((gt-i*0.12)/(0.7+i*0.15)),k=1-Math.pow(1-u,3);r.style.transform='scale('+(0.12+(1.5+i*0.7)*k).toFixed(3)+')';r.style.opacity=(u>0&&u<1?(1-u)*(0.95-i*0.35):0).toFixed(3);});
+        el.s.forEach((sp,i)=>{const a=(i*45+(i%2?18:-8))*D2R,u=clamp(gt/0.65),k=1-Math.pow(1-u,3),dd=26+(i%2?70:110)*k;sp.style.transform='translate('+(Math.cos(a)*dd).toFixed(1)+'px,'+(Math.sin(a)*dd).toFixed(1)+'px) scale('+(1-0.6*u).toFixed(3)+')';sp.style.opacity=(gt>0?1-clamp((gt-0.18)/0.5):0).toFixed(3);});
+        const sg=gt<=0?0:1-Math.exp(-6.5*gt)*Math.cos(11*gt);el.t.style.transform='translate(-50%,-50%) scale('+(Math.max(0,sg)*(1+0.12*out)).toFixed(3)+')';el.t.style.opacity=(clamp(gt*7)*(1-out)).toFixed(3);el.t.style.filter=out>0.01?'drop-shadow(0 10px 22px rgba(47,91,255,.38)) blur('+(out*8).toFixed(1)+'px)':'';}}
     // events: rise from below the screen against gravity, overshoot and jiggle into place (damped spring), headers lead their rows
     const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.style.opacity=rt>0||REDUCED?'1':'0';Pn.style.visibility=rt>0||REDUCED?'visible':'hidden';
       L.chips.forEach(c=>{const u=REDUCED?9:Math.max(0,rt-0.35-c.delay),sp=u>0?1-Math.exp(-4.2*u)*Math.cos(9.5*u):0,wob=u>0?Math.exp(-3.6*u)*Math.sin(15*u):0;
@@ -2133,7 +2181,11 @@ class Component extends DCLogic {
   tick(){this.setState(s=>({live:liveStep(s.live)}));}
   // every page change gets a browser history entry, so the Back button and the phone's back gesture both return to the last page
   pushNav(screen){const cur=this.state.screen||'home';if(screen===cur)return;try{history.pushState({gms:screen},'');}catch(e){}}
-  go(screen,after){this.pushNav(screen);this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
+  // the event centre now lives under the TV on the home page: anything that used to open its page opens the panel there
+  openEc(){const run=()=>{this.ecSet(true);setTimeout(()=>{const el=this.refs.ecx&&this.refs.ecx.current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-84,behavior:REDUCED?'auto':'smooth'});},90);};
+    if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
+  ecSet(on){clearTimeout(this.ecT);this.setState({ecOpen:on,ecDone:false});if(on)this.ecT=setTimeout(()=>this.setState({ecDone:true}),720);}
+  go(screen,after){if(screen==='scores'){this.openEc();return;}this.pushNav(screen);this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
   goBack(){const st=history.state;if(st&&st.gms)history.back();else this.go('home');}
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
@@ -2171,7 +2223,7 @@ class Component extends DCLogic {
     const meStatus=mine?mine.status:'Pending';const stIdx={Pending:1,Verified:2,Accredited:3,Rejected:1}[meStatus];
     const setStatus=(id,status)=>this.setState(x=>({admin:x.admin.map(r=>r.id===id?{...r,status}:r)}));
     const regBtn=r=>({...r,open:()=>this.setState({modal:r.id})});
-    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live Scores',()=>this.go('scores'),'scores'],['Live TV',()=>this.go('tv'),'tv']];
+    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live Scores',()=>this.scrollTo('tv'),'scores'],['Live TV',()=>this.go('tv'),'tv']];
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
       overviewRef:this.ref('overview'),liveRef:this.ref('live'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
@@ -2180,7 +2232,7 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
-      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.go('scores'),goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
@@ -2196,7 +2248,7 @@ class Component extends DCLogic {
       
       
       
-      photoLoop:this.photoLoopEl(),arenaVideo:this.lazyVideo('av','assets/arena.mp4'),
+      photoLoop:this.photoLoopEl(),
       ...this.newVals(),...this.contactVals(),
       ...this.finVals(),botReady:!LITE&&!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
@@ -2208,7 +2260,7 @@ class Component extends DCLogic {
       bento:BENTO_ORDER.map((mi,k)=>{const m=MODULES[mi],T=TEAMS[mi],open=s.btOpen===mi;return {icon:m.icon,title:m.title.replace('Competition Management System','Competition & results'),desc:m.desc.split('. ').slice(0,2).join('. '),
         num:pad(mi+1),area:T[0],team:T[1],items:T[2].map(t=>({t})),open:String(open),toggle:()=>this.setState({btOpen:open?-1:mi})};}),
       // background film: "People works on a broadcast of an event", Pexels video 2890236 (Pexels licence, free to use); phones get its still frame
-      crewMedia:LITE?React.createElement('img',{key:'cp',src:'assets/crew-poster.webp',alt:'',loading:'lazy',decoding:'async'}):this.lazyVideo('cr','assets/crew.mp4'),
+      crewMedia:LITE?React.createElement('img',{key:'cp',src:'assets/crew-poster.webp',alt:'',loading:'lazy',decoding:'async'}):this.lazyVideo('cr','assets/crew-1080.mp4'),
       modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
       rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
