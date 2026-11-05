@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -246,39 +246,9 @@ html,body{background:#F4F5F7}
  [data-regmenu]{max-height:calc(100svh - 96px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
  [data-r=regmenu-head]{position:sticky;top:-16px;z-index:2;margin:-16px -16px 12px!important;padding:16px!important;background:rgba(255,255,255,.98);border-bottom:1px solid #EEF0F4;align-items:center!important}
 }
-/* Live liquid buttons: two slow waves of liquid drift inside the pill (opposite directions), hover raises the level.
-   Transform-only animation, so it stays on the compositor. */
-.gms-liquid{position:relative!important;overflow:hidden!important;isolation:isolate!important;-webkit-mask-image:-webkit-radial-gradient(white,black)}
-.gms-liquid::before,.gms-liquid::after{content:'';position:absolute;left:0;top:-6%;width:200%;height:150%;z-index:-1;pointer-events:none;background-repeat:repeat-x;background-size:50% 100%;will-change:transform;transition:translate .8s cubic-bezier(.2,.8,.2,1);animation:gmsLiquid 7s linear infinite}
-.gms-liquid::after{top:6%;animation-duration:4.6s;animation-direction:reverse}
-/* a single layer of liquid per button */
-.gms-liquid::before{content:none!important}
-.gms-liquid:hover::before,.gms-liquid:hover::after,.gms-liquid:focus-visible::before,.gms-liquid:focus-visible::after{translate:0 -24%}
-@keyframes gmsLiquid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.gms-liquid--blue{background:linear-gradient(180deg,#4F78FF 0%,#2F5BFF 52%,#2448E6 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -8px 16px rgba(14,30,120,.28),0 1px 2px rgba(15,20,40,.12)!important}
-.gms-liquid--blue::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(150,180,255,.42)'/%3E%3C/svg%3E")}
-.gms-liquid--blue::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(20,46,190,.5)'/%3E%3C/svg%3E")}
-.gms-liquid--water{background:linear-gradient(180deg,rgba(150,180,255,.6) 0%,rgba(90,130,255,.45) 100%)!important;color:#fff!important;text-shadow:0 1px 2px rgba(10,30,120,.45);border:1px solid rgba(47,91,255,.45)!important;-webkit-backdrop-filter:blur(10px) saturate(1.5);backdrop-filter:blur(10px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -10px 18px rgba(20,50,200,.18),0 1px 2px rgba(15,20,40,.12)!important}
-.gms-liquid--water::before,.gms-liquid--water::after{top:-16%;background-size:96px 100%;animation-name:gmsWater}
-@keyframes gmsWater{from{transform:translateX(0)}to{transform:translateX(-96px)}}
-.gms-liquid--water::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(102,206,255,.9)'/%3E%3C/svg%3E")}
-.gms-liquid--water::after{top:-4%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(47,91,255,.92)'/%3E%3C/svg%3E")}
-.gms-liquid--water:hover::before,.gms-liquid--water:hover::after,.gms-liquid--water:focus-visible::before,.gms-liquid--water:focus-visible::after{translate:0 -10%}
-.gms-liquid--clear{background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(241,244,250,.78) 100%)!important;color:#0B0D12!important;border:1px solid rgba(11,13,18,.12)!important;-webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);box-shadow:inset 0 1px 0 #fff,inset 0 -8px 14px rgba(47,91,255,.06),0 8px 20px rgba(15,20,40,.10)!important}
-.gms-liquid--clear::before,.gms-liquid--clear::after{top:22%}
-.gms-liquid--clear::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,190,255,.22)'/%3E%3C/svg%3E")}
-.gms-liquid--clear::after{top:30%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(47,91,255,.12)'/%3E%3C/svg%3E")}
-.gms-liquid--dark{background:linear-gradient(180deg,#2A3044 0%,#11141C 55%,#0B0D12 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -8px 16px rgba(0,0,0,.35)!important}
-.gms-liquid--dark::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(91,132,255,.30)'/%3E%3C/svg%3E")}
-.gms-liquid--dark::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.07)'/%3E%3C/svg%3E")}
-.gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.35)!important}
-.gms-liquid--glass::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
-.gms-liquid--glass::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(143,166,255,.24)'/%3E%3C/svg%3E")}
 /* Hero: registration status as one glass pill, sport chapter label synced to the montage, the dot pops after the title */
 .hero-pill{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:7px 15px 7px 11px;border-radius:999px;background:rgba(8,10,16,.34);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);font-size:12.5px;color:rgba(255,255,255,.82);white-space:nowrap}
 .hero-pill b{font-weight:600;color:#fff}
-.hp-dot{width:8px;height:8px;border-radius:50%;background:#1FA463;flex:none;animation:gmsLive 1.8s infinite}
-.hp-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.42);flex:none}
 .hp-mono{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em}
 .hero-dot{display:inline-block;color:#5B84FF;font-weight:700;animation:heroDot .7s 1.05s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes heroDot{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
@@ -300,9 +270,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-r=regdock]{all:unset;box-sizing:border-box;position:fixed;left:50%;bottom:22px;z-index:72;display:flex;align-items:center;gap:12px;height:44px;padding:0 5px 0 16px;border-radius:999px;cursor:pointer;
  background:rgba(11,13,18,.88);color:#fff;border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 18px 44px rgba(15,20,40,.28);
  font-family:'Instrument Sans',system-ui,sans-serif;font-size:13px;white-space:nowrap;transform:translate(-50%,0);transition:transform .6s var(--gms-ease),opacity .45s ease,background .3s}
-[data-r=regdock] .rd-dot{width:7px;height:7px;border-radius:50%;background:#1FA463;animation:gmsLive 1.8s infinite}
 [data-r=regdock] .rd-k{color:rgba(255,255,255,.62)}
-[data-r=regdock] .rd-sep{width:1px;height:16px;background:rgba(255,255,255,.18)}
 [data-r=regdock] b{font-weight:600}
 [data-r=regdock] .rd-go{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2F5BFF;color:#fff;font-size:15px;transition:background .3s}
 [data-r=regdock] .rd-go .gi{transition:transform .45s var(--gms-ease)}
@@ -380,7 +348,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 [data-art][data-on="1"]{opacity:1;transform:none;filter:none}
 [data-r=roles-copy]>*{transition:opacity .4s ease}
 [data-role-drawer],[data-r=roles-progress]{display:none}
-@media (min-width:761px){
+@media (min-width:1025px){
  [data-r=roles-section]{height:calc(100vh + 12 * 28vh)}
  [data-r=roles-pin]{position:sticky;top:0;height:100vh;box-sizing:border-box;padding:max(92px,12vh) 32px max(26px,4vh)}
  [data-r=roles-grid]{height:100%;grid-template-rows:minmax(0,1fr)}
@@ -405,13 +373,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 .gms-in .gms-w>span{transform:none}
 .gms-rv{opacity:0;translate:0 26px;filter:blur(6px);transition:opacity 1s var(--gms-soft) var(--d,0s),translate 1.2s var(--gms-ease) var(--d,0s),filter 1s var(--gms-soft) var(--d,0s)}
 .gms-rv.gms-in{opacity:1;translate:none;filter:none}
-/* Half-filled liquid (Back button): frosted glass with blue water up to the middle; it rises on hover */
-.gms-liquid--half{background:linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(236,241,252,.82) 100%)!important;color:#0B1A4A!important;border:1px solid rgba(47,91,255,.28)!important;-webkit-backdrop-filter:blur(12px) saturate(1.5);backdrop-filter:blur(12px) saturate(1.5);box-shadow:inset 0 1px 0 #fff,0 10px 26px rgba(15,20,40,.12)!important}
-.gms-liquid--half::before,.gms-liquid--half::after{background-size:72px 100%;animation-name:gmsWaterHalf}
-.gms-liquid--half::before{top:42%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(102,206,255,.55)'/%3E%3C/svg%3E")}
-.gms-liquid--half::after{top:52%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(47,91,255,.55)'/%3E%3C/svg%3E")}
-.gms-liquid--half:hover::before,.gms-liquid--half:hover::after,.gms-liquid--half:focus-visible::before,.gms-liquid--half:focus-visible::after{translate:0 -18%}
-@keyframes gmsWaterHalf{from{transform:translateX(0)}to{transform:translateX(-72px)}}
+/* Back button (inner pages): top-left under the nav */
 [data-r=backwrap]{position:fixed;z-index:49;top:82px;left:max(16px,calc(50% - 620px));animation:gmsBackIn .7s var(--gms-ease) .15s both}
 [data-r=backbtn]{all:unset;cursor:pointer;display:flex;align-items:center;gap:5px;padding:7px 14px 7px 10px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.01em}
 [data-r=backbtn] svg{transition:transform .45s var(--gms-ease)}[data-r=backbtn]:hover svg{transform:translateX(-3px)}
@@ -434,46 +396,6 @@ button,[role=tab],a[href]{transition-property:translate,scale,transform,backgrou
 }
 button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.12s!important}
 @media (prefers-reduced-motion:reduce){button,[role=tab],a[href]{transition-duration:.01s!important}main[data-screen-label]{animation:none!important}[data-r=backwrap]{animation:none}}
-/* Built for every team: a broadcast crew at work behind glass tiles; tiles rise in turn, hover or tap turns one over to show who runs it */
-[data-r=bt-section]{position:relative;height:360vh;background:#06080D}
-[data-r=bt-sticky]{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;color:#fff}
-.bt-media{position:absolute;inset:0;transform:scale(1.12);will-change:transform}.bt-media::after{content:'';position:absolute;left:0;right:0;top:0;height:30%;pointer-events:none;background:linear-gradient(180deg,#06080D 0%,rgba(6,8,13,.7) 40%,rgba(6,8,13,0) 100%)}.bt-media video,.bt-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.bt-scrim{position:absolute;inset:0;background:radial-gradient(60% 55% at 70% 35%,rgba(47,91,255,.20),rgba(47,91,255,0) 70%),linear-gradient(180deg,rgba(6,8,13,.82) 0%,rgba(6,8,13,.58) 38%,rgba(6,8,13,.66) 70%,rgba(6,8,13,.92) 100%)}
-.bt-inner{position:relative;height:100%;box-sizing:border-box;max-width:1280px;margin:0 auto;padding:clamp(88px,12vh,112px) 32px clamp(24px,4vh,44px);display:flex;flex-direction:column;gap:clamp(18px,3.4vh,34px)}
-.bt-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 40px;flex-wrap:wrap}
-.bt-eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:#9FB3FF}
-.bt-head h2{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:min(var(--h2),6.8vh);letter-spacing:-.05em;line-height:.96;max-width:720px}
-.bt-head p{margin:0;max-width:360px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.66)}
-.bt-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vh,16px);
- grid-template-areas:"reg reg reg reg reg ver ver ver ver acc acc acc" "reg reg reg reg reg cms cms cms cms cms cms cms" "sta sta sta sta tra tra tra tra cat cat cat cat"}
-.bt-tile{appearance:none;font:inherit;color:#fff;text-align:left;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:0;padding:clamp(16px,2.4vh,24px);border-radius:var(--r-m);
- background:linear-gradient(160deg,rgba(30,36,54,.62),rgba(14,18,28,.5));color:#fff;border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1);
- transition:border-color .5s var(--gms-ease),background .5s var(--gms-ease),box-shadow .5s var(--gms-ease)}
-.bt-tile::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(120% 80% at 0% 0%,rgba(91,132,255,.22),rgba(91,132,255,0) 55%);opacity:0;transition:opacity .6s var(--gms-ease)}
-.bt-tile:hover,.bt-tile[data-open=true]{border-color:rgba(143,166,255,.6);background:linear-gradient(160deg,rgba(36,44,68,.72),rgba(18,22,34,.6));box-shadow:0 30px 70px rgba(0,0,0,.42),0 0 0 4px rgba(47,91,255,.16)}
-.bt-tile:hover::after,.bt-tile[data-open=true]::after{opacity:1}
-.bt-tile:focus-visible{outline:2px solid #8FA6FF;outline-offset:3px}
-.bt-top{display:flex;justify-content:space-between;align-items:center}
-.bt-ico{width:40px;height:40px;border-radius:var(--r-s);display:grid;place-items:center;background:rgba(47,91,255,.16);border:1px solid rgba(143,166,255,.28);font-family:'Material Symbols Rounded';font-size:21px;color:#AFC0FF;transition:background .5s,color .5s}
-.bt-tile:hover .bt-ico,.bt-tile[data-open=true] .bt-ico{background:#2F5BFF;color:#fff;border-color:#2F5BFF}
-.bt-num{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:rgba(255,255,255,.42)}
-.bt-body{position:relative;display:grid;gap:6px}
-.bt-title{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(18px,2.6vh,24px);letter-spacing:-.02em;line-height:1.1}
-.bt-front,.bt-back{grid-row:2;grid-column:1;transition:opacity .45s var(--gms-ease),transform .55s var(--gms-ease)}
-.bt-front{font-size:clamp(12.5px,1.7vh,14.5px);line-height:1.45;color:rgba(255,255,255,.66)}
-.bt-back{display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(10px);pointer-events:none}
-.bt-tile:hover .bt-front,.bt-tile[data-open=true] .bt-front{opacity:0;transform:translateY(-8px)}
-.bt-tile:hover .bt-back,.bt-tile[data-open=true] .bt-back{opacity:1;transform:none}
-.bt-team{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;color:#9FB3FF}
-.bt-items{display:flex;flex-wrap:wrap;gap:6px}.bt-items span{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.88)}
-@media (max-width:900px){
- [data-r=bt-section]{height:auto}[data-r=bt-sticky]{position:relative;height:auto}
- .bt-inner{padding:84px 16px 56px;gap:22px}.bt-media{transform:none}
- .bt-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-template-areas:"reg reg" "ver acc" "cms cms" "sta tra" "cat cat"}
- .bt-tile{min-height:0;border-radius:var(--r-m);padding:14px 14px 16px;gap:14px}.bt-head p{font-size:14px}.bt-ico{width:34px;height:34px;font-size:19px;border-radius:11px}.bt-title{font-size:18px}
- .bt-back{display:none}.bt-tile[data-open=true] .bt-back{display:flex}.bt-tile[data-open=true] .bt-front{display:none}.bt-tile:hover .bt-front{opacity:1;transform:none}.bt-items{flex-direction:column;gap:5px}.bt-items span{padding:0;background:none;border:0;font-size:12.5px;line-height:1.35}.bt-items span::before{content:'· ';color:#8FA6FF}
-}
-.gms-lite .bt-tile{background:rgba(20,24,38,.86)!important}
 /* Finale: a window opens into the full-screen film, the countdown flips in, then the headline and the way in */
 .fn-win{position:absolute;inset:0;overflow:hidden;background:#0B0D12;clip-path:inset(20vh 22vw round 36px);will-change:clip-path;color:#fff}
 .fn-vid{position:absolute;inset:0;transform:scale(1.18);will-change:transform}.fn-vid video{object-position:50% 40%}
@@ -490,17 +412,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .fn-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:clamp(0,calc(var(--t,0) * 3 - 1.9),1);transform:translateY(calc((1 - clamp(0,calc(var(--t,0) * 3 - 1.9),1)) * 16px))}
 @media (max-width:600px){.fn-txt{padding:80px 16px 28px}.fn-p{font-size:14.5px}.fn-units{gap:8px}}
 @media (prefers-reduced-motion:reduce){.fn-w{filter:none}}
-/* Slim call-to-action pill: the liquid blue grows out of the arrow on hover */
-.gms-cta{all:unset;box-sizing:border-box;cursor:pointer;position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:12px;height:42px;padding:0 5px 0 18px;border-radius:999px;border:1px solid rgba(47,91,255,.3);background:#fff;color:#0B0D12;font-size:13.5px;font-weight:600;letter-spacing:.005em;white-space:nowrap;max-width:100%;transition:color .5s var(--gms-ease),border-color .5s,box-shadow .5s var(--gms-ease)}
-.gms-cta>span{overflow:hidden;text-overflow:ellipsis}
-.gms-cta::before{content:'';position:absolute;inset:-1px;z-index:-1;background:#2F5BFF;clip-path:circle(0 at calc(100% - 21px) 50%);transition:clip-path .6s var(--gms-ease)}
-.gms-cta>i{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2F5BFF;color:#fff;transition:background .5s,color .5s}
-.gms-cta svg{transition:transform .5s var(--gms-ease)}
-.gms-cta:hover,.gms-cta:focus-visible{color:#fff;border-color:#2F5BFF;box-shadow:0 1px 2px rgba(15,20,40,.12)}
-.gms-cta:hover::before,.gms-cta:focus-visible::before{clip-path:circle(150% at calc(100% - 21px) 50%)}
-.gms-cta:hover>i,.gms-cta:focus-visible>i{background:#fff;color:#2F5BFF}.gms-cta:hover svg,.gms-cta:focus-visible svg{transform:translateX(2px)}
-.gms-cta:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
-@media (max-width:600px){.gms-cta{height:40px;font-size:13px}}
 /* Vision chat: answers, desk hand-off form and the reference ticket */
 .cc-msg{max-width:86%;padding:11px 14px;border-radius:var(--r-m);font-size:14px;line-height:1.45;display:flex;flex-direction:column;gap:6px;animation:gmsBubble .45s var(--gms-ease) both;flex:none}
 .cc-msg--bot{align-self:flex-start;background:#fff;color:#0B0D12;border:1px solid #EEF0F4;border-bottom-left-radius:6px}
@@ -518,7 +429,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .cc-ticket small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#1C8A53}.cc-ticket b{font-family:'Bricolage Grotesque';font-size:22px;letter-spacing:-.02em;color:#0B0D12}
 .cc-tk-ic{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1FA463;color:#fff;font-family:'Material Symbols Rounded';font-size:19px}
 .cc-typing{align-self:flex-start;flex:none;display:flex;gap:4px;padding:13px 15px;border-radius:var(--r-m);border-bottom-left-radius:6px;background:#fff;border:1px solid #EEF0F4}
-.cc-typing i{width:6px;height:6px;border-radius:50%;background:#8A909C;animation:gmsTyping 1s infinite}.cc-typing i:nth-child(2){animation-delay:.15s}.cc-typing i:nth-child(3){animation-delay:.3s}
+.cc-typing i{width:6px;height:6px;border-radius:50%;background:#6B7180;animation:gmsTyping 1s infinite}.cc-typing i:nth-child(2){animation-delay:.15s}.cc-typing i:nth-child(3){animation-delay:.3s}
 @keyframes gmsTyping{0%,60%,100%{transform:none;opacity:.45}30%{transform:translateY(-4px);opacity:1}}
 @keyframes gmsBubble{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 /* Lite build (phones, tablets, touch-first): no backdrop blur, no blur-in reveals, solid frosted surfaces instead */
@@ -536,26 +447,13 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .bt-grid{position:relative}
 .bt-core{position:absolute;left:50%;top:50%;z-index:4;width:min(460px,70%);padding:34px 30px;margin:0;box-sizing:border-box;border-radius:var(--r-l);background:linear-gradient(160deg,rgba(36,44,68,.85),rgba(14,18,28,.8));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(143,166,255,.45);color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);box-shadow:0 1px 2px rgba(15,20,40,.12),0 0 0 1px rgba(255,255,255,.6);will-change:transform,opacity}
 .bt-core b{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.04em;line-height:1}.bt-core b+b{color:#8FA6FF}
-.bt-core small{margin-top:10px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;color:#8A909C}
+.bt-core small{margin-top:10px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;color:#6B7180}
 .bt-core i{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle,#8FA6FF 0%,#2F5BFF 45%,rgba(47,91,255,0) 72%);opacity:0}
 .bt-dim{position:absolute;inset:0;z-index:5;background:#06080D;opacity:0;pointer-events:none}
 @media (max-width:900px){.bt-core,.bt-dim{display:none}}
-/* Register pill: royal-blue liquid sways inside a glass pill, a sheen passes every few seconds and the arrow nudges forward */
-.gms-glow{all:unset;box-sizing:border-box;cursor:pointer;position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:space-between;gap:14px;height:48px;padding:0 6px 0 20px;border-radius:999px;color:#fff;font-weight:600;font-size:14.5px;white-space:nowrap;max-width:100%;
- background:linear-gradient(180deg,#5D84FF 0%,#2F5BFF 55%,#2347E0 100%);box-shadow:0 1px 2px rgba(15,20,40,.12),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -6px 14px rgba(14,30,120,.25);transition:box-shadow .5s var(--gms-ease)}
-.gms-glow>span{position:relative;z-index:2;overflow:hidden;text-overflow:ellipsis}
-.gms-glow::before{content:'';position:absolute;left:0;top:48%;width:200%;height:80%;z-index:0;pointer-events:none;background-repeat:repeat-x;background-size:96px 100%;animation:gmsWater 5s linear infinite;
- background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14C25 8 75 8 100 14S175 20 200 14V40H0Z' fill='rgba(255,255,255,.16)'/%3E%3C/svg%3E")}
-.gms-glow::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.38) 50%,transparent 65%);transform:translateX(-120%);animation:gmsSheen 3.6s var(--gms-ease) infinite}
-.gms-glow>i{position:relative;z-index:2;flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#2F5BFF;box-shadow:0 4px 12px rgba(14,30,120,.25);animation:gmsNudge 3.6s var(--gms-ease) infinite}
-.gms-glow:hover,.gms-glow:focus-visible{box-shadow:0 1px 2px rgba(15,20,40,.12),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -6px 14px rgba(14,30,120,.25)}
-.gms-glow:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}
-@keyframes gmsSheen{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
-@keyframes gmsNudge{0%,70%,100%{transform:none}80%{transform:translateX(4px)}90%{transform:translateX(-1px)}}
-@media (prefers-reduced-motion:reduce){.gms-glow::before,.gms-glow::after,.gms-glow>i{animation:none}}
 /* Roles on phones: the section scrolls normally and the role cards are a swipe carousel, one card per swipe */
 .rc-wrap{display:none}
-@media (max-width:760px){
+@media (max-width:1024px){
  [data-r=roles-section]{height:auto}
  [data-r=roles-pin]{position:relative;height:auto;box-sizing:border-box;padding:64px 16px 40px!important;display:flex;flex-direction:column}
  [data-r=roles-grid]{flex:1;min-height:0;width:100%;grid-template-columns:minmax(0,1fr)!important;gap:0!important}
@@ -569,13 +467,12 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  .rc-card{flex:0 0 calc(100vw - 64px);scroll-snap-align:center;scroll-snap-stop:always;border-radius:var(--r-l);background:#fff;border:1px solid #E8EBF0;box-shadow:var(--sh-2);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
  .rc-card[data-on="0"]{transform:scale(.95);opacity:.6;box-shadow:var(--sh-1)}
  .rc-art{position:relative;height:clamp(220px,44svh,360px);width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
- .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C}
+ .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180}
  .rc-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
  .rc-group{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em}
  .rc-copy h3{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:21px;letter-spacing:-.03em;line-height:1.1}
  .rc-copy p{margin:0 0 6px;font-size:13.5px;line-height:1.5;color:#4A505C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
  .rc-go{display:flex;width:100%;font-size:14px}
- .rc-dots{display:flex;justify-content:center;gap:6px}.rc-dots i{width:6px;height:6px;border-radius:3px;background:#D5D9E1;cursor:pointer;transition:width .45s var(--gms-ease),background .45s}.rc-dots i[data-on="1"]{width:22px;background:#2F5BFF}
 }
 /* Vision: the reactor flares on open and the chat grows out of it */
 .vz-glow{position:absolute;left:50%;top:60%;width:34px;height:34px;margin:-17px 0 0 -14px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,236,224,.95) 0%,rgba(255,170,130,.6) 35%,rgba(255,140,90,0) 70%);mix-blend-mode:screen;opacity:0}
@@ -584,25 +481,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .vz-chat{transform-origin:calc(100% - 46px) calc(100% + 62px);animation:gmsZoop .62s cubic-bezier(.2,1.25,.35,1) both}
 @keyframes gmsZoop{0%{opacity:0;transform:scale(.03);filter:brightness(1.8) blur(8px)}55%{opacity:1;filter:none}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.vz-glow{animation:none}.vz-chat{animation:none}}
-/* Compact button system: every button about 40px tall (36px on phones, 34px in the header) with smaller type.
-   Liquid buttons keep one royal-blue liquid, now a thinner layer in the lower part of the glass, with a bright top edge,
-   a soft inner glow and a light sheen on hover; the quiet secondary buttons stay clean outline glass */
-.gms-liquid{box-sizing:border-box!important;min-height:40px!important;padding:0 18px!important;display:inline-flex!important;align-items:center!important;justify-content:center;gap:7px!important;font-size:13.5px!important;font-weight:600!important;letter-spacing:.005em;line-height:1!important;white-space:nowrap!important}
-@media (max-width:420px){[data-r=nav] .gms-liquid{padding:0 11px!important;font-size:12.5px!important}}
-.gms-liquid [style*="Material Symbols"]{font-size:17px!important}
-.gms-liquid--water,.gms-liquid--blue{background:linear-gradient(180deg,rgba(104,138,255,.94) 0%,rgba(62,102,255,.94) 100%)!important;color:#fff!important;border:1px solid rgba(255,255,255,.28)!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -8px 16px rgba(14,30,120,.22),0 1px 2px rgba(15,20,40,.12)!important;text-shadow:0 1px 1px rgba(10,30,120,.35)}
-.gms-liquid--water::after,.gms-liquid--blue::after{top:30%!important}
-.gms-liquid--clear,.gms-liquid--glass{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(15,20,40,.08)!important}
-.gms-liquid::before{content:''!important;position:absolute;top:0!important;left:0!important;width:100%!important;height:100%!important;z-index:-1;pointer-events:none;
- background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.34) 50%,transparent 70%)!important;background-size:250% 100%!important;background-repeat:no-repeat!important;background-position:130% 0!important;
- animation:none!important;transform:none!important;translate:none!important;transition:background-position .9s var(--gms-ease)!important}
-.gms-liquid:hover::before,.gms-liquid:focus-visible::before{background-position:-30% 0!important}
-.gms-liquid--water:hover,.gms-liquid--blue:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -8px 16px rgba(14,30,120,.2),0 1px 2px rgba(15,20,40,.12)!important}
-.gms-glow{height:40px;padding:0 4px 0 17px;gap:12px;font-size:13.5px;box-shadow:0 1px 2px rgba(15,20,40,.12),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -6px 12px rgba(14,30,120,.22)}
-.gms-glow>i{width:32px;height:32px}
-.gms-cta{height:38px;font-size:13px;padding:0 4px 0 16px}.gms-cta>i{width:30px;height:30px}
-[data-r=nav] .gms-liquid{min-height:34px!important;padding:0 14px!important;font-size:13px!important}
+/* Slim top navigation on desktop */
 @media (min-width:901px){
  [data-r=nav]{top:12px!important;padding:5px 5px 5px 14px!important;gap:12px!important}
  [data-r=nav]>button:first-child>span:first-child{width:28px!important;height:28px!important}
@@ -618,9 +497,9 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 @keyframes gmsLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes gmsRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @keyframes stepIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 /* Event centre (Live Scores page) */
-.ec-cap{display:block;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#8A909C;margin-bottom:6px}
+.ec-cap{display:block;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#6B7180;margin-bottom:6px}
 .ec-per{display:grid;grid-template-columns:64px 1fr 1fr 84px;gap:8px;align-items:center;padding:11px 16px;border-top:1px solid #F0F2F6;transition:background .5s var(--gms-ease)}
-.ec-perh{border-top:0;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:#8A909C;background:#FAFBFC}.ec-per[data-cur="1"]{background:#F3F6FF}
+.ec-perh{border-top:0;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:#6B7180;background:#FAFBFC}.ec-per[data-cur="1"]{background:#F3F6FF}
 .ec-per .ec-sum{text-align:center}
 
 [data-r=ec-top]{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
@@ -643,7 +522,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-r=ec-row]::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;background:var(--c)}
 [data-r=ec-row]:hover{border-color:rgba(11,13,18,.32)}
 [data-r=ec-row][data-on="1"]{border-color:#0B0D12;box-shadow:var(--sh-2)}
-.ec-meta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#8A909C}
+.ec-meta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#6B7180}
 .ec-ev{grid-column:1/-1;font-weight:600;font-size:14px;margin-bottom:2px}
 .ec-nm{display:flex;align-items:center;gap:8px;font-size:14px;color:#4A505C;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ec-nm small,.ec-pl small,.ec-arw small{flex:none;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;padding:2px 6px;border-radius:6px;background:#F1F3F7;color:#4A505C}
@@ -668,7 +547,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 @keyframes gmsPing{0%{transform:scale(1);opacity:.75}100%{transform:scale(3.4);opacity:0}}
 .ec-ends{display:flex;flex-direction:column;border:1px solid #EEF0F4;border-radius:var(--r-m);overflow:hidden;min-width:0}
 .ec-end{display:grid;grid-template-columns:36px minmax(0,1fr) 40px 64px;grid-template-areas:"l a sa sp" "l b sb sp";gap:6px 10px;align-items:center;padding:10px 14px;border-top:1px solid #F0F2F6;transition:background .5s var(--gms-ease)}
-.ec-endh{grid-template-areas:"l a sa sp";border-top:0;padding:10px 14px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:#8A909C;background:#FAFBFC}
+.ec-endh{grid-template-areas:"l a sa sp";border-top:0;padding:10px 14px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.12em;color:#6B7180;background:#FAFBFC}
 .ec-end[data-cur="1"]{background:#F3F6FF}
 .ec-l{grid-area:l;font-family:'JetBrains Mono';font-size:12px;color:#4A505C}
 .ec-arw{display:flex;align-items:center;gap:5px}
@@ -706,7 +585,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ecx-toggle[data-open="1"]{border-color:rgba(255,255,255,.3)}
 .ecx-l{display:flex;flex-direction:column;gap:8px;min-width:0}
 .ecx-live{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#E5484D}
-.ecx-dot{width:8px;height:8px;border-radius:50%;background:#E5484D;animation:gmsPulse 1.6s infinite;flex:none}
 .ecx-title{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.4vw,48px);letter-spacing:-.05em;line-height:.96}
 .ecx-sub{font-size:15px;line-height:1.5;color:rgba(255,255,255,.62)}
 [data-r=ecx] [data-r=ec-list] [style*=dashed]{color:rgba(255,255,255,.7)!important;border-color:rgba(255,255,255,.2)!important}
@@ -730,7 +608,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .tvh-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
 .tvh-player{position:relative;aspect-ratio:16/9;border-radius:var(--r-m);overflow:hidden;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.07)}
 .tvh-player iframe,.tvh-player img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
-.tvh-bug{position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11px;font-weight:700;letter-spacing:.1em;pointer-events:none;box-shadow:0 8px 20px rgba(229,72,77,.35)}
+.tvh-bug{position:absolute;left:16px;top:16px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:12px;font-weight:600;letter-spacing:0;color:#fff;pointer-events:none;box-shadow:0 1px 2px rgba(15,20,40,.2)}
 .tvh-flash{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px),#0B0D12;animation:gmsTvSw .7s var(--gms-soft) both}
 @keyframes gmsTvSw{0%{opacity:1;transform:scaleY(1)}55%{opacity:.85;transform:scaleY(.02)}100%{opacity:0;transform:scaleY(.002)}}
 .tvh-info{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 20px;border-radius:var(--r-m);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
@@ -755,40 +633,12 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .tvh-rs{font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
 @media (max-width:1040px){.tvh-grid{grid-template-columns:1fr}}
 @media (max-width:640px){[data-r=tvh]{padding:100px 16px 64px}.tvh-player{border-radius:var(--r-m)}.tvh-chs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:0 16px}.tvh-chs::-webkit-scrollbar{display:none}.tvh-chs button{scroll-snap-align:start}.tvh-info{padding:16px}.tvh-score{font-size:26px}}
-/* Live: split-flap stadium board */
-[data-r=flap-board]{border-radius:var(--r-l);background:#FFFFFF;border:1px solid #E6EAF0;box-shadow:var(--sh-3);padding:8px 12px 10px}
-[data-r=flap-head],[data-r=flap-row]{display:grid;grid-template-columns:104px minmax(0,1.25fr) minmax(0,1fr) auto minmax(0,1fr) 128px;align-items:center;gap:16px}
-[data-r=flap-head]{padding:12px 12px 10px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#8A909C;border-bottom:1px solid #EEF0F4}
-[data-r=flap-row]{appearance:none;-webkit-appearance:none;margin:0;border:0;background:none;font:inherit;color:inherit;text-align:left;box-sizing:border-box;cursor:pointer;width:100%;padding:14px 12px;border-bottom:1px solid #F0F2F6;border-radius:var(--r-s);transition:background .3s var(--gms-ease)}
-[data-r=flap-row]:last-child{border-bottom:0}
-[data-r=flap-row]:hover,[data-r=flap-row]:focus-visible{background:#F5F7FC}
-[data-r=flap-row]:focus-visible{outline:2px solid #2F5BFF;outline-offset:-2px}
-[data-fl=field]{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:#4A505C}
-[data-fl=event]{min-width:0}[data-fl=event] b{display:block;font-weight:600;font-size:14px;line-height:1.25;color:#0B0D12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}[data-fl=event] small{display:block;margin-top:2px;font-size:12px;color:#8A909C}
-[data-fl=a],[data-fl=b]{display:flex;align-items:center;gap:8px;min-width:0}
-[data-fl=a] small,[data-fl=b] small{flex:none;padding:3px 6px;border-radius:6px;background:#F1F3F7;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C}
-[data-fl=a][data-win=true] small,[data-fl=b][data-win=true] small{background:#2F5BFF;color:#fff}
-[data-fl=score]{display:flex;align-items:center;gap:6px}
-[data-fl=dash]{font-family:'Bricolage Grotesque';font-weight:700;font-size:22px;color:#C3C8D2}
-[data-fl=status]{display:flex;align-items:center;gap:8px}
-[data-fl=dot]{width:7px;height:7px;border-radius:50%;flex:none;background:#E5484D;animation:gmsPulse 1.6s infinite}
-[data-r=flap-row][data-live="0"] [data-fl=dot]{background:#C3C8D2;animation:none}
+/* Split-flap digits (the finale countdown) */
 .flaps{display:inline-flex;gap:1px;white-space:nowrap}
 .flap{position:relative;display:inline-grid;place-items:center;min-width:.74em;height:1.36em;border-radius:.2em;background:linear-gradient(180deg,#FCFDFF 0 49%,#EDF1F7 51% 100%);box-shadow:0 1px 0 rgba(15,20,40,.07),inset 0 0 0 1px rgba(15,20,40,.05);font-family:'JetBrains Mono';font-weight:700;font-size:13px;color:#0B0D12;overflow:hidden;perspective:120px}
 .flap::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(15,20,40,.10)}
 .flap>i{font-style:normal;display:block;line-height:1;animation:gmsFlap .55s cubic-bezier(.3,.7,.3,1) var(--fd,0s) both}
 @keyframes gmsFlap{0%{transform:rotateX(95deg);opacity:0}55%{transform:rotateX(-16deg);opacity:1}100%{transform:none;opacity:1}}
-.flaps--score .flap{font-size:22px;color:#2F5BFF}
-.flaps--status .flap{font-size:10.5px;min-width:.7em}
-.flaps--short{display:none}
-@media (max-width:1100px){[data-r=flap-head],[data-r=flap-row]{grid-template-columns:92px minmax(0,1fr) minmax(0,.9fr) auto minmax(0,.9fr) 112px;gap:12px}}
-@media (max-width:860px){[data-r=flap-head]{display:none}
- [data-r=flap-row]{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"fd st st" "a sc b" "ev ev ev";row-gap:10px;padding:14px 8px}
- [data-fl=field]{grid-area:fd}[data-fl=status]{grid-area:st;justify-content:flex-end}[data-fl=a]{grid-area:a}[data-fl=score]{grid-area:sc}[data-fl=b]{grid-area:b;justify-content:flex-end;flex-direction:row-reverse}[data-fl=event]{grid-area:ev;text-align:center}
- [data-fl=event] b{white-space:normal}.flaps--score .flap{font-size:20px}
- [data-fl=a],[data-fl=b]{flex-direction:column;align-items:flex-start;gap:5px}[data-fl=b]{align-items:flex-end}
- .flaps--long{display:none}.flaps--short{display:inline-flex}.flaps--short .flap{font-size:12px}}
-@media (max-width:420px){.flaps--short .flap{font-size:11px}.flaps--score .flap{font-size:18px}}
 /* Programme: at the goal a broadcast lower-third slides in at the bottom-left; then the events spring up (CSS, graphics card only) */
 [data-goal-board]{position:absolute;z-index:5;left:clamp(16px,4vw,56px);bottom:clamp(28px,6vh,64px);display:flex;align-items:stretch;height:48px;border-radius:12px;overflow:hidden;pointer-events:none;
  background:#0B0D12;color:#fff;box-shadow:0 2px 6px rgba(15,20,40,.12),0 18px 44px rgba(15,20,40,.22);clip-path:inset(0 100% 0 0 round 12px);opacity:0;
@@ -820,13 +670,13 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-ch]{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;opacity:var(--ci,1)}
 [data-goal-ic]{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:18px;font-weight:400;flex:none}
 [data-goal-nm]{display:flex;align-items:baseline;gap:8px;line-height:1.1;min-width:0}
-[data-goal-nm] [data-goal-sub]{font-family:'JetBrains Mono';font-size:9.5px;font-weight:400;letter-spacing:.1em;color:#8A909C}
+[data-goal-nm] [data-goal-sub]{font-family:'JetBrains Mono';font-size:9.5px;font-weight:400;letter-spacing:.1em;color:#6B7180}
 [data-goal-list]{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 [data-goal-ev]{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(242,246,255,.8));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 26px rgba(15,20,40,.09),0 0 0 1px rgba(47,91,255,.10),inset 0 1px 0 #fff;font-size:14.5px;font-weight:600;color:#0B0D12;white-space:nowrap;will-change:transform,opacity;transition:background .22s ease,color .22s ease,box-shadow .3s ease}
 [data-goal-ev]::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--dc);flex:none}
 [data-goal-ev]:hover,[data-goal-ev]:focus-visible{background:var(--dt);color:var(--dc);box-shadow:0 14px 30px rgba(15,20,40,.12),0 0 0 1.5px var(--dc)}
 [data-goal-ev]:focus-visible{outline:2px solid var(--dc);outline-offset:2px}
-[data-goal-g]{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C;flex:none}
+[data-goal-g]{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#6B7180;flex:none}
 [data-goal-panel][data-compact="1"] [data-goal-ch]{font-size:13.5px}
 [data-goal-panel][data-compact="1"] [data-goal-ic]{width:24px;height:24px;font-size:15px;border-radius:8px}
 [data-goal-panel][data-compact="1"] [data-goal-list]{gap:6px}
@@ -909,7 +759,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
 /* Buttons: ink & hairline. Compact 36px pills (32 in the nav, 34 on phones). Primary is solid (royal blue on light, white on dark and over video),
    secondary is a 1px hairline; on hover a fill sweeps in from the left and any arrow slides. Register actions are text with a small arrow chip. */
-.gms-liquid{height:36px!important;min-height:36px!important;padding:0 16px!important;gap:7px!important;border-radius:999px!important;font-size:13.5px!important;font-weight:600!important;letter-spacing:-.005em!important;
+.gms-liquid{position:relative!important;box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center;white-space:nowrap!important;height:36px!important;min-height:36px!important;padding:0 16px!important;gap:7px!important;border-radius:999px!important;font-size:13.5px!important;font-weight:600!important;letter-spacing:-.005em!important;
  text-shadow:none!important;overflow:visible!important;-webkit-mask-image:none!important;isolation:isolate!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
  transition:color .4s var(--gms-ease),border-color .4s var(--gms-ease),box-shadow .4s var(--gms-ease),transform .4s var(--gms-ease),background-color .4s!important}
 .gms-liquid::before{content:''!important;position:absolute!important;inset:0!important;left:0!important;top:0!important;width:auto!important;height:auto!important;z-index:-1!important;border-radius:inherit!important;
@@ -953,7 +803,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-r=stories]{position:relative;background:#F4F5F7;padding:84px 0 92px;overflow:hidden}
 .st-head{max-width:1240px;margin:0 auto 40px;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .st-l{display:flex;flex-direction:column;gap:14px;max-width:640px}
-.st-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;color:#2F5BFF}
 .st-h{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96}
 .st-p{margin:0;font-size:15px;line-height:1.55;color:#4A505C;max-width:460px}
 .st-nav{display:flex;gap:8px}
@@ -977,7 +826,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 @media (max-width:760px){[data-r=stories]{padding:64px 0 72px}.st-head{padding:0 20px;margin-bottom:26px}.st-nav{display:none}.st-track{--st-pad:20px;gap:12px}.st-card{flex-basis:76vw}.st-prog{padding:0 20px}}
 /* Add to calendar inside a schedule row */
 .cal-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:0 16px 16px}
-.cal-k{display:inline-flex;align-items:center;gap:6px;margin-right:4px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.08em;color:#8A909C}.cal-k .gi{font-size:14px}
+.cal-k{display:inline-flex;align-items:center;gap:6px;margin-right:4px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.08em;color:#6B7180}.cal-k .gi{font-size:14px}
 .cal-a{all:unset;box-sizing:border-box;cursor:pointer;height:30px;padding:0 13px;border-radius:999px;border:1px solid rgba(11,13,18,.16);display:inline-flex;align-items:center;font-size:12.5px;font-weight:600;color:#0B0D12;transition:background .3s var(--gms-ease),color .3s,border-color .3s}
 .cal-a:hover{background:#0B0D12;color:#fff;border-color:#0B0D12}.cal-a:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
 /* Cursor bubble (desktop) */
@@ -1036,6 +885,36 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-r=menu-admin]{all:unset;box-sizing:border-box;display:block;cursor:pointer;margin-top:4px;padding:14px 16px;border-top:1px solid rgba(11,13,18,.08);font-size:15px;font-weight:600;color:#0B0D12}
  [data-r=navlinks] button[data-cur]::after{display:none}
 }
+
+/* Tablets (761-1024px): centred role cards, a vertically centred podium, a smaller Vision robot */
+@media (min-width:761px) and (max-width:1024px){
+ .rc-wrap{margin:14px -32px 0!important}
+ .rc-card{flex-basis:520px!important}
+ .rc-rail{padding:4px calc(50vw - 260px) 10px!important;scroll-padding:0 calc(50vw - 260px)!important}
+ .rc-art{height:clamp(260px,36svh,380px)!important}
+ [data-r=roles-pin]{padding:72px 32px 48px!important}
+ [data-r=bot]{transform:scale(.82);transform-origin:100% 100%}
+}
+@media (min-width:761px) and (max-width:900px){
+ [data-r=steps-grid]{align-content:center!important;padding:92px 32px 40px!important}
+ [data-r=steps-photo]{height:34svh!important}
+}
+/* Schedule: on tablets and phones the five days are one row of chips */
+@media (max-width:900px){
+ [data-r=sch-days]{flex-direction:row!important;overflow-x:auto;scrollbar-width:none;margin:2px 0 0!important;padding:2px 0 6px!important;gap:8px!important;scroll-snap-type:x proximity}
+ [data-r=sch-days]::-webkit-scrollbar{display:none}
+ [data-r=sch-days]>button{flex:none!important;padding:10px 14px!important;scroll-snap-align:start}
+ [data-r=sch-days]>button>span:last-child{display:none!important}
+}
+/* Smallest phones: schedule rows never spill past the edge */
+@media (max-width:380px){[data-r=sch-section] [data-cursor=Details]>span:first-child{min-width:0;flex:1}[data-r=sch-section] [data-cursor=Details]>span:last-child{gap:6px!important}[data-r=sch-section] [data-cursor=Details]{gap:8px!important;padding:12px 12px!important}}
+
+/* Accessibility: one visible focus ring for every control (keyboard only), a skip link, form focus, and reduced motion respected */
+:focus-visible{outline:2px solid #2F5BFF!important;outline-offset:3px!important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #2F5BFF!important;outline-offset:1px!important;border-color:#2F5BFF!important}
+.skip-link{position:fixed;left:16px;top:-60px;z-index:200;padding:10px 16px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600;text-decoration:none;transition:top .25s ease}
+.skip-link:focus{top:16px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script defer src="./vendor/react.production.min.js"></script>
@@ -1051,7 +930,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
   <div data-r="navlinks" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
-    <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Overview<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Schedule<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Events<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Registration<span style="font-family:'Material Symbols Rounded';font-size:18px;width:18px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Live Scores<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Live TV<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button>
+    <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Overview<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Schedule<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Events<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Registration<span style="font-family:'Material Symbols Rounded';font-size:18px;width:18px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0D12;transition:background .2s ease,color .2s ease">Live<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="menu"></i></button>
@@ -1082,6 +961,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 <x-dc>
 <helmet></helmet>
 
+<a class="skip-link" href="#content">Skip to content</a>
 <div data-navback data-open="{{ navBack }}" onClick="{{ closeNavMenus }}" aria-hidden="true"></div>
 <nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
   <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
@@ -1107,12 +987,12 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
       <sc-for list="{{ regGroups }}" as="g" hint-placeholder-count="3">
         <div data-rg style="display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:var(--r-m);background:#F5F7FA">
-          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#8A909C;padding:6px 8px 6px">{{ g.title }}</span>
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#6B7180;padding:6px 8px 6px">{{ g.title }}</span>
           <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="4">
             <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:10px;border-radius:var(--r-s);transition:background .2s ease,box-shadow .2s ease" style-hover="background:#fff;box-shadow:var(--sh-1)">
               <span style="width:40px;height:40px;border-radius:var(--r-s);background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:21px;box-shadow:inset 0 0 0 1px #E6E9EF"><i class="gi" data-gi="{{ r.icon }}"></i></span>
               <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:#0B0D12">{{ r.name }}</span><span data-r="regmenu-desc" style="font-size:12px;color:#5B6270;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
-              <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#8A909C"><i class="gi" data-gi="arrow_forward"></i></span>
+              <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#6B7180"><i class="gi" data-gi="arrow_forward"></i></span>
             </button>
           </sc-for>
         </div>
@@ -1125,7 +1005,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 </sc-if>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-<main data-screen-label="Home">
+<main id="content" data-screen-label="Home">
 
   <section ref="{{ overviewRef }}" data-r="hero" data-hero-sec style="position:relative;z-index:1;height:100svh;min-height:600px;overflow:hidden;background:#0B0D12;color:#fff">
     <div data-hero-media data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform">{{ heroVideo }}</div>
@@ -1218,7 +1098,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
               <sc-for list="{{ ec.list }}" as="m" hint-placeholder-count="6">
                 <button data-r="ec-row" data-cursor="Open" data-on="{{ m.on }}" onClick="{{ m.pick }}" aria-label="{{ m.aria }}" style="--c:{{ m.color }}">
                   <span class="ec-meta"><span>{{ m.fieldShort }} · {{ m.time }} IST</span><span class="pill" data-live="{{ m.liveAttr }}"><span class="pd"></span>{{ m.status }}</span></span>
-                  <span class="ec-ev">{{ m.event }} <span style="color:#8A909C;font-weight:500">· {{ m.round }}</span></span>
+                  <span class="ec-ev">{{ m.event }} <span style="color:#6B7180;font-weight:500">· {{ m.round }}</span></span>
                   <span class="ec-nm" data-win="{{ m.winA }}"><small>{{ m.A1 }}</small>{{ m.A0 }}</span><span class="ec-sc">{{ m.sa }}</span>
                   <span class="ec-nm" data-win="{{ m.winB }}"><small>{{ m.B1 }}</small>{{ m.B0 }}</span><span class="ec-sc">{{ m.sb }}</span>
                 </button>
@@ -1230,10 +1110,10 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
             <div data-r="ec-detail" ref="{{ ecdRef }}">
               <div class="ec-card">
                 <div class="ec-head">
-                  <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#8A909C">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
+                  <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#6B7180">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
                   <span class="pill" data-live="{{ ec.d.liveAttr }}"><span class="pd"></span>{{ ec.d.status }}</span>
                 </div>
-                <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#8A909C">· {{ ec.d.round }}</span></h2>
+                <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#6B7180">· {{ ec.d.round }}</span></h2>
                 <div class="ec-vs">
                   <div class="ec-pl" data-win="{{ ec.d.winA }}"><small>{{ ec.d.A1 }}</small><b>{{ ec.d.A0 }}</b></div>
                   <div class="ec-big"><span>{{ ec.d.sa }}</span><span>:</span><span>{{ ec.d.sb }}</span></div>
@@ -1241,7 +1121,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
                 </div>
                 <sc-if value="{{ ec.d.hasEnds }}" hint-placeholder-val="{{ true }}">
                   <div class="ec-body">
-                    <div class="ec-target"><span class="ec-cap">MOMENTUM</span><div>{{ ec.target }}</div><div class="ec-legend"><span><i style="background:#2F5BFF"></i>{{ ec.d.A1 }}</span><span><i style="background:#FF8A3D"></i>{{ ec.d.B1 }}</span><span style="color:#8A909C">{{ ec.d.endNote }}</span></div></div>
+                    <div class="ec-target"><span class="ec-cap">MOMENTUM</span><div>{{ ec.target }}</div><div class="ec-legend"><span><i style="background:#2F5BFF"></i>{{ ec.d.A1 }}</span><span><i style="background:#FF8A3D"></i>{{ ec.d.B1 }}</span><span style="color:#6B7180">{{ ec.d.endNote }}</span></div></div>
                     <div class="ec-ends">
                       <div class="ec-per ec-perh"><span>PERIOD</span><span>{{ ec.d.A1 }}</span><span>{{ ec.d.B1 }}</span><span>{{ ec.d.spLabel }}</span></div>
                       <sc-for list="{{ ec.ends }}" as="e" hint-placeholder-count="4">
@@ -1301,7 +1181,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         <span class="sx"><i>04</i>Schedule</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96">Every session, day by day</h2>
         <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">Sessions run from 07:30 to 20:00 IST across four venues. Open one for its round, venue and a calendar link.</p>
-        <div data-rise style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+        <div data-rise data-r="sch-days" style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
             <button onClick="{{ d.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:var(--r-s);background:{{ d.bg }};color:{{ d.fg }};transition:background .3s ease,color .3s ease">
               <span style="display:flex;align-items:baseline;gap:12px"><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;opacity:.7">DAY {{ d.n }}</span><span style="font-weight:600;font-size:15px">{{ d.dow }} {{ d.date }}</span></span>
@@ -1314,18 +1194,18 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
             <div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px">
-              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:#8A909C">{{ g.part }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:#6B7180">{{ g.part }}</span></div>
               <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid #E8EAEE;padding-left:14px">
                 <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="3">
                   <div style="display:flex;flex-direction:column;border-radius:var(--r-s);background:{{ r.bg }};box-shadow:inset 2px 0 0 {{ r.dot }};transition:background .3s ease">
                     <button onClick="{{ r.toggle }}" data-cursor="Details" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:var(--r-s)" style-hover="background:#F6F7F9">
-                      <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#8A909C">{{ r.sport }} · {{ r.code }}</span></span>
-                      <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#8A909C;transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
+                      <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#6B7180">{{ r.sport }} · {{ r.code }}</span></span>
+                      <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6B7180;transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
                     </button>
                     <div style="max-height:{{ r.mh }};overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1)">
                       <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 14px">
                         <sc-for list="{{ r.details }}" as="x" hint-placeholder-count="4">
-                          <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#8A909C">{{ x.k }}</span>{{ x.v }}</span>
+                          <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#6B7180">{{ x.k }}</span>{{ x.v }}</span>
                         </sc-for>
                       </div>
                       <div class="cal-row"><span class="cal-k"><i class="gi" data-gi="event_available"></i>ADD TO CALENDAR</span><a class="cal-a" href="{{ r.gcal }}" target="_blank" rel="noopener">Google</a><button type="button" class="cal-a" onClick="{{ r.ics }}">Apple</button><a class="cal-a" href="{{ r.outlook }}" target="_blank" rel="noopener">Outlook</a></div>
@@ -1355,11 +1235,11 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
             <div data-r="roles-index">
               <sc-for list="{{ roleGroups }}" as="g" hint-placeholder-count="3">
                 <div data-role-group style="margin-top:34px">
-                  <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#0B0D12"><span class="edge edge--v" style="background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:#8A909C">{{ g.count }}</span></div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#0B0D12"><span class="edge edge--v" style="background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:#6B7180">{{ g.count }}</span></div>
                   <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
                     <div data-role-row data-k="{{ r.k }}" data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid #E8EBF0">
                       <button onClick="{{ r.click }}" data-cursor="Register" onMouseMove="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:var(--row-pad,17px) 6px">
-                        <span style="font-family:'JetBrains Mono';font-size:12px;color:#8A909C">{{ r.num }}</span>
+                        <span style="font-family:'JetBrains Mono';font-size:12px;color:#6B7180">{{ r.num }}</span>
                         <span data-role-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(19px,min(1.9vw,3.4vh),27px);letter-spacing:-.03em;line-height:1.08;color:#0B0D12;overflow-wrap:anywhere">{{ r.name }}</span>
                         <span data-role-arrow aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_outward"></i></span>
                       </button>
@@ -1368,7 +1248,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
                           <div style="display:flex;flex-direction:column;gap:14px;padding:2px 6px 22px">
                             <div style="position:relative;border-radius:var(--r-m);overflow:hidden;aspect-ratio:9/7;background:#fff;border:1px solid #EEF0F4">{{ r.art }}</div>
                             <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">{{ r.who }}</p>
-                            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ r.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+                            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ r.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
                             <button onClick="{{ r.go }}" class="gms-cta" style="align-self:flex-start"><span>{{ r.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
                           </div>
                         </div>
@@ -1386,14 +1266,14 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
           <div style="border-radius:var(--r-l);background:#FFFFFF;border:1px solid #E8EBF0;box-shadow:var(--sh-3);overflow:hidden">
             <div data-r="roles-art" style="position:relative;aspect-ratio:16/11;max-height:calc(100vh - 462px);min-height:190px;width:100%;background:#FFFFFF;border-bottom:1px solid #EEF0F4">
               <sc-for list="{{ roleArts }}" as="a" hint-placeholder-count="12"><span data-art data-on="{{ a.on }}">{{ a.el }}</span></sc-for>
-              <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#8A909C">{{ rolePrev.num }}</span>
+              <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#6B7180">{{ rolePrev.num }}</span>
               <span data-r="roles-live" style="position:absolute;right:18px;top:15px;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid #E8EBF0;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:#4A505C">{{ roleLive }}</span>
             </div>
             <div data-r="roles-copy" style="padding:18px 24px 20px;display:flex;flex-direction:column;gap:10px">
               <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:{{ rolePrev.gc }}"><span class="edge edge--v" style="background:{{ rolePrev.gc }}"></span>{{ rolePrev.group }}</span>
               <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,min(2vw,3.6vh),29px);letter-spacing:-.035em;line-height:1.05;color:#0B0D12">{{ rolePrev.name }}</h3>
               <p style="margin:0;font-size:14px;line-height:1.55;color:#4A505C">{{ rolePrev.who }}</p>
-              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#8A909C">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ rolePrev.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ rolePrev.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
               <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px">
                 <button onClick="{{ rolePrev.go }}" class="gms-glow"><span>{{ rolePrev.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
                 <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;font-size:13.5px;font-weight:600;color:#4A505C;border-bottom:1px solid rgba(11,13,18,.2);padding-bottom:2px" style-hover="color:#0B0D12">Open the registration menu</button>
@@ -1454,7 +1334,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
 <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
 <main data-screen-label="Registration" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.14),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
-  <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:rgba(255,255,255,.6);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:var(--sh-3);box-sizing:border-box">
+  <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
     <sc-if value="{{ regFormOpen }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-direction:column;gap:22px">
         <div style="display:flex;align-items:center;gap:14px">
@@ -1514,7 +1394,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
 <main data-screen-label="Login" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.14),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
   <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
-    <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:var(--r-l);background:rgba(255,255,255,.6);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:var(--sh-3);box-sizing:border-box">
+    <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
       <div style="display:flex;padding:4px;border-radius:999px;background:rgba(11,13,18,.06)">
         <sc-for list="{{ loginTabs }}" as="t" hint-placeholder-count="2">
           <button type="button" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:999px;font-size:14px;font-weight:600;background:{{ t.bg }};box-shadow:{{ t.sh }}">{{ t.label }}</button>
@@ -1532,7 +1412,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </form>
   </sc-if>
   <sc-if value="{{ isParticipant }}" hint-placeholder-val="{{ false }}">
-    <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:rgba(255,255,255,.62);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:var(--sh-3);box-sizing:border-box">
+    <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">My registration</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:#5B6270">{{ me.type }} · {{ me.id }}</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
@@ -1543,7 +1423,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </div>
   </sc-if>
   <sc-if value="{{ isAdminSession }}" hint-placeholder-val="{{ false }}">
-    <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:var(--r-l);background:rgba(255,255,255,.66);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:var(--sh-3);box-sizing:border-box">
+    <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">Admin verification</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
@@ -1594,7 +1474,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
   <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
       <div style="display:flex;flex-direction:column;gap:12px">
-        <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#FF6B70"><span>BROADCAST · 3 CHANNELS · {{ clock }} IST</span></span>
+        <span class="sx sx--dark"><b class="sig sig--live" style="font-size:12px;text-transform:uppercase;letter-spacing:.06em">Live</b>Broadcast on three channels, {{ clock }} IST</span>
         <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Live TV</h1>
       </div>
       <span style="font-size:15px;color:rgba(255,255,255,.6);max-width:380px;line-height:1.5">One channel per venue. Switch channels to follow any match, with the live score beside the picture.</span>
@@ -1604,7 +1484,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         <div class="tvh-player">
           {{ tv.player }}
           {{ tv.flash }}
-          <span class="tvh-bug">LIVE · {{ tv.now.num }} · {{ tv.now.fieldUp }}</span>
+          <span class="tvh-bug"><b class="sig sig--onred">Live</b>{{ tv.now.fieldName }}</span>
         </div>
         <div class="tvh-info">
           <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
@@ -1658,7 +1538,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:80;background:rgba(230,234,241,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;padding:24px">
-    <div onClick="{{ stop }}" style="position:relative;width:min(480px,100%);display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:rgba(255,255,255,.55);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 30px 80px rgba(15,20,40,.16),inset 0 1px 0 rgba(255,255,255,.9);box-sizing:border-box">
+    <div onClick="{{ stop }}" style="position:relative;width:min(480px,100%);display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:0 30px 80px rgba(15,20,40,.16),inset 0 1px 0 rgba(255,255,255,.9);box-sizing:border-box">
       <button onClick="{{ closeModal }}" style="all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="close"></i></button>
       <span style="width:66px;height:66px;border-radius:var(--r-m);background:rgba(255,255,255,.85);border:1px solid #fff;box-shadow:var(--sh-1);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:34px;color:#2F5BFF"><i class="gi" data-gi="{{ modal.icon }}"></i></span>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -1673,10 +1553,10 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 
 <sc-if value="{{ showChat }}" hint-placeholder-val="{{ true }}">
   <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
-    <div data-r="chat" class="vz-chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:var(--r-l);overflow:hidden;background:rgba(255,255,255,.78);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.95);box-shadow:var(--sh-3)">
+    <div data-r="chat" class="vz-chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:var(--r-l);overflow:hidden;background:#fff;border:1px solid rgba(11,13,18,.08);box-shadow:var(--sh-3)">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(11,13,18,.06)">
         <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">Vision</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#5B6270">{{ chatSub }}</span></div>
-        <button onClick="{{ toggleChat }}" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="close"></i></button>
+        <button onClick="{{ toggleChat }}" aria-label="Close chat" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="close"></i></button>
       </div>
       <div ref="{{ chatScrollRef }}" style="flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
         {{ chatThread }}
@@ -1685,8 +1565,8 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
         {{ chatQuick }}
       </div>
       <form onSubmit="{{ submitChat }}" style="display:flex;gap:8px;padding:12px;border-top:1px solid rgba(11,13,18,.06)">
-        <input value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Ask a question…" style="flex:1;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid #E3E6EB;background:#fff;font-size:14px;outline:none">
-        <button type="submit" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:#0B0D12;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_upward"></i></button>
+        <input value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Ask a question…" aria-label="Ask Vision a question" style="flex:1;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid #E3E6EB;background:#fff;font-size:14px">
+        <button type="submit" aria-label="Send" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:#0B0D12;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_upward"></i></button>
       </form>
     </div>
   </sc-if>
@@ -1706,7 +1586,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
     </sc-if>
     <span class="vz-glow" data-zoop="{{ visionZoop }}" aria-hidden="true"></span>
 
-    <button onClick="{{ toggleChat }}" title="Chat with Vision" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
+    <button onClick="{{ toggleChat }}" title="Chat with Vision" aria-label="Chat with Vision" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
     <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
   </div>
 </sc-if>
@@ -1759,19 +1639,6 @@ const STEPS=[
 {title:'Accreditation & arrivals',when:'10 to 13 Nov',desc:'Cards printed, zones assigned, and travel and stays confirmed for every delegation.'},
 {title:'Competition',when:'14 to 17 Nov',desc:'Heats, group stages and knockouts across every sport, scored live at every venue.'},
 {title:'Finals & ceremonies',when:'18 Nov',desc:'Medal events streamed live, results published instantly and medals awarded.'}];
-const MODULES=[
-{icon:'assignment',title:'Registration',desc:'One registration. One source of truth.',bg:'#EEF2FF'},
-{icon:'verified',title:'Verification',desc:'Every entry, verified and ready.',bg:'#F2F4F7'},
-{icon:'badge',title:'Accreditation',desc:'The right access, for the right people.',bg:'#EAF7F0'},
-{icon:'bed',title:'Accommodation',desc:'Every stay, organised.',bg:'#FFF5E6'},
-{icon:'directions_bus',title:'Transportation',desc:'Move the Games without the guesswork.',bg:'#EEF2FF'},
-{icon:'restaurant',title:'Catering',desc:'Every meal. Every delegation. Accounted for.',bg:'#F2F4F7'},
-{icon:'sports_score',title:'Competition Management System',desc:'Draws, brackets, live scoring, results and rankings. Every match at every venue, run from one console.',bg:'linear-gradient(115deg,#EEF2FF 0%,#E4EBFF 45%,#F3EEFF 100%)',wide:true,chips:['Draws & brackets','Live scoring','Results','Rankings','Records']}];
-// The team behind each module and what it handles (bento tiles), with the tile's place on the grid
-const TEAMS=[['reg','Registration team',['Athlete and delegation entries','Role-based forms','One record per person']],['ver','Verification desk',['Passports and IDs','Eligibility certificates','Eligibility sign-off']],
-['acc','Accreditation centre',['Cards and zone access','Photo capture','Same-day replacements']],['sta','Accommodation team',['Official hotels','Step-free rooms','Check-in lists']],
-['tra','Transport control',['Airport arrivals','Accessible shuttles','Venue timetables']],['cat','Catering team',['Meal plans','Dietary needs','Dining counts']],['cms','Technical officials and results',['Draws and brackets','Live scoring','Results and rankings']]];
-const BENTO_ORDER=[0,1,2,6,3,4,5];
 // five days of sessions: [time IST, event code, round]
 const SESSIONS=[
 [['07:30','ATH100M','Heats'],['07:30','ATH100W','Heats'],['09:15','SWM50M','Heats'],['09:15','SWM50W','Heats'],['11:00','FBM','Group stage'],['13:45','BKM','Group stage'],['16:30','VBW','Pool A'],['18:15','TNM','Round of 16'],['19:30','FBW','Group stage']],
@@ -1899,7 +1766,6 @@ const pad=n=>String(n).padStart(2,'0');
 // Programme section: a shaded player runs in and strikes the ball into the net (GOAL!), and the net's ripple becomes
 // real kick footage scrubbed by scroll, then the 15 event chips bursting out of the net. Everything is a function of the pinned scroll progress (s.p.ev), so it scrubs both ways.
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-const D2R=Math.PI/180;
 // Kick clip: one video scrubbed by the scroll (1080p on desktop, 720p on phones); KV maps clip time to the old 192-step timeline: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
 const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],ball:[0.547,0.349],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
@@ -1908,13 +1774,12 @@ const smooth=t=>t*t*(3-2*t);
 // background videos: 1080p on desktop, 720p on phones
 const VRES=()=>window.innerWidth<=760?'720':'1080';
 const HERO_SPORTS=['Basketball','Swimming','Athletics','Volleyball','Tennis','Football'];
-const backOut=t=>{const c=1.25;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2);};
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
 const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',events:[],docs:{}});
 
 class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
-    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),boardIn:false,ecOpen:false,ecDone:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
+    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),ecOpen:false,ecDone:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{step:'ask',q:'',desk:null,name:'',email:'',msg:'',errors:{},stage:0,ref:'',sent:null,track:''},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m Vision. Ask me anything about the Games or GMS: registration, accreditation, schedules, venues, scores. If I can\'t settle it, I\'ll hand you to the right person.'}],coco:{mode:null,desk:null,name:'',email:'',msg:'',err:{}},cocoTyping:false,btOpen:-1,
@@ -1997,12 +1862,12 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=760?'Swipe through the twelve roles and register from any card.':'Keep scrolling: the twelve roles slide past one by one.'),
+    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=1024?'Swipe through the twelve roles and register from any card.':'Keep scrolling: the twelve roles slide past one by one.'),
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
-          enter:()=>{if(window.innerWidth<=760)return;if(HOVER){this.roleOnceK=-1;this.roleHovK=k;}if(this.state.roleSel!==k)this.setState({roleSel:k});},
-          click:e=>{if(window.innerWidth<=760){this.anchorRow(e&&e.currentTarget);this.setState({roleOpen:op?-1:k,roleSel:k});return;}if(HOVER)this.startReg(I.r.id);else this.roleGoTo(k);},
+          enter:()=>{if(window.innerWidth<=1024)return;if(HOVER){this.roleOnceK=-1;this.roleHovK=k;}if(this.state.roleSel!==k)this.setState({roleSel:k});},
+          click:e=>{if(window.innerWidth<=1024){this.anchorRow(e&&e.currentTarget);this.setState({roleOpen:op?-1:k,roleSel:k});return;}if(HOVER)this.startReg(I.r.id);else this.roleGoTo(k);},
           who:I.r.desc,needs:I.needs.map(t=>({t})),gt:I.gc[1],art:op?figEl(k,'m'+k):null,regLabel:'Register as '+I.r.name,
           go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};})})),
       roleRail:this.roleRailEl(),
@@ -2034,11 +1899,10 @@ class Component extends DCLogic {
       el.querySelectorAll('.rc-card').forEach((c,i)=>{const on=i===k?'1':'0';c.setAttribute('data-on',on);const a=c.querySelector('[data-cart]');if(a)a.setAttribute('data-on',on);});
       const w=el.parentNode;if(w){const n=w.querySelector('.rc-n'),b=w.querySelector('.rc-bar i');if(n)n.textContent=pad(k+1)+' / '+pad(REG_ORDER.length);if(b)b.style.transform='translateX('+(k*100)+'%)';}};
     el.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(sync);},{passive:true});}
-  railGo(k){const el=document.querySelector('.rc-rail'),c0=el&&el.firstChild;if(c0)el.scrollTo({left:k*(c0.offsetWidth+12),behavior:REDUCED?'auto':'smooth'});}
   figMount(el,k){if(!el||el.__fig)return;const r=REG[REG_ORDER[k]];const fg=el.__fig=mountRolePhoto(el,r.id);fg.k=k;fg.want='idle';(this.figs||(this.figs=new Set())).add(fg);}
   // animate only the figures on show: the preview's current role (desktop/tablet) or an open row (phones)
   figTick(now){if(!this.figs||!this.figs.size)return;const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<-80||r.top>window.innerHeight+80)return;
-    const mob=window.innerWidth<=760;
+    const mob=window.innerWidth<=1024;
     this.figs.forEach(f=>{if(!f.el.isConnected){this.figs.delete(f);return;}
       const box=f.el.closest('[data-art],[data-cart]'),vis=!!box&&box.getAttribute('data-on')==='1'&&box.offsetParent!==null;
       if(!vis){if(f.want!=='idle'){f.want='idle';f.act('idle',now);}if(f.tail&&now<f.tail)f.tick(now);return;}
@@ -2049,7 +1913,7 @@ class Component extends DCLogic {
   // pinned index: smoothed progress -> a role position that holds on each role, then glides to the next
   rolesGlide(){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const W=window.innerWidth,vh=window.innerHeight;
     const ix=sec.querySelector('[data-r=roles-index]'),win=sec.querySelector('[data-r=roles-window]');if(!ix||!win)return;
-    const mob=W<=760;if(mob)return;
+    const mob=W<=1024;if(mob)return;
     const r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;this.rgOn=1;
     const span=r.height-vh,tg=span>0?clamp(-r.top/span):0;this.rgP=this.rgP==null?tg:this.rgP+(tg-this.rgP)*(REDUCED?1:mob?0.3:0.085);if(Math.abs(tg-this.rgP)<0.00015)this.rgP=tg;
     const key=this.rgP.toFixed(5)+'|'+W+'|'+vh;if(key===this.rgKey)return;this.rgKey=key;
@@ -2064,17 +1928,8 @@ class Component extends DCLogic {
   // touch tablets: tapping a row scrolls the pinned index to it
   roleGoTo(k){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect(),span=r.height-window.innerHeight;
     window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/12,behavior:REDUCED?'auto':'smooth'});}
-  // Live: split-flap board rows (live first), and the match shown on the home cinema (the live Finals Field match)
-  liveVals(){const s=this.state,h=React.createElement,fresh=s.boardIn&&performance.now()-(this.boardInAt||0)<2600;
-    const flap=(txt,len,row,cls,right)=>{const u=(s.boardIn?String(txt):'').toUpperCase().slice(0,len),t=right?u.padStart(len,' '):u.padEnd(len,' ');
-      return h('span',{className:'flaps'+(cls?' '+cls:'')},t.split('').map((ch,i)=>h('span',{key:i,className:'flap'},h('i',{key:ch,style:{'--fd':fresh?(row*0.08+i*0.025).toFixed(3)+'s':'0s'}},ch===' '?'\u00a0':ch))));};
-    const sur=n=>n.split(' ').pop();
-    const views=liveOrder(s.live).map(liveView),live=views.filter(v=>v.live),tv=views.find(v=>v.live&&v.field==='stadium')||live[0]||views[0];
-    return {boardIn:s.boardIn?'1':'0',liveNowCount:String(live.length),
-      board:views.slice(0,6).map((v,row)=>({...v,liveAttr:v.live?'1':'0',winA:v.winA?'true':'false',winB:v.winB?'true':'false',aria:v.event+', '+v.round+': '+v.A0+' '+v.sa+', '+v.B0+' '+v.sb+', '+v.status,
-        nameA:flap(v.A0,11,row,'flaps--long'),nameB:flap(v.B0,11,row,'flaps--long'),nameAs:flap(sur(v.A0),8,row,'flaps--short'),nameBs:flap(sur(v.B0),8,row,'flaps--short'),scoreA:flap(v.sa,3,row,'flaps--score',1),scoreB:flap(v.sb,3,row,'flaps--score'),statusEl:flap(v.status,10,row,'flaps--status'),
-        open:()=>{this.setState({sel:v.id});this.go('scores');}})),
-      tvNow:tv,tvVideo:this.tvFeedEl()};}
+  // Live: how many matches are live now, and the home TV feed
+  liveVals(){const live=liveOrder(this.state.live).filter(m=>m.state==='live');return {liveNowCount:String(live.length),tvVideo:this.tvFeedEl()};}
   // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
   // captions off and HD asked for through the player's message channel (the URL flags alone are not always honoured)
   ytQuiet(f){if(!f)return;const send=(func,args)=>{try{f.contentWindow.postMessage(JSON.stringify({event:'command',func,args:args||[]}),'*');}catch(e){}};
@@ -2105,7 +1960,7 @@ class Component extends DCLogic {
       h('line',{x1:6,x2:W-6,y1:H/2,y2:H/2,stroke:'#E1E5EC',strokeWidth:1.5}),
       m.p.map((p,i)=>{const x=10+i*((W-20)/n)+((W-20)/n-bw)/2,ha=(p[0]/mx)*(H/2-14),hb=(p[1]/mx)*(H/2-14),live=d.live&&i===m.p.length-1;
         return h('g',{key:i,className:live?'ec-ping':''},h('rect',{className:'ec-dot',x,y:H/2-ha,width:bw,height:Math.max(2,ha),rx:5,fill:'#2F5BFF'}),h('rect',{className:'ec-dot',x,y:H/2,width:bw,height:Math.max(2,hb),rx:5,fill:'#FF8A3D'}),
-          h('text',{x:x+bw/2,y:H-2,textAnchor:'middle',fontSize:10,fontFamily:'JetBrains Mono',fill:'#8A909C'},SPORT_FMT[m.div].per+(i+1)));}));}
+          h('text',{x:x+bw/2,y:H-2,textAnchor:'middle',fontSize:10,fontFamily:'JetBrains Mono',fill:'#6B7180'},SPORT_FMT[m.div].per+(i+1)));}));}
   // Broadcast hub: one channel per field, the picked channel's match under the player, its now/next running order, and live matches elsewhere
   tvVals(screen){const s=this.state,h=React.createElement,views=liveOrder(s.live).map(liveView),chan=s.chan||'stadium';
     const onField=f=>views.filter(v=>v.field===f),cur=f=>{const l=onField(f);return l.find(v=>v.live)||l.find(v=>v.state==='next')||l[0];};
@@ -2178,7 +2033,7 @@ class Component extends DCLogic {
       if(m.kind==='ticket')return h('div',{key:i,className:'cc-ticket',role:'status'},h('span',{className:'cc-tk-ic','aria-hidden':'true'},h('i',{className:'gi','data-gi':'check'})),h('span',{style:{display:'flex',flexDirection:'column',gap:4,minWidth:0}},h('small',null,'HANDED OVER'),h('b',null,m.ref),h('span',null,m.text)));
       return h('div',{key:i,className:'cc-msg cc-msg--'+(me?'me':'bot')},kids);};
     return {chatThread:[...s.messages.map(bubble),s.cocoTyping?h('div',{key:'ty',className:'cc-typing','aria-label':'Vision is typing'},h('i'),h('i'),h('i')):null],
-      chatSub:open?'Help desks open · '+clock+' IST':'Desks open 09:00 IST · I answer any time',chatDot:open?'#1FA463':'#E3A008',
+      chatSub:open?'Help desks open · '+clock+' IST':'Desks open 09:00 IST · I answer any time',
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
   heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
@@ -2239,7 +2094,7 @@ class Component extends DCLogic {
       e.preventDefault();const d=e.deltaY*(e.deltaMode===1?40:e.deltaMode===2?window.innerHeight:1);if(!raf){cur=window.scrollY;tgt=cur;}tgt=Math.max(0,Math.min(max(),tgt+d));if(!raf)raf=requestAnimationFrame(step);},{passive:false});
     // keyboard, scrollbar, links and programmatic scrolls take over: follow them instead of fighting
     window.addEventListener('scroll',()=>{if(Math.abs(window.scrollY-last)>2){if(raf){cancelAnimationFrame(raf);raf=0;}cur=tgt=last=window.scrollY;}},{passive:true});}
-  measure(){this.dockFx();this.storyBind();this.cursorInit();this.smoothInit();this.target={steps:this.prog('steps'),tiles:this.prog('tiles'),car:this.prog('car'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
+  measure(){this.dockFx();this.storyBind();this.cursorInit();this.smoothInit();this.target={steps:this.prog('steps'),close:this.prog('close'),ev:this.prog('events'),tv:this.prog('tv')};
     const near=k=>{const el=this.refs[k]&&this.refs[k].current;return !!el&&el.getBoundingClientRect().top<window.innerHeight*2;};
     if(near('events'))this.kvPreload();
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
@@ -2248,7 +2103,7 @@ class Component extends DCLogic {
     const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose&&!this.state.tvNear)this.setState({tvNear:true});
     // the chat robot is WebGL: let it rest while the page scrolls, resume once scrolling settles
     const bot=this.botApp;if(bot){try{if(!bot._isPaused&&!this.botScrollStop){bot.stop();this.botScrollStop=true;}}catch(e){}clearTimeout(this.botResumeT);
-      this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},260);}if(!this.state.boardIn){const lv=this.refs.live&&this.refs.live.current;if(lv&&lv.getBoundingClientRect().top<window.innerHeight*0.8){this.boardInAt=performance.now();this.setState({boardIn:true});}}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+      this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},260);}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
   // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
   // (a step number, the programme caption, the ticket counter, the closing video mounting...).
@@ -2256,27 +2111,11 @@ class Component extends DCLogic {
     const P=this.P||(this.P={...this.state.p}),t=this.target||P;let moved=false;
     for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*(LITE?0.32:this.smOn?0.24:0.12),nv=Math.abs(t[k]-v)<0.001?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
     if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.setState({p:{...P}});}}
-    if(this.hand){const tt=(performance.now()-this.t0)/1000,ph=(tt*0.55)%1;const sw=ph<0.6?Math.sin(ph/0.6*Math.PI):0;
-      this.hand.obj.position.y=this.hand.y+ (ph<0.6?(0.3-ph/0.6)*36:-6+ (ph-0.6)/0.4*0);this.hand.obj.position.x=this.hand.x+sw*3;}
     if(moved||this.fxDirty)this.awake=240;
     if(this.awake>0){this.awake--;this.heroParallax();this.kickAnim();this.mediaDolly();this.rolesGlide();}
     this.figTick(performance.now());
   }
   fxQ(sel){const c=this.fxC||(this.fxC={});let a=c[sel];if(!a||!a.length||!a[0].isConnected){a=[...document.querySelectorAll(sel)];c[sel]=a;}return a;}
-  // bento: the film settles from a slight zoom while the tiles rise in turn (desktop pins the section; phones simply show it)
-  btFx(p){const tiles=this.fxQ('[data-bt-tile]'),m=this.fxQ('[data-bt-media]')[0],hd=this.fxQ('[data-bt-head]')[0],core=this.fxQ('[data-bt-core]')[0],dim=this.fxQ('[data-bt-dim]')[0],grid=this.fxQ('[data-bt-grid]')[0];if(!tiles.length)return;
-    if(window.innerWidth<=900||REDUCED){if(this.btFlat)return;this.btFlat=1;tiles.forEach(el=>{el.style.opacity='';el.style.transform='';});if(m)m.style.transform='';if(hd)hd.style.opacity='';return;}this.btFlat=0;
-    // where each tile sits relative to the grid centre (layout positions, unaffected by the transforms below)
-    let G=this.btG;if(!G||!grid||G.w!==grid.clientWidth||G.h!==grid.clientHeight||!G.t[0].isConnected){const cx=grid.clientWidth/2,cy=grid.clientHeight/2;G=this.btG={w:grid.clientWidth,h:grid.clientHeight,t:tiles,d:tiles.map(el=>[cx-(el.offsetLeft+el.offsetWidth/2),cy-(el.offsetTop+el.offsetHeight/2)])};}
-    const gather=ease(clamp((p-0.5)/0.12));
-    if(m)m.style.transform='scale('+(1.12-0.12*ease(clamp(p/0.4))).toFixed(4)+')';if(hd)hd.style.opacity=((0.25+0.75*ease(clamp(p/0.1)))*(1-gather)).toFixed(3);
-    tiles.forEach((el,i)=>{const r=ease(clamp((p-0.04-i*0.035)/0.16)),c=ease(clamp((p-0.5-i*0.012)/0.15)),dd=G.d[i]||[0,0];
-      el.style.opacity=(r*(1-clamp(c*1.25))).toFixed(3);el.style.transform='translate3d('+(dd[0]*c).toFixed(1)+'px,'+((1-r)*46+dd[1]*c).toFixed(1)+'px,0) scale('+((0.965+0.035*r)*(1-0.7*c)).toFixed(4)+')';});
-    // the seven become one card, which then shrinks to a glowing dot as the film dims out
-    const k=ease(clamp((p-0.6)/0.1)),z=ease(clamp((p-0.8)/0.12));
-    if(core){core.style.opacity=(k*(1-clamp((z-0.75)/0.25))).toFixed(3);core.style.transform='translate(-50%,-50%) scale('+((0.6+0.4*k)*(1-0.93*z)).toFixed(4)+')';core.style.borderRadius=(28+300*z).toFixed(0)+'px';
-      this.fxQ('[data-bt-txt]').forEach(t=>{t.style.opacity=(1-clamp(z*2.2)).toFixed(3);});const orb=this.fxQ('[data-bt-orb]')[0];if(orb)orb.style.opacity=clamp(z*1.6).toFixed(3);}
-    if(dim)dim.style.opacity=(ease(clamp((p-0.86)/0.12))*0.95).toFixed(3);}
   // discrete state: when this changes the page re-renders once (text, counters, mounted elements)
   fxSig(P){const W=window.innerWidth,pe=REDUCED?1:(P.ev||0);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));
@@ -2286,7 +2125,6 @@ class Component extends DCLogic {
     if(ch('tv')){const e=ease(clamp((P.tv||0)*1.55)),W=window.innerWidth,H=window.innerHeight,mob=W<=760,t0=(mob?0.2:0.18)*H*(1-e),b0=(mob?0.22:0.12)*H*(1-e),x0=(mob?0.04:0.19)*W*(1-e),rr=(32*(1-e)).toFixed(1);
       const ins=t0.toFixed(1)+'px '+x0.toFixed(1)+'px '+b0.toFixed(1)+'px '+x0.toFixed(1)+'px';this.fxQ('[data-r=tv-cinema]').forEach(el=>{el.style.clipPath='inset('+ins+' round '+rr+'px)';});this.fxQ('[data-r=tv-ui]').forEach(el=>{el.style.inset=ins;});const d=clamp(e*1.15),mx=(a,b)=>Math.round(a+(b-a)*d);this.fxQ('[data-r=tv-section]').forEach(el=>{el.style.background='rgb('+mx(255,11)+','+mx(255,13)+','+mx(255,18)+')';});}
     if(ch('steps')){const si=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));if(si!==this.stepOn){this.stepOn=si;this.fxQ('[data-step]').forEach((el,i)=>el.setAttribute('data-on',i===si?'1':'0'));const sn=this.fxQ('[data-step-num]')[0];if(sn)sn.textContent=String(si+1).padStart(2,'0');const sd=this.fxQ('[data-step-desc]')[0];if(sd){sd.textContent=STEPS[si].desc;sd.removeAttribute('data-swap');void sd.offsetWidth;sd.setAttribute('data-swap','');}}}
-    if(ch('tiles'))this.btFx(P.tiles||0);
     if(ch('close')){const p=REDUCED?1:(P.close||0),o=ease(clamp(p/0.42)),c=ease(clamp((p-0.28)/0.2)),t=clamp((p-0.46)/0.3),W=window.innerWidth,H=window.innerHeight,mob=W<=760;
       const iy=((mob?0.17:0.2)*H*(1-o)).toFixed(1),ix=((mob?0.06:0.22)*W*(1-o)).toFixed(1),rr=(36*(1-o)).toFixed(1);
       this.fxQ('[data-fn-win]').forEach(el=>{el.style.clipPath='inset('+iy+'px '+ix+'px round '+rr+'px)';el.style.setProperty('--c',c.toFixed(3));el.style.setProperty('--t',t.toFixed(3));});
@@ -2297,32 +2135,6 @@ class Component extends DCLogic {
     const go=()=>{if(!sh.isConnected)return;sh.style.transition='opacity .35s ease';sh.style.opacity='0';setTimeout(()=>sh.remove(),420);window.removeEventListener('scroll',go);};
     window.addEventListener('scroll',go,{passive:true,once:true});requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(go,wait)));}
   // Ecosystem tiles crumple into paper scraps that fall and pile up at the bottom.
-  // Everything is a pure function of scroll progress, so scrolling back up rebuilds the cards.
-  buildPaper(L,host,W,H){L.innerHTML='';L.__w=W;L.__h=H;
-    let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
-    const tiles=[...host.querySelectorAll('[data-tile]')];
-    const BW=14,bins=new Array(Math.ceil(W/BW)+2).fill(0),pcs=[];
-    const crumples=['42% 58% 63% 37% / 41% 44% 56% 59%','58% 42% 38% 62% / 52% 61% 39% 48%','47% 53% 55% 45% / 62% 38% 62% 38%','61% 39% 52% 48% / 44% 57% 43% 56%'];
-    const scraps=['polygon(0 8%,92% 0,100% 74%,12% 100%)','polygon(6% 0,100% 14%,86% 100%,0 82%)','polygon(0 0,100% 22%,78% 100%,8% 70%)','polygon(14% 0,100% 0,90% 88%,0 100%)'];
-    tiles.forEach((el,ci)=>{
-      // offset* ignores the live crumple transform, so pieces always start from the card's resting box
-      let ox=0,oy=0,n=el;while(n&&n!==host){ox+=n.offsetLeft;oy+=n.offsetTop;n=n.offsetParent;}
-      const cw=el.offsetWidth,ch=el.offsetHeight,cx=ox+cw/2,cy=oy+ch/2;
-      const tint=MODULES[ci]&&MODULES[ci].wide?'#E4EBFF':((MODULES[ci]&&MODULES[ci].bg)||'#F2F4F7');
-      const count=Math.round(Math.max(22,Math.min(46,cw*ch/2600))*(LITE?0.5:1));
-      for(let j=0;j<count;j++){
-        const kind=rnd();const ink=rnd()<0.12;
-        const size=12+rnd()*20;let w=size,h=size,css;
-        if(kind<0.58){css='border-radius:'+crumples[j%4]+';background:radial-gradient(circle at 32% 28%,#fff 0%,'+(ink?'#7D97FF':tint)+' 45%,'+(ink?'#2F5BFF':'#A9B3C4')+' 100%);box-shadow:0 3px 6px rgba(15,20,40,.22),inset -3px -4px 5px rgba(15,20,40,.18),inset 2px 2px 3px rgba(255,255,255,.9)';}
-        else if(kind<0.88){w=size*1.4;h=size*0.9;css='clip-path:'+scraps[j%4]+';background:linear-gradient(160deg,#fff 0%,'+tint+' 55%,#B9C2D1 100%);filter:drop-shadow(0 2px 2px rgba(15,20,40,.22))'+(ink?';background-image:repeating-linear-gradient(0deg,transparent 0 4px,rgba(47,91,255,.35) 4px 5px),linear-gradient(160deg,#fff,'+tint+')':'');}
-        else{w=size*1.9;h=size*0.62;css='border-radius:999px;background:repeating-linear-gradient(90deg,#fff 0 3px,'+tint+' 3px 6px,#C9D0DC 6px 7px);box-shadow:0 2px 3px rgba(15,20,40,.18),inset 0 -2px 3px rgba(15,20,40,.12)';}
-        if(LITE)css=css.replace(/;?(box-shadow|filter):[^;]*/g,'');const d=document.createElement('div');d.style.cssText='position:absolute;left:0;top:0;width:'+w.toFixed(1)+'px;height:'+h.toFixed(1)+'px;opacity:0;will-change:transform,opacity;'+css;L.appendChild(d);
-        // landing spot: drift around the card's column, then stack into a mound using height bins
-        let xe=W*0.5+(cx-W*0.5)*0.85+(rnd()+rnd()+rnd()-1.5)*cw*0.55;xe=Math.max(w,Math.min(W-w,xe));
-        const b=Math.round(xe/BW);const top=Math.max(bins[b-1]||0,bins[b],bins[b+1]||0);
-        const ye=H-top-h*0.45-6;bins[b]=top+h*0.3;for(let k=1;k<4;k++){const f=h*0.3*(1-k/4);if(b-k>=0)bins[b-k]=Math.max(bins[b-k],top+f);if(b+k<bins.length)bins[b+k]=Math.max(bins[b+k],top+f);}
-        pcs.push({el:d,card:ci,w,h,cx,cy,x0:ox+rnd()*cw,y0:oy+rnd()*ch,xe,ye,r0:rnd()*360,spin:(rnd()-0.5)*540,drift:10+rnd()*30,ph:rnd()*6.28,delay:j/count*0.05,shown:0});}});
-    L.__pcs=pcs;}
   // Hero: calm parallax - the copy drifts up and fades, the video eases back. Compositor-only transforms.
   heroParallax(){const y=window.scrollY;if(this.__py===y)return;this.__py=y;const vh=window.innerHeight;if(y>vh*1.6&&this.__pdone)return;this.__pdone=y>vh*1.6;
     const c=document.querySelector('[data-hero-copy]'),m=document.querySelector('[data-hero-media]');const k=Math.min(1,y/vh);
@@ -2431,29 +2243,6 @@ class Component extends DCLogic {
     try{app._getPixelRatio=()=>pr;if(app._renderer&&app._renderer.getPixelRatio()!==pr){app._renderer.setPixelRatio(pr);app._resize&&app._resize();}}catch(e){}
     try{const io=new IntersectionObserver(es=>es.forEach(e=>{try{if(e.isIntersecting){if(app.isStopped||app._isPaused)app.play();}else if(!app._isPaused)app.stop();}catch(err){}}),{rootMargin:'200px'});io.observe(v);(this.sios||(this.sios=[])).push(io);}catch(e){}
     requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('gms-ready')));}
-  torchOrbitEl(items){const h=React.createElement,dur='60s';
-    return h('div',{style:{position:'absolute',left:'50%',top:'50%',width:'min(500px, calc(100vh - 240px), calc(100% - 150px))',aspectRatio:'1',zIndex:3,transform:'translate(-50%,-50%)',pointerEvents:'none'}},
-      h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',border:'1.5px dashed rgba(11,13,18,.28)'}}),
-      h('div',{style:{position:'absolute',inset:'14%',borderRadius:'50%',border:'1px solid rgba(47,91,255,.18)'}}),
-      h('div',{style:{position:'absolute',inset:0,animation:'gmsSpin '+dur+' linear infinite',willChange:'transform'}},
-        items.map((t,i)=>{const a=i/items.length*Math.PI*2-Math.PI/2;
-          return h('div',{key:t.label,style:{position:'absolute',left:(50+Math.cos(a)*50)+'%',top:(50+Math.sin(a)*50)+'%',width:0,height:0}},
-            h('div',{style:{animation:'gmsSpinRev '+dur+' linear infinite'}},
-              h('button',{onClick:t.go,style:{all:'unset',pointerEvents:'auto',cursor:'pointer',position:'absolute',transform:'translate(-50%,-50%)',display:'flex',alignItems:'center',gap:8,padding:'7px 15px 7px 7px',borderRadius:999,background:'rgba(255,255,255,.62)',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',border:'1px solid rgba(255,255,255,.95)',boxShadow:'0 10px 30px rgba(15,20,40,.10)',fontFamily:'Instrument Sans',fontWeight:600,fontSize:14,whiteSpace:'nowrap',color:'#0B0D12'}},
-                h('span',{style:{width:28,height:28,borderRadius:'50%',background:'#0B0D12',color:'#fff',display:'grid',placeItems:'center',fontSize:16}},h('i',{className:'gi','data-gi':t.icon})),t.label)));})));}
-  regOrbitEl(){const h=React.createElement,dur='140s',paused=this.state.peek?'paused':'running';
-    return h('div',{style:{position:'absolute',left:'50%',top:'50%',width:'min(540px, calc(82vh - 80px), 84vw)',aspectRatio:'1',transform:'translate(-50%,-50%)',pointerEvents:'none'}},
-      h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',border:'1px dashed rgba(11,13,18,.12)'}}),
-      h('div',{style:{position:'absolute',inset:0,animation:'gmsSpin '+dur+' linear infinite',animationPlayState:paused}},
-        REG.map((r,i)=>{const a=i/REG.length*Math.PI*2-Math.PI/2;const on=this.state.peek===r.id;
-          return h('div',{key:r.id,style:{position:'absolute',left:(50+Math.cos(a)*50)+'%',top:(50+Math.sin(a)*50)+'%',width:0,height:0}},
-            h('div',{style:{animation:'gmsSpinRev '+dur+' linear infinite',animationPlayState:paused}},
-              h('button',{onClick:()=>{clearTimeout(this.hoverT);this.setState({peek:r.id});},
-                onMouseEnter:()=>{clearTimeout(this.hoverT);this.hoverT=setTimeout(()=>this.setState({peek:r.id}),200);},
-                onMouseLeave:()=>clearTimeout(this.hoverT),
-                style:{all:'unset',pointerEvents:'auto',cursor:'pointer',position:'absolute',transform:'translate(-50%,-24px)',width:96,display:'flex',flexDirection:'column',alignItems:'center',gap:6}},
-                h('span',{style:{width:48,height:48,borderRadius:16,display:'grid',placeItems:'center',background:on?'rgba(47,91,255,.9)':'rgba(255,255,255,.55)',color:on?'#fff':'#2F5BFF',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',border:'1px solid rgba(255,255,255,.95)',boxShadow:'0 12px 30px rgba(15,20,40,.12), inset 0 1px 0 rgba(255,255,255,.9)',fontSize:23,transition:'background .3s ease, color .3s ease, transform .35s cubic-bezier(.2,.8,.2,1)',transform:on?'scale(1.12)':'none'}},h('i',{className:'gi','data-gi':r.icon})),
-                h('span',{style:{fontFamily:'Instrument Sans',fontSize:11,fontWeight:600,textAlign:'center',lineHeight:1.2,color:'#0B0D12'}},r.name))));})));}
   photoLoopEl(){const h=React.createElement,imgs=['assets/stadium-football-sm.webp?v=g1','assets/stadium-tennis-sm.jpg?v=g1'];
     const col=(order,anim)=>h('div',{className:'pl-col',style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{className:'pl-track',style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
       order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:'var(--r-m)',display:'block'}}))));
@@ -2503,12 +2292,12 @@ class Component extends DCLogic {
     const meStatus=mine?mine.status:'Pending';const stIdx={Pending:1,Verified:2,Accredited:3,Rejected:1}[meStatus];
     const setStatus=(id,status)=>this.setState(x=>({admin:x.admin.map(r=>r.id===id?{...r,status}:r)}));
     const regBtn=r=>({...r,open:()=>this.setState({modal:r.id})});
-    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live Scores',()=>this.scrollTo('tv'),'scores'],['Live TV',()=>this.go('tv'),'tv']];
+    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live',()=>this.scrollTo('tv'),'tv']];
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
-      overviewRef:this.ref('overview'),liveRef:this.ref('live'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),tilesRef:this.ref('tiles'),carRef:this.ref('car'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
+      overviewRef:this.ref('overview'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
       menuOpen:s.menuOpen?'1':'0',menuIcon:s.menuOpen?'close':'menu',toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
-      navItems:nav.map(([label,go,k])=>({label,sec:{Overview:'overview',Schedule:'schedule',Events:'events',Registration:'reg','Live Scores':'tv'}[label]||'',...(label==='Registration'?{
+      navItems:nav.map(([label,go,k])=>({label,sec:{Overview:'overview',Schedule:'schedule',Events:'events',Registration:'reg',Live:'tv'}[label]||'',...(label==='Registration'?{
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
@@ -2537,8 +2326,6 @@ class Component extends DCLogic {
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'ROUND',v:round},{k:'VENUE',v:venue},{k:'CATEGORY',v:ev.gender==='MIXED'?'Mixed':ev.gender==='MEN'?'Men':'Women'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
-      bento:BENTO_ORDER.map((mi,k)=>{const m=MODULES[mi],T=TEAMS[mi],open=s.btOpen===mi;return {icon:m.icon,title:m.title.replace('Competition Management System','Competition & results'),desc:m.desc.split('. ').slice(0,2).join('. '),
-        num:pad(mi+1),area:T[0],team:T[1],items:T[2].map(t=>({t})),open:String(open),toggle:()=>this.setState({btOpen:open?-1:mi})};}),
       // background film: "People works on a broadcast of an event", Pexels video 2890236 (Pexels licence, free to use); phones get its still frame
       
       modalOpen:!!mr,modal:mr||{},closeModal:()=>this.setState({modal:null}),stop:e=>e.stopPropagation(),startFlow:()=>this.startReg(s.modal),
@@ -2554,7 +2341,7 @@ class Component extends DCLogic {
       submitLogin:e=>{e.preventDefault();if(!/^\S+@\S+\.\S+$/.test(s.loginEmail)||s.loginPass.length<4){this.setState({loginError:'Enter a valid email and a password of at least 4 characters.'});return;}this.setState({session:{role:s.loginTab,email:s.loginEmail}});},
       logout:()=>this.setState({session:null,loginPass:''}),
       me:{name:mine?mine.name:s.loginEmail.split('@')[0],type:mine?mine.type:'Participant',id:mine?mine.id:'No registration on this email yet',
-        timeline:['Submitted','Verified','Accredited','On field'].map((label,i)=>{const rej=meStatus==='Rejected'&&i===1;return {label:rej?'Rejected':label,bar:rej?'#E5484D':i<stIdx?'#1FA463':'rgba(11,13,18,.1)',fg:rej?'#C2383D':i<stIdx?'#0B0D12':'#8A909C'};})},
+        timeline:['Submitted','Verified','Accredited','On field'].map((label,i)=>{const rej=meStatus==='Rejected'&&i===1;return {label:rej?'Rejected':label,bar:rej?'#E5484D':i<stIdx?'#1FA463':'rgba(11,13,18,.1)',fg:rej?'#C2383D':i<stIdx?'#0B0D12':'#6B7180'};})},
       kpis:[['Total',s.admin.length,'#0B0D12'],['Pending',s.admin.filter(r=>r.status==='Pending').length,'#9A6B00'],['Verified',s.admin.filter(r=>r.status==='Verified').length,BLUE],['Accredited',s.admin.filter(r=>r.status==='Accredited').length,'#1C8A53']].map(([label,v,c])=>({label,v:String(v),c})),
       adminRows:s.admin.map(r=>{const done=r.status==='Accredited'||r.status==='Rejected';return {...r,sBg:ST[r.status][0],sFg:ST[r.status][1],actOp:done?'0.3':'1',
         approve:()=>!done&&setStatus(r.id,r.status==='Pending'?'Verified':'Accredited'),reject:()=>!done&&setStatus(r.id,'Rejected')};}),
