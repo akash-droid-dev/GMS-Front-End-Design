@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230B0D12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23fff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%232F5BFF'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B0D12'/%3E%3Cg transform='translate(1.5 0)' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='5'%3E%3Cpath stroke='%23fff' d='M31.6 18.7A14 14 0 1 0 38 32M38 18.5V45.5M38 18.5h5.2a6.75 6.75 0 0 1 0 13.5M44.2 32a6.75 6.75 0 0 1 0 13.5H38'/%3E%3Cpath stroke='%232F5BFF' d='M28 32h16.4'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preconnect" href="https://prod.spline.design" crossorigin>
 <link rel="preconnect" href="https://cdn.spline.design" crossorigin>
@@ -926,7 +926,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 <div id="gms-shell" aria-hidden="true" style="position:fixed;inset:0;z-index:90;overflow:hidden;background:#0B0D12">
 <div data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
   <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
-    <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
+    <img src="assets/brand/gms-mark.svg" alt="" width="32" height="32" style="display:block;width:32px;height:32px">
     <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
   <div data-r="navlinks" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
@@ -964,8 +964,8 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 <a class="skip-link" href="#content">Skip to content</a>
 <div data-navback data-open="{{ navBack }}" onClick="{{ closeNavMenus }}" aria-hidden="true"></div>
 <nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
-  <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
-    <span style="width:32px;height:32px;border-radius:50%;background:#0B0D12;display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;box-sizing:border-box"><span style="width:7px;height:7px;border-radius:50%;background:#2F5BFF"></span></span></span>
+  <button onClick="{{ goHome }}" aria-label="GMS home" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
+    <img src="assets/brand/gms-mark.svg" alt="" width="32" height="32" style="display:block;width:32px;height:32px">
     <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
   <div data-r="navlinks" data-open="{{ menuOpen }}" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
@@ -1322,7 +1322,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 
   <footer style="background:#000;color:#fff;padding:44px 32px 52px">
     <div data-r="foot-grid" data-rise style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
-      <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px">GMS</span>
+      <span style="display:flex;align-items:center;gap:10px"><img src="assets/brand/gms-mark-dark.svg" alt="" width="30" height="30" loading="lazy" style="display:block;width:30px;height:30px"><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span></span>
       <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">GMS runs registration, accreditation, scheduling and results for the GMS Games 2026, Ahmedabad, 14 to 18 November.</p>
       <div style="display:flex;gap:22px;font-size:13px;color:rgba(255,255,255,.62)">
         <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">Schedule</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">Events</button><button onClick="{{ toContact }}" style="all:unset;cursor:pointer">Help desk</button><span>© 2026</span>
