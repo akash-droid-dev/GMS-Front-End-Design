@@ -462,10 +462,10 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-r=roles-left] h2{font-size:26px!important;margin-top:8px!important}
  [data-r=roles-p]{font-size:13.5px!important;margin-top:8px!important}
  .rc-wrap{display:flex;flex-direction:column;gap:10px;margin:14px -16px 0;overflow:hidden}
- .rc-rail{display:flex;gap:12px;padding:4px 32px 10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 32px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ .rc-rail{display:flex;gap:12px;padding:4px 52px 10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 52px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
  .rc-rail::-webkit-scrollbar{display:none}
- .rc-card{flex:0 0 calc(100vw - 64px);scroll-snap-align:center;scroll-snap-stop:always;border-radius:var(--r-l);background:#fff;border:1px solid #E8EBF0;box-shadow:var(--sh-2);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
- .rc-card[data-on="0"]{transform:scale(.95);opacity:.6;box-shadow:var(--sh-1)}
+ .rc-card{flex:0 0 calc(100vw - 104px);scroll-snap-align:center;scroll-snap-stop:always;border-radius:var(--r-l);background:#fff;border:1px solid #E8EBF0;box-shadow:var(--sh-2);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s var(--gms-ease),box-shadow .6s var(--gms-ease),opacity .6s}
+ .rc-card[data-on="0"]{transform:scale(.96);opacity:.82;box-shadow:var(--sh-1)}
  .rc-art{position:relative;height:clamp(220px,44svh,360px);width:100%;background:#fff;border-bottom:1px solid #F0F2F6}
  .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180}
  .rc-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
@@ -1202,14 +1202,14 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
                       <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#6B7180">{{ r.sport }} · {{ r.code }}</span></span>
                       <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6B7180;transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
                     </button>
-                    <div style="max-height:{{ r.mh }};overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1)">
+                    <div style="display:grid;grid-template-rows:{{ r.gr }};transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)"><div style="min-height:0;overflow:hidden;visibility:{{ r.vis }};transition:visibility .45s">
                       <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 14px">
                         <sc-for list="{{ r.details }}" as="x" hint-placeholder-count="4">
                           <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#6B7180">{{ x.k }}</span>{{ x.v }}</span>
                         </sc-for>
                       </div>
                       <div class="cal-row"><span class="cal-k"><i class="gi" data-gi="event_available"></i>ADD TO CALENDAR</span><a class="cal-a" href="{{ r.gcal }}" target="_blank" rel="noopener">Google</a><button type="button" class="cal-a" onClick="{{ r.ics }}">Apple</button><a class="cal-a" href="{{ r.outlook }}" target="_blank" rel="noopener">Outlook</a></div>
-                    </div>
+                    </div></div>
                   </div>
                 </sc-for>
               </div>
@@ -2322,7 +2322,7 @@ class Component extends DCLogic {
       ...this.finVals(),botReady:!LITE&&!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
       groups:[...new Set(SESSIONS[s.day].map(x=>x[0]))].map(time=>({time,part:time<'12'?'Morning':time<'17'?'Afternoon':'Evening',items:SESSIONS[s.day].filter(d=>d[0]===time).map(([tm,code,round])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;const venue=VENUE_OF[ev.cat.name];
-        return {name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',mh:open?'150px':'0px',...calLinks(ev.name+', '+round+' (GMS Games 2026)',tm,round+', '+venue,s.day,venue),
+        return {name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',gr:open?'1fr':'0fr',vis:open?'visible':'hidden',...calLinks(ev.name+', '+round+' (GMS Games 2026)',tm,round+', '+venue,s.day,venue),
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'ROUND',v:round},{k:'VENUE',v:venue},{k:'CATEGORY',v:ev.gender==='MIXED'?'Mixed':ev.gender==='MEN'?'Men':'Women'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
