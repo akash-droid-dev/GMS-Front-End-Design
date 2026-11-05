@@ -789,12 +789,28 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  [data-fl=a],[data-fl=b]{flex-direction:column;align-items:flex-start;gap:5px}[data-fl=b]{align-items:flex-end}
  .flaps--long{display:none}.flaps--short{display:inline-flex}.flaps--short .flap{font-size:12px}}
 @media (max-width:420px){.flaps--short .flap{font-size:11px}.flaps--score .flap{font-size:18px}}
-/* Programme: where the ball hits, a shockwave ripples across the net and a small GOAL bursts out of the impact point with a few sparks */
-[data-goal-board]{position:absolute;z-index:4;left:50%;top:40%;width:0;height:0;visibility:hidden;pointer-events:none}
-[data-goal-ring]{position:absolute;left:-90px;top:-90px;width:180px;height:180px;border-radius:50%;border:2px solid rgba(255,255,255,.95);opacity:0;will-change:transform,opacity}
-[data-goal-spark]{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#2F5BFF;opacity:0;will-change:transform,opacity}
-[data-goal-led]{position:absolute;left:0;top:0;white-space:nowrap;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(34px,4.4vw,66px);line-height:.9;letter-spacing:-.06em;padding:0 .05em;opacity:0;will-change:transform,opacity;
- background:linear-gradient(180deg,#7C9BFF 0%,#2F5BFF 58%,#1B3FD0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 2px rgba(15,20,40,.12))}
+/* Programme: at the goal a broadcast lower-third slides in at the bottom-left; then the events spring up (CSS, graphics card only) */
+[data-goal-board]{position:absolute;z-index:5;left:clamp(16px,4vw,56px);bottom:clamp(28px,6vh,64px);display:flex;align-items:stretch;height:48px;border-radius:12px;overflow:hidden;pointer-events:none;
+ background:#0B0D12;color:#fff;box-shadow:0 2px 6px rgba(15,20,40,.12),0 18px 44px rgba(15,20,40,.22);clip-path:inset(0 100% 0 0 round 12px);opacity:0;
+ transition:clip-path .75s var(--gms-ease),opacity .3s ease;will-change:clip-path}
+[data-goal-board][data-on="1"]{clip-path:inset(0 0 0 0 round 12px);opacity:1}
+[data-goal-board] .lt-ball{width:48px;flex:none;display:grid;place-items:center;background:#2F5BFF;font-size:21px}
+[data-goal-board] .lt-main{display:flex;align-items:baseline;gap:9px;padding:0 16px;align-self:center}
+[data-goal-board] .lt-main b{font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;letter-spacing:-.02em}
+[data-goal-board] .lt-min{font-family:'JetBrains Mono';font-size:12px;color:rgba(255,255,255,.6)}
+[data-goal-board] .lt-sub{display:flex;align-items:center;padding:0 16px;background:#161A22;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap;
+ clip-path:inset(0 100% 0 0);transition:clip-path .6s var(--gms-ease) .35s}
+[data-goal-board][data-on="1"] .lt-sub{clip-path:inset(0 0 0 0)}
+@media (max-width:760px){[data-goal-board]{left:16px;bottom:calc(196px + env(safe-area-inset-bottom));height:42px}[data-goal-board] .lt-ball{width:42px;font-size:18px}[data-goal-board] .lt-main b{font-size:16px}[data-goal-board] .lt-sub{font-size:12px;padding:0 12px}}
+[data-goal-panel] :is([data-goal-ch],[data-goal-ev]){opacity:0;transform:translateY(var(--rise,80px))}
+[data-goal-panel][data-in="1"] :is([data-goal-ch],[data-goal-ev]){animation:chipIn 1.2s var(--d,0s) both}
+@keyframes chipIn{0%{opacity:0;transform:translateY(var(--rise,80px)) rotate(var(--spin,0deg));animation-timing-function:cubic-bezier(.2,.75,.35,1)}
+ 12%{opacity:1}
+ 52%{transform:translateY(-8px) rotate(calc(var(--spin,0deg) * -.3));animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 72%{transform:translateY(3px) rotate(calc(var(--spin,0deg) * .12));animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 88%{transform:translateY(-1px) rotate(0deg)}
+ 100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){[data-goal-panel][data-in="1"] :is([data-goal-ch],[data-goal-ev]){animation:none;opacity:1;transform:none}}
 [data-kv-veil]{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(246,248,252,.5),rgba(240,244,251,.72));-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15)}
 [data-kv-wash]{position:absolute;left:0;top:0;width:min(640px,70%);height:min(420px,55%);pointer-events:none;background:radial-gradient(90% 85% at 0% 0%,rgba(246,247,249,.92) 30%,rgba(246,247,249,0) 100%)}
 [data-goal-cols][data-mode=burst]{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3vh,30px);pointer-events:none}
@@ -823,7 +839,6 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-panel][data-compact="1"] [data-goal-ev]:last-child:nth-child(odd){grid-column:1 / -1}
 [data-goal-panel][data-compact="1"] [data-goal-ch]{padding-left:2px}
 [data-goal-panel][data-compact="1"] [data-goal-g],[data-goal-panel][data-compact="1"] [data-goal-nm] [data-goal-sub]{display:none}
-@media (max-width:600px){[data-goal-led]{font-size:clamp(34px,11vw,48px)}[data-goal-ring]{left:-70px;top:-70px;width:140px;height:140px}}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
  .gms-rv{opacity:1!important;translate:none!important;filter:none!important}[data-art]{filter:none!important}.gms-w>span{transform:none!important}
@@ -1259,10 +1274,10 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
           <span class="sx"><i>03</i>The programme</span>
           <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">18 medal events<br>across six sports</h2>
           <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:#4A505C">Scroll on and the strike opens the full programme, from the 100 m heats to the football final.</p>
-          <span style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.12em;color:#5B6270"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span>{{ evStage }}</span>
+          <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#5B6270"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
       </div>
-      <div data-goal-board aria-hidden="true"><span data-goal-ring></span><span data-goal-ring></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-spark></span><span data-goal-led>GOAL</span></div>
+      <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_soccer"></i></span><span class="lt-main"><b>Goal</b><span class="lt-min">63&#8217;</span></span><span class="lt-sub">18 medal events unlocked</span></div>
       <div data-goal-panel data-compact="0" style="position:absolute;left:0;top:0;width:0;height:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none">
         <div data-goal-cols data-mode="ring" style="position:absolute">
           <sc-for list="{{ goalCats }}" as="c" hint-placeholder-count="3">
@@ -1958,7 +1973,7 @@ class Component extends DCLogic {
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
       navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
-      evStage:pe<KICK.run0+0.01?'SCROLL TO KICK OFF':pe<KICK.strike?'THE RUN-UP':pe<KICK.board0?'THE STRIKE':(HOVER?'HOVER AN EVENT · CLICK TO REGISTER':'TAP AN EVENT TO REGISTER'),
+      evStage:pe<KICK.run0+0.01?'Scroll to kick off':pe<KICK.strike?'The run-up':pe<KICK.board0?'The strike':(HOVER?'Hover an event, click to register':'Tap an event to register'),
       goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.rolesVals(),
       
@@ -2265,8 +2280,7 @@ class Component extends DCLogic {
   // discrete state: when this changes the page re-renders once (text, counters, mounted elements)
   fxSig(P){const W=window.innerWidth,pe=REDUCED?1:(P.ev||0);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,(P.steps||0)/0.72)*STEPS.length));
-    const evS=pe<KICK.run0+0.01?0:pe<KICK.strike?1:pe<KICK.board0?2:3;
-    return evS+'|'+((P.close||0)>0.3);}
+    return String((P.close||0)>0.3);}
   scrollFx(P){const last=this.fxPrev||(this.fxPrev={}),ch=k=>{const v=P[k]||0;if(last[k]===v&&!this.fxForce)return false;last[k]=v;return true;};
     const force=this.fxForce;this.fxForce=false;
     if(ch('tv')){const e=ease(clamp((P.tv||0)*1.55)),W=window.innerWidth,H=window.innerHeight,mob=W<=760,t0=(mob?0.2:0.18)*H*(1-e),b0=(mob?0.22:0.12)*H*(1-e),x0=(mob?0.04:0.19)*W*(1-e),rr=(32*(1-e)).toFixed(1);
@@ -2338,16 +2352,19 @@ class Component extends DCLogic {
     const step=now=>{const k=Math.min(1,(now-t0)/d);tn.nodeValue=k<1?String(Math.round(n*ease(k))):fin;if(k<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
   // ---- Programme, real footage: a 10 s clip (run-up from the left, strike, ball into the net, celebration) shown full-screen as
   // a frame sequence that scrubs with the pinned scroll; then the net dissolves and the 18 events float up into the goal ----
-  // what to draw: the kick clip itself, scrubbed to the scroll's clip time (one video decoder instead of hundreds of decoded frames,
-  // which kept the page well under the browser's memory limits)
-  kvSource(fi){if(!this.kv)return null;const v=this.kvVideoLoad();this.kvMode='video';
-    if(!v.paused)v.pause();const tt=this.kvT||0;if(!v.seeking&&v.readyState>=1&&Math.abs(v.currentTime-tt)>0.03)v.currentTime=tt;
-    return v.readyState>=2?{img:v,t:v.currentTime}:null;}
-  kvVideoLoad(){if(this.kvVid)return this.kvVid;const v=this.kvVid=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.preload='auto';
-    const src='assets/kick-fallback-'+VRES()+'.mp4?v=g1',use=u=>{v.src=u;v.load();const pp=v.play();if(pp&&pp.then)pp.then(()=>v.pause()).catch(()=>{});v.addEventListener('loadeddata',()=>{this.kickLast=-1;},{once:true});};
-    v.addEventListener('seeked',()=>{this.kickLast=-1;this.awake=Math.max(this.awake||0,20);});
-    fetch(src).then(r=>r.ok?r.blob():Promise.reject()).then(b=>use(URL.createObjectURL(b))).catch(()=>use(src));return v;}
-  kvPreload(){if(this.kv)return;this.kv={video:true};this.kvVideoLoad();}
+  // what to draw for frame fi: an exact pre-decoded frame. Every frame is fetched once as a small compressed file; only a rolling
+  // window of at most 10 decoded frames around the scroll position is kept (decoded off the main thread, the rest released at once)
+  kvSource(fi){const kv=this.kv;if(!kv||!kv.blobs)return null;const N=kv.n,st=kv.step;fi=Math.min(N-1,Math.floor(fi/st)*st);
+    const dir=fi>=(kv.cur??fi)?1:-1;kv.cur=fi;const bm=kv.bm,pend=kv.pend;
+    const want=i=>{if(i<0||i>=N||bm.has(i)||pend.has(i)||!kv.blobs[i])return;pend.add(i);
+      createImageBitmap(kv.blobs[i]).then(b=>{pend.delete(i);if(Math.abs(i-kv.cur)>st*7){b.close&&b.close();return;}bm.set(i,b);if(Math.abs(i-kv.cur)<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}
+        while(bm.size>10){let far=-1,fd=-1;for(const k of bm.keys()){const d=Math.abs(k-kv.cur);if(d>fd){fd=d;far=k;}}const v=bm.get(far);v&&v.close&&v.close();bm.delete(far);}}).catch(()=>pend.delete(i));};
+    want(fi);for(let k=1;k<=6;k++)want(fi+dir*k*st);for(let k=1;k<=2;k++)want(fi-dir*k*st);
+    if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
+  kvPreload(){if(this.kv)return;const dir='assets/kickfull/'+(window.innerWidth<=760?'m':'d')+'/',st=LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
+    const order=[0,KV.idx(2),KV.idx(KV.hitT)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
+    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=g2').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
+    for(let k=0;k<6;k++)next();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/9.8)),dw=KV.w*s,dh=KV.h*s,fx=L.port?(t<2.2?0.32+0.18*smooth(t/2.2):0.5):0.5;
     const ox=Math.min(0,Math.max(L.W-dw,L.W/2-fx*dw)),oy=L.port?L.H*0.17:(L.H-dh)*0.5;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
@@ -2371,40 +2388,34 @@ class Component extends DCLogic {
         else{const M=L.menu,gw=M[2]-M[0],gh=M[3]-M[1];Object.assign(C.style,{left:(M[0]+gw*0.04)+'px',width:(gw*0.92)+'px',top:(M[1]+gh*0.05)+'px',height:(gh*0.9)+'px',right:'',bottom:''});}
         const hr=host.getBoundingClientRect();C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
         const items=[...C.querySelectorAll('[data-goal-ch],[data-goal-ev]')];items.forEach(el=>{el.style.transform='';el.style.opacity='';});
-        items.forEach((el,i)=>{const b=el.getBoundingClientRect();L.chips.push({el,rise:H-(b.top-hr.top)+40+((i*37)%60),spin:((i*53)%24)-12,delay:i*0.055,head:el.hasAttribute('data-goal-ch')});});}}
-    const B=host.querySelector('[data-goal-board]');if(B){const hb=this.kvView(L,KV.hitT).pt(KV.ball[0],KV.ball[1]);const hd=host.querySelector('[data-ev-head]'),hdB=hd?hd.getBoundingClientRect().bottom-host.getBoundingClientRect().top:120;
-      // centred on the net, but never over the heading: on tall phone screens it drops just below it
-      const ld=B.querySelector('[data-goal-led]'),lh=ld?ld.offsetHeight:60;Object.assign(B.style,{left:hb[0]+'px',top:Math.max(hdB+lh/2+18,hb[1])+'px'});}}
+        items.forEach((el,i)=>{const b=el.getBoundingClientRect();el.style.setProperty('--rise',Math.round(H-(b.top-hr.top)+40+((i*37)%60))+'px');el.style.setProperty('--spin',(((i*53)%24)-12)*(el.hasAttribute('data-goal-ch')?0.4:1)+'deg');el.style.setProperty('--d',(0.12+i*0.045).toFixed(3)+'s');L.chips.push(el);});}}}
   kickAnim(){const box=document.querySelector('[data-kick]');if(!box){this.kickBox=null;return;}
-    const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50){if(this.kvMode){this.kvMode=null;if(this.kvVid){this.kvVid.pause();try{this.kvVid.currentTime=0;}catch(e){}}}return;}
+    const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     if(this.kickBox!==box||this.kickDirty||!this.kickL||this.kickL.W!==W||this.kickL.H!==H){this.kickBox=box;this.kickDirty=false;this.kvBuild(host,box);}
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),now=performance.now();
     // scroll -> clip time: run-up, strike and flight take most of the scroll; the drop and celebration move quicker
     const t=p<KICK.run0?0:p<KICK.hit?KV.hitT*seg(p,KICK.run0,KICK.hit):p<KICK.board0?KV.hitT+(6-KV.hitT)*seg(p,KICK.hit,KICK.board0):6+3.8*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);this.kvT=t;
-    // the reveal runs on its own clock once it starts, so the float-up and jiggle play out even if scrolling stops
-    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0;
-    if(p>=KICK.score0&&!this.kvGoalT)this.kvGoalT=now;if(p<KICK.score0-0.005)this.kvGoalT=0;const live=!REDUCED&&((this.kvRevealT&&rt<3.4)||(this.kvGoalT&&now-this.kvGoalT<1400));
-    const key=fi+'|'+p.toFixed(4)+'|'+(live?Math.round(now/16):'')+(this.kvMode==='video'&&this.kvVid?'|'+this.kvVid.currentTime.toFixed(2):'');if(key===this.kickLast)return;this.kickLast=key;
-    const src=this.kvSource(fi);if(src){const V=this.kvView(L,src.t!=null?src.t:t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
+    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<1.4;
+    // the picture: redrawn only when the scroll (and so the frame) changes
+    const key=fi+'|'+p.toFixed(4);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
       if(L.port){const bg=x.createLinearGradient(0,0,0,L.H);bg.addColorStop(0,'#DCE4EE');bg.addColorStop(1,'#EDF0F4');x.fillStyle=bg;x.fillRect(0,0,L.W,L.H);}
       x.drawImage(src.img,V.ox,V.oy,KV.w*V.s,dh);
       if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
-        const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}
-    // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in on top
+        const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
+    // stage caption, written straight to the page
+    const stg=p<KICK.run0+0.01?'Scroll to kick off':p<KICK.strike?'The run-up':p<KICK.board0?'The strike':(HOVER?'Hover an event, click to register':'Tap an event to register');
+    if(stg!==this.kvStage){this.kvStage=stg;host.querySelectorAll('[data-ev-stage]').forEach(el=>{el.textContent=stg;});}
+    // the goal strip: a broadcast lower-third from the moment of impact until the events have risen
+    const gon=p>=KICK.score0&&p<KICK.score1+0.03?'1':'0';if(gon!==this.kvGoalOn){this.kvGoalOn=gon;host.querySelectorAll('[data-goal-board]').forEach(el=>el.setAttribute('data-on',gon));}
+    // the events: one CSS spring each (staggered), started once when the reveal begins
+    const Pn=host.querySelector('[data-goal-panel]');if(Pn){const pin=rt>0||REDUCED?'1':'0';if(Pn.getAttribute('data-in')!==pin){Pn.setAttribute('data-in',pin);Pn.style.visibility=pin==='1'?'visible':'hidden';Pn.style.opacity=pin;}}
+    // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in and opens out into the menu frame
+    if(!live&&this.kvOverlayDone===(this.kvRevealT?1:0))return;this.kvOverlayDone=live?-1:(this.kvRevealT?1:0);
     const nf=REDUCED?1:ease(clamp(rt/0.9));K.veil.style.opacity=nf.toFixed(3);K.frame.setAttribute('stroke-dashoffset',(L.port?1:1-ease(clamp((rt-0.1)/0.7))).toFixed(4));
     if(!L.port){const m=REDUCED?1:ease(clamp((rt-0.25)/0.9)),G=L.goal,M=L.menu,lx=G[0]+(M[0]-G[0])*m,ty=G[1]+(M[1]-G[1])*m,rx=G[2]+(M[2]-G[2])*m,by=G[3]+(M[3]-G[3])*m;
       K.frame.setAttribute('d','M'+lx.toFixed(1)+' '+by.toFixed(1)+'V'+ty.toFixed(1)+'H'+rx.toFixed(1)+'V'+by.toFixed(1));}
-    const fo=(1-nf).toFixed(3);host.querySelectorAll('[data-r=ev-p]').forEach(el=>{el.style.opacity=fo;});
-    const Bd=host.querySelector('[data-goal-board]');if(Bd){const gt=REDUCED?9:this.kvGoalT?(now-this.kvGoalT)/1000:-1,out=ease(seg(p,KICK.score1-0.04,KICK.score1)),on=gt>=0&&out<0.999;
-      Bd.style.visibility=on?'visible':'hidden';if(on){const el=this.kvGoalEls||(this.kvGoalEls={r:[...Bd.querySelectorAll('[data-goal-ring]')],s:[...Bd.querySelectorAll('[data-goal-spark]')],t:Bd.querySelector('[data-goal-led]')});
-        el.r.forEach((r,i)=>{const u=clamp((gt-i*0.12)/(0.7+i*0.15)),k=1-Math.pow(1-u,3);r.style.transform='scale('+(0.12+(1.5+i*0.7)*k).toFixed(3)+')';r.style.opacity=(u>0&&u<1?(1-u)*(0.95-i*0.35):0).toFixed(3);});
-        el.s.forEach((sp,i)=>{const a=(i*45+(i%2?18:-8))*D2R,u=clamp(gt/0.65),k=1-Math.pow(1-u,3),dd=26+(i%2?70:110)*k;sp.style.transform='translate('+(Math.cos(a)*dd).toFixed(1)+'px,'+(Math.sin(a)*dd).toFixed(1)+'px) scale('+(1-0.6*u).toFixed(3)+')';sp.style.opacity=(gt>0?1-clamp((gt-0.18)/0.5):0).toFixed(3);});
-        const sg=gt<=0?0:1-Math.exp(-6.5*gt)*Math.cos(11*gt);el.t.style.transform='translate(-50%,-50%) scale('+(Math.max(0,sg)*(1+0.12*out)).toFixed(3)+')';el.t.style.opacity=(clamp(gt*7)*(1-out)).toFixed(3);el.t.style.filter=out>0.01?'drop-shadow(0 1px 2px rgba(15,20,40,.12)) blur('+(out*8).toFixed(1)+'px)':'';}}
-    // events: rise from below the screen against gravity, overshoot and jiggle into place (damped spring), headers lead their rows
-    const Pn=host.querySelector('[data-goal-panel]');if(Pn){Pn.style.opacity=rt>0||REDUCED?'1':'0';Pn.style.visibility=rt>0||REDUCED?'visible':'hidden';
-      L.chips.forEach(c=>{const u=REDUCED?9:Math.max(0,rt-0.35-c.delay),sp=u>0?1-Math.exp(-4.2*u)*Math.cos(9.5*u):0,wob=u>0?Math.exp(-3.6*u)*Math.sin(15*u):0;
-        c.el.style.transform='translate('+(wob*(c.head?2:5)).toFixed(2)+'px,'+((1-sp)*c.rise).toFixed(1)+'px) rotate('+(wob*c.spin).toFixed(2)+'deg) scale('+(1+0.06*wob).toFixed(4)+')';c.el.style.opacity=clamp(u*4).toFixed(3);});}}
+    const fo=(1-nf).toFixed(3);host.querySelectorAll('[data-r=ev-p]').forEach(el=>{el.style.opacity=fo;});}
   patchSpline(){
     document.querySelectorAll('spline-viewer').forEach(v=>{const app=v._spline;if(!app||this.splineDone.has(app))return;let objs;try{objs=app.getAllObjects();}catch(e){return;}if(!objs||!objs.length)return;
       const url=v.getAttribute('url')||'';
