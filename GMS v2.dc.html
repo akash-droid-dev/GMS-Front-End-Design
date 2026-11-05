@@ -1718,7 +1718,7 @@ const ROLE_VERB={athlete:'In competition',staff:'Notes and coaching cues',entity
 // The action frames only download the first time that role plays.
 const ROLE_PHOTOS={athlete:3,staff:3,entity:3,lo:3,official:3,medical:3,nada:3,gov:3,media:3,volunteer:3,service:3,ema:3};
 // roles with a filmed loop (the photo stays underneath as the instant first frame)
-const ROLE_VIDEO={athlete:10,entity:10,staff:10,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10};
+const ROLE_VIDEO={athlete:10,entity:10,staff:10,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10,service:10,ema:10};
 const PHOTO_KEYS=[[0,0],[0.35,0],[0.55,1],[1,1],[1.2,2],[2.6,2],[2.8,1],[3.1,1],[3.3,0],[3.6,0]];
 const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],V=ROLE_VIDEO[id],D=V||3.6;
   host.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;background:#FFFFFF"><div data-ph style="position:absolute;inset:-3%;will-change:transform">'+
