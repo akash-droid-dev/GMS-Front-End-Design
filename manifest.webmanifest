@@ -1,0 +1,22 @@
+{
+  "name": "GMS, Games Management System",
+  "short_name": "GMS",
+  "description": "Schedule, live results, medals and registration for the GMS Games 2026 in Ahmedabad.",
+  "id": "./",
+  "start_url": "./?source=app",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0B0D12",
+  "theme_color": "#0B0D12",
+  "lang": "en",
+  "categories": ["sports", "events"],
+  "icons": [
+    { "src": "assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "My Games", "url": "./#mygames", "icons": [{ "src": "assets/brand/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Medal table", "url": "./#medals", "icons": [{ "src": "assets/brand/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

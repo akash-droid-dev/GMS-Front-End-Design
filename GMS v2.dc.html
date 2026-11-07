@@ -6,6 +6,12 @@
 <title>GMS, Games Management System for the GMS Games 2026</title>
 <meta name="description" content="Registration, accreditation, schedules and live results for every athlete, official and venue of the GMS Games 2026 in Ahmedabad, 14 to 18 November.">
 <meta name="theme-color" content="#0B0D12">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GMS">
+<script>/* theme before first paint: saved choice, else the device setting */(function(){try{var t=localStorage.getItem('gms-theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GMS">
 <meta property="og:title" content="GMS, Games Management System">
@@ -297,6 +303,14 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
  footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))!important}
 }
 /* GMS icon set: one family of 24-unit line icons (rounded strokes) drawn as masks, so they take the text colour */
+[data-gi="search"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='M16 16l4.5 4.5'/%3E%3C/svg%3E")}
+[data-gi="star"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z'/%3E%3C/svg%3E")}
+[data-gi="star_fill"],[aria-pressed="true"]>.gi[data-gi="star"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z' fill='%23000'/%3E%3C/svg%3E")}
+[data-gi="dark_mode"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z'/%3E%3C/svg%3E")}
+[data-gi="light_mode"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4'/%3E%3C/svg%3E")}
+[data-gi="medal"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='15' r='5.2'/%3E%3Cpath d='M8.2 3.5h7.6M9 3.5l2.2 6.6M15 3.5l-2.2 6.6'/%3E%3Cpath d='M12 12.7v4.6'/%3E%3C/svg%3E")}
+[data-gi="download"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14'/%3E%3C/svg%3E")}
+[data-gi="link"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1'/%3E%3Cpath d='M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1'/%3E%3C/svg%3E")}
 .gi{display:inline-block;width:1em;height:1em;vertical-align:-.14em;font-style:normal;flex:none;background:currentColor;-webkit-mask:var(--gi) center/contain no-repeat;mask:var(--gi) center/contain no-repeat}
 [data-gi="arrow_forward"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")}
 [data-gi="arrow_outward"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8.5 7H17v8.5'/%3E%3C/svg%3E")}
@@ -915,11 +929,82 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 .skip-link{position:fixed;left:16px;top:-60px;z-index:200;padding:10px 16px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600;text-decoration:none;transition:top .25s ease}
 .skip-link:focus{top:16px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ---- Quick tools in the nav: search, My Games, theme ---- */
+.nv-ic{all:unset;box-sizing:border-box;position:relative;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--d-ink,#0B0D12);font-size:18px;transition:background .25s var(--gms-ease),color .25s}
+.nv-ic:hover{background:var(--d-tint,rgba(11,13,18,.06))}.nv-ic:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}
+.nv-badge{position:absolute;right:2px;top:2px;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:999px;background:#2F5BFF;color:#fff;font:700 10px/16px 'Instrument Sans',system-ui,sans-serif;text-align:center;transform:scale(0);transition:transform .35s var(--gms-ease)}
+.nv-badge[data-n]{transform:scale(1)}
+.nv-mi{display:none}
+@media (max-width:1180px){.nv-ic--theme{display:none}}
+@media (max-width:900px){
+ .nv-ic--my,.nv-ic--theme{display:none}
+ [data-r=navlinks] .nv-mi{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 16px;font-size:15px;font-weight:600;color:var(--d-ink,#0B0D12)}
+ [data-r=navlinks] .nv-mi .gi{font-size:18px}
+ [data-r=navlinks] .nv-mi .nv-badge{position:static;transform:none;display:none}[data-r=navlinks] .nv-mi .nv-badge[data-n]{display:inline-block}
+}
+/* ---- star a session for My Games ---- */
+.sr-head{display:flex;align-items:center}
+.sr-star{all:unset;box-sizing:border-box;flex:none;width:40px;height:40px;margin-right:6px;border-radius:50%;display:grid;place-items:center;cursor:pointer;font-size:18px;color:var(--d-ink3,#8A909C);transition:color .25s,background .25s,transform .35s var(--gms-ease)}
+.sr-star:hover{background:var(--d-tint,rgba(11,13,18,.05));color:var(--d-ink,#0B0D12)}.sr-star:focus-visible{outline:2px solid #2F5BFF;outline-offset:1px}
+.sr-star[aria-pressed="true"]{color:#E7A10E}.sr-star[data-pop]{animation:srPop .45s var(--gms-ease)}
+@keyframes srPop{40%{transform:scale(1.28)}}
+
+/* ---- Dark theme. Light sections carry var(--d-*, light value) colours, so these variables only exist here ---- */
+html[data-theme=dark]{color-scheme:dark;--d-chip:rgba(255,255,255,.08);--d-s0:#0E1117;--d-s1:#151921;--d-ink:#ECEEF2;--d-ink2:#AEB5C1;--d-ink3:#8E96A4;--d-line:rgba(255,255,255,.1);--d-tint:rgba(255,255,255,.07);
+ --d-glass:rgba(16,19,26,.84);--d-inv:#F1F3F7;--d-on-inv:#0B0D12;--sh-1:0 1px 2px rgba(0,0,0,.4);--sh-2:0 2px 8px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.3);--sh-3:0 4px 14px rgba(0,0,0,.4),0 24px 60px rgba(0,0,0,.4)}
+html[data-theme=dark],html[data-theme=dark] body{background:#0B0D12;color:#ECEEF2}
+html[data-theme=dark] [data-r=nav]{background:rgba(16,19,26,.84)!important;border-color:rgba(255,255,255,.08)!important}
+html[data-theme=dark] [data-r=nav] img[src*="gms-mark.svg"]{filter:invert(1) hue-rotate(180deg)}
+html[data-theme=dark] [data-regmenu]{background:#11141B!important;border-color:rgba(255,255,255,.08)!important}
+html[data-theme=dark] [data-r=regmenu-head]{background:rgba(17,20,27,.98)!important;border-color:rgba(255,255,255,.08)!important}
+html[data-theme=dark] [data-rg]{background:#151921!important}
+html[data-theme=dark] [data-r=navlinks] button[data-on="0"]:hover{background:rgba(255,255,255,.08)!important}
+html[data-theme=dark] [data-r=menu-admin]{border-color:rgba(255,255,255,.08)!important;color:#ECEEF2!important}
+html[data-theme=dark] [data-r=tabbar]{background:rgba(17,20,27,.94)!important;border-color:rgba(255,255,255,.08)!important}
+html[data-theme=dark] [data-r=tabbar] button{color:#8E96A4}html[data-theme=dark] [data-r=tabbar] button[data-on="1"]{color:#ECEEF2;background:rgba(255,255,255,.08)}
+html[data-theme=dark] .gms-lite [data-r=nav]{background:rgba(16,19,26,.96)!important}
+html[data-theme=dark] .gms-lite [data-r=chat]{background:#11141B!important}
+html[data-theme=dark] [data-ev-sticky]::before{background:linear-gradient(180deg,#151921 0%,rgba(21,25,33,.6) 45%,rgba(21,25,33,0) 100%)}
+html[data-theme=dark] [data-r=stories]{background:#0E1117}
+html[data-theme=dark] .st-p,html[data-theme=dark] .step-desc,html[data-theme=dark] .rc-copy p{color:#AEB5C1}
+html[data-theme=dark] .sx{color:#8E96A4}
+html[data-theme=dark] .st-arw{border-color:rgba(255,255,255,.2);color:#ECEEF2}html[data-theme=dark] .st-arw:hover{background:#F1F3F7;color:#0B0D12;border-color:#F1F3F7}
+html[data-theme=dark] .st-prog>span,html[data-theme=dark] .rc-bar,html[data-theme=dark] [data-r=roles-progress]{background:rgba(255,255,255,.12)}
+html[data-theme=dark] .st-prog i,html[data-theme=dark] .rc-bar i{background:#ECEEF2}html[data-theme=dark] .rc-n{color:#ECEEF2}
+html[data-theme=dark] .rc-card{background:#11141B;border-color:rgba(255,255,255,.08)}html[data-theme=dark] .rc-art{border-color:rgba(255,255,255,.06)}
+html[data-theme=dark] [data-role-arrow]{border-color:rgba(255,255,255,.18);color:#ECEEF2}
+html[data-theme=dark] .cal-a{border-color:rgba(255,255,255,.18);color:#ECEEF2}html[data-theme=dark] .cal-a:hover{background:#F1F3F7;color:#0B0D12;border-color:#F1F3F7}
+html[data-theme=dark] .cal-k,html[data-theme=dark] .ec-cap,html[data-theme=dark] [data-goal-g],html[data-theme=dark] [data-goal-nm] [data-goal-sub]{color:#8E96A4}
+html[data-theme=dark] :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark):not(:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) *){--bt-fill:#F1F3F7;color:#ECEEF2!important;border-color:rgba(255,255,255,.24)!important}
+html[data-theme=dark] :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark):not(:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) *):hover{color:#0B0D12!important}
+html[data-theme=dark] :is(.gms-glow,.gms-cta):not(:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) *){color:#ECEEF2}
+html[data-theme=dark] .ecx-panel{color:#ECEEF2}
+html[data-theme=dark] :is(.ec-card,[data-r=ec-row],.ec-seg){background:#11141B;border-color:rgba(255,255,255,.1)}
+html[data-theme=dark] [data-r=ec-row]:hover{border-color:rgba(255,255,255,.3)}html[data-theme=dark] [data-r=ec-row][data-on="1"]{border-color:#ECEEF2}
+html[data-theme=dark] .ec-seg button:hover{color:#ECEEF2}html[data-theme=dark] .ec-seg button[data-on="1"]{background:#F1F3F7;color:#0B0D12}
+html[data-theme=dark] :is(.ec-nm,.ec-l,.ec-sum,.ec-legend){color:#AEB5C1}html[data-theme=dark] .ec-nm[data-win="1"]{color:#ECEEF2}
+html[data-theme=dark] :is(.ec-nm,.ec-pl,.ec-arw) small{background:#1C2029;color:#AEB5C1}
+html[data-theme=dark] :is(.ec-perh,.ec-endh){background:#151921;color:#8E96A4}html[data-theme=dark] :is(.ec-per,.ec-end)[data-cur="1"]{background:#18213D}
+html[data-theme=dark] .ec-ends{border-color:rgba(255,255,255,.1)}html[data-theme=dark] .ec-legend i{border-color:#11141B}
+html[data-theme=dark] .cc-msg--bot,html[data-theme=dark] .cc-typing{background:#151921;color:#ECEEF2;border-color:rgba(255,255,255,.08)}
+html[data-theme=dark] .cc-msg--me{background:#F1F3F7;color:#0B0D12}
+html[data-theme=dark] .cc-chip{background:#151921;color:#ECEEF2;border-color:rgba(255,255,255,.14)}
+html[data-theme=dark] .cc-form :is(input,textarea){background:#151921;color:#ECEEF2;border-color:rgba(255,255,255,.12)}html[data-theme=dark] .cc-form :is(input,textarea):focus{background:#0E1117}
+html[data-theme=dark] .cc-ticket{background:linear-gradient(160deg,#151921,#121A2E);border-color:rgba(255,255,255,.1)}
+html[data-theme=dark] :is(input,select,textarea){color-scheme:dark}
+html[data-theme=dark] #gms-shell [data-r=nav]{background:rgba(16,19,26,.84)!important;border-color:rgba(255,255,255,.08)!important;color:#ECEEF2}
+html[data-theme=dark] #gms-shell [data-r=nav] button{color:#ECEEF2!important}
+html[data-theme=dark] #gms-shell [data-r=nav] img{filter:invert(1) hue-rotate(180deg)}
+html[data-theme=dark] #gms-shell [data-r=admin-btn]{background:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
+html[data-theme=dark] [data-r=admin-btn]{background:transparent!important}
+html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.16),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#0B0D12!important}
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
+<script defer src="./assets/js/gms-plus.js?v=5"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -963,7 +1048,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 
 <a class="skip-link" href="#content">Skip to content</a>
 <div data-navback data-open="{{ navBack }}" onClick="{{ closeNavMenus }}" aria-hidden="true"></div>
-<nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
+<nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:var(--d-glass,rgba(255,255,255,.62));backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
   <button onClick="{{ goHome }}" aria-label="GMS home" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
     <img src="assets/brand/gms-mark.svg" alt="" width="32" height="32" style="display:block;width:32px;height:32px">
     <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
@@ -972,27 +1057,32 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
       <button data-on="{{ n.on }}" data-sec="{{ n.sec }}" onClick="{{ n.go }}" onMouseEnter="{{ n.enter }}" onMouseLeave="{{ n.leave }}" aria-expanded="{{ n.exp }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }};transition:background .2s ease,color .2s ease">{{ n.label }}<span style="font-family:'Material Symbols Rounded';font-size:18px;width:{{ n.cw }};overflow:hidden;transition:transform .3s ease;transform:rotate({{ n.rot }})"><i class="gi" data-gi="expand_more"></i></span></button>
     </sc-for>
+    <button type="button" class="nv-mi" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
+    <button type="button" class="nv-mi" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
     <button data-r="menu-admin" onClick="{{ goAdminLogin }}">Admin login</button>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
-    <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,13,18,.06);font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="{{ menuIcon }}"></i></button>
-    <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0D12;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
+    <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:var(--d-tint,rgba(11,13,18,.06));font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="{{ menuIcon }}"></i></button>
+    <button type="button" class="nv-ic" data-plus="search" aria-label="Search the Games" title="Search (Ctrl K)"><i class="gi" data-gi="search"></i></button>
+    <button type="button" class="nv-ic nv-ic--my" data-plus="mygames" aria-label="My Games" title="My Games"><i class="gi" data-gi="star"></i><b class="nv-badge" data-my-count></b></button>
+    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button>
+    <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-size:14px;font-weight:600">Admin Login</button>
     <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
-  <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:var(--r-l);background:rgba(255,255,255,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid #E6E9EF;box-shadow:var(--sh-3);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
+  <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:var(--r-l);background:var(--d-glass,rgba(255,255,255,.96));backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid var(--d-line,#E6E9EF);box-shadow:var(--sh-3);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
       <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span class="sx">Registration, 12 ways to take part</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Games.</span></div>
-      <div style="display:flex;align-items:center;gap:8px"><button data-r="regmenu-all" onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.1);font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:#F3F5F9">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px"><i class="gi" data-gi="arrow_downward"></i></span></button><button data-r="regmenu-close" onClick="{{ regClose }}" aria-label="Close registration menu" style="all:unset;cursor:pointer;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:#F1F3F7;font-family:'Material Symbols Rounded';font-size:21px;transition:background .2s ease" style-hover="background:#E4E8EF"><i class="gi" data-gi="close"></i></button></div>
+      <div style="display:flex;align-items:center;gap:8px"><button data-r="regmenu-all" onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,13,18,.1));font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:var(--d-s1,#F3F5F9)">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px"><i class="gi" data-gi="arrow_downward"></i></span></button><button data-r="regmenu-close" onClick="{{ regClose }}" aria-label="Close registration menu" style="all:unset;cursor:pointer;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--d-s1,#F1F3F7);font-family:'Material Symbols Rounded';font-size:21px;transition:background .2s ease" style-hover="background:#E4E8EF"><i class="gi" data-gi="close"></i></button></div>
     </div>
     <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
       <sc-for list="{{ regGroups }}" as="g" hint-placeholder-count="3">
-        <div data-rg style="display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:var(--r-m);background:#F5F7FA">
-          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#6B7180;padding:6px 8px 6px">{{ g.title }}</span>
+        <div data-rg style="display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:var(--r-m);background:var(--d-s1,#F5F7FA)">
+          <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--d-ink3,#6B7180);padding:6px 8px 6px">{{ g.title }}</span>
           <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="4">
-            <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:10px;border-radius:var(--r-s);transition:background .2s ease,box-shadow .2s ease" style-hover="background:#fff;box-shadow:var(--sh-1)">
-              <span style="width:40px;height:40px;border-radius:var(--r-s);background:#fff;color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:21px;box-shadow:inset 0 0 0 1px #E6E9EF"><i class="gi" data-gi="{{ r.icon }}"></i></span>
-              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:#0B0D12">{{ r.name }}</span><span data-r="regmenu-desc" style="font-size:12px;color:#5B6270;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
-              <span style="font-family:'Material Symbols Rounded';font-size:17px;color:#6B7180"><i class="gi" data-gi="arrow_forward"></i></span>
+            <button onClick="{{ r.go }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:10px;border-radius:var(--r-s);transition:background .2s ease,box-shadow .2s ease" style-hover="background:var(--d-s0,#fff);box-shadow:var(--sh-1)">
+              <span style="width:40px;height:40px;border-radius:var(--r-s);background:var(--d-s0,#fff);color:#2F5BFF;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:21px;box-shadow:inset 0 0 0 1px var(--d-line,#E6E9EF)"><i class="gi" data-gi="{{ r.icon }}"></i></span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px;color:var(--d-ink,#0B0D12)">{{ r.name }}</span><span data-r="regmenu-desc" style="font-size:12px;color:var(--d-ink2,#5B6270);line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ r.desc }}</span></span>
+              <span style="font-family:'Material Symbols Rounded';font-size:17px;color:var(--d-ink3,#6B7180)"><i class="gi" data-gi="arrow_forward"></i></span>
             </button>
           </sc-for>
         </div>
@@ -1025,9 +1115,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0">{{ ticker }}</div>
   </section>
 
-  <section ref="{{ stepsRef }}" style="position:relative;z-index:2;height:260vh;background:#FFFFFF">
+  <section ref="{{ stepsRef }}" style="position:relative;z-index:2;height:260vh;background:var(--d-s0,#FFFFFF)">
     <div data-r="steps-grid" style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
-      <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:var(--r-l);background:#F1F3F7;overflow:hidden">
+      <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:var(--r-l);background:var(--d-s1,#F1F3F7);overflow:hidden">
         {{ photoLoop }}
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,0) 86%,rgba(255,255,255,.5) 100%);pointer-events:none"></div>
         <div style="position:absolute;left:18px;bottom:18px;padding:10px 18px;border-radius:var(--r-m);background:rgba(255,255,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);font-family:'Bricolage Grotesque';font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1" data-step-num>{{ stepNum }}</div>
@@ -1038,7 +1128,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
           <div data-step data-on="{{ s.on }}" style="padding:9px 0">
             <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
               <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.6vw,52px);letter-spacing:-.04em;line-height:1.05">{{ s.title }}</div>
-              <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ s.when }}</span>
+              <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ s.when }}</span>
             </div>
           </div>
         </sc-for>
@@ -1047,7 +1137,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     </div>
   </section>
 
-  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:190vh;background:#FFFFFF">
+  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:190vh;background:var(--d-s0,#FFFFFF)">
     <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
       <div data-r="tv-cinema" data-cursor="Watch" data-cursor-tone="light" onClick="{{ goTv }}" style="position:absolute;inset:0;cursor:pointer;background:#0B0D12;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
         {{ tvVideo }}
@@ -1146,15 +1236,15 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
   </section>
 
   <div class="seam seam-dl" aria-hidden="true"></div>
-  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:330vh;background:#F6F7F9">
+  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:330vh;background:var(--d-s1,#F6F7F9)">
     <div data-ev-sticky style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(70% 60% at 70% 40%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
       <div data-kick aria-hidden="true" style="position:absolute;inset:0"></div>
       <div data-r="ev-head" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:78px 32px 0;box-sizing:border-box;pointer-events:none">
         <div data-ev-head>
           <span class="sx"><i>03</i>The programme</span>
           <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">18 medal events<br>across six sports</h2>
-          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:#4A505C">Scroll on and the strike opens the full programme, from the 100 m heats to the football final.</p>
-          <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#5B6270"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
+          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">Scroll on and the strike opens the full programme, from the 100 m heats to the football final.</p>
+          <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--d-ink2,#5B6270)"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
       </div>
       <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_soccer"></i></span><span class="lt-main"><b>Goal</b><span class="lt-min">63&#8217;</span></span><span class="lt-sub">18 medal events unlocked</span></div>
@@ -1175,12 +1265,12 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     </div>
   </section>
 
-  <section data-r="sch-section" ref="{{ scheduleRef }}" style="background:#FFFFFF;padding:88px 32px">
+  <section data-r="sch-section" ref="{{ scheduleRef }}" style="background:var(--d-s0,#FFFFFF);padding:88px 32px">
     <div data-r="sch-grid" style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,1.6fr);gap:56px;align-items:start">
       <div data-r="sch-left" style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
         <span class="sx"><i>04</i>Schedule</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96">Every session, day by day</h2>
-        <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">Sessions run from 07:30 to 20:00 IST across four venues. Open one for its round, venue and a calendar link.</p>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">Sessions run from 07:30 to 20:00 IST across four venues. Open one for its round, venue and a calendar link.</p>
         <div data-rise data-r="sch-days" style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
             <button onClick="{{ d.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:var(--r-s);background:{{ d.bg }};color:{{ d.fg }};transition:background .3s ease,color .3s ease">
@@ -1194,18 +1284,18 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
         <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
             <div style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px">
-              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:#6B7180">{{ g.part }}</span></div>
-              <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid #E8EAEE;padding-left:14px">
+              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:var(--d-ink3,#6B7180)">{{ g.part }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--d-line,#E8EAEE);padding-left:14px">
                 <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="3">
                   <div style="display:flex;flex-direction:column;border-radius:var(--r-s);background:{{ r.bg }};box-shadow:inset 2px 0 0 {{ r.dot }};transition:background .3s ease">
-                    <button onClick="{{ r.toggle }}" data-cursor="Details" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:var(--r-s)" style-hover="background:#F6F7F9">
-                      <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#6B7180">{{ r.sport }} · {{ r.code }}</span></span>
-                      <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:#4A505C">{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#6B7180;transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
-                    </button>
+                    <div class="sr-head"><button onClick="{{ r.toggle }}" data-cursor="Details" style="all:unset;cursor:pointer;flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-radius:var(--r-s)" style-hover="background:var(--d-s1,#F6F7F9)">
+                      <span style="display:flex;flex-direction:column;gap:3px"><span style="font-weight:600;font-size:16px">{{ r.name }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:var(--d-ink3,#6B7180)">{{ r.sport }} · {{ r.code }}</span></span>
+                      <span style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;color:var(--d-ink2,#4A505C)">{{ r.cat }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;color:var(--d-ink3,#6B7180);transform:{{ r.rot }};transition:transform .3s ease"><i class="gi" data-gi="expand_more"></i></span></span>
+                    </button><button type="button" class="sr-star" data-star="{{ r.key }}" aria-pressed="false" aria-label="Add {{ r.name }} to My Games"><i class="gi" data-gi="star"></i></button></div>
                     <div style="display:grid;grid-template-rows:{{ r.gr }};transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)"><div style="min-height:0;overflow:hidden;visibility:{{ r.vis }};transition:visibility .45s">
                       <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 14px">
                         <sc-for list="{{ r.details }}" as="x" hint-placeholder-count="4">
-                          <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #ECEEF2;font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:#6B7180">{{ x.k }}</span>{{ x.v }}</span>
+                          <span style="display:flex;gap:6px;align-items:baseline;padding:7px 12px;border-radius:999px;background:var(--d-s0,#fff);border:1px solid var(--d-line,#ECEEF2);font-size:13px"><span style="font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;color:var(--d-ink3,#6B7180)">{{ x.k }}</span>{{ x.v }}</span>
                         </sc-for>
                       </div>
                       <div class="cal-row"><span class="cal-k"><i class="gi" data-gi="event_available"></i>ADD TO CALENDAR</span><a class="cal-a" href="{{ r.gcal }}" target="_blank" rel="noopener">Google</a><button type="button" class="cal-a" onClick="{{ r.ics }}">Apple</button><a class="cal-a" href="{{ r.outlook }}" target="_blank" rel="noopener">Outlook</a></div>
@@ -1217,38 +1307,38 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
           </sc-for>
         </sc-if>
         <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:48px 28px;border-radius:var(--r-m);background:#F6F7F9;color:#5B6270;font-size:15px">Session timings for this day will be published after the draw.</div>
+          <div style="padding:48px 28px;border-radius:var(--r-m);background:var(--d-s1,#F6F7F9);color:var(--d-ink2,#5B6270);font-size:15px">Session timings for this day will be published after the draw.</div>
         </sc-if>
       </div>
     </div>
   </section>
 
-  <section ref="{{ regRef }}" data-r="roles-section" style="position:relative;background:#FFFFFF;overflow:clip">
+  <section ref="{{ regRef }}" data-r="roles-section" style="position:relative;background:var(--d-s0,#FFFFFF);overflow:clip">
     <div data-r="roles-pin">
       <div aria-hidden="true" style="position:absolute;right:-14%;top:4%;width:64%;height:90%;background:radial-gradient(closest-side,rgba(47,91,255,.11),rgba(47,91,255,0));pointer-events:none"></div>
       <div data-r="roles-grid" style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(32px,5vw,84px);align-items:center">
         <div data-r="roles-left" style="display:flex;flex-direction:column;min-width:0">
           <span class="sx"><i>05</i>Registration</span>
           <h2 style="margin:12px 0 0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,min(3.6vw,5.8vh),50px);letter-spacing:-.05em;line-height:.96">Choose how you're taking part</h2>
-          <p data-r="roles-p" style="margin:14px 0 0;max-width:460px;font-size:14.5px;line-height:1.6;color:#4A505C">{{ roleHint }}</p>
+          <p data-r="roles-p" style="margin:14px 0 0;max-width:460px;font-size:14.5px;line-height:1.6;color:var(--d-ink2,#4A505C)">{{ roleHint }}</p>
           <div data-r="roles-window" onMouseLeave="{{ roleLeave }}">
             <div data-r="roles-index">
               <sc-for list="{{ roleGroups }}" as="g" hint-placeholder-count="3">
                 <div data-role-group style="margin-top:34px">
-                  <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#0B0D12"><span class="edge edge--v" style="background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:#6B7180">{{ g.count }}</span></div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:var(--d-ink,#0B0D12)"><span class="edge edge--v" style="background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:var(--d-ink3,#6B7180)">{{ g.count }}</span></div>
                   <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
-                    <div data-role-row data-k="{{ r.k }}" data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid #E8EBF0">
+                    <div data-role-row data-k="{{ r.k }}" data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid var(--d-line,#E8EBF0)">
                       <button onClick="{{ r.click }}" data-cursor="Register" onMouseMove="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:var(--row-pad,17px) 6px">
-                        <span style="font-family:'JetBrains Mono';font-size:12px;color:#6B7180">{{ r.num }}</span>
-                        <span data-role-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(19px,min(1.9vw,3.4vh),27px);letter-spacing:-.03em;line-height:1.08;color:#0B0D12;overflow-wrap:anywhere">{{ r.name }}</span>
+                        <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink3,#6B7180)">{{ r.num }}</span>
+                        <span data-role-name style="font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(19px,min(1.9vw,3.4vh),27px);letter-spacing:-.03em;line-height:1.08;color:var(--d-ink,#0B0D12);overflow-wrap:anywhere">{{ r.name }}</span>
                         <span data-role-arrow aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_outward"></i></span>
                       </button>
                       <div data-role-drawer>
                         <div data-role-drawer-in>
                           <div style="display:flex;flex-direction:column;gap:14px;padding:2px 6px 22px">
-                            <div style="position:relative;border-radius:var(--r-m);overflow:hidden;aspect-ratio:9/7;background:#fff;border:1px solid #EEF0F4">{{ r.art }}</div>
-                            <p style="margin:0;font-size:15px;line-height:1.55;color:#4A505C">{{ r.who }}</p>
-                            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ r.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+                            <div style="position:relative;border-radius:var(--r-m);overflow:hidden;aspect-ratio:9/7;background:var(--d-s0,#fff);border:1px solid var(--d-line,#EEF0F4)">{{ r.art }}</div>
+                            <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ r.who }}</p>
+                            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:var(--d-chip,{{ r.gt }});font-size:12.5px;font-weight:600;color:var(--d-ink,#0B0D12)">{{ n.t }}</span></sc-for></span></div>
                             <button onClick="{{ r.go }}" class="gms-cta" style="align-self:flex-start"><span>{{ r.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
                           </div>
                         </div>
@@ -1263,20 +1353,20 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
           {{ roleRail }}
         </div>
         <aside data-r="roles-preview" aria-label="Selected role" onMouseEnter="{{ rolePrevEnter }}" onMouseLeave="{{ roleLeave }}" style="min-width:0">
-          <div style="border-radius:var(--r-l);background:#FFFFFF;border:1px solid #E8EBF0;box-shadow:var(--sh-3);overflow:hidden">
-            <div data-r="roles-art" style="position:relative;aspect-ratio:16/11;max-height:calc(100vh - 462px);min-height:190px;width:100%;background:#FFFFFF;border-bottom:1px solid #EEF0F4">
+          <div style="border-radius:var(--r-l);background:var(--d-s0,#FFFFFF);border:1px solid var(--d-line,#E8EBF0);box-shadow:var(--sh-3);overflow:hidden">
+            <div data-r="roles-art" style="position:relative;aspect-ratio:16/11;max-height:calc(100vh - 462px);min-height:190px;width:100%;background:var(--d-s0,#FFFFFF);border-bottom:1px solid var(--d-line,#EEF0F4)">
               <sc-for list="{{ roleArts }}" as="a" hint-placeholder-count="12"><span data-art data-on="{{ a.on }}">{{ a.el }}</span></sc-for>
-              <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:#6B7180">{{ rolePrev.num }}</span>
-              <span data-r="roles-live" style="position:absolute;right:18px;top:15px;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid #E8EBF0;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:#4A505C">{{ roleLive }}</span>
+              <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">{{ rolePrev.num }}</span>
+              <span data-r="roles-live" style="position:absolute;right:18px;top:15px;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid var(--d-line,#E8EBF0);font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:var(--d-ink2,#4A505C)">{{ roleLive }}</span>
             </div>
             <div data-r="roles-copy" style="padding:18px 24px 20px;display:flex;flex-direction:column;gap:10px">
               <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:{{ rolePrev.gc }}"><span class="edge edge--v" style="background:{{ rolePrev.gc }}"></span>{{ rolePrev.group }}</span>
-              <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,min(2vw,3.6vh),29px);letter-spacing:-.035em;line-height:1.05;color:#0B0D12">{{ rolePrev.name }}</h3>
-              <p style="margin:0;font-size:14px;line-height:1.55;color:#4A505C">{{ rolePrev.who }}</p>
-              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:{{ rolePrev.gt }};font-size:12.5px;font-weight:600;color:#0B0D12">{{ n.t }}</span></sc-for></span></div>
+              <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(22px,min(2vw,3.6vh),29px);letter-spacing:-.035em;line-height:1.05;color:var(--d-ink,#0B0D12)">{{ rolePrev.name }}</h3>
+              <p style="margin:0;font-size:14px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ rolePrev.who }}</p>
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:var(--d-chip,{{ rolePrev.gt }});font-size:12.5px;font-weight:600;color:var(--d-ink,#0B0D12)">{{ n.t }}</span></sc-for></span></div>
               <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px">
                 <button onClick="{{ rolePrev.go }}" class="gms-glow"><span>{{ rolePrev.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
-                <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;font-size:13.5px;font-weight:600;color:#4A505C;border-bottom:1px solid rgba(11,13,18,.2);padding-bottom:2px" style-hover="color:#0B0D12">Open the registration menu</button>
+                <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--d-ink2,#4A505C);border-bottom:1px solid var(--d-line,rgba(11,13,18,.2));padding-bottom:2px" style-hover="color:var(--d-ink,#0B0D12)">Open the registration menu</button>
               </div>
             </div>
           </div>
@@ -1300,7 +1390,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     <div class="st-prog" aria-hidden="true"><span><i></i></span></div>
   </section>
 
-  <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:220vh;background:#F4F5F7">
+  <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:220vh;background:var(--d-s1,#F4F5F7)">
     <div style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden">
       <div data-fn-win class="fn-win">
         <div data-fn-vid class="fn-vid">{{ finaleVideo }}</div>
@@ -1334,7 +1424,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 
 <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
 <main data-screen-label="Registration" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.14),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
-  <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
+  <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.07));box-shadow:var(--sh-3);box-sizing:border-box">
     <sc-if value="{{ regFormOpen }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-direction:column;gap:22px">
         <div style="display:flex;align-items:center;gap:14px">
@@ -1343,14 +1433,14 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
         </div>
         <div data-r="form-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
           <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
-            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">{{ f.label }}
-              <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;color:#0B0D12;outline:none">
+            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">{{ f.label }}
+              <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid var(--d-line,rgba(11,13,18,.1));background:var(--d-glass,rgba(255,255,255,.85));font-size:15px;color:var(--d-ink,#0B0D12);outline:none">
             </label>
           </sc-for>
         </div>
         <sc-if value="{{ isAthleteForm }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-direction:column;gap:10px">
-            <span style="font-size:13px;font-weight:600;color:#4A505C">Events · {{ selCount }} selected</span>
+            <span style="font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">Events · {{ selCount }} selected</span>
             <sc-for list="{{ eventPicker }}" as="cat" hint-placeholder-count="3">
               <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
                 <span style="width:110px;font-size:12px;font-weight:700;color:{{ cat.color }}">{{ cat.name }}</span>
@@ -1362,7 +1452,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
           </div>
         </sc-if>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font-size:13px;font-weight:600;color:#4A505C">Documents</span>
+          <span style="font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">Documents</span>
           <sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
             <button onClick="{{ d.toggle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-s);border:1px dashed {{ d.bd }};background:{{ d.bg }}">
               <span style="font-family:'Material Symbols Rounded';font-size:22px;color:{{ d.ic }}"><i class="gi" data-gi="{{ d.icon }}"></i></span>
@@ -1373,7 +1463,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
         </div>
         <span style="font-size:13px;color:#E5484D;min-height:16px">{{ regError }}</span>
         <div style="display:flex;gap:10px;justify-content:space-between">
-          <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-weight:600;font-size:14px">Cancel</button>
+          <button onClick="{{ goHome }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;border:1px solid var(--d-line,rgba(11,13,18,.12));font-weight:600;font-size:14px">Cancel</button>
           <button onClick="{{ submitReg }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:14px">Submit registration</button>
         </div>
       </div>
@@ -1382,9 +1472,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:20px 0">
         <span style="width:72px;height:72px;border-radius:50%;background:#E7F7EE;color:#1FA463;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:40px"><i class="gi" data-gi="check"></i></span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.03em">Registration submitted</h2>
-        <span style="font-size:15px;color:#4A505C;max-width:400px">Your application is with the verification team. Log in with this email to track it.</span>
-        <span style="font-family:'JetBrains Mono';font-size:17px;padding:12px 18px;border-radius:var(--r-s);background:rgba(255,255,255,.85)">{{ lastRegId }}</span>
-        <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:14px">Go to login</button>
+        <span style="font-size:15px;color:var(--d-ink2,#4A505C);max-width:400px">Your application is with the verification team. Log in with this email to track it.</span>
+        <span style="font-family:'JetBrains Mono';font-size:17px;padding:12px 18px;border-radius:var(--r-s);background:var(--d-glass,rgba(255,255,255,.85))">{{ lastRegId }}</span>
+        <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-weight:600;font-size:14px">Go to login</button>
       </div>
     </sc-if>
   </div>
@@ -1394,27 +1484,27 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
 <main data-screen-label="Login" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.14),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
   <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
-    <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
-      <div style="display:flex;padding:4px;border-radius:999px;background:rgba(11,13,18,.06)">
+    <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.07));box-shadow:var(--sh-3);box-sizing:border-box">
+      <div style="display:flex;padding:4px;border-radius:999px;background:var(--d-tint,rgba(11,13,18,.06))">
         <sc-for list="{{ loginTabs }}" as="t" hint-placeholder-count="2">
           <button type="button" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:999px;font-size:14px;font-weight:600;background:{{ t.bg }};box-shadow:{{ t.sh }}">{{ t.label }}</button>
         </sc-for>
       </div>
       <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:34px;letter-spacing:-.035em">{{ loginTitle }}</h1>
-      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">Email
-        <input type="email" value="{{ loginEmail }}" onChange="{{ onLoginEmail }}" placeholder="you@example.com" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;outline:none">
+      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">Email
+        <input type="email" value="{{ loginEmail }}" onChange="{{ onLoginEmail }}" placeholder="you@example.com" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid var(--d-line,rgba(11,13,18,.1));background:var(--d-glass,rgba(255,255,255,.85));font-size:15px;outline:none">
       </label>
-      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:#4A505C">Password
-        <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" placeholder="••••••••" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid rgba(11,13,18,.1);background:rgba(255,255,255,.85);font-size:15px;outline:none">
+      <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">Password
+        <input type="password" value="{{ loginPass }}" onChange="{{ onLoginPass }}" placeholder="••••••••" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid var(--d-line,rgba(11,13,18,.1));background:var(--d-glass,rgba(255,255,255,.85));font-size:15px;outline:none">
       </label>
       <span style="font-size:13px;color:#E5484D;min-height:16px">{{ loginError }}</span>
       <button type="submit" style="all:unset;cursor:pointer;text-align:center;padding:15px;border-radius:999px;background:{{ loginBtnBg }};color:#fff;font-weight:600;font-size:15px">Sign in</button>
     </form>
   </sc-if>
   <sc-if value="{{ isParticipant }}" hint-placeholder-val="{{ false }}">
-    <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">My registration</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:#5B6270">{{ me.type }} · {{ me.id }}</span></div>
-      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
+    <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.07));box-shadow:var(--sh-3);box-sizing:border-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">My registration</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:var(--d-ink2,#5B6270)">{{ me.type }} · {{ me.id }}</span></div>
+      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,13,18,.12));font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ me.timeline }}" as="t" hint-placeholder-count="4">
           <div style="display:flex;flex-direction:column;gap:8px"><div style="height:6px;border-radius:6px;background:{{ t.bar }}"></div><span style="font-weight:600;font-size:14px;color:{{ t.fg }}">{{ t.label }}</span></div>
@@ -1423,40 +1513,40 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     </div>
   </sc-if>
   <sc-if value="{{ isAdminSession }}" hint-placeholder-val="{{ false }}">
-    <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:var(--sh-3);box-sizing:border-box">
+    <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.07));box-shadow:var(--sh-3);box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">Admin verification</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
-      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(11,13,18,.12);font-size:13px;font-weight:600">Log out</button></div>
+      <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,13,18,.12));font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
-          <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-m);background:rgba(255,255,255,.8)"><span style="font-size:12px;color:#5B6270">{{ k.label }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-m);background:rgba(255,255,255,.8)"><span style="font-size:12px;color:var(--d-ink2,#5B6270)">{{ k.label }}</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
         </sc-for>
       </div>
-      <div style="display:flex;flex-direction:column;border-radius:var(--r-m);background:rgba(255,255,255,.85);overflow:hidden">
+      <div style="display:flex;flex-direction:column;border-radius:var(--r-m);background:var(--d-glass,rgba(255,255,255,.85));overflow:hidden">
         <sc-for list="{{ adminRows }}" as="r" hint-placeholder-count="6">
-          <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px 160px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
-            <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ r.id }}</span>
+          <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px 160px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--d-line,#EEF0F3)">
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ r.id }}</span>
             <span style="font-weight:600;font-size:14px">{{ r.name }}</span>
-            <span style="font-size:13px;color:#4A505C">{{ r.type }}</span>
+            <span style="font-size:13px;color:var(--d-ink2,#4A505C)">{{ r.type }}</span>
             <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:{{ r.sBg }};color:{{ r.sFg }}">{{ r.status }}</span>
             <div style="display:flex;gap:6px;opacity:{{ r.actOp }}">
-              <button onClick="{{ r.approve }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600">Approve</button>
-              <button onClick="{{ r.reject }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;border:1px solid #E3E6EB;font-size:12px;font-weight:600">Reject</button>
+              <button onClick="{{ r.approve }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-size:12px;font-weight:600">Approve</button>
+              <button onClick="{{ r.reject }}" style="all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;border:1px solid var(--d-line,#E3E6EB);font-size:12px;font-weight:600">Reject</button>
             </div>
           </div>
         </sc-for>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em">Help desk enquiries</span><span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ enqCount }} NEW</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em">Help desk enquiries</span><span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ enqCount }} NEW</span></div>
         <sc-if value="{{ noEnq }}" hint-placeholder-val="{{ true }}">
-          <div style="padding:18px;border-radius:var(--r-m);background:rgba(255,255,255,.7);font-size:14px;color:#5B6270">No enquiries yet. Messages sent from the Contact section on the home page appear here.</div>
+          <div style="padding:18px;border-radius:var(--r-m);background:rgba(255,255,255,.7);font-size:14px;color:var(--d-ink2,#5B6270)">No enquiries yet. Messages sent from the Contact section on the home page appear here.</div>
         </sc-if>
         <sc-if value="{{ hasEnq }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;flex-direction:column;border-radius:var(--r-m);background:rgba(255,255,255,.85);overflow:hidden">
+          <div style="display:flex;flex-direction:column;border-radius:var(--r-m);background:var(--d-glass,rgba(255,255,255,.85));overflow:hidden">
             <sc-for list="{{ adminEnq }}" as="q" hint-placeholder-count="2">
-              <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid #EEF0F3">
-                <span style="font-family:'JetBrains Mono';font-size:12px;color:#5B6270">{{ q.ref }}</span>
-                <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ q.name }}</span><span style="font-size:12px;color:#5B6270;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ q.snip }}</span></span>
-                <span style="font-size:13px;color:#4A505C">{{ q.desk }} · {{ q.time }}</span>
+              <div data-r="admin-row" style="display:grid;grid-template-columns:120px minmax(0,1.3fr) minmax(0,1fr) 100px;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--d-line,#EEF0F3)">
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ q.ref }}</span>
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ q.name }}</span><span style="font-size:12px;color:var(--d-ink2,#5B6270);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ q.snip }}</span></span>
+                <span style="font-size:13px;color:var(--d-ink2,#4A505C)">{{ q.desk }} · {{ q.time }}</span>
                 <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#E8EEFF;color:#2F5BFF">{{ q.status }}</span>
               </div>
             </sc-for>
@@ -1538,25 +1628,25 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:80;background:rgba(230,234,241,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;padding:24px">
-    <div onClick="{{ stop }}" style="position:relative;width:min(480px,100%);display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:#fff;border:1px solid rgba(11,13,18,.07);box-shadow:0 30px 80px rgba(15,20,40,.16),inset 0 1px 0 rgba(255,255,255,.9);box-sizing:border-box">
-      <button onClick="{{ closeModal }}" style="all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="close"></i></button>
-      <span style="width:66px;height:66px;border-radius:var(--r-m);background:rgba(255,255,255,.85);border:1px solid #fff;box-shadow:var(--sh-1);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:34px;color:#2F5BFF"><i class="gi" data-gi="{{ modal.icon }}"></i></span>
+    <div onClick="{{ stop }}" style="position:relative;width:min(480px,100%);display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.07));box-shadow:0 30px 80px rgba(15,20,40,.16),inset 0 1px 0 rgba(255,255,255,.9);box-sizing:border-box">
+      <button onClick="{{ closeModal }}" style="all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:var(--d-glass,rgba(255,255,255,.85));display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="close"></i></button>
+      <span style="width:66px;height:66px;border-radius:var(--r-m);background:var(--d-glass,rgba(255,255,255,.85));border:1px solid #fff;box-shadow:var(--sh-1);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:34px;color:#2F5BFF"><i class="gi" data-gi="{{ modal.icon }}"></i></span>
       <div style="display:flex;flex-direction:column;gap:10px">
         <span class="sx">Register as</span>
         <h3 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:36px;letter-spacing:-.04em;line-height:1.02">{{ modal.name }}</h3>
-        <p style="margin:0;font-size:16px;line-height:1.55;color:#4A505C">{{ modal.desc }}</p>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ modal.desc }}</p>
       </div>
-      <button onClick="{{ startFlow }}" style="all:unset;cursor:pointer;text-align:center;padding:16px;border-radius:999px;background:#0B0D12;color:#fff;font-weight:600;font-size:15px">Register</button>
+      <button onClick="{{ startFlow }}" style="all:unset;cursor:pointer;text-align:center;padding:16px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-weight:600;font-size:15px">Register</button>
     </div>
   </div>
 </sc-if>
 
 <sc-if value="{{ showChat }}" hint-placeholder-val="{{ true }}">
   <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
-    <div data-r="chat" class="vz-chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:var(--r-l);overflow:hidden;background:#fff;border:1px solid rgba(11,13,18,.08);box-shadow:var(--sh-3)">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(11,13,18,.06)">
-        <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">Vision</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#5B6270">{{ chatSub }}</span></div>
-        <button onClick="{{ toggleChat }}" aria-label="Close chat" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(11,13,18,.06);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="close"></i></button>
+    <div data-r="chat" class="vz-chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:var(--r-l);overflow:hidden;background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,13,18,.08));box-shadow:var(--sh-3)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--d-line,rgba(11,13,18,.06))">
+        <div style="display:flex;flex-direction:column"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px">Vision</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--d-ink2,#5B6270)">{{ chatSub }}</span></div>
+        <button onClick="{{ toggleChat }}" aria-label="Close chat" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:var(--d-tint,rgba(11,13,18,.06));display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="close"></i></button>
       </div>
       <div ref="{{ chatScrollRef }}" style="flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
         {{ chatThread }}
@@ -1564,9 +1654,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
       <div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px">
         {{ chatQuick }}
       </div>
-      <form onSubmit="{{ submitChat }}" style="display:flex;gap:8px;padding:12px;border-top:1px solid rgba(11,13,18,.06)">
-        <input value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Ask a question…" aria-label="Ask Vision a question" style="flex:1;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid #E3E6EB;background:#fff;font-size:14px">
-        <button type="submit" aria-label="Send" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:#0B0D12;color:#fff;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_upward"></i></button>
+      <form onSubmit="{{ submitChat }}" style="display:flex;gap:8px;padding:12px;border-top:1px solid var(--d-line,rgba(11,13,18,.06))">
+        <input value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Ask a question…" aria-label="Ask Vision a question" style="flex:1;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid var(--d-line,#E3E6EB);background:var(--d-s0,#fff);font-size:14px">
+        <button type="submit" aria-label="Send" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_upward"></i></button>
       </form>
     </div>
   </sc-if>
@@ -1587,7 +1677,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
     <span class="vz-glow" data-zoop="{{ visionZoop }}" aria-hidden="true"></span>
 
     <button onClick="{{ toggleChat }}" title="Chat with Vision" aria-label="Chat with Vision" style="all:unset;cursor:pointer;position:absolute;inset:0;border-radius:50%"></button>
-    <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:#0B0D12;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
+    <span style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:{{ botLabelOp }};transition:opacity .6s ease">{{ chatLabel }}</span>
   </div>
 </sc-if>
 </x-dc>
@@ -1819,6 +1909,13 @@ class Component extends DCLogic {
     this.onResize=()=>{this.kickDirty=true;this.fxDirty=true;this.fxC=null;this.setState({p:{...(this.P||this.state.p)}});};window.addEventListener('resize',this.onResize);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
+    // bridge for assets/js/gms-plus.js (search, medals, My Games, chapter rail): data plus a few safe navigation calls
+    const app=this;window.GMSApp={data:{CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
+      screen:()=>app.state.screen||'home',home:after=>{if((app.state.screen||'home')!=='home')app.go('home',after);else if(after)after();},
+      scrollTo:k=>app.scrollTo(k),showSession:(day,code)=>window.GMSApp.home(()=>{app.setState({day,openRow:code});setTimeout(()=>app.scrollTo('schedule'),60);}),
+      startReg:id=>app.startReg(id),openTv:f=>{app.setState({chan:f||'stadium'});app.go('tv');},openEc:()=>app.openEc(),
+      live:()=>(app.state.live||[]).map(liveView),contact:()=>app.setState({chatOpen:true}),closeMenus:()=>{if(app.state.menuOpen||app.state.regOpen)app.setState({menuOpen:false,regOpen:false});}};
+    try{window.dispatchEvent(new Event('gms:ready'));}catch(e){}
   }
   newVals(){const s=this.state,W=typeof window!=='undefined'?window.innerWidth:1200;
     const demo=Math.floor(s.now/1000)%9;const DF=[['FULL NAME','Aarav Mehta'],['COUNTRY / NPC','India'],['EVENT','Athletics 100m Men'],['CATEGORY','Senior']];
@@ -2296,7 +2393,7 @@ class Component extends DCLogic {
     const meStatus=mine?mine.status:'Pending';const stIdx={Pending:1,Verified:2,Accredited:3,Rejected:1}[meStatus];
     const setStatus=(id,status)=>this.setState(x=>({admin:x.admin.map(r=>r.id===id?{...r,status}:r)}));
     const regBtn=r=>({...r,open:()=>this.setState({modal:r.id})});
-    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live',()=>this.scrollTo('tv'),'tv']];
+    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live',()=>this.scrollTo('tv'),'tv'],['Medals',()=>{window.GMSPlus&&window.GMSPlus.open('medals');}]];
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
       overviewRef:this.ref('overview'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
@@ -2304,7 +2401,7 @@ class Component extends DCLogic {
       navItems:nav.map(([label,go,k])=>({label,sec:{Overview:'overview',Schedule:'schedule',Events:'events',Registration:'reg',Live:'tv'}[label]||'',...(label==='Registration'?{
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
-        :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'#0B0D12':'transparent',fg:k&&screen===k?'#fff':'#0B0D12'})),
+        :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'var(--d-inv,#0B0D12)':'transparent',fg:k&&screen===k?'var(--d-on-inv,#fff)':'var(--d-ink,#0B0D12)'})),
       goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/stories/'+t.img+'.webp?v=g1',alt:t.sport+' athlete'})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
@@ -2316,7 +2413,7 @@ class Component extends DCLogic {
       ticker:this.tickerEl(),
       stepNum:pad(stepNow+1),stepDesc:STEPS[stepNow].desc,steps:STEPS.map((x,i)=>({...x,on:i===stepNow?'1':'0'})),
       
-      days:DAYS.map((d,i)=>({n:d[0],date:d[1],dow:d[2],pick:()=>this.setState({day:i,openRow:null}),bg:s.day===i?'#0B0D12':'#F6F7F9',fg:s.day===i?'#fff':'#0B0D12',bd:'transparent'})),
+      days:DAYS.map((d,i)=>({n:d[0],date:d[1],dow:d[2],pick:()=>this.setState({day:i,openRow:null}),bg:s.day===i?'var(--d-inv,#0B0D12)':'var(--d-s1,#F6F7F9)',fg:s.day===i?'var(--d-on-inv,#fff)':'var(--d-ink,#0B0D12)',bd:'transparent'})),
       hasRows:true,noRows:false,
       
       
@@ -2326,7 +2423,7 @@ class Component extends DCLogic {
       ...this.finVals(),botReady:!LITE&&!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
       groups:[...new Set(SESSIONS[s.day].map(x=>x[0]))].map(time=>({time,part:time<'12'?'Morning':time<'17'?'Afternoon':'Evening',items:SESSIONS[s.day].filter(d=>d[0]===time).map(([tm,code,round])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;const venue=VENUE_OF[ev.cat.name];
-        return {name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'#F6F7F9':'transparent',rot:open?'rotate(180deg)':'none',gr:open?'1fr':'0fr',vis:open?'visible':'hidden',...calLinks(ev.name+', '+round+' (GMS Games 2026)',tm,round+', '+venue,s.day,venue),
+        return {key:s.day+'-'+tm.replace(':','')+'-'+code,name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'var(--d-s1,#F6F7F9)':'transparent',rot:open?'rotate(180deg)':'none',gr:open?'1fr':'0fr',vis:open?'visible':'hidden',...calLinks(ev.name+', '+round+' (GMS Games 2026)',tm,round+', '+venue,s.day,venue),
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'ROUND',v:round},{k:'VENUE',v:venue},{k:'CATEGORY',v:ev.gender==='MIXED'?'Mixed':ev.gender==='MEN'?'Men':'Women'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},
@@ -2336,10 +2433,10 @@ class Component extends DCLogic {
       rt,regFormOpen:!s.regDone,regDone:s.regDone,lastRegId:s.lastRegId,regError:s.regError,submitReg:()=>this.submitReg(),
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
       isAthleteForm:isAth,selCount:String(f.events.length),
-      eventPicker:CATS.map(c=>({name:c.name,color:c.color,events:c.events.map(e=>{const on=f.events.includes(e[2]);return {name:e[3]||e[0].replace(c.name+' ',''),bg:on?c.color:'rgba(255,255,255,.8)',fg:on?'#fff':'#0B0D12',bd:on?c.color:'rgba(11,13,18,.1)',toggle:()=>this.setF('events',on?f.events.filter(x=>x!==e[2]):f.events.concat(e[2]))};})})),
+      eventPicker:CATS.map(c=>({name:c.name,color:c.color,events:c.events.map(e=>{const on=f.events.includes(e[2]);return {name:e[3]||e[0].replace(c.name+' ',''),bg:on?c.color:'var(--d-glass,rgba(255,255,255,.8))',fg:on?'#fff':'var(--d-ink,#0B0D12)',bd:on?c.color:'rgba(11,13,18,.1)',toggle:()=>this.setF('events',on?f.events.filter(x=>x!==e[2]):f.events.concat(e[2]))};})})),
       docs:docs.map(d=>{const on=!!f.docs[d];return {name:d,icon:on?'task':'upload_file',ic:on?'#1FA463':'#5B6270',status:on?'Attached':'Attach',bd:on?'#9ED9B8':'rgba(11,13,18,.15)',bg:on?'rgba(231,247,238,.8)':'rgba(255,255,255,.6)',toggle:()=>this.setF('docs',{...f.docs,[d]:!on})};}),
       loggedOut:!s.session,isParticipant:!!s.session&&s.session.role==='participant',isAdminSession:!!s.session&&s.session.role==='admin',
-      loginTabs:[['participant','Login'],['admin','Admin Login']].map(([k,label])=>({label,pick:()=>this.setState({loginTab:k,loginError:''}),bg:s.loginTab===k?'#fff':'transparent',sh:s.loginTab===k?'0 2px 10px rgba(15,20,40,.08)':'none'})),
+      loginTabs:[['participant','Login'],['admin','Admin Login']].map(([k,label])=>({label,pick:()=>this.setState({loginTab:k,loginError:''}),bg:s.loginTab===k?'var(--d-s0,#fff)':'transparent',sh:s.loginTab===k?'0 2px 10px rgba(15,20,40,.08)':'none'})),
       loginTitle:s.loginTab==='admin'?'Admin Login':'Login',loginEmail:s.loginEmail,loginPass:s.loginPass,loginError:s.loginError,loginBtnBg:s.loginTab==='admin'?'#0B0D12':BLUE,
       onLoginEmail:e=>this.setState({loginEmail:e.target.value,loginError:''}),onLoginPass:e=>this.setState({loginPass:e.target.value,loginError:''}),
       submitLogin:e=>{e.preventDefault();if(!/^\S+@\S+\.\S+$/.test(s.loginEmail)||s.loginPass.length<4){this.setState({loginError:'Enter a valid email and a password of at least 4 characters.'});return;}this.setState({session:{role:s.loginTab,email:s.loginEmail}});},
