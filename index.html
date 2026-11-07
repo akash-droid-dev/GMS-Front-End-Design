@@ -1806,14 +1806,14 @@ class Component extends DCLogic {
         mag=b;b.setAttribute('data-mag','');const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;b.style.translate=(dx*7).toFixed(1)+'px '+(dy*5-2).toFixed(1)+'px';});};
       this.onMagOut=()=>{rel(mag);mag=null;};window.addEventListener('pointermove',this.onMag,{passive:true});document.addEventListener('pointerleave',this.onMagOut);window.addEventListener('blur',this.onMagOut);}
     this.onScroll=()=>{this.lastScrollT=performance.now();this.measure();this.awake=240;};this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;this.awake=Math.max(this.awake||0,90);};
-    window.addEventListener('scroll',this.onScroll,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
+    window.addEventListener('scroll',this.onScroll,{passive:true});this.onTouch=()=>{this.lastScrollT=performance.now();};window.addEventListener('touchstart',this.onTouch,{passive:true});window.addEventListener('pointerdown',this.onTouch,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.fxForce=true;this.fxDirty=true;this.shellHandoff();
     this.measure();
     const loop=()=>{this.raf=requestAnimationFrame(loop);this.frame();};loop();
     this.splineT=setInterval(()=>this.patchSpline(),250);
-    this.clockT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<350)return;const n=Date.now();if((this.state.screen||'home')!=='home'||this.secNeed!==false||n-this.state.now>=30000)this.setState({now:n});},1000);
+    this.clockT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<700)return;const n=Date.now();if((this.state.screen||'home')!=='home'||this.secNeed!==false||n-this.state.now>=30000)this.soft({now:n});},1000);
     this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
-    this.tickT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<600)return;if((this.state.screen||'home')!=='home'||this.liveNeed!==false)this.tick();},LITE?4200:2800);
+    this.tickT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<900)return;if((this.state.screen||'home')!=='home'||this.liveNeed!==false)this.tick();},LITE?4200:2800);
     this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?700:250);
     this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);
     this.onResize=()=>{this.kickDirty=true;this.fxDirty=true;this.fxC=null;this.setState({p:{...(this.P||this.state.p)}});};window.addEventListener('resize',this.onResize);
@@ -1924,7 +1924,7 @@ class Component extends DCLogic {
       const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
       R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});}
     const bar=sec.querySelector('[data-r=roles-bar]');if(bar)bar.style.transform='scaleX('+((g+1)/12).toFixed(4)+')';
-    const sk=Math.round(g);if(sk!==this.rgK){const first=this.rgK==null;this.rgK=sk;if(!first&&(this.state.roleSel??0)!==sk){this.roleOnceK=sk;this.roleHovK=-1;this.setState({roleSel:sk});}}}
+    const sk=Math.round(g);if(sk!==this.rgK){const first=this.rgK==null;this.rgK=sk;if(!first&&(this.state.roleSel??0)!==sk){this.roleOnceK=sk;this.roleHovK=-1;this.soft({roleSel:sk});}}}
   // touch tablets: tapping a row scrolls the pinned index to it
   roleGoTo(k){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect(),span=r.height-window.innerHeight;
     window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/12,behavior:REDUCED?'auto':'smooth'});}
@@ -2054,7 +2054,7 @@ class Component extends DCLogic {
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.poster=src.replace(/(-1080|-720)?\.mp4/,'-poster.webp');el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
     style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',display:'block'}});}
-  componentWillUnmount(){window.removeEventListener('touchstart',this.onTS);window.removeEventListener('touchmove',this.onTM);window.removeEventListener('touchend',this.onTE);window.removeEventListener('scroll',this.onSwScroll);cancelAnimationFrame(this.swRaf);window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
+  componentWillUnmount(){window.removeEventListener('touchstart',this.onTouch);window.removeEventListener('pointerdown',this.onTouch);clearTimeout(this.tvT);window.removeEventListener('touchstart',this.onTS);window.removeEventListener('touchmove',this.onTM);window.removeEventListener('touchend',this.onTE);window.removeEventListener('scroll',this.onSwScroll);cancelAnimationFrame(this.swRaf);window.removeEventListener('popstate',this.onPop);window.removeEventListener('pointermove',this.onMag);window.removeEventListener('keydown',this.onKey);window.removeEventListener('pointerdown',this.onDown);clearTimeout(this.regT);(this.sios||[]).forEach(o=>o.disconnect());window.removeEventListener('scroll',this.onScroll);window.removeEventListener('resize',this.onScroll);window.removeEventListener('mousemove',this.onMove);cancelAnimationFrame(this.raf);clearTimeout(this.botT);clearTimeout(this.ctT1);clearTimeout(this.ctT2);clearTimeout(this.botFbT);clearInterval(this.splineT);clearInterval(this.motionT);this.mio&&this.mio.disconnect();window.removeEventListener('resize',this.onResize);clearInterval(this.clockT);clearTimeout(this.readyT);clearInterval(this.tickT);clearTimeout(this.hoverT);}
   componentDidUpdate(){if(this.__scr!==this.state.screen){this.__scr=this.state.screen;this.fxForce=true;this.fxDirty=true;this.fxC=null;this.kickDirty=true;}const el=this.refs.chat&&this.refs.chat.current;if(el)el.scrollTop=el.scrollHeight;}
   prog(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const span=r.height-window.innerHeight;return span>0?clamp(-r.top/span):0;}
   vis(k){const el=this.refs[k]&&this.refs[k].current;if(!el)return 0;const r=el.getBoundingClientRect();const vh=window.innerHeight;return clamp((vh-r.top)/(vh*0.9));}
@@ -2100,17 +2100,19 @@ class Component extends DCLogic {
     const vh=window.innerHeight,inView=k=>{const el=this.refs[k]&&this.refs[k].current;if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>-vh*0.5&&r.top<vh*1.5;};
     this.secNeed=window.scrollY<vh*1.2||inView('close');this.liveNeed=window.scrollY<vh*1.2||inView('ecx')||inView('tv');
     // the home stream only exists while its section is near, so it stops downloading and decoding once you've scrolled past
-    const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*2&&tr.bottom>-vh*1.5;if(tvClose&&!this.state.tvNear)this.setState({tvNear:true});
+    const tvEl=this.refs.tv&&this.refs.tv.current,tr=tvEl&&tvEl.getBoundingClientRect(),tvClose=!!tr&&tr.top<vh*3.5&&tr.bottom>-vh*1.5;
+    // the YouTube player boots in a pause between scrolls (or at the last moment), never in the middle of a swipe
+    if(tvClose&&!this.state.tvNear){clearTimeout(this.tvT);if(tr.top<vh*0.9)this.soft({tvNear:true});else this.tvT=setTimeout(()=>this.soft({tvNear:true}),240);}
     // the chat robot is WebGL: let it rest while the page scrolls, resume once scrolling settles
     const bot=this.botApp;if(bot){try{if(!bot._isPaused&&!this.botScrollStop){bot.stop();this.botScrollStop=true;}}catch(e){}clearTimeout(this.botResumeT);
-      this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},260);}if(!this.state.evNear&&near('events'))this.setState({evNear:true});if(!this.state.regNear&&near('reg'))this.setState({regNear:true});}
+      this.botResumeT=setTimeout(()=>{this.botScrollStop=false;try{bot.play();}catch(e){}},650);}}
   // Scroll engine: smoothed progress lives in this.P. Each frame writes the moving parts straight to the DOM
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
   // (a step number, the programme caption, the ticket counter, the closing video mounting...).
   frame(){
     const P=this.P||(this.P={...this.state.p}),t=this.target||P;let moved=false;
     for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*(LITE?0.32:this.smOn?0.24:0.12),nv=Math.abs(t[k]-v)<0.001?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
-    if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.setState({p:{...P}});}}
+    if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.soft({p:{...P}});}}
     if(moved||this.fxDirty)this.awake=240;
     if(this.awake>0){this.awake--;this.heroParallax();this.kickAnim();this.mediaDolly();this.rolesGlide();}
     this.figTick(performance.now());
@@ -2247,7 +2249,9 @@ class Component extends DCLogic {
     const col=(order,anim)=>h('div',{className:'pl-col',style:{flex:1,minWidth:0,overflow:'hidden'}},h('div',{className:'pl-track',style:{display:'flex',flexDirection:'column',gap:14,animation:anim,willChange:'transform'}},
       order.concat(order,order,order).map((s,i)=>h('img',{key:i,src:s,alt:'',loading:'lazy',decoding:'async',style:{width:'100%',aspectRatio:'3/4',objectFit:'cover',borderRadius:'var(--r-m)',display:'block'}}))));
     return h('div',{className:'pl',style:{position:'absolute',inset:14,display:'flex',gap:14}},col(imgs,'gmsUp 26s linear infinite'),col([imgs[1],imgs[0]],'gmsDown 26s linear infinite'));}
-  tick(){this.setState(s=>({live:liveStep(s.live)}));}
+  // background re-renders yield to scrolling: React renders them in short slices between frames
+  soft(p){const R=window.React;if(R&&R.startTransition)R.startTransition(()=>this.setState(p));else this.setState(p);}
+  tick(){this.soft(s=>({live:liveStep(s.live)}));}
   // every page change gets a browser history entry, so the Back button and the phone's back gesture both return to the last page
   pushNav(screen){const cur=this.state.screen||'home';if(screen===cur)return;try{history.pushState({gms:screen},'');}catch(e){}}
   // the event centre now lives under the TV on the home page: anything that used to open its page opens the panel there
