@@ -1,7 +1,7 @@
 /* GMS service worker: the page and its code work offline (schedule, My Games, results), media stays network-only.
    Pages are network-first so a new deploy shows up on the next visit; versioned files are cache-first. */
-const CACHE = 'gms-v1';
-const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-plus.js?v=5',
+const CACHE = 'gms-v2';
+const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-plus.js?v=8',
   'assets/fonts/bricolage-grotesque-latin.woff2', 'assets/fonts/instrument-sans-latin.woff2', 'assets/fonts/jetbrains-mono-latin.woff2',
   'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/hero-poster.webp?v=g1', 'manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting())); });

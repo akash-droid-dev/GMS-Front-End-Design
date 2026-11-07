@@ -32,6 +32,12 @@
     '.gp-pal-in .gi{font-size:20px;color:var(--d-ink3,#6B7180)}',
     '.gp-pal-in input{all:unset;flex:1;min-width:0;font:500 18px/1.3 "Instrument Sans",system-ui,sans-serif;color:inherit}',
     '.gp-pal-in input::placeholder{color:var(--d-ink3,#8A909C)}',
+    '.gp-pal-in input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}',
+    '.gp-pal .gp-pal-in input:focus,.gp-pal .gp-pal-in input:focus-visible{outline:none!important}.gp-pal-in:focus-within{box-shadow:inset 0 -2px 0 #2F5BFF}',
+    '.gp-clr{all:unset;box-sizing:border-box;flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;font-size:14px;background:var(--d-tint,rgba(11,13,18,.07));color:var(--d-ink2,#4A505C)}.gp-clr:hover{background:var(--d-line,rgba(11,13,18,.12));color:var(--d-ink,#0B0D12)}.gp-clr[hidden]{display:none}',
+    '.gp-cancel{all:unset;box-sizing:border-box;flex:none;cursor:pointer;border-radius:999px;color:var(--d-ink2,#4A505C)}.gp-cancel:focus-visible,.gp-clr:focus-visible{outline:2px solid #2F5BFF;outline-offset:2px}',
+    '.gp-cancel-d{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 4px 0 10px;border-radius:999px;font-size:15px}.gp-cancel:hover .gp-cancel-d{background:var(--d-tint,rgba(11,13,18,.06));color:var(--d-ink,#0B0D12)}.gp-cancel-m{display:none}',
+    '@media (max-width:640px),(hover:none) and (pointer:coarse){.gp-cancel-d{display:none}.gp-cancel-m{display:inline-flex;align-items:center;height:40px;padding:0 6px 0 4px;font:600 15px/1 "Instrument Sans",system-ui,sans-serif;color:#2F5BFF}}',
     '.gp-kbd{font:500 11px/1 "JetBrains Mono",monospace;padding:5px 7px;border-radius:7px;border:1px solid var(--d-line,#E3E6EB);color:var(--d-ink3,#6B7180);white-space:nowrap}',
     '.gp-pal-list{overflow:auto;overscroll-behavior:contain;padding:8px}',
     '.gp-grp{padding:12px 12px 6px;font:500 10.5px/1 "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--d-ink3,#6B7180)}',
@@ -505,12 +511,15 @@
     if (pal) return pal;
     var el = doc.createElement('div'); el.className = 'gp-pal'; el.style.display = 'none';
     el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Search the Games');
-    el.innerHTML = '<div class="gp-pal-in">' + ICON('search') + '<input type="search" placeholder="Search events, sessions, teams, venues, roles" aria-label="Search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="gp-pal-list" aria-autocomplete="list"><span class="gp-kbd">Esc</span></div><div class="gp-pal-list" id="gp-pal-list" role="listbox"></div><div class="gp-pal-ft"><span><span class="gp-kbd">↑</span><span class="gp-kbd">↓</span> move</span><span><span class="gp-kbd">Enter</span> open</span><span><span class="gp-kbd">' + (/Mac|iPhone|iPad/.test(navigator.platform || '') ? '⌘' : 'Ctrl') + ' K</span> search anywhere</span></div>';
+    el.innerHTML = '<div class="gp-pal-in">' + ICON('search') + '<input type="search" placeholder="Search events, sessions, teams, venues, roles" aria-label="Search" autocomplete="off" spellcheck="false" enterkeyhint="search" role="combobox" aria-expanded="true" aria-controls="gp-pal-list" aria-autocomplete="list"><button type="button" class="gp-clr" aria-label="Clear search" hidden>' + ICON('close') + '</button><button type="button" class="gp-cancel" aria-label="Close search"><span class="gp-cancel-d">' + ICON('close') + '<span class="gp-kbd">Esc</span></span><span class="gp-cancel-m">Cancel</span></button></div><div class="gp-pal-list" id="gp-pal-list" role="listbox"></div><div class="gp-pal-ft"><span><span class="gp-kbd">↑</span><span class="gp-kbd">↓</span> move</span><span><span class="gp-kbd">Enter</span> open</span><span><span class="gp-kbd">' + (/Mac|iPhone|iPad/.test(navigator.platform || '') ? '⌘' : 'Ctrl') + ' K</span> search anywhere</span></div>';
     doc.body.appendChild(el);
     pal = { el: el, input: el.querySelector('input'), list: el.querySelector('.gp-pal-list'), items: [], idx: 0, I: null };
     pal.focus = function () { pal.input.focus({ preventScroll: true }); pal.input.select(); };
     pal.onClose = function () {};
-    pal.input.addEventListener('input', function () { palRender(); });
+    pal.clr = el.querySelector('.gp-clr');
+    pal.input.addEventListener('input', function () { pal.clr.hidden = !pal.input.value; palRender(); });
+    pal.clr.addEventListener('click', function () { pal.input.value = ''; pal.clr.hidden = true; palRender(); pal.input.focus(); });
+    el.querySelector('.gp-cancel').addEventListener('click', function () { closeLayer(pal); });
     el.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); palMove(e.key === 'ArrowDown' ? 1 : -1); }
       else if (e.key === 'Enter') { e.preventDefault(); palRun(pal.idx); }
@@ -546,8 +555,8 @@
   function palMove(d) { var n = pal.items.length; if (!n) return; pal.idx = (pal.idx + d + n) % n; palMark(true); }
   function palRun(i) {
     var it = pal.items[i]; if (!it) return;
-    if (it.recent) { pal.input.value = it.recent; palRender(); return; }
-    if (it.venue) { pal.input.value = it.venue; palRender(); return; }
+    if (it.recent) { pal.input.value = it.recent; pal.clr.hidden = false; palRender(); return; }
+    if (it.venue) { pal.input.value = it.venue; pal.clr.hidden = false; palRender(); return; }
     var q = pal.input.value.trim();
     if (q) { var r = LS.get('gms-recent', []).filter(function (x) { return x !== q; }); r.unshift(q); LS.set('gms-recent', r.slice(0, 6)); }
     closeLayer(pal);
@@ -557,7 +566,7 @@
     if (!A) return;
     var P = palLayer(); P.I = buildIndex();
     if (stack.indexOf(P) >= 0) { P.focus(); return; }
-    P.input.value = ''; palRender(); openLayer(P);
+    P.input.value = ''; P.clr.hidden = true; palRender(); openLayer(P);
   }
 
   /* ------------------------------------------------------------------ chapter rail (desktop) */
