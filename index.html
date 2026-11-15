@@ -363,7 +363,7 @@ html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero
 [data-r=roles-copy]>*{transition:opacity .4s ease}
 [data-role-drawer],[data-r=roles-progress]{display:none}
 @media (min-width:1025px){
- [data-r=roles-section]{height:calc(100vh + 12 * 28vh)}
+ [data-r=roles-section]{height:calc(100vh + 8 * 30vh)}
  [data-r=roles-pin]{position:sticky;top:0;height:100vh;box-sizing:border-box;padding:max(92px,12vh) 32px max(26px,4vh)}
  [data-r=roles-grid]{height:100%;grid-template-rows:minmax(0,1fr)}
  [data-r=roles-left]{height:100%;min-height:0}
@@ -1005,7 +1005,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=8"></script>
+<script defer src="./assets/js/gms-plus.js?v=12"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1033,8 +1033,8 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
       <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">Registration, accreditation, schedules and live results for every athlete, official and venue, run from one system.</p>
       <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both"><span><b>5</b> days of competition</span><span><b>4</b> venues</span><span><b>6</b> sports</span><span><b>18</b> medal events</span></p>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
-        <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Athlete</button>
-        <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
+        <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Participants</button>
+        <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 8 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
       </div>
     </div>
     <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
@@ -1072,7 +1072,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:var(--r-l);background:var(--d-glass,rgba(255,255,255,.96));backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid var(--d-line,#E6E9EF);box-shadow:var(--sh-3);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
-      <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span class="sx">Registration, 12 ways to take part</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Games.</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span class="sx">Registration, 8 ways to take part</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Games.</span></div>
       <div style="display:flex;align-items:center;gap:8px"><button data-r="regmenu-all" onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,13,18,.1));font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:var(--d-s1,#F3F5F9)">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px"><i class="gi" data-gi="arrow_downward"></i></span></button><button data-r="regmenu-close" onClick="{{ regClose }}" aria-label="Close registration menu" style="all:unset;cursor:pointer;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--d-s1,#F1F3F7);font-family:'Material Symbols Rounded';font-size:21px;transition:background .2s ease" style-hover="background:#E4E8EF"><i class="gi" data-gi="close"></i></button></div>
     </div>
     <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
@@ -1107,8 +1107,8 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
       <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">Registration, accreditation, schedules and live results for every athlete, official and venue, run from one system.</p>
       <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both">{{ heroLine }}</p>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
-        <button class="gms-liquid gms-liquid--water" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="box-shadow:0 1px 2px rgba(15,20,40,.12)">Register as Athlete</button>
-        <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 12 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
+        <button class="gms-liquid gms-liquid--water" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:#2F5BFF;color:#fff;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="box-shadow:0 1px 2px rgba(15,20,40,.12)">Register as Participants</button>
+        <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 8 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
       </div>
     </div>
     <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
@@ -1711,19 +1711,15 @@ const calLinks=(title,tm,desc,day,venue)=>{const [h,m]=tm.split(':').map(Number)
     ics:()=>{const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GMS//Games 2026//EN','BEGIN:VEVENT','UID:'+title.replace(/\W+/g,'-')+'-'+tm.replace(':','')+'@gms','DTSTAMP:'+utc(h,m),'DTSTART:'+utc(h,m),'DTEND:'+utc(h+2,m),'SUMMARY:'+title,'DESCRIPTION:'+desc,'LOCATION:'+loc,'END:VEVENT','END:VCALENDAR'].join('\r\n');
       const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=title.split(' · ')[0].replace(/\W+/g,'-').toLowerCase()+'.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}};};
 const REG=[
-{id:'athlete',name:'Athlete',icon:'directions_run',desc:'Athletes competing in any sport at the Games, as individuals or in a team.'},
-{id:'staff',name:'Support Staff',icon:'groups',desc:'Coaches, team managers, physios and technicians travelling with a delegation.'},
-{id:'official',name:'Technical Official',icon:'sports',desc:'Referees, judges and technical officials appointed to run each competition.'},
-{id:'entity',name:'Entity/Organisation/CDM',icon:'corporate_fare',desc:'National federations and Chefs de Mission registering and managing their delegation.'},
-{id:'medical',name:'Medical',icon:'medical_services',desc:'Doctors, paramedics and medical staff on duty at the venue.'},
-{id:'nada',name:'NADA/WADA',icon:'science',desc:'Anti-doping officers and chaperones working under NADA and WADA protocols.'},
-{id:'gov',name:'Government Officials',icon:'account_balance',desc:'Ministry, state and civic officials attending in an official capacity.'},
-{id:'media',name:'Media & Broadcasting',icon:'videocam',desc:'Press, photographers and broadcast crews covering the Games.'},
-{id:'volunteer',name:'Volunteer',icon:'volunteer_activism',desc:'Help run venues, logistics, hospitality and spectator services.'},
-{id:'service',name:'Service Provider',icon:'handyman',desc:'Vendors delivering catering, transport, equipment and venue services.'},
-{id:'ema',name:'EMA',icon:'event_available',desc:'Event management agency staff responsible for operations and production.'},
-{id:'lo',name:'Liaison Officer',icon:'connect_without_contact',desc:'Officers assigned to a delegation as their point of contact throughout the event.'}];
-const DOCS={athlete:['Passport / National ID','Sport eligibility certificate','Passport-size photo'],staff:['Passport / National ID','Team accreditation letter','Passport-size photo'],entity:['Federation authorisation letter','Delegation list'],lo:['Photo ID','LOC appointment letter'],official:['Photo ID','Officiating licence'],medical:['Photo ID','Medical registration certificate'],nada:['Photo ID','NADA / WADA authorisation'],gov:['Government ID','Official nomination letter'],media:['Press card','Organisation letter'],volunteer:['Photo ID','Volunteer consent form'],service:['Company registration','Work order / contract'],ema:['Photo ID','Agency authorisation letter'],_:['Photo ID','Authorisation letter']};
+{id:'athlete',name:'Participants',icon:'directions_run',org:'none',desc:'Players and team members competing in any sport at the tournament.'},
+{id:'media',name:'Media',icon:'videocam',org:'required',orgLabel:'Media Outlet / Organisation',orgPh:'Outlet or organisation name',desc:'Press, photographers and broadcast crews covering the tournament.'},
+{id:'official',name:'Technical Official',icon:'sports',org:'optional',desc:'Referees, umpires, judges and technical officials appointed to run each competition.'},
+{id:'entity',name:'LOC',icon:'corporate_fare',org:'none',desc:'Local Organising Committee members running the tournament on the ground.'},
+{id:'medical',name:'Medical',icon:'medical_services',org:'optional',desc:'Doctors, paramedics and medical staff on duty at the venues.'},
+{id:'staff',name:'TSR',icon:'groups',org:'none',desc:'Timing, scoring and results staff who record and publish every result.'},
+{id:'ema',name:'EMA',icon:'event_available',org:'optional',desc:'Event management agency staff responsible for operations and production.'},
+{id:'service',name:'Service Provider',icon:'handyman',org:'optional',desc:'Vendors delivering catering, transport, equipment and venue services.'}];
+const DOCS={media:['Front-face photo','Media outlet name','Emergency contact','Government ID (optional)'],_:['Front-face photo','Emergency contact','Kit and shoe size','Government ID (optional)']};
 const STEPS=[
 {title:'Registration',when:'Closes 7 Nov',desc:'Athletes, staff, officials and every accredited role register online through one verified identity.'},
 {title:'Verification',when:'In progress',desc:'Identity, eligibility and documents are checked before anyone is accredited.'},
@@ -1797,13 +1793,14 @@ const SEED=[
 const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E8EEFF','#2F5BFF'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
 const EVENT_START=new Date('2026-09-05T08:00:00+05:30').getTime();
 // Registration mega-menu groups (role ids from REG).
-const REG_GROUPS=[['COMPETITORS & TEAMS',['athlete','staff','entity','lo']],['OFFICIALS & MEDICAL',['official','medical','nada','gov']],['MEDIA & SERVICES',['media','volunteer','service','ema']]];
+const REG_GROUPS=[['COMPETITION & MEDIA',['athlete','media','official']],['ORGANISING & MEDICAL',['entity','medical','staff']],['OPERATIONS & SERVICES',['ema','service']]];
 // Registration grid: roles in mega-menu group order (first 9 = the 3x3, last 3 = the closing row), group colours, timing
 const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_OF[id]=g));
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
+const NR=REG_ORDER.length;
 const REG_GC=[['#2F5BFF','#E8EEFF'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
 // what each figure is doing (shown on the preview while it plays)
-const ROLE_VERB={athlete:'In competition',staff:'Notes and coaching cues',entity:'Flying the delegation flag',lo:'Greeting the delegation',official:'Judging the play',medical:'First aid on call',
+const ROLE_VERB={athlete:'In competition',staff:'Timing and results',entity:'Running the tournament',lo:'Greeting the delegation',official:'Judging the play',medical:'First aid on call',
   nada:'Sample check',gov:'Addressing the venue',media:'Covering the final',volunteer:'Cheering the venue',service:'Setting up the venue',ema:'Running the show'};
 // Role photos (assets/roles/<id>-0..2.webp: rest, mid-action, peak): idle breathes with a slow zoom, the action blends rest -> mid -> peak and back with a gentle push-in.
 // The action frames only download the first time that role plays.
@@ -1915,7 +1912,7 @@ class Component extends DCLogic {
       screen:()=>app.state.screen||'home',home:after=>{if((app.state.screen||'home')!=='home')app.go('home',after);else if(after)after();},
       scrollTo:k=>app.scrollTo(k),showSession:(day,code)=>window.GMSApp.home(()=>{app.setState({day,openRow:code});setTimeout(()=>app.scrollTo('schedule'),60);}),
       startReg:id=>app.startReg(id),openTv:f=>{app.setState({chan:f||'stadium'});app.go('tv');},openEc:()=>app.openEc(),
-      live:()=>(app.state.live||[]).map(liveView),contact:()=>app.setState({chatOpen:true}),closeMenus:()=>{if(app.state.menuOpen||app.state.regOpen)app.setState({menuOpen:false,regOpen:false});}};
+      live:()=>(app.state.live||[]).map(liveView),contact:()=>app.setState({chatOpen:true}),register:(name,email,type)=>{const st=app.state,id='GMS-26-'+pad(413+st.admin.length-SEED.length).padStart(4,'0');app.setState(x=>({lastRegId:id,loginEmail:email,admin:[{id,name,type,status:'Pending',email},...x.admin]}));return id;},closeMenus:()=>{if(app.state.menuOpen||app.state.regOpen)app.setState({menuOpen:false,regOpen:false});}};
     try{window.dispatchEvent(new Event('gms:ready'));}catch(e){}
   }
   newVals(){const s=this.state,W=typeof window!=='undefined'?window.innerWidth:1200;
@@ -1960,7 +1957,7 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:HOVER?'Scroll through the twelve roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=1024?'Swipe through the twelve roles and register from any card.':'Keep scrolling: the twelve roles slide past one by one.'),
+    return {roleHint:HOVER?'Scroll through the eight roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=1024?'Swipe through the eight roles and register from any card.':'Keep scrolling: the eight roles slide past one by one.'),
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
@@ -1971,9 +1968,9 @@ class Component extends DCLogic {
       roleRail:this.roleRailEl(),
       roleArts:REG_ORDER.map((ri,k)=>({on:k===sel?'1':'0',el:figEl(k,'a'+k)})),
       roleLive:(ROLE_VERB[cur.r.id]||'').toUpperCase(),
-      rolePrev:{name:cur.r.name,group:REG_GROUPS[cur.g][0],gc:cur.gc[0],gt:cur.gc[1],who:cur.r.desc,needs:cur.needs.map(t=>({t})),num:pad(sel+1)+' / 12',
+      rolePrev:{name:cur.r.name,group:REG_GROUPS[cur.g][0],gc:cur.gc[0],gt:cur.gc[1],who:cur.r.desc,needs:cur.needs.map(t=>({t})),num:pad(sel+1)+' / '+pad(NR),
         regLabel:'Register as '+cur.r.name,go:()=>this.startReg(cur.r.id)}};}
-  // phones: the twelve roles on a rail that your normal scrolling slides left to right (rolesGlide), pausing on each role; the card in view plays its film
+  // phones: the eight roles on a rail that your normal scrolling slides left to right (rolesGlide), pausing on each role; the card in view plays its film
   // Vision opens the chat: its reactor flares and the window grows out of it, with a soft whoosh
   visionOpen(){this.zoop();clearTimeout(this.vzT1);clearTimeout(this.vzT2);this.setState({visionOpen:!REDUCED});
     this.vzT1=setTimeout(()=>this.setState({chatOpen:true}),REDUCED?0:260);this.vzT2=setTimeout(()=>this.setState({visionOpen:false}),1000);}
@@ -1988,7 +1985,7 @@ class Component extends DCLogic {
     return h('div',{className:'rc-wrap'},
       h('div',{className:'rc-rail',role:'list','aria-label':'Ways to take part',ref:el=>this.railMount(el)},REG_ORDER.map((ri,k)=>{const r=REG[ri],g=REG_GROUP_OF[r.id],on=k===sel?'1':'0';
         return h('article',{key:r.id,className:'rc-card',role:'listitem','data-on':on},
-          h('div',{className:'rc-art'},h('span',{'data-cart':'','data-on':on,style:{position:'absolute',inset:0}},h('span',{style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)})),h('span',{className:'rc-num'},pad(k+1)+' / 12')),
+          h('div',{className:'rc-art'},h('span',{'data-cart':'','data-on':on,style:{position:'absolute',inset:0}},h('span',{style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)})),h('span',{className:'rc-num'},pad(k+1)+' / '+pad(NR))),
           h('div',{className:'rc-copy'},h('span',{className:'rc-group',style:{color:REG_GC[g][0]}},REG_GROUPS[g][0]),h('h3',null,r.name),h('p',null,r.desc),
             h('button',{type:'button',className:'gms-glow rc-go',onClick:()=>this.startReg(r.id)},h('span',null,'Register as '+r.name),h('i',{'aria-hidden':'true'},h('svg',{width:15,height:15,viewBox:'0 0 16 16'},h('path',{d:'M3 8h10M9 4l4 4-4 4',fill:'none',stroke:'currentColor',strokeWidth:2.2,strokeLinecap:'round',strokeLinejoin:'round'}))))));})),
       h('div',{className:'rc-count','aria-hidden':'true'},h('span',{className:'rc-n'},pad(sel+1)+' / '+pad(REG_ORDER.length)),h('span',{className:'rc-bar'},h('i',{style:{width:(100/REG_ORDER.length)+'%',transform:'translateX('+(sel*100)+'%)'}}))));}
@@ -2015,17 +2012,17 @@ class Component extends DCLogic {
     const r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;this.rgOn=1;
     const span=r.height-vh,tg=span>0?clamp(-r.top/span):0;this.rgP=this.rgP==null?tg:this.rgP+(tg-this.rgP)*(REDUCED?1:mob?0.3:0.085);if(Math.abs(tg-this.rgP)<0.00015)this.rgP=tg;
     const key=this.rgP.toFixed(5)+'|'+W+'|'+vh;if(key===this.rgKey)return;this.rgKey=key;
-    const c=Math.min(11.999,this.rgP*12),k=Math.floor(c),fr=c-k,g=k+(k<11?smooth(clamp((fr-0.56)/0.44)):0);
+    const c=Math.min(NR-0.001,this.rgP*NR),k=Math.floor(c),fr=c-k,g=k+(k<NR-1?smooth(clamp((fr-0.56)/0.44)):0);
     let R=this.rgRows;if(!R||R.W!==W||R.H!==vh||!R.el[0]||!R.el[0].isConnected){const el=[...ix.querySelectorAll('[data-role-row]')];R=this.rgRows={W,H:vh,el,y:el.map(e=>e.offsetTop+e.offsetHeight/2)};}
-    if(!mob&&R.el.length<12)return;
-    if(!mob){const i0=Math.floor(g),i1=Math.min(11,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
+    if(!mob&&R.el.length<NR)return;
+    if(!mob){const i0=Math.floor(g),i1=Math.min(NR-1,i0+1),yy=R.y[i0]+(R.y[i1]-R.y[i0])*(g-i0),wh=win.clientHeight,lh=ix.scrollHeight;
       const ty=Math.min(0,Math.max(Math.min(0,wh-lh-8),wh*0.36-yy));ix.style.transform='translate3d(0,'+ty.toFixed(2)+'px,0)';
       R.el.forEach((e,i)=>{e.style.opacity=(1-Math.min(0.62,Math.abs(i-g)*0.15)).toFixed(3);});}
-    const bar=sec.querySelector('[data-r=roles-bar]');if(bar)bar.style.transform='scaleX('+((g+1)/12).toFixed(4)+')';
+    const bar=sec.querySelector('[data-r=roles-bar]');if(bar)bar.style.transform='scaleX('+((g+1)/NR).toFixed(4)+')';
     const sk=Math.round(g);if(sk!==this.rgK){const first=this.rgK==null;this.rgK=sk;if(!first&&(this.state.roleSel??0)!==sk){this.roleOnceK=sk;this.roleHovK=-1;this.soft({roleSel:sk});}}}
   // touch tablets: tapping a row scrolls the pinned index to it
   roleGoTo(k){const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect(),span=r.height-window.innerHeight;
-    window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/12,behavior:REDUCED?'auto':'smooth'});}
+    window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/NR,behavior:REDUCED?'auto':'smooth'});}
   // Live: how many matches are live now, and the home TV feed
   liveVals(){const live=liveOrder(this.state.live).filter(m=>m.state==='live');return {liveNowCount:String(live.length),tvVideo:this.tvFeedEl()};}
   // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
@@ -2361,7 +2358,7 @@ class Component extends DCLogic {
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
   closeRegSoon(){clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:false}),220);}
-  startReg(type,ev){this.pushNav('register');this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
+  startReg(type,ev){if(window.GMSPlus&&window.GMSPlus.vault){this.setState({modal:null,regOpen:false,menuOpen:false});window.GMSPlus.vault(type);return;}this.pushNav('register');this.setState({screen:'register',regType:type,form:{...emptyForm(),events:ev?[ev]:[]},regError:'',regDone:false,modal:null});window.scrollTo(0,0);}
   setF(k,v){this.setState(s=>({form:{...s.form,[k]:v},regError:''}));}
   docList(){return DOCS[this.state.regType]||DOCS._;}
   submitReg(){const s=this.state,f=s.form;
