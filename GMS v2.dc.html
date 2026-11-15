@@ -24,9 +24,6 @@
 <meta name="twitter:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B0D12'/%3E%3Cg transform='translate(1.5 0)' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='5'%3E%3Cpath stroke='%23fff' d='M31.6 18.7A14 14 0 1 0 38 32M38 18.5V45.5M38 18.5h5.2a6.75 6.75 0 0 1 0 13.5M44.2 32a6.75 6.75 0 0 1 0 13.5H38'/%3E%3Cpath stroke='%232F5BFF' d='M28 32h16.4'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link rel="preconnect" href="https://prod.spline.design" crossorigin>
-<link rel="preconnect" href="https://cdn.spline.design" crossorigin>
 <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -36,7 +33,14 @@
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
 var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.webp?v=g1';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
-if(!lite)addEventListener('load',function(){setTimeout(function(){var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);},lite?500:0);});})();
+/* Low mode: weak or data-saving devices get a lighter page (fewer scene frames, no parallax, posters instead of role films).
+   Decided from memory, cores, Data Saver and connection speed; ?low=1 / ?low=0 forces it; the page can also switch itself on if scrolling proves slow. */
+var low=false;try{var n=navigator,c=n.connection||n.mozConnection||n.webkitConnection||{},mem=n.deviceMemory||8,cores=n.hardwareConcurrency||8;
+low=mem<=2||cores<=2||(lite&&mem<=4&&cores<=4)||c.saveData===true||/(^|-)2g$|^3g$/.test(c.effectiveType||'');
+var q=/[?&]low=([01])/.exec(location.search);if(q)low=q[1]==='1';}catch(e){}
+if(low)document.documentElement.classList.add('gms-low');
+/* the robot's 3D library only downloads when someone opens Vision on a desktop */
+window.__gmsLoadBot=function(){if(window.__gmsBot)return;window.__gmsBot=1;var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);};})();
 </script>
 <style>
 /* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
@@ -1004,6 +1008,16 @@ html[data-theme=dark] #gms-shell [data-r=nav] img{filter:invert(1) hue-rotate(18
 html[data-theme=dark] #gms-shell [data-r=admin-btn]{background:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
 html[data-theme=dark] [data-r=admin-btn]{background:transparent!important}
 html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.16),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#0B0D12!important}
+
+/* Live TV: tap to play (phones, low mode) */
+.tv-play{all:unset;box-sizing:border-box;position:absolute;left:50%;top:50%;z-index:6;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;height:52px;padding:0 20px 0 8px;border-radius:999px;background:rgba(255,255,255,.94);color:#0B0D12;font:600 14px/1 'Instrument Sans',system-ui,sans-serif;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35);white-space:nowrap}
+.tv-play .gi{width:36px;height:36px;border-radius:50%;background:#E5484D;color:#fff;-webkit-mask:none;mask:none;display:grid;place-items:center}
+.tv-play .gi::before{content:'';width:0;height:0;margin-left:3px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+/* pinned sections are about a third shorter on phones: fewer swipes for the same animation */
+@media (max-width:760px){[data-r=steps-section]{height:180vh!important}[data-r=tv-section]{height:135vh!important}[data-r=ev-section]{height:230vh!important}[data-r=fn-section]{height:150vh!important}}
+/* Low mode */
+.gms-low *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.gms-low [data-r=hero-media]{transform:none!important;width:100%!important}
 </style>
 <!-- React served from this site (same 18.3.1 build support.js would fetch); support.js skips its CDN load when window.React exists -->
 <script defer src="./vendor/react.production.min.js"></script>
@@ -1121,7 +1135,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0">{{ ticker }}</div>
   </section>
 
-  <section ref="{{ stepsRef }}" style="position:relative;z-index:2;height:260vh;background:var(--d-s0,#FFFFFF)">
+  <section ref="{{ stepsRef }}" data-r="steps-section" style="position:relative;z-index:2;height:260vh;background:var(--d-s0,#FFFFFF)">
     <div data-r="steps-grid" style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
       <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:var(--r-l);background:var(--d-s1,#F1F3F7);overflow:hidden">
         {{ photoLoop }}
@@ -1692,6 +1706,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 
 // Set in <head> before render: phones, tablets and touch-first devices use CSS stand-ins for the Spline scenes.
 const LITE=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-lite');
+let LOW=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-low');
 // Sports on the programme: [full event name, category, code, short label for chips]
 // =====================================================================================================
 // TOURNAMENT SETTINGS. Everything that belongs to one tournament lives in this block: edit it (and nothing
@@ -1854,7 +1869,7 @@ const ROLE_VERB={athlete:'In competition',staff:'Timing and results',entity:'Run
 // The action frames only download the first time that role plays.
 const ROLE_PHOTOS={athlete:3,staff:3,entity:3,lo:3,official:3,medical:3,nada:3,gov:3,media:3,volunteer:3,service:3,ema:3};
 // roles with a filmed loop (the photo stays underneath as the instant first frame)
-const ROLE_VIDEO={athlete:10,entity:10,staff:10,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10,service:10,ema:10};
+const ROLE_VIDEO=LOW?{}:{athlete:10,entity:10,staff:10,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10,service:10,ema:10};
 const PHOTO_KEYS=[[0,0],[0.35,0],[0.55,1],[1,1],[1.2,2],[2.6,2],[2.8,1],[3.1,1],[3.3,0],[3.6,0]];
 const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],V=ROLE_VIDEO[id],D=V||3.6;
   host.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;background:#FFFFFF"><div data-ph style="position:absolute;inset:-3%;will-change:transform">'+
@@ -1862,7 +1877,7 @@ const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],V=ROLE_VIDEO[id],D=V||3
   const wrap=host.querySelector('[data-ph]'),imgs=[...wrap.querySelectorAll('img')],vid=wrap.querySelector('video'),st={mode:'idle',w:0,tw:0,t0:0,last:0,once:false,loaded:false};
   const frame=tc=>{let i=0;while(i<PHOTO_KEYS.length-2&&tc>PHOTO_KEYS[i+1][0])i++;const a=PHOTO_KEYS[i],b=PHOTO_KEYS[i+1];return a[1]+(b[1]-a[1])*smooth(clamp((tc-a[0])/((b[0]-a[0])||1)));};
   return {el:host,id,_st:st,
-    act(mode,now){if(mode==='idle'){st.tw=0;return;}if(!st.loaded){st.loaded=true;imgs.forEach(im=>{const s=im.getAttribute('data-src');if(s)im.src=s;});
+    act(mode,now){if(mode==='idle'){st.tw=0;if(vid&&!vid.paused)vid.pause();return;}if(!st.loaded){st.loaded=true;imgs.forEach(im=>{const s=im.getAttribute('data-src');if(s)im.src=s;});
         if(vid){vid.src='assets/rolevid/'+id+'-'+(window.innerWidth<=760?'m':'d')+'.mp4?v=g1';vid.preload='auto';}}
       if(vid){if(st.mode==='idle'||mode!==st.mode)try{vid.currentTime=0;}catch(e){}const pl=vid.play();if(pl&&pl.catch)pl.catch(()=>{});}
       if(st.mode==='idle'||st.tw===0||mode!==st.mode)st.t0=now;st.mode=mode;st.tw=1;st.once=mode==='once';},
@@ -1950,8 +1965,6 @@ class Component extends DCLogic {
     this.clockT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<700)return;const n=Date.now();if((this.state.screen||'home')!=='home'||this.secNeed!==false||n-this.state.now>=30000)this.soft({now:n});},1000);
     this.readyT=setTimeout(()=>document.querySelectorAll('spline-viewer').forEach(v=>v.classList.add('gms-ready')),8000);
     this.tickT=setInterval(()=>{if(performance.now()-(this.lastScrollT||0)<900)return;if((this.state.screen||'home')!=='home'||this.liveNeed!==false)this.tick();},LITE?4200:2800);
-    this.botT=setTimeout(()=>this.setState({botReady:true}),LITE?700:250);
-    this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);
     this.onResize=()=>{this.kickDirty=true;this.fxDirty=true;this.fxC=null;this.setState({p:{...(this.P||this.state.p)}});};window.addEventListener('resize',this.onResize);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
@@ -2021,7 +2034,7 @@ class Component extends DCLogic {
         regLabel:'Register as '+cur.r.name,go:()=>this.startReg(cur.r.id)}};}
   // phones: the eight roles on a rail that your normal scrolling slides left to right (rolesGlide), pausing on each role; the card in view plays its film
   // Vision opens the chat: its reactor flares and the window grows out of it, with a soft whoosh
-  visionOpen(){this.zoop();clearTimeout(this.vzT1);clearTimeout(this.vzT2);this.setState({visionOpen:!REDUCED});
+  visionOpen(){if(!LITE&&!LOW&&!this.state.botReady&&window.__gmsLoadBot){window.__gmsLoadBot();this.setState({botReady:true});clearTimeout(this.botFbT);this.botFbT=setTimeout(()=>{if(!this.state.botLoaded)this.setState({botFallback:true});},12000);}this.zoop();clearTimeout(this.vzT1);clearTimeout(this.vzT2);this.setState({visionOpen:!REDUCED});
     this.vzT1=setTimeout(()=>this.setState({chatOpen:true}),REDUCED?0:260);this.vzT2=setTimeout(()=>this.setState({visionOpen:false}),1000);}
   // a short rising whoosh made in the browser (no sound file); respects the phone's silent switch where the browser allows it
   zoop(){if(REDUCED)return;try{if(navigator.audioSession)navigator.audioSession.type='ambient';const C=this.actx||(this.actx=new (window.AudioContext||window.webkitAudioContext)());if(C.state==='suspended')C.resume();
@@ -2045,11 +2058,13 @@ class Component extends DCLogic {
     el.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(sync);},{passive:true});}
   figMount(el,k){if(!el||el.__fig)return;const r=REG[REG_ORDER[k]];const fg=el.__fig=mountRolePhoto(el,r.id);fg.k=k;fg.want='idle';(this.figs||(this.figs=new Set())).add(fg);}
   // animate only the figures on show: the preview's current role (desktop/tablet) or an open row (phones)
-  figTick(now){if(!this.figs||!this.figs.size)return;const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<-80||r.top>window.innerHeight+80)return;
-    const mob=window.innerWidth<=1024;
+  figTick(now){if(!this.figs||!this.figs.size)return;const sec=this.refs.reg&&this.refs.reg.current;if(!sec)return;const r=sec.getBoundingClientRect();if(r.bottom<-80||r.top>window.innerHeight+80){
+      // scrolled away: stop every role film (they would otherwise keep decoding off screen)
+      if(this.figsLive){this.figsLive=0;this.figs.forEach(f=>{f.want='idle';f._st.tw=0;f._st.w=0;f._st.mode='idle';const v=f.el.querySelector('video');if(v){if(!v.paused)v.pause();v.style.opacity='0';}});}return;}
+    this.figsLive=1;const mob=window.innerWidth<=1024;
     this.figs.forEach(f=>{if(!f.el.isConnected){this.figs.delete(f);return;}
       const box=f.el.closest('[data-art],[data-cart]'),vis=!!box&&box.getAttribute('data-on')==='1'&&box.offsetParent!==null;
-      if(!vis){if(f.want!=='idle'){f.want='idle';f.act('idle',now);}if(f.tail&&now<f.tail)f.tick(now);return;}
+      if(!vis){if(f.want!=='idle'){f.want='idle';f.act('idle',now);}if(f._st.mode!=='idle')f.tick(now);return;}
       f.tail=now+600;
       const want=REDUCED?'idle':(HOVER&&!mob)?(this.roleHovK===f.k?'loop':this.roleOnceK===f.k?'once':'idle'):'loop';
       if(want!==f.want){f.want=want;f.act(want,now);}
@@ -2081,7 +2096,7 @@ class Component extends DCLogic {
   tvFeedEl(){const h=React.createElement,id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),cov={position:'absolute',left:'50%',top:'50%',width:'max(100%, 177.78vh)',height:'max(100%, 56.25vw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:'none'};
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0D12'}},
       h('img',{src:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',alt:'',decoding:'async',loading:'lazy',style:{...cov,objectFit:'cover',filter:'saturate(1.05)'}}),
-      this.state.tvNear&&!REDUCED?h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&vq=hd1080&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1',onLoad:e=>this.ytQuiet(e.currentTarget),title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
+      (window.innerWidth<=760||LOW)&&!this.state.tvPlay?(REDUCED?null:h('button',{key:'play',type:'button',className:'tv-play','aria-label':'Play the live stream',onClick:e=>{e.stopPropagation();this.setState({tvPlay:true,tvNear:true});}},h('i',{className:'gi','data-gi':'play_arrow','aria-hidden':'true'}),h('span',null,'Play live stream'))):this.state.tvNear&&!REDUCED?      h('iframe',{key:'yt',src:'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=0&loop=1&playlist='+id+'&vq=hd1080&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&cc_load_policy=0&enablejsapi=1',onLoad:e=>this.ytQuiet(e.currentTarget),title:'Live from the Finals Field',allow:'autoplay; encrypted-media; picture-in-picture',tabIndex:-1,'aria-hidden':'true',style:cov}):null);}
   // Event centre: sport and status filters, live-first match list, and the picked match period by period with a momentum chart
   ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
     const list=byDiv.filter(v=>s.liveState==='all'||v.state===s.liveState),d=views.find(v=>v.id===s.sel)||views[0],m=s.live.find(x=>x.id===d.id),F=SPORT_FMT[m.div];
@@ -2230,7 +2245,7 @@ class Component extends DCLogic {
     window.addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;upd(e.target);},{passive:true});
     let st=0;window.addEventListener('scroll',()=>{if(st||(!x&&!y))return;st=requestAnimationFrame(()=>{st=0;upd(document.elementFromPoint(x,y));});},{passive:true});
     document.addEventListener('pointerleave',()=>{on=false;this.curLab='';c.setAttribute('data-on','0');});}
-  smoothInit(){if(this.smOn||REDUCED||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;this.smOn=1;document.documentElement.style.scrollBehavior='auto';
+  smoothInit(){if(this.smOn||REDUCED||LOW||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;this.smOn=1;document.documentElement.style.scrollBehavior='auto';
     let cur=window.scrollY,tgt=cur,raf=0,last=cur;const max=()=>document.documentElement.scrollHeight-window.innerHeight;
     const step=()=>{cur+=(tgt-cur)*0.1;if(Math.abs(tgt-cur)<0.5)cur=tgt;last=Math.round(cur);window.scrollTo(0,last);raf=cur!==tgt?requestAnimationFrame(step):0;};
     const canScroll=(el,dy)=>{if(!(el instanceof Element))return false;for(;el&&el!==document.body&&el!==document.documentElement;el=el.parentElement){const cs=getComputedStyle(el);if(/(auto|scroll)/.test(cs.overflowY)&&el.scrollHeight>el.clientHeight+1){if(dy<0?el.scrollTop>0:el.scrollTop+el.clientHeight<el.scrollHeight-1)return true;}}return false;};
@@ -2258,7 +2273,9 @@ class Component extends DCLogic {
     for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*(LITE?0.32:this.smOn?0.24:0.12),nv=Math.abs(t[k]-v)<0.001?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
     if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.soft({p:{...P}});}}
     if(moved||this.fxDirty)this.awake=240;
-    if(this.awake>0){this.awake--;this.heroParallax();this.kickAnim();this.mediaDolly();this.rolesGlide();}
+    if(this.awake>0){this.awake--;if(!LOW){this.heroParallax();this.mediaDolly();}this.kickAnim();this.rolesGlide();
+      // if scrolling proves slow on this device (a third of 150 moving frames over 34ms), drop to low mode for the rest of the visit
+      if(!LOW&&moved&&!this.lowDone){const now=performance.now(),dt=now-(this.lowT||now);this.lowT=now;if(dt>0&&dt<400){this.lowN=(this.lowN||0)+1;if(dt>34)this.lowS=(this.lowS||0)+1;if(this.lowN>=150){this.lowDone=1;if(this.lowS/this.lowN>0.33){LOW=true;document.documentElement.classList.add('gms-low');}}}}else if(!moved)this.lowT=0;}
     this.figTick(performance.now());
   }
   fxQ(sel){const c=this.fxC||(this.fxC={});let a=c[sel];if(!a||!a.length||!a[0].isConnected){a=[...document.querySelectorAll(sel)];c[sel]=a;}return a;}
@@ -2319,7 +2336,7 @@ class Component extends DCLogic {
         while(bm.size>10){let far=-1,fd=-1;for(const k of bm.keys()){const d=Math.abs(k-kv.cur);if(d>fd){fd=d;far=k;}}const v=bm.get(far);v&&v.close&&v.close();bm.delete(far);}}).catch(()=>pend.delete(i));};
     want(fi);for(let k=1;k<=6;k++)want(fi+dir*k*st);for(let k=1;k<=2;k++)want(fi-dir*k*st);
     if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
-  kvPreload(){if(this.kv)return;const dir='assets/kickfull/'+(window.innerWidth<=760?'m':'d')+'/',st=LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
+  kvPreload(){if(this.kv)return;const dir='assets/kickfull/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
     const order=[0,KV.idx(2),KV.idx(KV.hitT)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
     const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=g2').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
     for(let k=0;k<6;k++)next();}
