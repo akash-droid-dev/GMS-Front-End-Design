@@ -287,7 +287,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-r=tabbar]{display:none}
 @media (max-width:760px){
  [data-r=regdock]{display:none!important}
- [data-r=tabbar]{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:72;display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;align-items:center;gap:2px;padding:5px;border-radius:22px;
+ [data-r=tabbar]{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:72;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.75fr;align-items:center;gap:2px;padding:5px;border-radius:22px;
   background:rgba(255,255,255,.94);border:1px solid rgba(11,13,18,.06);box-shadow:0 2px 6px rgba(15,20,40,.06),0 16px 40px rgba(15,20,40,.16);transition:transform .55s var(--gms-ease),opacity .4s}
  [data-r=tabbar][data-show="0"]{transform:translateY(150%);opacity:0;pointer-events:none}
  [data-r=tabbar] button{all:unset;box-sizing:border-box;cursor:pointer;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:17px;color:#6B7180;
@@ -936,9 +936,13 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 .nv-badge{position:absolute;right:2px;top:2px;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:999px;background:#2F5BFF;color:#fff;font:700 10px/16px 'Instrument Sans',system-ui,sans-serif;text-align:center;transform:scale(0);transition:transform .35s var(--gms-ease)}
 .nv-badge[data-n]{transform:scale(1)}
 .nv-mi{display:none}
-@media (max-width:1180px){.nv-ic--theme{display:none}}
+.nv-tools{display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:var(--d-tint,rgba(11,13,18,.05))}.nv-tools .nv-ic{width:34px;height:34px;font-size:17px}
+@media (min-width:901px){[data-r=nav] [data-r=navlinks]{margin-right:auto;margin-left:14px;justify-content:flex-start!important}}
+/* one sign-in button: the Login page has the Admin tab */
+[data-r=nav] [data-r=admin-btn]{display:none!important}
 @media (max-width:900px){
- .nv-ic--my,.nv-ic--theme{display:none}
+ .nv-ic--my,.nv-ic--theme{display:none}.nv-tools{padding:0;background:none}.nv-tools .nv-ic{width:38px;height:38px}
+ @media (max-width:760px){.nv-tools{display:none}}
  [data-r=navlinks] .nv-mi{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 16px;font-size:15px;font-weight:600;color:var(--d-ink,#0B0D12)}
  [data-r=navlinks] .nv-mi .gi{font-size:18px}
  [data-r=navlinks] .nv-mi .nv-badge{position:static;transform:none;display:none}[data-r=navlinks] .nv-mi .nv-badge[data-n]{display:inline-block}
@@ -1005,7 +1009,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=12"></script>
+<script defer src="./assets/js/gms-plus.js?v=13"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1058,15 +1062,16 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
       <button data-on="{{ n.on }}" data-sec="{{ n.sec }}" onClick="{{ n.go }}" onMouseEnter="{{ n.enter }}" onMouseLeave="{{ n.leave }}" aria-expanded="{{ n.exp }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:{{ n.bg }};color:{{ n.fg }};transition:background .2s ease,color .2s ease">{{ n.label }}<span style="font-family:'Material Symbols Rounded';font-size:18px;width:{{ n.cw }};overflow:hidden;transition:transform .3s ease;transform:rotate({{ n.rot }})"><i class="gi" data-gi="expand_more"></i></span></button>
     </sc-for>
+    <button type="button" class="nv-mi" data-plus="search"><i class="gi" data-gi="search"></i>Search</button>
     <button type="button" class="nv-mi" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
     <button type="button" class="nv-mi" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
     <button data-r="menu-admin" onClick="{{ goAdminLogin }}">Admin login</button>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:var(--d-tint,rgba(11,13,18,.06));font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="{{ menuIcon }}"></i></button>
-    <button type="button" class="nv-ic" data-plus="search" aria-label="Search the Games" title="Search (Ctrl K)"><i class="gi" data-gi="search"></i></button>
+    <span class="nv-tools"><button type="button" class="nv-ic nv-ic--search" data-plus="search" aria-label="Search the Games" title="Search (Ctrl K)"><i class="gi" data-gi="search"></i></button>
     <button type="button" class="nv-ic nv-ic--my" data-plus="mygames" aria-label="My Games" title="My Games"><i class="gi" data-gi="star"></i><b class="nv-badge" data-my-count></b></button>
-    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button>
+    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button></span>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-size:14px;font-weight:600">Admin Login</button>
     <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:#2F5BFF;color:#fff;font-size:14px;font-weight:600">Login</button>
   </div>
@@ -1102,7 +1107,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
     <div data-hero-media data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform">{{ heroVideo }}</div>
     <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
     <div data-hero-copy data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
-      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">Registration open</b><span>GMS 2026</span><span class="hp-mono">{{ clock }} IST</span></span>
+      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">{{ phaseTag }}</b><span>{{ tShort }}</span><span class="hp-mono">{{ clock }} {{ tzLabel }}</span></span>
       <h1 data-r="hero-h1" style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.61s">System<b class="hero-dot">.</b></span></span></h1>
       <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">Registration, accreditation, schedules and live results for every athlete, official and venue, run from one system.</p>
       <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both">{{ heroLine }}</p>
@@ -1271,7 +1276,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
       <div data-r="sch-left" style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
         <span class="sx"><i>04</i>Schedule</span>
         <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96">Every session, day by day</h2>
-        <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">Sessions run from 07:30 to 20:00 IST across four venues. Open one for its round, venue and a calendar link.</p>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ schLead }}</p>
         <div data-rise data-r="sch-days" style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
             <button onClick="{{ d.pick }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-radius:var(--r-s);background:{{ d.bg }};color:{{ d.fg }};transition:background .3s ease,color .3s ease">
@@ -1380,12 +1385,12 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 
   <section data-r="stories" ref="{{ storiesRef }}">
     <div class="st-head">
-      <div class="st-l"><span class="sx"><i>06</i>Athlete stories</span><h2 class="st-h">A week at the Games, from the athlete's side</h2><p class="st-p">Six moments from registration to the final, and the part the system plays in each. Illustrative stories.</p></div>
+      <div class="st-l"><span class="sx"><i>06</i>The system at work</span><h2 class="st-h">A week at the Games, sport by sport</h2><p class="st-p">Six moments from registration to the final, and what the system does in each.</p></div>
       <div class="st-nav"><button type="button" class="st-arw" onClick="{{ storyPrev }}" aria-label="Previous story"><i class="gi st-back" data-gi="arrow_forward"></i></button><button type="button" class="st-arw" onClick="{{ storyNext }}" aria-label="Next story"><i class="gi" data-gi="arrow_forward"></i></button></div>
     </div>
-    <div class="st-track" data-cursor="Drag" role="list" aria-label="Athlete stories">
+    <div class="st-track" data-cursor="Drag" role="list" aria-label="The system at work">
       <sc-for list="{{ stories }}" as="t" hint-placeholder-count="6">
-        <figure class="st-card" role="listitem"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><blockquote>“{{ t.q }}”</blockquote><span class="st-who">{{ t.who }}</span></span></figcaption></figure>
+        <figure class="st-card" role="listitem"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><blockquote>{{ t.q }}</blockquote><span class="st-who">{{ t.who }}</span></span></figcaption></figure>
       </sc-for>
     </div>
     <div class="st-prog" aria-hidden="true"><span><i></i></span></div>
@@ -1402,7 +1407,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
             <div class="fn-units">{{ fnCount }}</div>
           </div>
           <h2 class="fn-h">{{ fnWords }}</h2>
-          <p class="fn-p">Registration closes on 7 November. Accreditation cards go out from 10 November, and the first heats start at 07:30 on day one.</p>
+          <p class="fn-p">{{ fnPara }}</p>
           <div class="fn-cta">
             <button onClick="{{ fnPrimary.go }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:16px 28px;border-radius:999px;font-weight:600;font-size:15px">{{ fnPrimary.label }}</button>
           </div>
@@ -1414,7 +1419,7 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
   <footer style="background:#000;color:#fff;padding:44px 32px 52px">
     <div data-r="foot-grid" data-rise style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
       <span style="display:flex;align-items:center;gap:10px"><img src="assets/brand/gms-mark-dark.svg" alt="" width="30" height="30" loading="lazy" style="display:block;width:30px;height:30px"><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span></span>
-      <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">GMS runs registration, accreditation, scheduling and results for the GMS Games 2026, Ahmedabad, 14 to 18 November.</p>
+      <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">{{ footLine }}</p>
       <div style="display:flex;gap:22px;font-size:13px;color:rgba(255,255,255,.62)">
         <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">Schedule</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">Events</button><button onClick="{{ toContact }}" style="all:unset;cursor:pointer">Help desk</button><span>© 2026</span>
       </div>
@@ -1665,9 +1670,10 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
     <button type="button" data-tab="overview" data-on="1" onClick="{{ tabHome }}"><i class="gi" data-gi="home"></i><span>Home</span></button>
     <button type="button" data-tab="schedule" onClick="{{ tabSchedule }}"><i class="gi" data-gi="event_available"></i><span>Schedule</span></button>
     <button type="button" data-tab="tv" onClick="{{ tabLive }}"><i class="gi" data-gi="live_tv"></i><span>Live</span></button>
+    <button type="button" data-plus="search"><i class="gi" data-gi="search"></i><span>Search</span></button>
     <button type="button" data-tab="reg" class="tb-reg" onClick="{{ tabReg }}"><span>Register</span><i class="gi" data-gi="arrow_forward"></i></button>
   </nav>
-  <button type="button" data-r="regdock" data-show="{{ dockShow }}" data-hide="1" onClick="{{ tabReg }}"><span class="rd-k sig sig--open">Registration open</span><b>Register for the Games</b><span class="rd-go"><i class="gi" data-gi="arrow_forward"></i></span></button>
+  <button type="button" data-r="regdock" data-show="{{ dockShow }}" data-hide="1" onClick="{{ tabReg }}"><span class="rd-k sig sig--open">{{ regTag }}</span><b>Register for the Games</b><span class="rd-go"><i class="gi" data-gi="arrow_forward"></i></span></button>
   <div data-r="bot" data-zoop="{{ visionZoop }}" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;transition:opacity .25s ease;opacity:{{ botOp }};pointer-events:{{ botPe }}">
     <img src="assets/bot-still.webp" alt="" width="120" height="120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:{{ botStillOp }};transition:opacity .7s ease .15s">
     <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
@@ -1683,32 +1689,79 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 </sc-if>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sy6emSOKlQY&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
-const BLUE='#2F5BFF';
+
 // Set in <head> before render: phones, tablets and touch-first devices use CSS stand-ins for the Spline scenes.
 const LITE=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-lite');
 // Sports on the programme: [full event name, category, code, short label for chips]
-const CATS=[
-{name:'Athletics',icon:'directions_run',color:BLUE,tint:'#E8EEFF',outdoor:true,events:[['Athletics 100m Men','MEN','ATH100M','100m Men'],['Athletics 100m Women','WOMEN','ATH100W','100m Women'],['Athletics 4×400m Mixed Relay','MIXED','ATH4X4','4×400m Relay']]},
-{name:'Swimming',icon:'pool',color:'#0E8FB8',tint:'#E1F4FA',outdoor:false,events:[['Swimming 50m Freestyle Men','MEN','SWM50M','50m Free Men'],['Swimming 50m Freestyle Women','WOMEN','SWM50W','50m Free Women'],['Swimming 4×100m Mixed Medley','MIXED','SWMMED','Medley Relay']]},
-{name:'Football',icon:'sports_soccer',color:'#1F8A4C',tint:'#E4F5EA',outdoor:true,events:[['Football Men\'s Tournament','MEN','FBM','Men'],['Football Women\'s Tournament','WOMEN','FBW','Women'],['Football Five-a-side','MIXED','FB5','Five-a-side']]},
-{name:'Basketball',icon:'sports_basketball',color:'#D9601E',tint:'#FDEDE3',outdoor:false,events:[['Basketball Men\'s Tournament','MEN','BKM','Men'],['Basketball Women\'s Tournament','WOMEN','BKW','Women'],['Basketball 3×3 Mixed','MIXED','BK3','3×3 Mixed']]},
-{name:'Volleyball',icon:'sports_volleyball',color:'#A9741E',tint:'#FBF1DF',outdoor:false,events:[['Volleyball Men\'s Tournament','MEN','VBM','Men'],['Volleyball Women\'s Tournament','WOMEN','VBW','Women'],['Volleyball Beach Mixed','MIXED','VBB','Beach Mixed']]},
-{name:'Tennis',icon:'sports_tennis',color:'#7A4FD6',tint:'#EFE9FC',outdoor:true,events:[['Tennis Men\'s Singles','MEN','TNM','Men\'s Singles'],['Tennis Women\'s Singles','WOMEN','TNW','Women\'s Singles'],['Tennis Mixed Doubles','MIXED','TNX','Mixed Doubles']]}];
+// =====================================================================================================
+// TOURNAMENT SETTINGS. Everything that belongs to one tournament lives in this block: edit it (and nothing
+// else) to point the site at another event. The schedule, countdown, calendar links, counts, search,
+// medal table and copy all read from here. Times are local to the tournament's time zone.
+// =====================================================================================================
+const TOURNAMENT={
+  name:'GMS Games 2026',            // full name, used in headings, calendar entries and the footer
+  short:'GMS 2026',                 // short tag in the hero
+  city:'Ahmedabad',
+  firstDay:'2026-11-14',            // date of day 1 (YYYY-MM-DD); later days follow one per entry in `sessions`
+  timezone:{label:'IST',offsetMinutes:330,iana:'Asia/Kolkata'},
+  registrationCloses:'2026-11-07',
+  accreditationFrom:'2026-11-10',
+  teamLabel:'Team',                 // what competitors represent: Team, State, Unit, Nation...
+  teams:{IND:'India',USA:'United States',BRA:'Brazil',JPN:'Japan',GER:'Germany',ITA:'Italy',ESP:'Spain',AUS:'Australia',GBR:'Great Britain',CHN:'China',KEN:'Kenya',SRB:'Serbia',TUR:'Türkiye',FRA:'France',CAN:'Canada',NED:'Netherlands',JAM:'Jamaica',KOR:'Korea'},
+  // venues; `channel` links a venue to a Live TV channel and the live-score feed
+  venues:[{name:'Sabarmati Stadium',channel:'stadium',short:'SABARMATI',icon:'sports_soccer'},{name:'Narmada Aquatics Centre'},{name:'Riverfront Arena',channel:'arena',short:'RIVERFRONT',icon:'sports_basketball'},{name:'Motera Tennis Centre',channel:'court',short:'MOTERA',icon:'sports_tennis'}],
+  // sports and their medal events: [full name, MEN | WOMEN | MIXED, code, short name]
+  sports:[
+{name:'Athletics',venue:'Sabarmati Stadium',icon:'directions_run',color:'#2F5BFF',tint:'#E8EEFF',outdoor:true,events:[['Athletics 100m Men','MEN','ATH100M','100m Men'],['Athletics 100m Women','WOMEN','ATH100W','100m Women'],['Athletics 4×400m Mixed Relay','MIXED','ATH4X4','4×400m Relay']]},
+{name:'Swimming',venue:'Narmada Aquatics Centre',icon:'pool',color:'#0E8FB8',tint:'#E1F4FA',outdoor:false,events:[['Swimming 50m Freestyle Men','MEN','SWM50M','50m Free Men'],['Swimming 50m Freestyle Women','WOMEN','SWM50W','50m Free Women'],['Swimming 4×100m Mixed Medley','MIXED','SWMMED','Medley Relay']]},
+{name:'Football',venue:'Sabarmati Stadium',icon:'sports_soccer',color:'#1F8A4C',tint:'#E4F5EA',outdoor:true,events:[['Football Men\'s Tournament','MEN','FBM','Men'],['Football Women\'s Tournament','WOMEN','FBW','Women'],['Football Five-a-side','MIXED','FB5','Five-a-side']]},
+{name:'Basketball',venue:'Riverfront Arena',icon:'sports_basketball',color:'#D9601E',tint:'#FDEDE3',outdoor:false,events:[['Basketball Men\'s Tournament','MEN','BKM','Men'],['Basketball Women\'s Tournament','WOMEN','BKW','Women'],['Basketball 3×3 Mixed','MIXED','BK3','3×3 Mixed']]},
+{name:'Volleyball',venue:'Riverfront Arena',icon:'sports_volleyball',color:'#A9741E',tint:'#FBF1DF',outdoor:false,events:[['Volleyball Men\'s Tournament','MEN','VBM','Men'],['Volleyball Women\'s Tournament','WOMEN','VBW','Women'],['Volleyball Beach Mixed','MIXED','VBB','Beach Mixed']]},
+{name:'Tennis',venue:'Motera Tennis Centre',icon:'sports_tennis',color:'#7A4FD6',tint:'#EFE9FC',outdoor:true,events:[['Tennis Men\'s Singles','MEN','TNM','Men\'s Singles'],['Tennis Women\'s Singles','WOMEN','TNW','Women\'s Singles'],['Tennis Mixed Doubles','MIXED','TNX','Mixed Doubles']]}],
+  // one array per day: [start time, event code, round]
+  sessions:[
+[['07:30','ATH100M','Heats'],['07:30','ATH100W','Heats'],['09:15','SWM50M','Heats'],['09:15','SWM50W','Heats'],['11:00','FBM','Group stage'],['13:45','BKM','Group stage'],['16:30','VBW','Pool A'],['18:15','TNM','Round of 16'],['19:30','FBW','Group stage']],
+[['08:00','ATH4X4','Heats'],['09:30','SWMMED','Heats'],['11:15','BKW','Group stage'],['14:00','VBM','Pool B'],['15:45','TNW','Round of 16'],['17:30','FB5','Group stage'],['19:00','BK3','Pool play']],
+[['07:45','ATH100M','Semi-finals'],['07:45','ATH100W','Semi-finals'],['10:00','SWM50M','Semi-finals'],['12:30','FBM','Quarter-finals'],['15:00','VBB','Pool play'],['16:45','TNX','Quarter-finals'],['19:15','BKM','Quarter-finals']],
+[['08:30','SWM50W','Semi-finals'],['10:15','FBW','Semi-finals'],['13:00','BKW','Semi-finals'],['15:30','VBW','Semi-finals'],['17:15','TNM','Semi-finals'],['19:45','FBM','Semi-finals']],
+[['08:00','ATH100M','Final'],['08:20','ATH100W','Final'],['09:40','ATH4X4','Final'],['10:30','SWM50M','Final'],['10:45','SWM50W','Final'],['11:30','SWMMED','Final'],['14:00','TNM','Final'],['15:30','VBM','Final'],['17:00','BKM','Final'],['19:30','FBM','Final']]]
+};
+// ---- derived from the settings (no tournament details below this line) ----
+const T=(()=>{const c=TOURNAMENT,off=c.timezone.offsetMinutes*60000,[y,mo,d]=c.firstDay.split('-').map(Number),n=c.sessions.length,p2=x=>String(x).padStart(2,'0');
+  const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],MONL=['January','February','March','April','May','June','July','August','September','October','November','December'],DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const date=i=>new Date(Date.UTC(y,mo-1,d+i)),iso=x=>{const [a,b,e]=x.split('-').map(Number);return new Date(Date.UTC(a,b-1,e));};
+  const at=(i,tm)=>{const [h,m]=tm.split(':').map(Number);return Date.UTC(y,mo-1,d+i,h,m)-off;};                 // the real instant of a local time on day i
+  const short=x=>x.getUTCDate()+' '+MON[x.getUTCMonth()],long=x=>x.getUTCDate()+' '+MONL[x.getUTCMonth()];
+  const times=c.sessions.flat().map(x=>x[0]).sort(),lastDay=c.sessions[n-1].map(x=>x[0]).sort();
+  const start=at(0,c.sessions[0].map(x=>x[0]).sort()[0]),end=at(n-1,lastDay[lastDay.length-1])+2*36e5;
+  const sign=off<0?'-':'+',ao=Math.abs(c.timezone.offsetMinutes),offStr=sign+p2(Math.floor(ao/60))+':'+p2(ao%60);
+  const same=date(0).getUTCMonth()===date(n-1).getUTCMonth();
+  return {n,off,offStr,date,at,start,end,year:y,
+    ymd:i=>{const x=date(i);return x.getUTCFullYear()+p2(x.getUTCMonth()+1)+p2(x.getUTCDate());},isoDay:i=>{const x=date(i);return x.getUTCFullYear()+'-'+p2(x.getUTCMonth()+1)+'-'+p2(x.getUTCDate());},
+    dayShort:i=>short(date(i)),dayLong:i=>long(date(i)),dow:i=>DOW[date(i).getUTCDay()],fmtShort:x=>short(iso(x)),fmtLong:x=>long(iso(x)),
+    range:(same?date(0).getUTCDate():long(date(0)))+' to '+long(date(n-1)),rangeShort:(same?date(0).getUTCDate():short(date(0)))+' to '+short(date(n-1)),
+    firstTime:times[0],lastTime:times[times.length-1],events:c.sports.reduce((a,x)=>a+x.events.length,0),
+    phase:now=>now<start?'before':now<=end?'during':'after',                                                       // before, during or after the Games
+    dayNow:now=>Math.max(0,Math.min(n-1,Math.floor((now+off-Date.UTC(y,mo-1,d))/864e5))),
+    regOpen:now=>now<iso(c.registrationCloses).getTime()+864e5-off,
+    local:now=>new Date(now+off+new Date(now).getTimezoneOffset()*60000)};})();
+const BLUE='#2F5BFF';
+const CATS=TOURNAMENT.sports;
 const ALL_EVENTS=CATS.flatMap(c=>c.events.map(e=>({name:e[0],gender:e[1],code:e[2],cat:c})));
 // Athlete stories: portraits cut from the hero footage; the quotes are illustrative, not real people
 const STORIES=[
-{img:'basketball',sport:'Basketball',icon:'sports_basketball',q:'Accreditation took one evening. The rest of my week was about the rim.',who:'Basketball · Delegation athlete'},
-{img:'athletics',sport:'Athletics',icon:'directions_run',q:'My heat, lane and call time were on my phone the minute the draw landed.',who:'Athletics · 100 m sprinter'},
-{img:'swimming',sport:'Swimming',icon:'pool',q:'The result was waiting for me before I had climbed out of the pool.',who:'Swimming · Freestyle'},
-{img:'volleyball',sport:'Volleyball',icon:'sports_volleyball',q:'The whole squad registered from one link. No paper, no queues.',who:'Volleyball · Team captain'},
-{img:'tennis',sport:'Tennis',icon:'sports_tennis',q:'Practice courts, transport and match times, all in one place.',who:'Tennis · Singles'},
-{img:'football',sport:'Football',icon:'sports_soccer',q:'My family followed every match live from home.',who:'Football · Youth squad'}];
-// calendar links for a session (14 to 18 Nov 2026, IST, two hours): Google and Outlook open prefilled, Apple downloads an .ics file
-const calLinks=(title,tm,desc,day,venue)=>{const [h,m]=tm.split(':').map(Number),e=String(h+2).padStart(2,'0')+':'+String(m).padStart(2,'0'),loc=venue+', Ahmedabad',enc=encodeURIComponent,dd=14+(day||0),ds='202611'+dd;
-  const utc=(hh,mm)=>{const d=new Date(Date.UTC(2026,10,dd,hh,mm)-330*60000);return d.toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';};
-  return {gcal:'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+enc(title)+'&dates='+ds+'T'+tm.replace(':','')+'00/'+ds+'T'+e.replace(':','')+'00&ctz=Asia/Kolkata&details='+enc(desc)+'&location='+enc(loc),
-    outlook:'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject='+enc(title)+'&startdt=2026-11-'+dd+'T'+tm+':00%2B05:30&enddt=2026-11-'+dd+'T'+e+':00%2B05:30&body='+enc(desc)+'&location='+enc(loc),
-    ics:()=>{const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GMS//Games 2026//EN','BEGIN:VEVENT','UID:'+title.replace(/\W+/g,'-')+'-'+tm.replace(':','')+'@gms','DTSTAMP:'+utc(h,m),'DTSTART:'+utc(h,m),'DTEND:'+utc(h+2,m),'SUMMARY:'+title,'DESCRIPTION:'+desc,'LOCATION:'+loc,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+{img:'basketball',sport:'Basketball',icon:'sports_basketball',q:'Accreditation is checked once, then the card works at every venue gate.',who:'Accreditation'},
+{img:'athletics',sport:'Athletics',icon:'directions_run',q:'Heat, lane and call time reach every athlete the moment the draw is made.',who:'Start lists'},
+{img:'swimming',sport:'Swimming',icon:'pool',q:'Results are published from the timing desk as each race finishes.',who:'Results'},
+{img:'volleyball',sport:'Volleyball',icon:'sports_volleyball',q:'A whole squad registers from one link, with every member verified.',who:'Team registration'},
+{img:'tennis',sport:'Tennis',icon:'sports_tennis',q:'Practice courts, transport and match times sit in one schedule.',who:'Scheduling'},
+{img:'football',sport:'Football',icon:'sports_soccer',q:'Every match is streamed with its live score beside the picture.',who:'Live coverage'}];
+// calendar links for a session (local time from the settings, two hours): Google and Outlook open prefilled, Apple downloads an .ics file
+const calLinks=(title,tm,desc,day,venue)=>{const [h,m]=tm.split(':').map(Number),e=String(h+2).padStart(2,'0')+':'+String(m).padStart(2,'0'),loc=venue+', '+TOURNAMENT.city,enc=encodeURIComponent,ds=T.ymd(day||0),di=T.isoDay(day||0),oz=enc(T.offStr);
+  const utc=(hh,mm)=>new Date(T.at(day||0,hh+':'+mm)).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+  return {gcal:'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+enc(title)+'&dates='+ds+'T'+tm.replace(':','')+'00/'+ds+'T'+e.replace(':','')+'00&ctz='+TOURNAMENT.timezone.iana+'&details='+enc(desc)+'&location='+enc(loc),
+    outlook:'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject='+enc(title)+'&startdt='+di+'T'+tm+':00'+oz+'&enddt='+di+'T'+e+':00'+oz+'&body='+enc(desc)+'&location='+enc(loc),
+    ics:()=>{const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GMS//'+TOURNAMENT.name+'//EN','BEGIN:VEVENT','UID:'+title.replace(/\W+/g,'-')+'-'+tm.replace(':','')+'@gms','DTSTAMP:'+utc(h,m),'DTSTART:'+utc(h,m),'DTEND:'+utc(h+2,m),'SUMMARY:'+title,'DESCRIPTION:'+desc,'LOCATION:'+loc,'END:VEVENT','END:VCALENDAR'].join('\r\n');
       const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=title.split(' · ')[0].replace(/\W+/g,'-').toLowerCase()+'.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}};};
 const REG=[
 {id:'athlete',name:'Participants',icon:'directions_run',org:'none',desc:'Players and team members competing in any sport at the tournament.'},
@@ -1721,23 +1774,18 @@ const REG=[
 {id:'service',name:'Service Provider',icon:'handyman',org:'optional',desc:'Vendors delivering catering, transport, equipment and venue services.'}];
 const DOCS={media:['Front-face photo','Media outlet name','Emergency contact','Government ID (optional)'],_:['Front-face photo','Emergency contact','Kit and shoe size','Government ID (optional)']};
 const STEPS=[
-{title:'Registration',when:'Closes 7 Nov',desc:'Athletes, staff, officials and every accredited role register online through one verified identity.'},
+{title:'Registration',when:'Closes '+T.fmtShort(TOURNAMENT.registrationCloses),desc:'Athletes, staff, officials and every accredited role register online through one verified identity.'},
 {title:'Verification',when:'In progress',desc:'Identity, eligibility and documents are checked before anyone is accredited.'},
-{title:'Accreditation & arrivals',when:'10 to 13 Nov',desc:'Cards printed, zones assigned, and travel and stays confirmed for every delegation.'},
-{title:'Competition',when:'14 to 17 Nov',desc:'Heats, group stages and knockouts across every sport, scored live at every venue.'},
-{title:'Finals & ceremonies',when:'18 Nov',desc:'Medal events streamed live, results published instantly and medals awarded.'}];
+{title:'Accreditation & arrivals',when:T.fmtShort(TOURNAMENT.accreditationFrom)+' to '+T.dayShort(-1),desc:'Cards printed, zones assigned, and travel and stays confirmed for every delegation.'},
+{title:'Competition',when:T.n>2?T.dayShort(0)+' to '+T.dayShort(T.n-2):T.dayShort(0),desc:'Heats, group stages and knockouts across every sport, scored live at every venue.'},
+{title:'Finals & ceremonies',when:T.dayShort(T.n-1),desc:'Medal events streamed live, results published instantly and medals awarded.'}];
 // five days of sessions: [time IST, event code, round]
-const SESSIONS=[
-[['07:30','ATH100M','Heats'],['07:30','ATH100W','Heats'],['09:15','SWM50M','Heats'],['09:15','SWM50W','Heats'],['11:00','FBM','Group stage'],['13:45','BKM','Group stage'],['16:30','VBW','Pool A'],['18:15','TNM','Round of 16'],['19:30','FBW','Group stage']],
-[['08:00','ATH4X4','Heats'],['09:30','SWMMED','Heats'],['11:15','BKW','Group stage'],['14:00','VBM','Pool B'],['15:45','TNW','Round of 16'],['17:30','FB5','Group stage'],['19:00','BK3','Pool play']],
-[['07:45','ATH100M','Semi-finals'],['07:45','ATH100W','Semi-finals'],['10:00','SWM50M','Semi-finals'],['12:30','FBM','Quarter-finals'],['15:00','VBB','Pool play'],['16:45','TNX','Quarter-finals'],['19:15','BKM','Quarter-finals']],
-[['08:30','SWM50W','Semi-finals'],['10:15','FBW','Semi-finals'],['13:00','BKW','Semi-finals'],['15:30','VBW','Semi-finals'],['17:15','TNM','Semi-finals'],['19:45','FBM','Semi-finals']],
-[['08:00','ATH100M','Final'],['08:20','ATH100W','Final'],['09:40','ATH4X4','Final'],['10:30','SWM50M','Final'],['10:45','SWM50W','Final'],['11:30','SWMMED','Final'],['14:00','TNM','Final'],['15:30','VBM','Final'],['17:00','BKM','Final'],['19:30','FBM','Final']]];
-const VENUE_OF={Athletics:'Sabarmati Stadium',Football:'Sabarmati Stadium',Swimming:'Narmada Aquatics Centre',Basketball:'Riverfront Arena',Volleyball:'Riverfront Arena',Tennis:'Motera Tennis Centre'};
-const DAYS=[['01','14 Nov','Sat'],['02','15 Nov','Sun'],['03','16 Nov','Mon'],['04','17 Nov','Tue'],['05','18 Nov','Wed']];
+const SESSIONS=TOURNAMENT.sessions;
+const VENUE_OF=Object.fromEntries(CATS.map(c=>[c.name,c.venue]));
+const DAYS=SESSIONS.map((_,i)=>[String(i+1).padStart(2,'0'),T.dayShort(i),T.dow(i)]);
 // ---- Live scores: head-to-head matches at three venues. Each sport scores its own way (football goals by the minute,
 // basketball points by the quarter, volleyball rallies to sets, tennis games to sets); liveStep() plays one moment of one live match. ----
-const FIELDS=[{id:'stadium',name:'Sabarmati Stadium',short:'SABARMATI',icon:'sports_soccer'},{id:'arena',name:'Riverfront Arena',short:'RIVERFRONT',icon:'sports_basketball'},{id:'court',name:'Motera Tennis Centre',short:'MOTERA',icon:'sports_tennis'}];
+const FIELDS=TOURNAMENT.venues.filter(v=>v.channel).map(v=>({id:v.channel,name:v.name,short:v.short||v.name.toUpperCase(),icon:v.icon||'sports'}));
 // sport rules, by CATS index: how a match is played and how its periods are named
 const SPORT_FMT={2:{k:'football',per:'H',plan:'TWO HALVES',help:'Football: two halves of 45 minutes; most goals wins.'},3:{k:'basketball',per:'Q',plan:'FOUR QUARTERS',help:'Basketball: four quarters of 10 minutes; most points wins.'},
   4:{k:'volleyball',per:'S',plan:'BEST OF FIVE SETS',help:'Volleyball: sets to 25 (the fifth to 15), win by two; first to three sets.'},5:{k:'tennis',per:'S',plan:'BEST OF THREE SETS',help:'Tennis: sets to six games, win by two; first to two sets.'}};
@@ -1791,7 +1839,7 @@ const SEED=[
 {id:'GMS-26-0385',name:'James Carter',type:'Media & Broadcasting',status:'Pending'},
 {id:'GMS-26-0362',name:'Dr. Meera Shah',type:'Medical',status:'Rejected'}];
 const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E8EEFF','#2F5BFF'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
-const EVENT_START=new Date('2026-09-05T08:00:00+05:30').getTime();
+const EVENT_START=T.start;
 // Registration mega-menu groups (role ids from REG).
 const REG_GROUPS=[['COMPETITION & MEDIA',['athlete','media','official']],['ORGANISING & MEDICAL',['entity','medical','staff']],['OPERATIONS & SERVICES',['ema','service']]];
 // Registration grid: roles in mega-menu group order (first 9 = the 3x3, last 3 = the closing row), group colours, timing
@@ -1836,8 +1884,8 @@ const CONTACT_TOPICS=[['registration','Registration','how_to_reg','Registration 
 const HELP_FAQ=[
 {q:'What is GMS?',k:['gms','system','platform','what is','software','module'],d:'general',a:'GMS runs a multi-sport Games end to end: registration, verification, accreditation, stays, transport, catering, competition and results, all on one record per person.'},
 {q:'Which documents do I need to register?',k:['document','upload','passport','photo','file','certificate','pdf','id'],d:'registration',a:'Usually a passport or national ID, a recent photo and, for athletes, a sport eligibility certificate. Each role lists its own documents in the form. Files go up as PDF, JPG or PNG.',act:['Start registration','reg']},
-{q:'When are the Games?',k:['when','date','day','schedule','final','time','start'],d:'general',a:'14 to 18 Nov 2026 in Ahmedabad. The schedule has every session for every sport.',act:['See the schedule','schedule']},
-{q:'Which sports are on?',k:['sport','events','which','programme','program','athletics','swimming','football','basketball','volleyball','tennis'],d:'general',a:'Six sports with 18 medal events: athletics, swimming, football, basketball, volleyball and tennis.'},
+{q:'When are the Games?',k:['when','date','day','schedule','final','time','start'],d:'general',a:T.rangeShort+' '+T.year+' in '+TOURNAMENT.city+'. The schedule has every session for every sport.',act:['See the schedule','schedule']},
+{q:'Which sports are on?',k:['sport','events','which','programme','program','athletics','swimming','football','basketball','volleyball','tennis'],d:'general',a:CATS.length+' sports with '+T.events+' medal events: '+CATS.map(c=>c.name.toLowerCase()).join(', ')+'.'},
 {q:'Where are live scores and results?',k:['score','result','ranking','points','standing','live'],d:'technical',a:'Every match at every venue is live in the event centre, with results as soon as it ends.',act:['Open the event centre','scores']},
 {q:'How can I watch?',k:['watch','stream','tv','broadcast','youtube','video'],d:'media',a:'Live TV has one channel per venue with the score beside the picture.',act:['Open Live TV','tv']},
 {q:'How do I register?',k:['register','registration','sign up','apply','join','fee','payment'],d:'registration',a:'Pick your role in “Pick how you\'re taking part”, fill in your details and upload the documents. You get a reference straight away.',act:['Pick my role','reg']},
@@ -1867,7 +1915,7 @@ const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',ev
 
 class Component extends DCLogic {
   state={screen:null,modal:null,peek:null,regType:'athlete',form:emptyForm(),regError:'',regDone:false,lastRegId:'',
-    day:0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),ecOpen:false,ecDone:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
+    day:T.phase(Date.now())==='during'?T.dayNow(Date.now()):0,openRow:null,p:{hero:0,steps:0,tiles:0,car:0,close:0,ev:0,reg:0,tv:0},live:liveInit(),ecOpen:false,ecDone:false,sel:'m0',liveDiv:-1,liveState:'all',now:Date.now(),
     loginTab:'participant',loginEmail:'',loginPass:'',loginError:'',session:null,admin:SEED,
     contact:{step:'ask',q:'',desk:null,name:'',email:'',msg:'',errors:{},stage:0,ref:'',sent:null,track:''},enquiries:[],
     chatOpen:false,draft:'',messages:[{from:'bot',text:'Hi, I\'m Vision. Ask me anything about the Games or GMS: registration, accreditation, schedules, venues, scores. If I can\'t settle it, I\'ll hand you to the right person.'}],coco:{mode:null,desk:null,name:'',email:'',msg:'',err:{}},cocoTyping:false,btOpen:-1,
@@ -1908,7 +1956,8 @@ class Component extends DCLogic {
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{this.kickDirty=true;});
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
     // bridge for assets/js/gms-plus.js (search, medals, My Games, chapter rail): data plus a few safe navigation calls
-    const app=this;window.GMSApp={data:{CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
+    try{document.title='GMS, Games Management System for the '+TOURNAMENT.name;const md=document.querySelector('meta[name=description]');if(md)md.content='Registration, accreditation, schedules and live results for every athlete, official and venue of the '+TOURNAMENT.name+' in '+TOURNAMENT.city+', '+T.range+'.';}catch(e){}
+    const app=this;window.GMSApp={tour:{at:T.at,start:T.start,end:T.end,year:T.year,phase:()=>T.phase(Date.now()),dayNow:()=>T.dayNow(Date.now()),dayLong:T.dayLong,n:T.n},data:{TOURNAMENT,CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
       screen:()=>app.state.screen||'home',home:after=>{if((app.state.screen||'home')!=='home')app.go('home',after);else if(after)after();},
       scrollTo:k=>app.scrollTo(k),showSession:(day,code)=>window.GMSApp.home(()=>{app.setState({day,openRow:code});setTimeout(()=>app.scrollTo('schedule'),60);}),
       startReg:id=>app.startReg(id),openTv:f=>{app.setState({chan:f||'stadium'});app.go('tv');},openEc:()=>app.openEc(),
@@ -1926,7 +1975,7 @@ class Component extends DCLogic {
       
       
       
-      heroLine:[[5,'days of competition'],[4,'venues'],[6,'sports'],[18,'medal events']].map(([n,t],i)=>React.createElement('span',{key:i},React.createElement('b',null,n),' '+t)),
+      heroLine:[[T.n,T.n===1?'day of competition':'days of competition'],[TOURNAMENT.venues.length,'venues'],[CATS.length,'sports'],[T.events,'medal events']].map(([n,t],i)=>React.createElement('span',{key:i},React.createElement('b',null,n),' '+t)),
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
       regOpen:s.regOpen?'1':'0',botOp:s.regOpen||s.menuOpen?'0':'1',botPe:s.regOpen||s.menuOpen?'none':'auto',regPanelEnter:()=>clearTimeout(this.regT),regPanelLeave:()=>{if(HOVER)this.closeRegSoon();},
@@ -2071,15 +2120,15 @@ class Component extends DCLogic {
       rail:views.filter(v=>v.live&&v.field!==F.id).map(v=>({...v,open:open(v)})),railAny:views.some(v=>v.live&&v.field!==F.id),
       scorecard:open(now)}};}
   // Finale: every visitor sees the countdown start at 10 days 23:59:59 from the moment they open the site
-  finVals(){const s=this.state,h=React.createElement;if(!this.fnEnd)this.fnEnd=Date.now()+((10*24+23)*3600+59*60+59)*1000;
+  finVals(){const s=this.state,h=React.createElement;const ph=T.phase(s.now);this.fnEnd=ph==='before'?T.start:T.end;
     const left=Math.max(0,this.fnEnd-s.now),inn=REDUCED||s.p.close>0.3;if(inn&&!this.finAt)this.finAt=performance.now();
     const units=[['DAYS',String(Math.floor(left/864e5)).padStart(2,'0')],['HRS',pad(Math.floor(left/36e5)%24)],['MIN',pad(Math.floor(left/6e4)%60)],['SEC',pad(Math.floor(left/1e3)%60)]];
     const first=performance.now()-(this.finAt||0)<2000;
     return {finaleVideo:this.lazyVideo('fv','assets/finale-'+VRES()+'.mp4?v=g1'),
-      fnLabel:'The next Games begin in',
+      fnLabel:ph==='before'?'The Games begin in':ph==='during'?'Day '+(T.dayNow(s.now)+1)+' of '+T.n+'. The Games close in':'The Games are complete',
       fnCount:units.map(([l,v],u)=>h('div',{key:l,className:'fn-unit'},h('span',{className:'flaps flaps--fin'},(inn?v:'  ').split('').map((ch,i)=>h('span',{key:i,className:'flap'},
         h('i',{key:ch,style:{'--fd':first?(u*0.12+i*0.05).toFixed(2)+'s':'0s'}},ch===' '?'\u00a0':ch)))),h('small',null,l))),
-      fnWords:'See you in Ahmedabad'.split(' ').map((w,i)=>h('span',{key:i,className:'fn-w',style:{'--i':i}},w,'\u00a0')),
+      fnWords:(ph==='before'?'See you in '+TOURNAMENT.city:ph==='during'?'Live from '+TOURNAMENT.city:'Thank you, '+TOURNAMENT.city).split(' ').map((w,i)=>h('span',{key:i,className:'fn-w',style:{'--i':i}},w,'\u00a0')),
       fnPrimary:{label:'Begin registration',go:()=>this.startReg('athlete')}};}
   // enquiries handed over through Vision (admin list); the footer's help link opens Vision
   contactVals(){const s=this.state;return {toContact:()=>this.setState({chatOpen:true}),
@@ -2089,8 +2138,8 @@ class Component extends DCLogic {
   // topic (a short form inside the chat), then a reference anyone can paste back in to track. Requests land in the admin enquiries list.
   cocoDesk(q){const t=(q||'').toLowerCase(),hit=HELP_FAQ.map(f=>({f,n:f.k.filter(k=>t.includes(k)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n)[0];return hit?hit.f.d:'general';}
   cocoSay(items,delay){clearTimeout(this.cocoT);this.setState({cocoTyping:true});this.cocoT=setTimeout(()=>this.setState(s=>({cocoTyping:false,messages:s.messages.concat(items)})),REDUCED?0:(delay??520));}
-  cocoHandoff(){const q=this.lastQ||'',d=this.cocoDesk(q),T=CONTACT_TOPICS.find(x=>x[0]===d);
-    this.setState(s=>({coco:{...s.coco,mode:null,desk:d,msg:s.coco.msg||q}}));this.cocoSay([{from:'bot',kind:'desks',text:'Sure. I\'d pass this to the '+T[3]+'. Or pick another desk:'}]);}
+  cocoHandoff(){const q=this.lastQ||'',d=this.cocoDesk(q),TP=CONTACT_TOPICS.find(x=>x[0]===d);
+    this.setState(s=>({coco:{...s.coco,mode:null,desk:d,msg:s.coco.msg||q}}));this.cocoSay([{from:'bot',kind:'desks',text:'Sure. I\'d pass this to the '+TP[3]+'. Or pick another desk:'}]);}
   cocoStatus(ref){const e=(this.state.enquiries||[]).find(x=>x.ref===ref.toUpperCase());
     return e?{from:'bot',text:ref.toUpperCase()+' is with '+e.assignee+' on the '+e.desk+' since '+e.time+'. '+e.reply+'.'}:{from:'bot',kind:'offer',text:'I can\'t find '+ref.toUpperCase()+'. Check the number, or I can pass a new question to a person.'};}
   send(text){if(!text||!text.trim())return;const q=text.trim(),t=q.toLowerCase(),ref=(q.match(/GMS-Q-\d+/i)||[])[0],mode=this.state.coco.mode;
@@ -2103,7 +2152,7 @@ class Component extends DCLogic {
     if(hits.length){const f=hits[0].f;return this.cocoSay([{from:'bot',title:f.q,text:f.a,act:f.act}]);}
     const r=this.reply(q);this.cocoSay([r.startsWith('I can help')?{from:'bot',kind:'offer',text:'I don\'t have a ready answer for that one. Want me to pass it to a person?'}:{from:'bot',text:r}]);}
   chatVals(){const s=this.state,h=React.createElement,c=s.coco,err=c.err||{},lastForm=s.messages.map(m=>m.kind).lastIndexOf('form');
-    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000),d=ist.getDay(),hr=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&hr>=9&&hr<19,clock=pad(ist.getHours())+':'+pad(ist.getMinutes());
+    const ist=T.local(s.now),d=ist.getDay(),hr=ist.getHours()+ist.getMinutes()/60,open=d>=1&&d<=6&&hr>=9&&hr<19,clock=pad(ist.getHours())+':'+pad(ist.getMinutes());
     const set=k=>e=>{const v=e.target.value;this.setState(x=>({coco:{...x.coco,[k]:v,err:{...(x.coco.err||{}),[k]:''}}}));};
     const chip=(key,label,on,hot)=>h('button',{key,type:'button',className:'cc-chip'+(hot?' cc-chip--hot':''),onClick:on},label);
     const act=a=>()=>{this.setState({chatOpen:false});if(a==='reg'||a==='schedule')this.scrollTo(a);else this.go(a);};
@@ -2113,18 +2162,18 @@ class Component extends DCLogic {
       if(m.kind==='offer')kids.push(h('span',{key:'o',className:'cc-row'},chip('p','Talk to a person',()=>{this.setState(x=>({messages:x.messages.concat({from:'me',text:'Talk to a person'})}));this.cocoHandoff();},1)));
       if(m.kind==='desks'&&i===s.messages.length-1)kids.push(h('span',{key:'d',className:'cc-row'},CONTACT_TOPICS.map(t=>chip(t[0],t[3],()=>{this.setState(x=>({coco:{...x.coco,desk:t[0]},messages:x.messages.concat({from:'me',text:t[3]})}));
         this.cocoSay([{from:'bot',kind:'form',desk:t[0],text:HELP_STAFF[t[0]]+' is on the '+t[3]+(open?' and usually picks up within a few minutes.':'. The desk opens at 09:00 IST and your message will be first in the queue.')}]);},t[0]===c.desk))));
-      if(m.kind==='form'&&i===lastForm&&!m.done){const T=CONTACT_TOPICS.find(t=>t[0]===m.desk);
+      if(m.kind==='form'&&i===lastForm&&!m.done){const TP=CONTACT_TOPICS.find(t=>t[0]===m.desk);
         kids.push(h('form',{key:'f',className:'cc-form',noValidate:true,onSubmit:e=>{e.preventDefault();const x=this.state.coco,er={};
             if(x.msg.trim().length<10)er.msg='Add a little more detail (at least 10 characters).';if(x.name.trim().length<2)er.name='Please enter your name.';if(!/^\S+@\S+\.\S+$/.test(x.email.trim()))er.email='Enter a valid email for the reply.';
             if(Object.keys(er).length){this.setState({coco:{...x,err:er}});return;}
-            const ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length),enq={ref,name:x.name.trim(),email:x.email.trim(),topic:T[1],desk:T[3],assignee:HELP_STAFF[T[0]],time:clock+' IST',reply:'Reply within '+T[5]+' hours'+(open?'':' of opening'),msg:x.msg.trim(),status:'New'};
+            const ref='GMS-Q-'+(2612+(this.state.enquiries||[]).length),enq={ref,name:x.name.trim(),email:x.email.trim(),topic:TP[1],desk:TP[3],assignee:HELP_STAFF[TP[0]],time:clock+' IST',reply:'Reply within '+TP[5]+' hours'+(open?'':' of opening'),msg:x.msg.trim(),status:'New'};
             this.setState(st=>({enquiries:[enq,...(st.enquiries||[])],coco:{...st.coco,msg:'',err:{}},messages:st.messages.map((mm,j)=>j===i?{...mm,done:true}:mm).concat({from:'me',text:'Send it'})}));
             this.cocoSay([{from:'bot',kind:'ticket',ref,text:enq.assignee+' on the '+enq.desk+' has it. '+enq.reply+' to '+enq.email+'. Paste the reference here any time to track it.'}]);}},
-          h('textarea',{value:c.msg,onChange:set('msg'),rows:3,placeholder:'Your question for the '+T[3],'aria-label':'Your question','aria-invalid':String(!!err.msg)}),
+          h('textarea',{value:c.msg,onChange:set('msg'),rows:3,placeholder:'Your question for the '+TP[3],'aria-label':'Your question','aria-invalid':String(!!err.msg)}),
           h('input',{value:c.name,onChange:set('name'),autoComplete:'name',placeholder:'Your name','aria-label':'Your name','aria-invalid':String(!!err.name)}),
           h('input',{value:c.email,onChange:set('email'),type:'email',autoComplete:'email',placeholder:'Email for the reply','aria-label':'Email for the reply','aria-invalid':String(!!err.email)}),
           (err.msg||err.name||err.email)?h('span',{className:'cc-err',role:'alert'},err.msg||err.name||err.email):null,
-          h('button',{type:'submit',className:'gms-cta'},h('span',null,'Send to '+HELP_STAFF[T[0]].split(' ')[0]),h('i',{'aria-hidden':'true'},h('svg',{width:14,height:14,viewBox:'0 0 16 16'},h('path',{d:'M3 8h10M9 4l4 4-4 4',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round'}))))));}
+          h('button',{type:'submit',className:'gms-cta'},h('span',null,'Send to '+HELP_STAFF[TP[0]].split(' ')[0]),h('i',{'aria-hidden':'true'},h('svg',{width:14,height:14,viewBox:'0 0 16 16'},h('path',{d:'M3 8h10M9 4l4 4-4 4',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round'}))))));}
       if(m.kind==='ticket')return h('div',{key:i,className:'cc-ticket',role:'status'},h('span',{className:'cc-tk-ic','aria-hidden':'true'},h('i',{className:'gi','data-gi':'check'})),h('span',{style:{display:'flex',flexDirection:'column',gap:4,minWidth:0}},h('small',null,'HANDED OVER'),h('b',null,m.ref),h('span',null,m.text)));
       return h('div',{key:i,className:'cc-msg cc-msg--'+(me?'me':'bot')},kids);};
     return {chatThread:[...s.messages.map(bubble),s.cocoTyping?h('div',{key:'ty',className:'cc-typing','aria-label':'Vision is typing'},h('i'),h('i'),h('i')):null],
@@ -2370,7 +2419,7 @@ class Component extends DCLogic {
     this.setState(x=>({regDone:true,lastRegId:id,loginEmail:f.email,admin:[{id,name:f.name,type:rt.name,status:'Pending',email:f.email},...x.admin]}));window.scrollTo(0,0);}
   reply(q){const t=q.toLowerCase();
     if(/hello|hi\b|hey/.test(t))return 'Hello! Ask me about registration, accreditation, the schedule, venues or scores.';
-    if(/where|venue|city|ahmedabad/.test(t))return 'The GMS Games 2026 take place in Ahmedabad across the Main Stadium, the Indoor Arena and Centre Court.';
+    if(/where|venue|city|ahmedabad/.test(t))return 'The '+TOURNAMENT.name+' take place in '+TOURNAMENT.city+' at '+TOURNAMENT.venues.map(v=>v.name).join(', ')+'.';
     if(/thank/.test(t))return 'Happy to help. Anything else?';
     return 'I can help with registration, accreditation, the schedule, venues, scores and streams.';}
   tickerEl(){
@@ -2382,7 +2431,7 @@ class Component extends DCLogic {
   renderVals(){
     const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=(P.enable3D??true)&&!LITE;
     const rt=REG.find(r=>r.id===s.regType)||REG[0];const mr=REG.find(r=>r.id===s.modal);const f=s.form;
-    const ist=new Date(s.now+(330+new Date().getTimezoneOffset())*60000);const left=Math.max(0,EVENT_START-s.now);
+    const ist=T.local(s.now);const left=Math.max(0,T.start-s.now);
     const stepIdx=Math.min(STEPS.length-1,Math.floor(Math.min(1,s.p.steps/0.72)*STEPS.length)),stepNow=Math.min(STEPS.length-1,Math.floor(Math.min(1,((this.P||s.p).steps||0)/0.72)*STEPS.length));
     const tp=ease(clamp(s.p.tiles*2.4));const cp=ease(clamp(s.p.close*1.25));const lerp=(a,b)=>Math.round(a+(b-a)*cp);
     const isAth=s.regType==='athlete';const docs=this.docList();
@@ -2400,12 +2449,17 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'var(--d-inv,#0B0D12)':'transparent',fg:k&&screen===k?'var(--d-on-inv,#fff)':'var(--d-ink,#0B0D12)'})),
-      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/stories/'+t.img+'.webp?v=g1',alt:t.sport+' athlete'})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/stories/'+t.img+'.webp?v=g1',alt:t.sport})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),
       regAthlete:()=>this.startReg('athlete'),regStaff:()=>this.startReg('staff'),
       clock:`${pad(ist.getHours())}:${pad(ist.getMinutes())}:${pad(ist.getSeconds())}`,
+      ...(()=>{const ph=T.phase(s.now),dn=T.dayNow(s.now),ro=T.regOpen(s.now),c=TOURNAMENT,today=SESSIONS[dn]||[];
+        return {tShort:c.short,tzLabel:c.timezone.label,phaseTag:ph==='during'?'Day '+(dn+1)+' of '+T.n:ph==='after'?'Results final':ro?'Registration open':'Opens '+T.dayShort(0),regTag:ro?'Registration open':'Registration',
+          schLead:'Sessions start between '+T.firstTime+' and '+T.lastTime+' '+c.timezone.label+' across '+c.venues.length+' venues. Open one for its round, venue and a calendar link.',
+          fnPara:ph==='before'?(ro?'Registration closes on '+T.fmtLong(c.registrationCloses)+'. ':'')+'Accreditation cards go out from '+T.fmtLong(c.accreditationFrom)+', and the first session starts at '+T.firstTime+' on day one.':ph==='during'?'Today is day '+(dn+1)+' of '+T.n+': '+today.length+' sessions across '+new Set(today.map(x=>VENUE_OF[(ALL_EVENTS.find(e=>e.code===x[1])||{cat:{}}).cat.name])).size+' venues. Follow them in the schedule and the Event centre.':'All '+T.events+' medal events are decided. The results and the medal table stay available.',
+          footLine:'GMS runs registration, accreditation, scheduling and results for the '+c.name+', '+c.city+', '+T.range+'.'};})(),
       
       
       ticker:this.tickerEl(),
@@ -2421,7 +2475,7 @@ class Component extends DCLogic {
       ...this.finVals(),botReady:!LITE&&!!s.botReady&&(P.enable3D??true)&&(P.showChatbot??true),botLite:(P.showChatbot??true)&&(!(P.enable3D??true)||(!!s.botFallback&&!s.botLoaded)),botLabelOp:'1',botStillOp:s.botLoaded?'0':'1',
       
       groups:[...new Set(SESSIONS[s.day].map(x=>x[0]))].map(time=>({time,part:time<'12'?'Morning':time<'17'?'Afternoon':'Evening',items:SESSIONS[s.day].filter(d=>d[0]===time).map(([tm,code,round])=>{const ev=ALL_EVENTS.find(e=>e.code===code);const open=s.openRow===code;const venue=VENUE_OF[ev.cat.name];
-        return {key:s.day+'-'+tm.replace(':','')+'-'+code,name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'var(--d-s1,#F6F7F9)':'transparent',rot:open?'rotate(180deg)':'none',gr:open?'1fr':'0fr',vis:open?'visible':'hidden',...calLinks(ev.name+', '+round+' (GMS Games 2026)',tm,round+', '+venue,s.day,venue),
+        return {key:s.day+'-'+tm.replace(':','')+'-'+code,name:ev.name,code,sport:ev.cat.name.toUpperCase(),cat:ev.gender,dot:ev.gender==='MEN'?BLUE:ev.gender==='WOMEN'?'#1FA463':'#A9741E',bg:open?'var(--d-s1,#F6F7F9)':'transparent',rot:open?'rotate(180deg)':'none',gr:open?'1fr':'0fr',vis:open?'visible':'hidden',...calLinks(ev.name+', '+round+' ('+TOURNAMENT.name+')',tm,round+', '+venue,s.day,venue),
           toggle:()=>this.setState({openRow:open?null:code}),details:[{k:'ROUND',v:round},{k:'VENUE',v:venue},{k:'CATEGORY',v:ev.gender==='MIXED'?'Mixed':ev.gender==='MEN'?'Men':'Women'}]};})})),
       peek:REG.find(r=>r.id===s.peek)||{icon:'',name:'',desc:''},peekOp:s.peek?'1':'0',peekScale:s.peek?'1':'0.92',peekPe:s.peek?'auto':'none',
       closePeek:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},stageLeave:()=>{clearTimeout(this.hoverT);this.setState({peek:null});},peekRegister:()=>{const id=s.peek;this.setState({peek:null});this.startReg(id);},

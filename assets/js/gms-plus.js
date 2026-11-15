@@ -309,7 +309,7 @@
   };
   function clashes(list) {
     var out = {};
-    for (var d = 0; d < 5; d++) {
+    for (var d = 0; d < D.SESSIONS.length; d++) {
       var day = list.filter(function (s) { return s.day === d; }).sort(function (a, b) { return mins(a.tm) - mins(b.tm); });
       for (var i = 1; i < day.length; i++) {
         var a = day[i - 1], b = day[i], gap = mins(b.tm) - mins(a.tm);
@@ -321,11 +321,11 @@
   }
   function ics(list) {
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    var utc = function (d, tm, add) { var p = tm.split(':'), t = Date.UTC(2026, 10, 14 + d, +p[0], +p[1]) - 330 * 60000 + (add || 0) * 60000, x = new Date(t); return x.getUTCFullYear() + pad(x.getUTCMonth() + 1) + pad(x.getUTCDate()) + 'T' + pad(x.getUTCHours()) + pad(x.getUTCMinutes()) + '00Z'; };
+    var utc = function (d, tm, add) { var p = tm.split(':'), t = A.tour.at(d, tm) + (add || 0) * 60000, x = new Date(t); return x.getUTCFullYear() + pad(x.getUTCMonth() + 1) + pad(x.getUTCDate()) + 'T' + pad(x.getUTCHours()) + pad(x.getUTCMinutes()) + '00Z'; };
     var e = function (s) { return String(s).replace(/[\\,;]/g, function (c) { return '\\' + c; }); };
     var now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
-    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GMS//My Games//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:My GMS Games 2026', 'X-WR-TIMEZONE:Asia/Kolkata'];
-    list.forEach(function (s) { L.push('BEGIN:VEVENT', 'UID:' + s.key + '@gms-games-2026', 'DTSTAMP:' + now, 'DTSTART:' + utc(s.day, s.tm), 'DTEND:' + utc(s.day, s.tm, 120), 'SUMMARY:' + e(s.ev.name + ', ' + s.round), 'LOCATION:' + e(s.venue + ', Ahmedabad'), 'DESCRIPTION:' + e('GMS Games 2026. ' + s.round + ' at ' + s.venue + '.'), 'END:VEVENT'); });
+    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GMS//My Games//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:My ' + e(D.TOURNAMENT.name), 'X-WR-TIMEZONE:' + D.TOURNAMENT.timezone.iana];
+    list.forEach(function (s) { L.push('BEGIN:VEVENT', 'UID:' + s.key + '@gms-' + A.tour.year, 'DTSTAMP:' + now, 'DTSTART:' + utc(s.day, s.tm), 'DTEND:' + utc(s.day, s.tm, 120), 'SUMMARY:' + e(s.ev.name + ', ' + s.round), 'LOCATION:' + e(s.venue + ', ' + D.TOURNAMENT.city), 'DESCRIPTION:' + e(D.TOURNAMENT.name + '. ' + s.round + ' at ' + s.venue + '.'), 'END:VEVENT'); });
     L.push('END:VCALENDAR'); return L.join('\r\n');
   }
   function download(name, text, type) {
@@ -362,7 +362,7 @@
       else if (act === 'star') { var on = My.toggle(v); t.setAttribute('aria-pressed', on ? 'true' : 'false'); if (sheet.view === 'mygames' && !on) renderSheet('mygames', sheet.arg); }
       else if (act === 'goto') { var s = sessFromKey(v); if (s) { closeLayer(sheet); A.showSession(s.day, s.code); } }
       else if (act === 'ec') { closeLayer(sheet); A.openEc(); }
-      else if (act === 'ics') { var list = My.keys().map(sessFromKey).filter(Boolean); if (list.length) { download('my-gms-games-2026.ics', ics(list), 'text/calendar'); toast('Calendar file downloaded', { icon: 'download' }); } }
+      else if (act === 'ics') { var list = My.keys().map(sessFromKey).filter(Boolean); if (list.length) { download('my-games-' + A.tour.year + '.ics', ics(list), 'text/calendar'); toast('Calendar file downloaded', { icon: 'download' }); } }
       else if (act === 'share') { var u = location.href.split('#')[0] + '#my=' + My.keys().join(','); copy(u).then(function () { toast('Link to your plan copied', { icon: 'link' }); }, function () { toast('Could not copy the link'); }); }
       else if (act === 'import') { var ks = My.keys(); (sheet.arg && sheet.arg.shared || []).forEach(function (k) { if (ks.indexOf(k) < 0) ks.push(k); }); My.save(ks); toast('Added to My Games', { icon: 'star_fill' }); renderSheet('mygames', null); }
       else if (act === 'schedule') { closeLayer(sheet); A.home(function () { A.scrollTo('schedule'); }); }
@@ -372,7 +372,7 @@
   var TABS = [['medals', 'Medal table'], ['results', 'Results'], ['mygames', 'My Games']];
   function renderSheet(view, arg) {
     var S = sheetLayer(); S.view = view; S.arg = arg || {};
-    var kick = { medals: 'GMS GAMES 2026', results: 'GMS GAMES 2026', mygames: 'YOUR PLAN' }[view], title = { medals: 'Medal table', results: 'Results', mygames: 'My Games' }[view];
+    var tn = D.TOURNAMENT.name.toUpperCase(), kick = { medals: tn, results: tn, mygames: 'YOUR PLAN' }[view], title = { medals: 'Medal table', results: 'Results', mygames: 'My Games' }[view];
     S.el.querySelector('[data-sh-kick]').textContent = kick; S.el.querySelector('[data-sh-title]').textContent = title;
     S.el.querySelector('[data-sh-tabs]').innerHTML = TABS.map(function (t) { return '<button type="button" class="gp-tab" data-act="tab" data-v="' + t[0] + '"' + (t[0] === view ? ' data-on aria-current="page"' : '') + '>' + t[1] + (t[0] === 'mygames' && My.keys().length ? ' · ' + My.keys().length : '') + '</button>'; }).join('');
     var body = S.el.querySelector('[data-sh-body]');
@@ -385,17 +385,20 @@
     }
   }
   function liveSig() { return (A.live() || []).filter(function (m) { return /final/i.test(m.round); }).map(function (m) { return m.id + m.state + m.sa + m.sb; }).join('|'); }
-  var PREVIEW = '<div class="gp-note">' + ICON('verified') + '<span>Competition starts on 14 November. Until then these are sample results so you can see how the table works; finals still in progress update live from the Event centre.</span></div>';
+  function previewNote() {
+    var before = A.tour.phase() === 'before';
+    return '<div class="gp-note">' + ICON('verified') + '<span>' + (before ? 'Competition starts on ' + esc(A.tour.dayLong(0)) + '. Until then these are sample results so you can see how the table works; finals still in progress update live from the Event centre.' : 'These are demo results: this preview is not connected to a results feed yet. Finals in progress update live from the Event centre.') + '</span></div>';
+  }
   function medalsHTML(arg) {
     var R = results(), sport = arg.sport || null, sort = arg.sort || 'gold';
     var rows = medalTable(R, sport).sort(function (a, b) { return sort === 'total' ? (b.t - a.t || b.g - a.g || b.s - a.s || a.name.localeCompare(b.name)) : (b.g - a.g || b.s - a.s || b.b - a.b || a.name.localeCompare(b.name)); });
     var done = Object.keys(R).filter(function (k) { return R[k].status === 'done'; }).length, live = Object.keys(R).filter(function (k) { return R[k].status === 'live'; }).length;
     var lead = rows[0];
-    var h = PREVIEW + '<div class="gp-stats"><div class="gp-stat"><b>' + done + ' / 18</b><span>Medal events decided</span></div><div class="gp-stat"><b>' + live + '</b><span>Finals live now</span></div><div class="gp-stat"><b>' + (lead ? esc(lead.name) : '–') + '</b><span>Leading the table</span></div></div>';
+    var h = previewNote() + '<div class="gp-stats"><div class="gp-stat"><b>' + done + ' / ' + D.ALL_EVENTS.length + '</b><span>Medal events decided</span></div><div class="gp-stat"><b>' + live + '</b><span>Finals live now</span></div><div class="gp-stat"><b>' + (lead ? esc(lead.name) : '–') + '</b><span>Leading the table</span></div></div>';
     h += '<div class="gp-chips" role="group" aria-label="Sport"><button type="button" class="gp-chip" data-act="sport" data-v=""' + (!sport ? ' data-on' : '') + '>All sports</button>' + D.CATS.map(function (c) { return '<button type="button" class="gp-chip" data-act="sport" data-v="' + esc(c.name) + '"' + (sport === c.name ? ' data-on' : '') + '>' + ICON(c.icon) + esc(c.name) + '</button>'; }).join('') + '</div>';
     h += '<div class="gp-chips" role="group" aria-label="Order"><button type="button" class="gp-chip" data-act="sort" data-v="gold"' + (sort === 'gold' ? ' data-on' : '') + '>By gold</button><button type="button" class="gp-chip" data-act="sort" data-v="total"' + (sort === 'total' ? ' data-on' : '') + '>By total</button></div>';
     if (!rows.length) return h + '<div class="gp-empty">No medals decided in this sport yet.</div>';
-    h += '<table class="gp-mt"><thead><tr><th scope="col">#</th><th scope="col">Team</th><th scope="col"><span class="gp-m gp-g"></span>G</th><th scope="col"><span class="gp-m gp-s"></span>S</th><th scope="col"><span class="gp-m gp-b"></span>B</th><th scope="col">Total</th></tr></thead><tbody>';
+    h += '<table class="gp-mt"><thead><tr><th scope="col">#</th><th scope="col">' + esc(D.TOURNAMENT.teamLabel || 'Team') + '</th><th scope="col"><span class="gp-m gp-g"></span>G</th><th scope="col"><span class="gp-m gp-s"></span>S</th><th scope="col"><span class="gp-m gp-b"></span>B</th><th scope="col">Total</th></tr></thead><tbody>';
     var rank = 0, prev = null;
     rows.forEach(function (r, i) {
       var key = sort === 'total' ? r.t + '/' + r.g + '/' + r.s : r.g + '/' + r.s + '/' + r.b; if (key !== prev) rank = i + 1; prev = key;
@@ -406,7 +409,7 @@
   }
   var stLabel = function (x) { return x.status === 'done' ? 'FINAL' : x.status === 'live' ? 'LIVE' : 'UPCOMING'; };
   function resultsHTML() {
-    var R = results(), h = PREVIEW;
+    var R = results(), h = previewNote();
     D.CATS.forEach(function (c) {
       h += '<div class="gp-sport" style="--c:' + c.color + '">' + ICON(c.icon) + esc(c.name) + '</div>';
       c.events.forEach(function (e) {
@@ -420,7 +423,7 @@
     opts = opts || {};
     var on = My.has(s.key);
     return '<div class="gp-ses"><time>' + s.tm + '</time><span><b>' + esc(opts.title || (s.ev.name + ' · ' + s.round)) + '</b><span>' + esc((opts.showDay ? dayLabel(s.day) + ' · ' : '') + s.venue) + '</span>' + (opts.clash ? '<span class="gp-clash">' + esc(opts.clash) + '</span>' : '') + '</span><span class="gp-ses-act">' +
-      (opts.cal ? '<a class="gp-ib" href="' + esc(A.calLinks(s.ev.name + ', ' + s.round + ' (GMS Games 2026)', s.tm, s.round + ', ' + s.venue, s.day, s.venue).gcal) + '" target="_blank" rel="noopener" aria-label="Add ' + esc(s.ev.name) + ' to Google Calendar" title="Google Calendar">' + ICON('event_available') + '</a>' : '') +
+      (opts.cal ? '<a class="gp-ib" href="' + esc(A.calLinks(s.ev.name + ', ' + s.round + ' (' + D.TOURNAMENT.name + ')', s.tm, s.round + ', ' + s.venue, s.day, s.venue).gcal) + '" target="_blank" rel="noopener" aria-label="Add ' + esc(s.ev.name) + ' to Google Calendar" title="Google Calendar">' + ICON('event_available') + '</a>' : '') +
       '<button type="button" class="gp-ib" data-act="goto" data-v="' + s.key + '" aria-label="Show in the schedule" title="Show in the schedule">' + ICON('arrow_outward') + '</button>' +
       '<button type="button" class="gp-ib" data-act="star" data-v="' + s.key + '" aria-pressed="' + on + '" aria-label="' + (on ? 'Remove from' : 'Add to') + ' My Games" title="My Games">' + ICON('star') + '</button></span></div>';
   }
@@ -456,7 +459,7 @@
   }
   function dayList(list, cal, cl) {
     cl = cl || {}; var h = '';
-    for (var d = 0; d < 5; d++) {
+    for (var d = 0; d < D.SESSIONS.length; d++) {
       var day = list.filter(function (s) { return s.day === d; }).sort(function (a, b) { return mins(a.tm) - mins(b.tm); });
       if (!day.length) continue;
       h += '<div class="gp-day"><b>' + esc(D.DAYS[d][2] + ' ' + D.DAYS[d][1]) + '</b><span>DAY ' + D.DAYS[d][0] + '</span></div>' + day.map(function (s) { return sesRow(s, { cal: cal, clash: cl[s.key] }); }).join('');
@@ -471,7 +474,7 @@
     P('Live TV', 'Three channels, one per venue, with the score beside the picture', 'live_tv', function () { A.openTv(); }, 'watch stream broadcast video channel');
     P('Event centre', 'Live scores from every venue', 'sports_score', function () { A.openEc(); }, 'scores live match');
     P('Medal table', 'Gold, silver and bronze by team', 'medal', function () { Plus.open('medals'); }, 'medals standings tally ranking');
-    P('Results', 'Finals and medal matches for all 18 events', 'sports', function () { Plus.open('results'); }, 'winners podium');
+    P('Results', 'Finals and medal matches for every event', 'sports', function () { Plus.open('results'); }, 'winners podium');
     P('My Games', 'Your starred sessions, clashes and calendar file', 'star', function () { Plus.open('mygames'); }, 'plan planner itinerary favourites saved');
     P('Schedule', 'Every session, day by day', 'event_available', function () { A.home(function () { A.scrollTo('schedule'); }); }, 'timetable programme agenda');
     P('Registration', 'Twelve ways to take part', 'badge', function () { A.home(function () { A.scrollTo('reg'); }); }, 'register sign up accreditation apply');
@@ -854,7 +857,7 @@
   }
   function passHTML() {
     var F = V.F, u = V.urls.photo, sub = [F.designation, F.org].filter(Boolean).join(' · ');
-    return '<div class="gv-pass" aria-label="Accreditation preview"><div class="gv-pass-top"><span>GMS ACCREDITATION</span><span>' + (F.blood ? esc(F.blood) : '2026') + '</span></div><div class="gv-pass-bd"><div class="gv-pass-ph"' + (u ? ' style="background-image:url(' + u + ')"' : '') + '>' + (u ? '' : ICON('badge')) + '</div><div><div class="gv-pass-n"' + (F.name ? '' : ' data-empty') + '>' + esc(F.name || 'Your name') + '</div><div class="gv-pass-d">' + esc(sub || 'Designation') + '</div><span class="gv-pass-role">' + esc(V.role.name.toUpperCase()) + '</span></div></div><div class="gv-pass-ft"><span>' + (V.done ? esc(V.done) : 'PREVIEW') + '</span><span class="gv-bars" aria-hidden="true"></span></div></div>';
+    return '<div class="gv-pass" aria-label="Accreditation preview"><div class="gv-pass-top"><span>GMS ACCREDITATION</span><span>' + (F.blood ? esc(F.blood) : A.tour.year) + '</span></div><div class="gv-pass-bd"><div class="gv-pass-ph"' + (u ? ' style="background-image:url(' + u + ')"' : '') + '>' + (u ? '' : ICON('badge')) + '</div><div><div class="gv-pass-n"' + (F.name ? '' : ' data-empty') + '>' + esc(F.name || 'Your name') + '</div><div class="gv-pass-d">' + esc(sub || 'Designation') + '</div><span class="gv-pass-role">' + esc(V.role.name.toUpperCase()) + '</span></div></div><div class="gv-pass-ft"><span>' + (V.done ? esc(V.done) : 'PREVIEW') + '</span><span class="gv-bars" aria-hidden="true"></span></div></div>';
   }
   function vaultPass() { $$('[data-gv-pass]', V.el).forEach(function (n) { n.innerHTML = passHTML(); }); }
   function fieldHTML(f) {
@@ -969,6 +972,7 @@
 
   function start() {
     if (A) return; A = window.GMSApp; if (!A) return; D = A.data;
+    if (D.TOURNAMENT && D.TOURNAMENT.teams) { NATIONS = D.TOURNAMENT.teams; NCODES = Object.keys(NATIONS); }
     var host = $('x-dc') || doc.body;
     mo.observe(host, { childList: true, subtree: true });
     My.sync(); Theme.sync();
