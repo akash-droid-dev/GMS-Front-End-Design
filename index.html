@@ -1009,6 +1009,55 @@ html[data-theme=dark] #gms-shell [data-r=admin-btn]{background:transparent!impor
 html[data-theme=dark] [data-r=admin-btn]{background:transparent!important}
 html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.16),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#0B0D12!important}
 
+/* ---- batch 5 ---- */
+/* Programme scene and role photos are shot on a white studio floor: in dark mode they stay a light stage, with ink text */
+html[data-theme=dark] :is([data-r=ev-section],[data-ev-sticky],[data-r=roles-art],[data-role-drawer] [style*="aspect-ratio:9/7"]){--d-s0:initial;--d-s1:initial;--d-ink:initial;--d-ink2:initial;--d-ink3:initial;--d-line:initial;--d-tint:initial;--d-chip:initial;--d-glass:initial;--d-inv:initial;--d-on-inv:initial;color:#0B0D12}
+html[data-theme=dark] [data-r=ev-section]{background:#F6F7F9!important}
+html[data-theme=dark] [data-ev-sticky]::before{background:linear-gradient(180deg,#F6F7F9 0%,rgba(246,247,249,.6) 45%,rgba(246,247,249,0) 100%)}
+html[data-theme=dark] [data-ev-sticky] .sx{color:#5B6270}
+html[data-theme=dark] [data-ev-sticky] :is([data-goal-g],[data-goal-nm] [data-goal-sub]){color:#6B7180}
+html[data-theme=dark] :is([data-r=roles-art],[data-role-drawer] [style*="aspect-ratio:9/7"]){background:#fff!important}
+/* cross-fade between screens */
+::view-transition-old(root){animation:gmsVtOut .22s ease both}::view-transition-new(root){animation:gmsVtIn .32s ease both}
+@keyframes gmsVtOut{to{opacity:0}}@keyframes gmsVtIn{from{opacity:0}}
+/* section opener: the chapter number ticks in and a rule draws out from the label */
+html.gms-op .sx::after{content:'';align-self:center;width:44px;height:1.5px;border-radius:2px;background:currentColor;opacity:.4;transform:scaleX(0);transform-origin:0 50%;transition:transform 1s .25s var(--gms-ease,cubic-bezier(.2,.8,.2,1))}
+html.gms-op .sx i{display:inline-block;transform:translateY(120%);opacity:0;transition:transform .7s var(--gms-ease,cubic-bezier(.2,.8,.2,1)),opacity .5s}
+html.gms-op .sx{clip-path:inset(-4px -60px -4px 0)}
+html.gms-op .sx.sx-in::after{transform:scaleX(1)}html.gms-op .sx.sx-in i{transform:none;opacity:1}
+/* one hover and press behaviour for every card */
+main :is(.st-card,.nn-it,.ft-cols button,[data-r=sch-days] button){transition:transform .35s var(--gms-ease,cubic-bezier(.2,.8,.2,1)),box-shadow .35s ease,background .25s ease,color .25s ease}
+@media (hover:hover){main :is(.st-card,.nn-it):hover{transform:translateY(-3px);box-shadow:inset 3px 0 0 var(--sp,transparent),0 14px 30px rgba(15,20,40,.12)}html[data-theme=dark] main :is(.st-card,.nn-it):hover{box-shadow:inset 3px 0 0 var(--sp,transparent),0 14px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1)}}
+main :is(.st-card,.nn-it,[data-r=sch-days] button,.sr-head>button:first-child):active{transform:scale(.985)}
+.gms-low main :is(.st-card,.nn-it):hover{transform:none}
+/* sport accent on Now/Next and the schedule group heads */
+main .nn-it{box-shadow:inset 3px 0 0 var(--sp,transparent)}
+/* empty states */
+.gms-blank{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 28px;border-radius:var(--r-m);background:var(--d-s1,#F6F7F9);color:var(--d-ink2,#5B6270);font-size:15px;line-height:1.5}
+.gms-blank>.gi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--d-tint,#E8EEFF);color:#2F5BFF}
+.gms-blank b{color:var(--d-ink,#0B0D12);font-size:16px}
+img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5) 0 12px,var(--d-tint,#E6E9EF) 12px 24px);object-fit:none}
+/* footer */
+.ft{background:#000;color:#fff;padding:64px 32px 40px}
+.ft-in{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+.ft-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end}
+.ft-brand{display:flex;flex-direction:column;gap:16px;max-width:460px}.ft-brand p{margin:0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.6)}
+.ft-logo{display:flex;align-items:center;gap:10px}.ft-logo img{display:block;width:34px;height:34px}.ft-logo b{font-family:'Bricolage Grotesque';font-weight:800;font-size:21px;letter-spacing:-.02em}
+.ft-stats{margin:0;display:flex;gap:clamp(18px,3vw,40px);flex-wrap:wrap}.ft-stats div{display:flex;flex-direction:column;gap:6px}
+.ft-stats dd{margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.ft-stats dt{font:500 10.5px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.ft-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;padding:34px 0;border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12)}
+.ft-cols>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.ft-cols h3{margin:0 0 10px;font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.ft-cols :is(button,a){all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:15px;color:rgba(255,255,255,.82)}
+.ft-cols :is(button,a):hover{color:#fff;transform:translateX(3px)}.ft-cols :is(button,a):focus-visible,.ft-up:focus-visible{outline:2px solid #7C9BFF;outline-offset:3px;border-radius:6px}
+.ft-cols a .gi{font-size:15px;opacity:.6}
+.ft-base{display:flex;align-items:center;gap:22px;flex-wrap:wrap;font-size:13px;padding-right:118px;color:rgba(255,255,255,.5)}
+.ft-up{all:unset;box-sizing:border-box;cursor:pointer;margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:600;font-size:13.5px;transition:background .25s,color .25s}
+.ft-up .gi{transform:rotate(-90deg);font-size:16px}.ft-up:hover{background:#fff;color:#000}
+@media (max-width:900px){.ft{padding:48px 18px 110px}.ft-in{gap:32px}.ft-top{grid-template-columns:minmax(0,1fr);align-items:start;gap:28px}.ft-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px;padding:28px 0}.ft-up{margin-left:0}.ft-base{gap:10px 18px;padding-right:0}}
+@media (prefers-reduced-motion:reduce){html.gms-op .sx::after,html.gms-op .sx i{transition:none}::view-transition-old(root),::view-transition-new(root){animation:none}}
+
 /* Live TV: tap to play (phones, low mode) */
 .tv-play{all:unset;box-sizing:border-box;position:absolute;left:50%;top:50%;z-index:6;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;height:52px;padding:0 20px 0 8px;border-radius:999px;background:rgba(255,255,255,.94);color:#0B0D12;font:600 14px/1 'Instrument Sans',system-ui,sans-serif;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35);white-space:nowrap}
 .tv-play .gi{width:36px;height:36px;border-radius:50%;background:#E5484D;color:#fff;-webkit-mask:none;mask:none;display:grid;place-items:center}
@@ -1048,7 +1097,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=19"></script>
+<script defer src="./assets/js/gms-plus.js?v=21"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1334,7 +1383,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
           <button type="button" class="cal-a" data-plus="venues"><i class="gi" data-gi="corporate_fare" style="margin-right:7px"></i>Venue map</button>
         </div>
         <sc-if value="{{ hasStrip }}" hint-placeholder-val="{{ false }}">
-          <div class="nn" role="group" aria-label="On now and next"><sc-for list="{{ nnItems }}" as="n" hint-placeholder-count="2"><button type="button" class="nn-it" data-k="{{ n.kind }}" onClick="{{ n.go }}"><b>{{ n.tag }}</b><span><span class="nn-t">{{ n.title }}</span><span class="nn-s">{{ n.sub }}</span></span></button></sc-for></div>
+          <div class="nn" role="group" aria-label="On now and next"><sc-for list="{{ nnItems }}" as="n" hint-placeholder-count="2"><button type="button" class="nn-it" data-k="{{ n.kind }}" onClick="{{ n.go }}" style="--sp:{{ n.sp }}"><b>{{ n.tag }}</b><span><span class="nn-t">{{ n.title }}</span><span class="nn-s">{{ n.sub }}</span></span></button></sc-for></div>
         </sc-if>
         <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
@@ -1362,7 +1411,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
           </sc-for>
         </sc-if>
         <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:48px 28px;border-radius:var(--r-m);background:var(--d-s1,#F6F7F9);color:var(--d-ink2,#5B6270);font-size:15px">Session timings for this day will be published after the draw.</div>
+          <div class="gms-blank"><i class="gi" data-gi="event_available"></i><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
         </sc-if>
       </div>
     </div>
@@ -1465,13 +1514,19 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
     </div>
   </section>
 
-  <footer style="background:#000;color:#fff;padding:44px 32px 52px">
-    <div data-r="foot-grid" data-rise style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:40px;align-items:center">
-      <span style="display:flex;align-items:center;gap:10px"><img src="assets/brand/gms-mark-dark.svg" alt="" width="30" height="30" loading="lazy" style="display:block;width:30px;height:30px"><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span></span>
-      <p style="margin:0;max-width:520px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.55)">{{ footLine }}</p>
-      <div style="display:flex;gap:22px;font-size:13px;color:rgba(255,255,255,.62)">
-        <button onClick="{{ toSchedule }}" style="all:unset;cursor:pointer">Schedule</button><button onClick="{{ toEvents }}" style="all:unset;cursor:pointer">Events</button><button onClick="{{ toContact }}" style="all:unset;cursor:pointer">Help desk</button><span>© 2026</span>
+  <footer class="ft">
+    <div class="ft-in">
+      <div class="ft-top" data-rise>
+        <div class="ft-brand"><span class="ft-logo"><img src="assets/brand/gms-mark-dark.svg" alt="" width="34" height="34" loading="lazy"><b>GMS</b></span><p>{{ footLine }}</p></div>
+        <dl class="ft-stats"><sc-for list="{{ footStats }}" as="x" hint-placeholder-count="5"><div><dd data-count="{{ x.n }}">{{ x.n }}</dd><dt>{{ x.label }}</dt></div></sc-for></dl>
       </div>
+      <nav class="ft-cols" aria-label="Footer" data-rise>
+        <div><h3>The Games</h3><button onClick="{{ toSchedule }}">Schedule</button><button onClick="{{ toEvents }}">Programme</button><button data-plus="venues">Venue map</button><button data-plus="medals">Medal table</button><button data-plus="results">Results</button></div>
+        <div><h3>Take part</h3><button onClick="{{ heroAllWays }}">Register</button><button onClick="{{ regAthlete }}">Registration Vault</button><button onClick="{{ goLogin }}">Login</button><button data-plus="mygames">My Games</button></div>
+        <div><h3>Watch</h3><button onClick="{{ goTv }}">Live TV</button><button onClick="{{ goScores }}">Event centre</button></div>
+        <div><h3>Help</h3><button onClick="{{ toContact }}">Help desk</button><button data-plus="search">Search</button><button data-plus="theme"><span data-theme-label>Dark mode</span></button><a href="https://gms.projectcode.dev/" target="_blank" rel="noopener">Live GMS<i class="gi" data-gi="arrow_outward"></i></a></div>
+      </nav>
+      <div class="ft-base"><span>© {{ footYear }} GMS</span><span>{{ footWhen }}</span><button type="button" data-top class="ft-up">Back to top<i class="gi" data-gi="arrow_forward"></i></button></div>
     </div>
   </footer>
 </main>
@@ -2460,7 +2515,10 @@ class Component extends DCLogic {
   openEc(){const run=()=>{this.ecSet(true);setTimeout(()=>{const el=this.refs.ecx&&this.refs.ecx.current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-84,behavior:REDUCED?'auto':'smooth'});},90);};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
   ecSet(on){clearTimeout(this.ecT);this.setState({ecOpen:on,ecDone:false});if(on)this.ecT=setTimeout(()=>this.setState({ecDone:true}),720);}
-  go(screen,after){if(screen==='scores'){this.openEc();return;}this.pushNav(screen);this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);}
+  go(screen,after){if(screen==='scores'){this.openEc();return;}const run=()=>{this.pushNav(screen);this.setState({screen,modal:null});window.scrollTo(0,0);if(after)setTimeout(after,80);};
+    const cur=this.state.screen||'home';if(screen!==cur&&document.startViewTransition&&!LOW&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.documentElement.classList.contains('gp-lock')){
+      try{document.startViewTransition(()=>{run();return new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});return;}catch(e){}}
+    run();}
   goBack(){const st=history.state;if(st&&st.gms)history.back();else this.go('home');}
   scrollTo(k){const run=()=>{const el=this.refs[k]&&this.refs[k].current;if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});};
     if((this.state.screen||'home')!=='home')this.go('home',run);else run();}
@@ -2517,7 +2575,7 @@ class Component extends DCLogic {
         return {tShort:c.short,tzLabel:c.timezone.label,phaseTag:ph==='during'?'Day '+(dn+1)+' of '+T.n:ph==='after'?'Results final':ro?'Registration open':'Opens '+T.dayShort(0),regTag:ro?'Registration open':'Registration',
           schLead:'Sessions start between '+T.firstTime+' and '+T.lastTime+' '+c.timezone.label+' across '+c.venues.length+' venues. Open one for its round, venue and a calendar link.',
           fnPara:ph==='before'?(ro?'Registration closes on '+T.fmtLong(c.registrationCloses)+'. ':'')+'Accreditation cards go out from '+T.fmtLong(c.accreditationFrom)+', and the first session starts at '+T.firstTime+' on day one.':ph==='during'?'Today is day '+(dn+1)+' of '+T.n+': '+today.length+' sessions across '+new Set(today.map(x=>VENUE_OF[(ALL_EVENTS.find(e=>e.code===x[1])||{cat:{}}).cat.name])).size+' venues. Follow them in the schedule and the Event centre.':'All '+T.events+' medal events are decided. The results and the medal table stay available.',
-          footLine:'GMS runs registration, accreditation, scheduling and results for the '+c.name+', '+c.city+', '+T.range+'.'};})(),
+          footLine:'GMS runs registration, accreditation, scheduling and results for the '+c.name+', '+c.city+', '+T.range+'.',footYear:T.year,footWhen:c.city+' · '+T.range+' · times in '+c.timezone.label,footStats:[[T.n,'days'],[CATS.length,'sports'],[ALL_EVENTS.length,'medal events'],[c.venues.length,'venues'],[REG_ORDER.length,'ways to take part']].map(([n,label])=>({n:String(n),label}))};})(),
       
       
       ticker:this.tickerEl(),
@@ -2539,7 +2597,7 @@ class Component extends DCLogic {
         const all=SESSIONS[s.day].map(x=>row(s.day,x)).sort((p,q)=>p.time.localeCompare(q.time)),keyOf=r=>view==='venue'?r.venue:view==='sport'?r.sportName:r.time,keys=[...new Set(all.map(keyOf))];
         // Now / Next: what is on at this minute (a session runs two hours) and what starts next; before the Games, the first session
         const ph=T.phase(s.now),dn=T.dayNow(s.now),lt=T.local(s.now),mins=lt.getHours()*60+lt.getMinutes(),mm=t=>+t.slice(0,2)*60+ +t.slice(3),today=(SESSIONS[dn]||[]).slice().sort((p,q)=>p[0].localeCompare(q[0]));
-        const nn=(kind,day,x)=>{const r=row(day,x);return {kind,tag:kind==='now'?'NOW':kind==='next'?'NEXT':'FIRST',title:r.name,sub:(day!==dn||kind==='first'?T.dow(day)+' '+T.dayShort(day)+' · ':'')+x[0]+' · '+x[2]+' · '+r.venue,go:()=>this.setState({day,schView:'time',openRow:x[1]})};};
+        const nn=(kind,day,x)=>{const r=row(day,x);return {kind,sp:r.dot,tag:kind==='now'?'NOW':kind==='next'?'NEXT':'FIRST',title:r.name,sub:(day!==dn||kind==='first'?T.dow(day)+' '+T.dayShort(day)+' · ':'')+x[0]+' · '+x[2]+' · '+r.venue,go:()=>this.setState({day,schView:'time',openRow:x[1]})};};
         let strip=[];if(ph==='during'){const on=today.filter(x=>mm(x[0])<=mins&&mins<mm(x[0])+120).slice(-2),nx=today.find(x=>mm(x[0])>mins)||(SESSIONS[dn+1]?SESSIONS[dn+1].slice().sort((p,q)=>p[0].localeCompare(q[0]))[0]:null);strip=on.map(x=>nn('now',dn,x));if(nx)strip.push(nn('next',today.includes(nx)?dn:dn+1,nx));}
         else if(ph==='before')strip=[nn('first',0,SESSIONS[0].slice().sort((p,q)=>p[0].localeCompare(q[0]))[0])];
         return {groups:keys.map(k=>{const items=all.filter(r=>keyOf(r)===k);return {time:view==='time'?k:'',head:view==='time'?'':k,part:view==='time'?(k<'12'?'Morning':k<'17'?'Afternoon':'Evening'):items.length+(items.length===1?' session':' sessions'),wide:view==='time'?'0':'1',items};}),

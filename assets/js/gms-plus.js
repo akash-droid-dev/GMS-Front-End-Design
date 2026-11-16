@@ -152,6 +152,15 @@
     '.gm-lab b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gm-lab span{font:500 10px/1.2 "JetBrains Mono",monospace;letter-spacing:.04em;color:var(--d-ink2,#5B6270);white-space:nowrap}',
     '.gm-pin[data-st=live] .gm-lab span{color:#D93D42}.gm-pin:focus-visible .gm-dot{outline:2px solid #2F5BFF;outline-offset:3px}',
     '@media (max-width:560px){.gm-pin .gm-lab{display:none}.gm-pin[data-on]{z-index:2}.gm{aspect-ratio:100/86}.gm-lab{padding:4px 7px}.gm-lab b{font-size:11px}.gm-lab span{font-size:9px}.gm-dot{width:30px;height:30px;font-size:15px}.gm-pin{transform:translate(-15px,-15px)}}',
+    /* back to top, with the page's progress drawn round it */
+    '.gp-top{all:unset;box-sizing:border-box;position:fixed;left:22px;bottom:24px;z-index:46;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:var(--d-s0,#fff);color:var(--d-ink,#0B0D12);box-shadow:0 1px 2px rgba(8,10,16,.1),0 10px 26px rgba(8,10,16,.16);opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .3s ease,transform .4s var(--gms-ease,ease)}',
+    '.gp-top[data-on]{opacity:1;transform:none;pointer-events:auto}.gp-top[data-on]:hover{transform:translateY(-3px)}.gp-top[data-on]:active{transform:scale(.94)}.gp-top:focus-visible{outline:2px solid #2F5BFF;outline-offset:3px}',
+    '.gp-top svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}.gp-top circle{fill:none;stroke-width:2.5}.gp-top .tr{stroke:var(--d-line,rgba(11,13,18,.1))}.gp-top .pr{stroke:#2F5BFF;stroke-linecap:round;stroke-dasharray:138.2;stroke-dashoffset:138.2}',
+    '.gp-top .gi{font-size:19px;transform:rotate(-90deg)}html[data-theme=dark] .gp-top{box-shadow:0 0 0 1px rgba(255,255,255,.1),0 10px 26px rgba(0,0,0,.5)}',
+    '@media (max-width:1024px){.gp-top{left:14px;bottom:96px;width:44px;height:44px}}',
+    /* offline strip */
+    '.gp-net{position:fixed;left:50%;top:84px;z-index:139;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 24px);padding:9px 15px;border-radius:999px;background:#0B0D12;color:#fff;font:600 13px/1.3 "Instrument Sans",system-ui,sans-serif;box-shadow:0 10px 30px rgba(8,10,16,.3);transform:translate(-50%,-14px);opacity:0;pointer-events:none;transition:opacity .3s,transform .4s var(--gms-ease,ease)}',
+    '.gp-net[data-on]{opacity:1;transform:translate(-50%,0)}.gp-net .gi{font-size:16px;color:#E7A10E}html[data-theme=dark] .gp-net{background:#F1F3F7;color:#0B0D12}',
     /* chapter rail */
     '.gp-rail{position:fixed;left:22px;top:50%;z-index:45;display:flex;flex-direction:column;gap:2px;padding:10px 8px;border-radius:18px;background:rgba(255,255,255,.88);box-shadow:0 1px 2px rgba(15,20,40,.08),0 0 0 1px rgba(11,13,18,.06);transform:translate(-14px,-50%);opacity:0;pointer-events:none;transition:opacity .35s,transform .45s var(--gms-ease,ease),background .3s}',
     '.gp-rail[data-on]{opacity:1;transform:translate(0,-50%);pointer-events:auto}',
@@ -760,7 +769,7 @@
       if (view === 'mygames' && arg && arg.shared) { renderSheet('mygames', arg); }
       else if (view === 'medals' && arg && arg.nation) { renderSheet('medals', {}); setTimeout(function () { var r = sheet.el.querySelector('tr.gp-row[data-v="' + arg.nation + '"]'); if (r) { r.click(); r.scrollIntoView({ block: 'center' }); } else toast((NATIONS[arg.nation] || arg.nation) + ' has no medals yet'); }, 60); }
       else renderSheet(view, arg);
-      if (stack.indexOf(sheet) < 0) openLayer(sheet);
+      if (stack.indexOf(sheet) < 0) { openLayer(sheet); if (view === 'medals') countMedals(); }
     },
     toggleTheme: function () { Theme.toggle(); },
     my: My
@@ -1094,9 +1103,59 @@
     vaultRender(); openLayer(L);
     if (restored) setTimeout(function () { toast('Your draft is back. Add the photo again.', { icon: 'check', action: 'Start over', onAction: function () { try { localStorage.removeItem('gms-reg-draft'); } catch (e) {} vaultReset(); vaultRender(); } }); }, 700);
   }
+  /* ------------------------------------------------------------------ polish: openers, counting numbers, back to top, section memory, states */
+  var LOWM = root.classList.contains('gms-low');
+  function countTo(el, n, ms) {
+    if (REDUCED || LOWM || !(n > 0)) return;
+    var t0 = performance.now(), fin = el.textContent;
+    (function step(now) { var k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3); el.textContent = k < 1 ? String(Math.round(n * e)) : fin; if (k < 1 && el.isConnected) requestAnimationFrame(step); })(t0);
+    setTimeout(function () { if (el.isConnected && el.textContent !== fin) el.textContent = fin; }, ms + 400); // a hidden tab pauses frames: never leave a half-counted number
+  }
+  function countMedals() { if (!sheet) return; $$('.gp-mt tr.gp-row td', sheet.el).forEach(function (td) { var t = td.textContent.trim(); if (/^\d+$/.test(t) && td.cellIndex > 1) countTo(td, +t, 900); }); }
+  var openIO = null;
+  function openers() {
+    if (REDUCED || LOWM || !('IntersectionObserver' in window)) return;
+    root.classList.add('gms-op');
+    if (!openIO) openIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('sx-in'); openIO.unobserve(e.target); } }); }, { threshold: 0.6 });
+    $$('main .sx').forEach(function (x) { if (x.__op) return; x.__op = 1; openIO.observe(x); });
+  }
+  var topBtn = null, topRaf = 0, memT = 0;
+  function secNow() { if (!rail) return null; var p = window.scrollY + window.innerHeight * 0.4, i = 0; measureRail(); for (var k = 0; k < rail.tops.length; k++) if (rail.tops[k] <= p) i = k; return i; }
+  function topTick() {
+    topRaf = 0; if (!topBtn) return;
+    var y = window.scrollY, vh = window.innerHeight, max = Math.max(1, doc.documentElement.scrollHeight - vh), home = A && A.screen() === 'home';
+    var show = y > vh * 1.2 && y < max - 260 && !stack.length;
+    if (show !== topBtn.on) { topBtn.on = show; if (show) topBtn.el.setAttribute('data-on', ''); else topBtn.el.removeAttribute('data-on'); }
+    if (show) topBtn.pr.style.strokeDashoffset = (138.2 * (1 - Math.min(1, y / max))).toFixed(1);
+    if (home && !memT) memT = setTimeout(function () { memT = 0; if (!A || A.screen() !== 'home') return; var i = secNow(); if (i == null) return; if (i > 0 && window.scrollY > window.innerHeight) LS.set('gms-place', { i: i, n: rail.CH[i][1], at: Date.now() }); else if (window.scrollY < 40) LS.set('gms-place', null); }, 900);
+  }
+  function toTop() { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); }
+  function topInit() {
+    var b = doc.createElement('button'); b.type = 'button'; b.className = 'gp-top'; b.setAttribute('aria-label', 'Back to top');
+    b.innerHTML = '<svg viewBox="0 0 48 48" aria-hidden="true"><circle class="tr" cx="24" cy="24" r="22"/><circle class="pr" cx="24" cy="24" r="22"/></svg>' + ICON('arrow_forward');
+    doc.body.appendChild(b); b.onclick = toTop; topBtn = { el: b, pr: b.querySelector('.pr'), on: false };
+    window.addEventListener('scroll', function () { if (!topRaf) topRaf = requestAnimationFrame(topTick); }, { passive: true });
+    doc.addEventListener('click', function (e) { if (e.target.closest('[data-top]')) { e.preventDefault(); toTop(); } });
+    // section memory: offer the place the visitor last read, once per page load
+    var m = LS.get('gms-place', null);
+    if (m && m.n && rail && rail.CH[m.i] && rail.CH[m.i][1] === m.n && Date.now() - (m.at || 0) < 7 * 864e5 && !location.hash && window.scrollY < 40)
+      setTimeout(function () { if (window.scrollY > 200 || stack.length || !A || A.screen() !== 'home') return; toast('You were reading ' + m.n, { icon: 'arrow_forward', action: 'Continue', onAction: function () { measureRail(); window.scrollTo({ top: Math.max(0, rail.tops[m.i] + 2), behavior: REDUCED ? 'auto' : 'smooth' }); } }); }, 2600);
+  }
+  var net = null;
+  function netShow(on) {
+    if (!net) { net = doc.createElement('div'); net.className = 'gp-net'; net.setAttribute('role', 'status'); net.innerHTML = ICON('info') + '<span>You are offline. The schedule and results shown are the saved copy.</span>'; doc.body.appendChild(net); }
+    if (on) net.setAttribute('data-on', ''); else net.removeAttribute('data-on');
+  }
+  function statesInit() {
+    window.addEventListener('offline', function () { netShow(true); });
+    window.addEventListener('online', function () { if (net && net.hasAttribute('data-on')) { netShow(false); toast('Back online', { icon: 'check' }); } });
+    if (navigator.onLine === false) netShow(true);
+    // a picture that fails to load keeps its box and shows a quiet pattern instead of a broken icon
+    doc.addEventListener('error', function (e) { var t = e.target; if (t && t.tagName === 'IMG' && !t.hasAttribute('data-broken') && t.closest('main')) { t.setAttribute('data-broken', ''); t.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='; } }, true);
+  }
   Plus.vault = openVault;
   // the page re-renders its schedule rows (day switch, row open): keep stars and the theme icon in step
-  var moT = 0, mo = new MutationObserver(function () { if (moT) return; moT = requestAnimationFrame(function () { moT = 0; My.sync(); Theme.sync(); }); });
+  var moT = 0, mo = new MutationObserver(function () { if (moT) return; moT = requestAnimationFrame(function () { moT = 0; My.sync(); Theme.sync(); openers(); }); });
 
   function start() {
     if (A) return; A = window.GMSApp; if (!A) return; D = A.data;
@@ -1104,7 +1163,8 @@
     var host = $('x-dc') || doc.body;
     mo.observe(host, { childList: true, subtree: true });
     My.sync(); Theme.sync();
-    var go = function () { railInit(); };
+    var go = function () { railInit(); topInit(); openers(); };
+    statesInit();
     if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 1500 }); else setTimeout(go, 400);
     // a shared plan (#my=...) or a deep link (#medals, #results, #mygames)
     var h = location.hash;
