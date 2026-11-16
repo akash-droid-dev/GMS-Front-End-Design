@@ -126,6 +126,32 @@
     '.gp-btn--pri{background:#2F5BFF;border-color:#2F5BFF;color:#fff}.gp-btn--pri:hover{background:#1E44DA;color:#fff}',
     '.gp-row-acts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}',
     '.gp-blank{padding:48px 18px;text-align:center}.gp-blank .gi{font-size:34px;color:#E7A10E}.gp-blank b{display:block;margin:14px 0 6px;font:700 22px/1.1 "Bricolage Grotesque",system-ui,sans-serif}.gp-blank p{margin:0 auto 18px;max-width:360px;color:var(--d-ink2,#5B6270);font-size:14px;line-height:1.5}',
+    /* bracket */
+    '.gb-wrap{overflow-x:auto;margin:0 -24px;padding:0 24px 4px;scrollbar-width:thin}.gb{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:22px;min-width:660px}',
+    '.gb-col{display:flex;flex-direction:column;gap:8px;min-width:0}.gb-h{font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--d-ink3,#6B7180)}',
+    '.gb-ms{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:12px}',
+    '.gb-m{position:relative;border:1px solid var(--d-line,#E3E6EB);border-radius:12px;overflow:hidden;background:var(--d-s0,#fff);transition:border-color .25s,box-shadow .25s}',
+    '.gb-col:not(:last-child) .gb-m::after{content:"";position:absolute;right:-23px;top:50%;width:22px;height:1px;background:var(--d-line,#D9DDE4)}',
+    '.gb-m[data-hl]{border-color:#2F5BFF;box-shadow:0 0 0 3px rgba(47,91,255,.16)}.gb-m[data-st=live]{border-color:#E5484D}',
+    '.gb-live{position:absolute;right:8px;top:-1px;padding:3px 6px;border-radius:0 0 6px 6px;background:#E5484D;color:#fff;font:600 9px/1 "JetBrains Mono",monospace;letter-spacing:.1em;font-style:normal}',
+    '.gb-t{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 10px;cursor:pointer;font-size:13.5px;color:var(--d-ink2,#4A505C)}.gb-t+.gb-t{border-top:1px solid var(--d-line,#EEF0F4)}',
+    '.gb-t[disabled]{cursor:default;color:var(--d-ink3,#9AA1AD)}.gb-t[data-win]{color:var(--d-ink,#0B0D12);font-weight:700}.gb-t[data-hl]{background:rgba(47,91,255,.1)}.gb-t:focus-visible{outline:2px solid #2F5BFF;outline-offset:-2px}',
+    '.gb-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gb-t b{font:600 13px/1 "JetBrains Mono",monospace}.gb-tip{margin:10px 0 0;font-size:12px;color:var(--d-ink3,#6B7180)}',
+    '@media (max-width:760px){.gb-wrap{margin:0 -16px;padding:0 16px 4px}}',
+    /* venue map */
+    '.gm{position:relative;aspect-ratio:100/62;border-radius:18px;overflow:hidden;background:var(--d-s1,#EEF1F5);box-shadow:inset 0 0 0 1px var(--d-line,#E3E6EB)}',
+    '.gm svg{position:absolute;inset:0;width:100%;height:100%}.gm-river{fill:none;stroke:#BFD3F5;stroke-width:7;stroke-linecap:round;opacity:.9}.gm-river2{fill:none;stroke:#D9E5FA;stroke-width:3;stroke-linecap:round}',
+    'html[data-theme=dark] .gm-river{stroke:#1F3566}html[data-theme=dark] .gm-river2{stroke:#2A4582}',
+    '.gm-l{stroke:var(--d-ink3,#A9B0BB);stroke-width:.35;stroke-dasharray:1.2 1.2;opacity:.55;vector-effect:non-scaling-stroke}.gm-l[data-on]{stroke:#2F5BFF;stroke-width:.6;opacity:1;stroke-dasharray:none}',
+    '.gm-min{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:5px 9px;border-radius:999px;background:#2F5BFF;color:#fff;font:600 11px/1 "JetBrains Mono",monospace;white-space:nowrap;pointer-events:none;box-shadow:0 2px 6px rgba(8,10,16,.2)}',
+    '.gm-pin{all:unset;box-sizing:border-box;position:absolute;transform:translate(-18px,-18px);display:flex;align-items:center;gap:8px;cursor:pointer;max-width:46%}',
+    '.gm-dot{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:17px;background:var(--d-s0,#fff);color:var(--d-ink,#0B0D12);box-shadow:0 2px 8px rgba(8,10,16,.18),0 0 0 1px var(--d-line,rgba(11,13,18,.08));transition:background .25s,color .25s,transform .35s var(--gms-ease,ease)}',
+    '.gm-pin[data-side=l]{flex-direction:row-reverse;transform:translate(18px,-18px)}@media (max-width:560px){.gm-pin[data-side=l]{transform:translate(15px,-15px)}}',
+    '.gm-pin[data-st=live] .gm-dot{box-shadow:0 0 0 3px rgba(229,72,77,.35),0 2px 8px rgba(8,10,16,.18)}.gm-pin[data-on] .gm-dot{background:#2F5BFF;color:#fff;transform:scale(1.12)}',
+    '.gm-lab{display:flex;flex-direction:column;gap:2px;padding:6px 10px;border-radius:10px;background:var(--d-s0,rgba(255,255,255,.94));box-shadow:0 1px 3px rgba(8,10,16,.12);min-width:0}',
+    '.gm-lab b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gm-lab span{font:500 10px/1.2 "JetBrains Mono",monospace;letter-spacing:.04em;color:var(--d-ink2,#5B6270);white-space:nowrap}',
+    '.gm-pin[data-st=live] .gm-lab span{color:#D93D42}.gm-pin:focus-visible .gm-dot{outline:2px solid #2F5BFF;outline-offset:3px}',
+    '@media (max-width:560px){.gm-pin .gm-lab{display:none}.gm-pin[data-on]{z-index:2}.gm{aspect-ratio:100/86}.gm-lab{padding:4px 7px}.gm-lab b{font-size:11px}.gm-lab span{font-size:9px}.gm-dot{width:30px;height:30px;font-size:15px}.gm-pin{transform:translate(-15px,-15px)}}',
     /* chapter rail */
     '.gp-rail{position:fixed;left:22px;top:50%;z-index:45;display:flex;flex-direction:column;gap:2px;padding:10px 8px;border-radius:18px;background:rgba(255,255,255,.88);box-shadow:0 1px 2px rgba(15,20,40,.08),0 0 0 1px rgba(11,13,18,.06);transform:translate(-14px,-50%);opacity:0;pointer-events:none;transition:opacity .35s,transform .45s var(--gms-ease,ease),background .3s}',
     '.gp-rail[data-on]{opacity:1;transform:translate(0,-50%);pointer-events:auto}',
@@ -343,12 +369,12 @@
     if (sheet) return sheet;
     var el = doc.createElement('section'); el.className = 'gp-sheet'; el.style.display = 'none';
     el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'gp-sh-title');
-    el.innerHTML = '<header class="gp-sh-hd"><div><small data-sh-kick></small><h2 id="gp-sh-title" data-sh-title></h2></div><button type="button" class="gp-x" aria-label="Close">' + ICON('close') + '</button></header><nav class="gp-sh-tabs" data-sh-tabs></nav><div class="gp-sh-bd" data-sh-body></div>';
+    el.innerHTML = '<header class="gp-sh-hd"><div><small data-sh-kick></small><h2 id="gp-sh-title" data-sh-title></h2></div><span style="display:flex;gap:8px"><button type="button" class="gp-x" data-act="shareview" aria-label="Share this view" title="Share">' + ICON('link') + '</button><button type="button" class="gp-x gp-x--close" aria-label="Close">' + ICON('close') + '</button></span></header><nav class="gp-sh-tabs" data-sh-tabs></nav><div class="gp-sh-bd" data-sh-body></div>';
     doc.body.appendChild(el);
     sheet = { el: el, view: null, arg: null, timer: 0, sig: '' };
-    el.querySelector('.gp-x').onclick = function () { closeLayer(sheet); };
+    el.querySelector('.gp-x--close').onclick = function () { closeLayer(sheet); };
     el.addEventListener('keydown', function (e) { trapTab(e, el); });
-    sheet.focus = function () { el.querySelector('.gp-x').focus({ preventScroll: true }); };
+    sheet.focus = function () { el.querySelector('.gp-x--close').focus({ preventScroll: true }); };
     sheet.onClose = function () { clearInterval(sheet.timer); sheet.timer = 0; };
     el.addEventListener('click', function (e) {
       var t = e.target.closest('[data-act]'); if (!t) return;
@@ -365,21 +391,24 @@
       else if (act === 'ics') { var list = My.keys().map(sessFromKey).filter(Boolean); if (list.length) { download('my-games-' + A.tour.year + '.ics', ics(list), 'text/calendar'); toast('Calendar file downloaded', { icon: 'download' }); } }
       else if (act === 'share') { var u = location.href.split('#')[0] + '#my=' + My.keys().join(','); copy(u).then(function () { toast('Link to your plan copied', { icon: 'link' }); }, function () { toast('Could not copy the link'); }); }
       else if (act === 'import') { var ks = My.keys(); (sheet.arg && sheet.arg.shared || []).forEach(function (k) { if (ks.indexOf(k) < 0) ks.push(k); }); My.save(ks); toast('Added to My Games', { icon: 'star_fill' }); renderSheet('mygames', null); }
+      else if (act === 'venue') renderSheet('venues', { venue: v });
+      else if (act === 'hl') { var on = t.hasAttribute('data-hl'); $$('.gb-t', el).forEach(function (b) { b.removeAttribute('data-hl'); b.closest('.gb-m').removeAttribute('data-hl'); }); if (!on) $$('.gb-t', el).forEach(function (b) { if (b.getAttribute('data-v') === v) { b.setAttribute('data-hl', ''); b.closest('.gb-m').setAttribute('data-hl', ''); } }); }
+      else if (act === 'shareview') shareSpec(sheet.view === 'results' && sheet.arg.event ? 'event:' + sheet.arg.event : sheet.view === 'venues' && sheet.arg.venue ? 'venue:' + sheet.arg.venue : sheet.view);
       else if (act === 'schedule') { closeLayer(sheet); A.home(function () { A.scrollTo('schedule'); }); }
     });
     return sheet;
   }
-  var TABS = [['medals', 'Medal table'], ['results', 'Results'], ['mygames', 'My Games']];
+  var TABS = [['medals', 'Medal table'], ['results', 'Results'], ['venues', 'Venues'], ['mygames', 'My Games']];
   function renderSheet(view, arg) {
     var S = sheetLayer(); S.view = view; S.arg = arg || {};
-    var tn = D.TOURNAMENT.name.toUpperCase(), kick = { medals: tn, results: tn, mygames: 'YOUR PLAN' }[view], title = { medals: 'Medal table', results: 'Results', mygames: 'My Games' }[view];
+    var tn = D.TOURNAMENT.name.toUpperCase(), kick = { medals: tn, results: tn, venues: tn, mygames: 'YOUR PLAN' }[view], title = { medals: 'Medal table', results: 'Results', venues: 'Venue map', mygames: 'My Games' }[view];
     S.el.querySelector('[data-sh-kick]').textContent = kick; S.el.querySelector('[data-sh-title]').textContent = title;
     S.el.querySelector('[data-sh-tabs]').innerHTML = TABS.map(function (t) { return '<button type="button" class="gp-tab" data-act="tab" data-v="' + t[0] + '"' + (t[0] === view ? ' data-on aria-current="page"' : '') + '>' + t[1] + (t[0] === 'mygames' && My.keys().length ? ' · ' + My.keys().length : '') + '</button>'; }).join('');
     var body = S.el.querySelector('[data-sh-body]');
-    body.innerHTML = view === 'medals' ? medalsHTML(S.arg) : view === 'results' ? (S.arg.event ? eventHTML(S.arg.event) : resultsHTML()) : myHTML(S.arg);
+    body.innerHTML = view === 'medals' ? medalsHTML(S.arg) : view === 'results' ? (S.arg.event ? eventHTML(S.arg.event) : resultsHTML()) : view === 'venues' ? venuesHTML(S.arg) : myHTML(S.arg);
     body.scrollTop = 0;
     clearInterval(S.timer); S.timer = 0;
-    if (view !== 'mygames') {
+    if (view === 'medals' || view === 'results') {
       S.sig = liveSig();
       S.timer = setInterval(function () { var g = liveSig(); if (g !== S.sig) { S.sig = g; var y = body.scrollTop; body.innerHTML = S.view === 'medals' ? medalsHTML(S.arg) : S.arg.event ? eventHTML(S.arg.event) : resultsHTML(); body.scrollTop = y; } }, 3000);
     }
@@ -440,6 +469,7 @@
       h += x.table.map(function (r) { return '<tr><td>' + r.pos + '</td><td><span class="gp-nat"><span class="gp-code">' + r.nat.code + '</span>' + esc(r.nat.name) + (r.vs ? ' <span style="color:var(--d-ink3,#6B7180);font-weight:500">v ' + esc(r.vs.name) + '</span>' : '') + (r.tag ? '<span class="gp-tag" title="' + (r.tag === 'GR' ? 'Games record' : 'National record') + '">' + r.tag + '</span>' : '') + '</span></td><td>' + esc(r.mark) + '</td></tr>'; }).join('');
       h += '</tbody></table>';
     }
+    h += bracketHTML(x);
     var rounds = allSessions().filter(function (s) { return s.code === code; });
     if (rounds.length) h += '<div class="gp-h4">ROUNDS AT THE GAMES</div>' + rounds.map(function (s) { return sesRow(s, { title: s.round, showDay: true }); }).join('');
     return h;
@@ -467,6 +497,102 @@
     return h;
   }
 
+  /* ------------------------------------------------------------------ knockout bracket (team and racket sports) */
+  function bracketOf(x) {
+    if (x.kind === 'race' || RACE[x.code]) return null;
+    var r = rng(x.code + ':bracket'), sport = x.ev.cat.name, nat = function (c) { return natOf('', c); };
+    var used = {}, take = function (n) { if (n) used[n.code] = 1; };
+    // racket events are played by people, not teams: opponents get a sample player name for their country
+    var solo = sport === 'Tennis', dbl = /Doubles/i.test(x.ev.name), SUR = ['Novak', 'Silva', 'Chen', 'Kaur', 'Hughes', 'Meyer', 'Tanaka', 'Okoro', 'Dubois', 'Costa', 'Larsen', 'Reyes', 'Ivanov', 'Park', 'Moreau', 'Singh'], INI = 'ABCDEJKLMNPRST';
+    var person = function (n) { if (!solo || !n || !n.code || n.name !== (NATIONS[n.code] || '')) return n; var a = SUR[Math.floor(r() * SUR.length)], b = SUR[Math.floor(r() * SUR.length)]; return { code: n.code, name: dbl ? a + ' / ' + b : INI[Math.floor(r() * INI.length)] + '. ' + a }; };
+    var gold = null, silver = null, bronze = null, finalScore = null, finalState = 'next';
+    if (x.status === 'done' && x.podium) { gold = x.podium[0].nat; silver = x.podium[1].nat; bronze = x.podium[2].nat; finalState = 'done'; finalScore = x.table[0] && x.table[0].mark; }
+    else if (x.match) { gold = x.match.a; silver = x.match.b; finalState = x.status === 'live' ? 'live' : 'next'; if (x.status === 'live') finalScore = x.match.sa + '–' + x.match.sb; bronze = BRONZE[x.code] ? nat(BRONZE[x.code]) : null; }
+    [gold, silver, bronze].forEach(take);
+    gold = person(gold); silver = person(silver); bronze = person(bronze);
+    var pool = shuffle(NCODES, r).map(nat).filter(function (n) { return !used[n.code]; }).map(person);
+    var fourth = pool.shift(), rest = pool.slice(0, 4);
+    var score = function (decided) {
+      if (!decided) return ['', ''];
+      if (sport === 'Football') { var a = 1 + Math.floor(r() * 3); return [String(a), String(Math.floor(r() * a))]; }
+      if (sport === 'Basketball') { var b = 68 + Math.floor(r() * 24); return [String(b), String(b - 2 - Math.floor(r() * 14))]; }
+      if (sport === 'Volleyball') return ['3', String(Math.floor(r() * 3))];
+      return ['2', String(Math.floor(r() * 2))];
+    };
+    var known = !!gold, m = function (a, b, decided, st) { var s = score(decided); return { a: a, b: b, sa: s[0], sb: s[1], win: decided ? 'a' : '', st: st || (decided ? 'done' : 'next') }; };
+    var tbd = { code: '', name: 'To be decided' };
+    var qf, sf, fin;
+    if (known) {
+      if (!bronze) bronze = pool[4] || tbd;
+      qf = [m(gold, rest[0], 1), m(bronze, rest[1], 1), m(silver, rest[2], 1), m(fourth, rest[3], 1)];
+      sf = [m(gold, bronze, 1), m(silver, fourth, 1)];
+      fin = m(gold, silver, finalState === 'done', finalState);
+      if (finalState === 'done' && finalScore) { var p = String(finalScore).split(' ')[0].split('–'); if (p.length === 2) { var hi = +p[0] >= +p[1] ? p[0] : p[1], lo = hi === p[0] ? p[1] : p[0]; fin.sa = hi; fin.sb = lo; } }
+      if (finalState === 'live' && finalScore) { var q = finalScore.split('–'); fin.sa = q[0]; fin.sb = q[1]; }
+    } else {
+      var eight = shuffle(NCODES, rng(x.code + ':draw')).slice(0, 8).map(nat).map(person);
+      qf = [m(eight[0], eight[1], 0), m(eight[2], eight[3], 0), m(eight[4], eight[5], 0), m(eight[6], eight[7], 0)];
+      sf = [m(tbd, tbd, 0), m(tbd, tbd, 0)]; fin = m(tbd, tbd, 0);
+    }
+    return { qf: qf, sf: sf, fin: fin };
+  }
+  function bracketHTML(x) {
+    var B = bracketOf(x); if (!B) return '';
+    var side = function (t, sc, win, other) { var k = t.code + '|' + t.name; return '<button type="button" class="gb-t"' + (t.code || t.name !== 'To be decided' ? ' data-act="hl" data-v="' + esc(k) + '"' : ' disabled') + (win ? ' data-win' : '') + '><span class="gp-code">' + esc(t.code || '—') + '</span><span class="gb-n">' + esc(t.name) + '</span><b>' + esc(sc) + '</b></button>'; };
+    var match = function (mm) { return '<div class="gb-m" data-st="' + mm.st + '">' + (mm.st === 'live' ? '<i class="gb-live">LIVE</i>' : '') + side(mm.a, mm.sa, mm.win === 'a') + side(mm.b, mm.sb, mm.win === 'b') + '</div>'; };
+    var col = function (title, list) { return '<div class="gb-col"><span class="gb-h">' + title + '</span><div class="gb-ms">' + list.map(match).join('') + '</div></div>'; };
+    return '<div class="gp-h4">KNOCKOUT BRACKET</div><div class="gb-wrap"><div class="gb" role="group" aria-label="Knockout bracket">' + col('QUARTER-FINALS', B.qf) + col('SEMI-FINALS', B.sf) + col('FINAL', [B.fin]) + '</div></div><p class="gb-tip">Tap a team to trace its path.</p>';
+  }
+  /* ------------------------------------------------------------------ venue map */
+  function venueNow(name) {
+    var ph = A.tour.phase(), all = allSessions().filter(function (s) { return s.venue === name; });
+    if (ph === 'after') return { k: 'done', label: 'Finished', s: null };
+    if (ph === 'before') return { k: 'next', label: 'First: ' + dayLabel(all[0] ? all[0].day : 0) + (all[0] ? ' ' + all[0].tm : ''), s: all[0] || null };
+    var d = A.tour.dayNow(), now = A.tour.nowMin(), today = all.filter(function (s) { return s.day === d; }).sort(function (a, b) { return mins(a.tm) - mins(b.tm); });
+    var on = today.filter(function (s) { return mins(s.tm) <= now && now < mins(s.tm) + 120; }).pop();
+    if (on) return { k: 'live', label: 'On now', s: on };
+    var nx = today.find(function (s) { return mins(s.tm) > now; }) || all.find(function (s) { return s.day > d; });
+    return nx ? { k: 'next', label: 'Next ' + (nx.day === d ? nx.tm : dayLabel(nx.day) + ' ' + nx.tm), s: nx } : { k: 'done', label: 'Finished', s: null };
+  }
+  function venuesHTML(arg) {
+    var vs = D.TOURNAMENT.venues, sel = (arg && arg.venue && vs.find(function (v) { return v.name === arg.venue; })) || vs[0], tr = D.TOURNAMENT.travel || [];
+    var P = function (v, i) { return v.pos || [20 + (i % 3) * 30, 25 + Math.floor(i / 3) * 40]; }, pos = {}; vs.forEach(function (v, i) { pos[v.name] = P(v, i); });
+    var lines = tr.map(function (t) {
+      var a = pos[t[0]], b = pos[t[1]]; if (!a || !b) return ''; var on = t[0] === sel.name || t[1] === sel.name, mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      return '<line x1="' + a[0] + '" y1="' + a[1] * 0.62 + '" x2="' + b[0] + '" y2="' + b[1] * 0.62 + '" class="gm-l"' + (on ? ' data-on' : '') + '/>';
+    }).join('');
+    var badges = tr.map(function (t) { var a = pos[t[0]], b = pos[t[1]]; if (!a || !b || !(t[0] === sel.name || t[1] === sel.name)) return ''; return '<span class="gm-min" style="left:' + (a[0] + b[0]) / 2 + '%;top:' + (a[1] + b[1]) / 2 + '%">' + t[2] + ' min</span>'; }).join('');
+    var h = '<div class="gm" role="group" aria-label="Venue map"><svg viewBox="0 0 100 62" preserveAspectRatio="none" aria-hidden="true"><path d="M-2 50 C 18 40, 30 58, 52 46 S 86 30, 102 40" class="gm-river"/><path d="M-2 50 C 18 40, 30 58, 52 46 S 86 30, 102 40" class="gm-river2"/>' + lines + '</svg>';
+    vs.forEach(function (v, i) {
+      var p = pos[v.name], st = venueNow(v.name);
+      h += '<button type="button" class="gm-pin" data-act="venue" data-v="' + esc(v.name) + '" data-st="' + st.k + '"' + (v.name === sel.name ? ' data-on aria-pressed="true"' : ' aria-pressed="false"') + (p[0] > 55 ? ' data-side="l"' : '') + ' style="' + (p[0] > 55 ? 'right:' + (100 - p[0]) + '%' : 'left:' + p[0] + '%') + ';top:' + p[1] + '%"><span class="gm-dot">' + ICON(v.icon || 'corporate_fare') + '</span><span class="gm-lab"><b>' + esc(v.name) + '</b><span>' + esc(st.label) + '</span></span></button>';
+    });
+    h += badges + '</div>';
+    var st = venueNow(sel.name), sports = D.CATS.filter(function (c) { return c.venue === sel.name; }).map(function (c) { return c.name; });
+    h += '<div class="gp-evh" style="margin-top:20px"><div><span class="gp-code">' + esc(sports.join(' · ').toUpperCase() || 'VENUE') + '</span><h3>' + esc(sel.name) + '</h3></div><span class="gp-st" data-k="' + (st.k === 'live' ? 'live' : st.k === 'done' ? 'done' : '') + '">' + esc(st.label.toUpperCase()) + '</span></div>';
+    if (st.s) h += '<div class="gp-note">' + ICON('event_available') + '<span>' + (st.k === 'live' ? 'On now: ' : 'Next up: ') + esc(st.s.ev.name + ', ' + st.s.round) + ' (' + esc(dayLabel(st.s.day) + ' ' + st.s.tm) + ').</span></div>';
+    var hops = tr.filter(function (t) { return t[0] === sel.name || t[1] === sel.name; }).map(function (t) { return { to: t[0] === sel.name ? t[1] : t[0], m: t[2] }; }).sort(function (a, b) { return a.m - b.m; });
+    if (hops.length) h += '<div class="gp-chips">' + hops.map(function (x) { return '<button type="button" class="gp-chip" data-act="venue" data-v="' + esc(x.to) + '">' + x.m + ' min to ' + esc(x.to) + '</button>'; }).join('') + '</div><p class="gb-tip" style="margin-top:-8px">Shuttle times are sample figures.</p>';
+    var list = allSessions().filter(function (s) { return s.venue === sel.name; });
+    return h + '<div class="gp-h4">SESSIONS AT THIS VENUE</div>' + (list.length ? dayList(list, false) : '<div class="gp-empty">No sessions at this venue.</div>');
+  }
+  /* ------------------------------------------------------------------ sharing: links that open the exact view */
+  function shareLink(hash) { return location.href.split('#')[0] + '#' + hash; }
+  function share(title, hash) {
+    var url = shareLink(hash), done = function () { toast('Link copied', { icon: 'link' }); };
+    if (navigator.share && window.matchMedia && matchMedia('(pointer:coarse)').matches) { navigator.share({ title: title, text: title, url: url }).catch(function (e) { if (!e || e.name !== 'AbortError') copy(url).then(done, function () {}); }); return; }
+    copy(url).then(done, function () { toast('Could not copy the link'); });
+  }
+  function shareSpec(spec) {
+    var i = String(spec).indexOf(':'), k = i < 0 ? spec : spec.slice(0, i), v = i < 0 ? '' : spec.slice(i + 1), tn = D.TOURNAMENT.name;
+    if (k === 'session') { var s = sessFromKey(v); if (s) share(s.ev.name + ', ' + s.round + ' · ' + dayLabel(s.day) + ' ' + s.tm + ' · ' + s.venue + ' (' + tn + ')', 'session=' + s.key); }
+    else if (k === 'event') { var e = evBy(v); if (e) share(e.name + ' results (' + tn + ')', 'results=' + e.code); }
+    else if (k === 'venue') share(v + ' (' + tn + ')', 'venues=' + encodeURIComponent(v));
+    else if (k === 'medals') share('Medal table (' + tn + ')', 'medals');
+    else if (k === 'results') share('Results (' + tn + ')', 'results');
+    else if (k === 'venues') share('Venue map (' + tn + ')', 'venues');
+    else if (k === 'mygames') { if (My.keys().length) share('My plan for the ' + tn, 'my=' + My.keys().join(',')); else toast('Star a session first'); }
+  }
   /* ------------------------------------------------------------------ search palette */
   var pal = null;
   function buildIndex() {
@@ -476,6 +602,7 @@
     P('Medal table', 'Gold, silver and bronze by team', 'medal', function () { Plus.open('medals'); }, 'medals standings tally ranking');
     P('Results', 'Finals and medal matches for every event', 'sports', function () { Plus.open('results'); }, 'winners podium');
     P('My Games', 'Your starred sessions, clashes and calendar file', 'star', function () { Plus.open('mygames'); }, 'plan planner itinerary favourites saved');
+    P('Venue map', 'Where each venue is, what is on now and how long between them', 'corporate_fare', function () { Plus.open('venues'); }, 'venues map location travel shuttle directions where');
     P('Schedule', 'Every session, day by day', 'event_available', function () { A.home(function () { A.scrollTo('schedule'); }); }, 'timetable programme agenda');
     P('Registration', 'Twelve ways to take part', 'badge', function () { A.home(function () { A.scrollTo('reg'); }); }, 'register sign up accreditation apply');
     P('Help desk', 'Ask Vision or reach the right desk', 'connect_without_contact', function () { A.contact(); }, 'help support contact faq question');
@@ -485,7 +612,7 @@
     NCODES.forEach(function (k) { I.push({ g: 'Teams', t: NATIONS[k], s: k + ' · medals and results', ic: 'groups', c: '#1C8A53', act: function () { Plus.open('medals', { nation: k }); }, kw: k }); });
     D.REG_ORDER.forEach(function (ri) { var r = D.REG[ri]; I.push({ g: 'Registration', t: 'Register as ' + r.name, s: r.desc, ic: r.icon || 'badge', c: '#B07A12', act: function () { A.startReg(r.id); }, kw: 'register ' + r.id }); });
     var V = {}; Object.keys(D.VENUE_OF).forEach(function (sp) { var v = D.VENUE_OF[sp]; (V[v] = V[v] || []).push(sp); });
-    Object.keys(V).forEach(function (v) { I.push({ g: 'Venues', t: v, s: V[v].join(', ') + ' · show its sessions', ic: 'corporate_fare', c: '#7A4FD6', venue: v, kw: 'venue stadium arena' }); });
+    Object.keys(V).forEach(function (v) { I.push({ g: 'Venues', t: v, s: V[v].join(', ') + ' · on the venue map', ic: 'corporate_fare', c: '#7A4FD6', act: function () { Plus.open('venues', { venue: v }); }, kw: 'venue stadium arena map' }); });
     return I;
   }
   var norm = function (s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[×]/g, 'x'); };
@@ -560,7 +687,6 @@
   function palRun(i) {
     var it = pal.items[i]; if (!it) return;
     if (it.recent) { pal.input.value = it.recent; pal.clr.hidden = false; palRender(); return; }
-    if (it.venue) { pal.input.value = it.venue; pal.clr.hidden = false; palRender(); return; }
     var q = pal.input.value.trim();
     if (q) { var r = LS.get('gms-recent', []).filter(function (x) { return x !== q; }); r.unshift(q); LS.set('gms-recent', r.slice(0, 6)); }
     closeLayer(pal);
@@ -642,6 +768,8 @@
   doc.addEventListener('click', function (e) {
     var s = e.target.closest('[data-star]');
     if (s) { e.preventDefault(); var on = My.toggle(s.getAttribute('data-star')); s.setAttribute('aria-pressed', on ? 'true' : 'false'); s.removeAttribute('data-pop'); void s.offsetWidth; if (on) s.setAttribute('data-pop', ''); return; }
+    var sh = e.target.closest('[data-share]');
+    if (sh) { e.preventDefault(); if (A) shareSpec(sh.getAttribute('data-share')); return; }
     var p = e.target.closest('[data-plus]');
     if (p) { var k = p.getAttribute('data-plus'); e.preventDefault(); if (A && A.closeMenus) A.closeMenus(); if (k === 'theme') Theme.toggle(); else Plus.open(k); }
   });
@@ -981,7 +1109,10 @@
     // a shared plan (#my=...) or a deep link (#medals, #results, #mygames)
     var h = location.hash;
     if (/^#my=/.test(h)) { var ks = decodeURIComponent(h.slice(4)).split(',').map(function (k) { var x = sessFromKey(k); return x && x.key; }).filter(Boolean); try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {} if (ks.length) setTimeout(function () { Plus.open('mygames', { shared: ks }); }, 900); }
-    else if (/^#(medals|results|mygames)$/.test(h)) setTimeout(function () { Plus.open(h.slice(1)); }, 900);
+    else if (/^#(medals|results|mygames|venues)$/.test(h)) setTimeout(function () { Plus.open(h.slice(1)); }, 900);
+    else if (/^#results=/.test(h)) { var ec = evBy(decodeURIComponent(h.slice(9))); setTimeout(function () { Plus.open('results', ec ? { event: ec.code } : null); }, 900); }
+    else if (/^#venues=/.test(h)) { var vn = decodeURIComponent(h.slice(8)), vv = D.TOURNAMENT.venues.find(function (x) { return x.name === vn; }); setTimeout(function () { Plus.open('venues', vv ? { venue: vv.name } : null); }, 900); }
+    else if (/^#session=/.test(h)) { var ss = sessFromKey(decodeURIComponent(h.slice(9))); if (ss) setTimeout(function () { A.showSession(ss.day, ss.code); }, 900); }
   }
   Theme.sync();
   if (window.GMSApp) start(); else window.addEventListener('gms:ready', start);
