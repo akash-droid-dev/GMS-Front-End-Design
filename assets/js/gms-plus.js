@@ -402,6 +402,7 @@
       else if (act === 'share') { var u = location.href.split('#')[0] + '#my=' + My.keys().join(','); copy(u).then(function () { toast('Link to your plan copied', { icon: 'link' }); }, function () { toast('Could not copy the link'); }); }
       else if (act === 'import') { var ks = My.keys(); (sheet.arg && sheet.arg.shared || []).forEach(function (k) { if (ks.indexOf(k) < 0) ks.push(k); }); My.save(ks); toast('Added to My Games', { icon: 'star_fill' }); renderSheet('mygames', null); }
       else if (act === 'venue') renderSheet('venues', { venue: v });
+      else if (act === 'layout') Plus.venueLayout(v);
       else if (act === 'hl') { var on = t.hasAttribute('data-hl'); $$('.gb-t', el).forEach(function (b) { b.removeAttribute('data-hl'); b.closest('.gb-m').removeAttribute('data-hl'); }); if (!on) $$('.gb-t', el).forEach(function (b) { if (b.getAttribute('data-v') === v) { b.setAttribute('data-hl', ''); b.closest('.gb-m').setAttribute('data-hl', ''); } }); }
       else if (act === 'shareview') shareSpec(sheet.view === 'results' && sheet.arg.event ? 'event:' + sheet.arg.event : sheet.view === 'venues' && sheet.arg.venue ? 'venue:' + sheet.arg.venue : sheet.view);
       else if (act === 'schedule') { closeLayer(sheet); A.home(function () { A.scrollTo('schedule'); }); }
@@ -586,6 +587,7 @@
       h += '<button type="button" class="gm-pin" data-act="venue" data-v="' + esc(v.name) + '" data-st="' + st.k + '"' + (v.name === sel.name ? ' data-on aria-pressed="true"' : ' aria-pressed="false"') + (p[0] > 55 ? ' data-side="l"' : '') + ' style="' + (p[0] > 55 ? 'right:' + (100 - p[0]) + '%' : 'left:' + p[0] + '%') + ';top:' + p[1] + '%"><span class="gm-dot">' + ICON(v.icon || 'corporate_fare') + '</span><span class="gm-lab"><b>' + esc(v.name) + '</b><span>' + esc(st.label) + '</span></span></button>';
     });
     h += badges + '</div>';
+    if (sel.layout) h += '<button type="button" class="gp-btn" data-act="layout" data-v="' + esc(sel.layout) + '" style="margin-top:16px">' + ICON('corporate_fare') + 'See the hall layout</button>';
     if (sel.photo) h += '<figure class="gm-ph"><img src="' + esc(sel.photo) + '?v=1" alt="' + esc(sel.name) + '" decoding="async"><figcaption>' + esc(D.TOURNAMENT.complex) + '</figcaption></figure>';
     var st = venueNow(sel.name), sports = D.CATS.filter(function (c) { return c.venue === sel.name; }).map(function (c) { return c.name; });
     h += '<div class="gp-evh" style="margin-top:20px"><div><span class="gp-code">' + esc(sports.join(' · ').toUpperCase() || 'VENUE') + '</span><h3>' + esc(sel.name) + '</h3></div><span class="gp-st" data-k="' + (st.k === 'live' ? 'live' : st.k === 'done' ? 'done' : '') + '">' + esc(st.label.toUpperCase()) + '</span></div>';
@@ -723,7 +725,7 @@
   function railInit() {
     var secs = $$('x-dc section'), find = function (k) { return $('section[data-r="' + k + '"]'); };
     var hero = find('hero'), steps = hero && hero.nextElementSibling && hero.nextElementSibling.tagName === 'SECTION' ? hero.nextElementSibling : secs[1];
-    var CH = [[hero, 'Home', 1], [steps, 'Overview', 0], [find('tv-section'), 'Live TV', 1], [find('ecx'), 'Event centre', 1], [find('ev-section'), 'Programme', 0], [find('sch-section'), 'Schedule', 0], [find('roles-section'), 'Registration', 0], [find('stories'), 'Stories', 0], [find('fn-section'), 'Finale', 1]].filter(function (c) { return c[0]; });
+    var CH = [[hero, 'Home', 1], [find('venue-section'), 'The venue', 0], [steps, 'Overview', 0], [find('tv-section'), 'Live TV', 1], [find('ecx'), 'Event centre', 1], [find('ev-section'), 'Programme', 0], [find('sch-section'), 'Schedule', 0], [find('roles-section'), 'Registration', 0], [find('stories'), 'Stories', 0], [find('fn-section'), 'Finale', 1]].filter(function (c) { return c[0]; });
     if (!CH.length) return;
     var el = rail && rail.el;
     if (!el) { el = doc.createElement('nav'); el.className = 'gp-rail'; el.setAttribute('aria-label', 'Page chapters'); doc.body.appendChild(el); }
@@ -1230,6 +1232,25 @@
   }
   var Deck = passDeck();
   window.addEventListener('scroll', function () { Deck.bind(); Deck.q(); }, { passive: true });
+  /* ------------------------------------------------------------------ The venue: layout tabs and numbered points */
+  doc.addEventListener('click', function (e) {
+    var tb = e.target.closest('[data-vl-tab]');
+    if (tb) { venueTab(tb.getAttribute('data-vl-tab')); return; }
+    var p = e.target.closest('[data-vl-pin],[data-vl-item]'); if (!p) return;
+    var sec = p.closest('.vl'); if (!sec) return; var n = p.getAttribute('data-vl-pin') || p.getAttribute('data-vl-item'), fig = sec.querySelector('[data-vl-plan][data-off="0"]'), list = sec.querySelector('[data-vl-key][data-off="0"]');
+    if (!fig || !list) return;
+    fig.querySelectorAll('[data-vl-pin]').forEach(function (g) { g.toggleAttribute('data-on', g.getAttribute('data-vl-pin') === n); });
+    list.querySelectorAll('[data-vl-item]').forEach(function (b) { var on = b.getAttribute('data-vl-item') === n; b.toggleAttribute('data-on', on); if (on && p.hasAttribute('data-vl-pin')) b.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' }); });
+  });
+  function venueTab(k, scroll) {
+    var sec = doc.querySelector('.vl'); if (!sec) return;
+    sec.querySelectorAll('[data-vl-tab]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-vl-tab') === k ? 'true' : 'false'); });
+    sec.querySelectorAll('[data-vl-plan]').forEach(function (f) { f.setAttribute('data-off', f.getAttribute('data-vl-plan') === k ? '0' : '1'); });
+    sec.querySelectorAll('[data-vl-key]').forEach(function (l) { l.setAttribute('data-off', l.getAttribute('data-vl-key') === k ? '0' : '1'); });
+    sec.querySelectorAll('[data-vl-pin][data-on],[data-vl-item][data-on]').forEach(function (x) { x.removeAttribute('data-on'); });
+    if (scroll) sec.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+  }
+  Plus.venueLayout = function (k) { while (stack.length) closeLayer(stack[stack.length - 1]); setTimeout(function () { venueTab(k === 'tabletennis' ? 'tabletennis' : k === 'ceremony' ? 'ceremony' : 'badminton', true); }, 300); };
   Plus.vault = openVault;
   // the page re-renders its schedule rows (day switch, row open): keep stars and the theme icon in step
   var moT = 0, mo = new MutationObserver(function () { if (moT) return; moT = requestAnimationFrame(function () { moT = 0; My.sync(); Theme.sync(); openers(); Deck.bind(); Deck.q(); }); });
