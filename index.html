@@ -32,7 +32,7 @@
    the Spline viewer is only used by the chat robot and loads once the page has finished; a still of the robot shows until then. */
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
-var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/hero-poster.webp?v=g1';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
+var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/venue-poster.webp?v=g1';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
 /* Low mode: weak or data-saving devices get a lighter page (fewer scene frames, no parallax, posters instead of role films).
    Decided from memory, cores, Data Saver and connection speed; ?low=1 / ?low=0 forces it; the page can also switch itself on if scrolling proves slow. */
 var low=false;try{var n=navigator,c=n.connection||n.mozConnection||n.webkitConnection||{},mem=n.deviceMemory||8,cores=n.hardwareConcurrency||8;
@@ -354,7 +354,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-gi="volunteer_activism"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 12.8s-4.4-2.6-4.4-5.5A2.3 2.3 0 0 1 12 6.1a2.3 2.3 0 0 1 4.4 1.2c0 2.9-4.4 5.5-4.4 5.5z'/%3E%3Cpath d='M3 15.5h2.5l3.6 2.2h5l5.9-3.3M5.5 15.5v5M10.5 15.5h3.2'/%3E%3C/svg%3E")}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
-#gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/hero-poster.webp?v=g1') 0% 42%/cover no-repeat}
+#gms-shell [data-r=hero-media]{background:#0B0D12 url('assets/venue-poster.webp?v=g1') 0% 42%/cover no-repeat}
 @media (max-aspect-ratio:11/10){#gms-shell [data-r=hero-media]{background-position:57% 50%}}
 /* Registration: pinned index (desktop + tablet) that glides role by role beside a live figure; phones open rows in place */
 [data-r=roles-pin]{position:relative;padding:130px 32px 140px}
@@ -1132,16 +1132,16 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
     <div data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform"></div>
     <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
     <div data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
-      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">Registration open</b><span>GMS 2026</span><span class="hp-mono"><span data-shell-clock>--:--:--</span> IST</span></span>
-      <h1 data-r="hero-h1" style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.61s">System<b class="hero-dot">.</b></span></span></h1>
-      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">Registration, accreditation, schedules and live results for every athlete, official and venue, run from one system.</p>
-      <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both"><span><b>5</b> days of competition</span><span><b>4</b> venues</span><span><b>6</b> sports</span><span><b>18</b> medal events</span></p>
+      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">Registration open</b><span>AIPT 2026</span><span class="hp-mono"><span data-shell-clock>--:--:--</span> IST</span></span>
+      <h1 data-r="hero-h1" style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(38px,5.4vw,92px);line-height:.92;letter-spacing:-.04em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Veer Savarkar</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Sports</span></span> <span class="gms-hl"><span style="animation-delay:.61s">Complex<b class="hero-dot">.</b></span></span></h1>
+      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster, Naranpura, Ahmedabad. Registration, accreditation, schedules and live results, run from one system.</p>
+      <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both"><span><b>6</b> days of competition</span><span><b>6</b> venues</span><span><b>8</b> sports</span><span><b>34</b> medal events</span></p>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
         <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:var(--y,#F7C600);color:#0B0D12;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Participants</button>
         <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 8 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
       </div>
     </div>
-    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
+    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>The complex</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
     <div style="position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.92);overflow:hidden;padding:14px 0"></div>
   </div>
@@ -1208,16 +1208,16 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
     <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
     <div data-hero-copy data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
       <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">{{ phaseTag }}</b><span>{{ tShort }}</span><span class="hp-mono">{{ clock }} {{ tzLabel }}</span></span>
-      <h1 data-r="hero-h1" style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(46px,6.2vw,104px);line-height:.88;letter-spacing:-.055em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Games</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Management</span></span> <span class="gms-hl"><span style="animation-delay:.61s">System<b class="hero-dot">.</b></span></span></h1>
-      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">Registration, accreditation, schedules and live results for every athlete, official and venue, run from one system.</p>
+      <h1 data-r="hero-h1" style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(38px,5.4vw,92px);line-height:.92;letter-spacing:-.04em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Veer Savarkar</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Sports</span></span> <span class="gms-hl"><span style="animation-delay:.61s">Complex<b class="hero-dot">.</b></span></span></h1>
+      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster, Naranpura, Ahmedabad. Registration, accreditation, schedules and live results, run from one system.</p>
       <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both">{{ heroLine }}</p>
       <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
         <button class="gms-liquid gms-liquid--water" onClick="{{ regAthlete }}" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:var(--y,#F7C600);color:#0B0D12;font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease" style-hover="box-shadow:0 1px 2px rgba(15,20,40,.12)">Register as Participants</button>
         <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 8 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
       </div>
     </div>
-    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>Basketball</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
-    <div data-r="hero-sw" role="group" aria-label="Show a sport">
+    <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>The complex</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
+    <div data-r="hero-sw" role="group" aria-label="Show a part of the complex">
       <sc-for list="{{ heroSports }}" as="h" hint-placeholder-count="6"><button type="button" data-hsw="{{ h.k }}" data-on="0" onClick="{{ h.go }}" style="--c:{{ h.color }}"><i></i>{{ h.name }}</button></sc-for>
     </div>
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
@@ -2058,6 +2058,8 @@ const smooth=t=>t*t*(3-2*t);
 // background videos: 1080p on desktop, 720p on phones
 const VRES=()=>window.innerWidth<=760?'720':'1080';
 const HERO_SPORTS=['Basketball','Swimming','Athletics','Volleyball','Tennis','Football'];
+// the hero film (assets/venue-*.mp4) and the part of the complex each stretch shows: [name, start second]
+const ZONES=[['The complex',0],['Centre for Sports Excellence',13],['Tennis courts',22],['Aquatic Stadium',42],['Indoor halls',52],['Community Sports Centre',84]],FILM_LEN=107.5;
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
 const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',events:[],docs:{}});
 
@@ -2121,7 +2123,7 @@ class Component extends DCLogic {
       
       
       
-      heroSports:HERO_SPORTS.map((n,k)=>({name:n,k:String(k),color:{'#0E7C74':'#F7C600'}[(CATS.find(c=>c.name===n)||{}).color]||(CATS.find(c=>c.name===n)||{}).color||'#F7C600',go:()=>this.heroSeek(k)})),
+      heroSports:ZONES.map(([n],k)=>({name:n,k:String(k),color:'#F7C600',go:()=>this.heroSeek(k)})),
       heroLine:[[T.n,T.n===1?'day of competition':'days of competition'],[TOURNAMENT.venues.length,'venues'],[CATS.length,'sports'],[T.events,'medal events']].map(([n,t],i)=>React.createElement('span',{key:i},React.createElement('b',null,n),' '+t)),
       heroVideo:this.heroVideoEl(),
       heroAllWays:()=>{clearTimeout(this.regT);this.setState({regOpen:true,menuOpen:false});},
@@ -2330,21 +2332,22 @@ class Component extends DCLogic {
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
   heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
-    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/hero-poster.webp?v=g1',src:'assets/hero-'+(small?'720':'1080')+(this.av1?'-av1':'')+'.mp4?v=g1','aria-hidden':'true',
+    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/venue-poster.webp?v=v1',src:'assets/venue-'+(small?'720':'1080')+'.mp4?v=v1','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         el.addEventListener('timeupdate',()=>this.heroChapter(el));el.addEventListener('pause',()=>this.heroChapter(el,'paused'));el.addEventListener('play',()=>this.heroChapter(el,'running'));
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});const go=()=>io.observe(el);if(LITE&&document.readyState!=='complete')window.addEventListener('load',()=>setTimeout(go,350),{once:true});else go();(this.vios||(this.vios=[])).push(io);},
-      style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'0% 42%',display:'block'}});}
+      style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'42% 50%',display:'block'}});}
   // sport chapter label: which sport the montage is on (cross-fades centred at 1.8 s, 3.8 s ... and the loop seam at 11.6 s) and how far through it
   // jump the montage to one sport (chapters start at 2k - 0.2 s; land just after the cross-fade)
-  heroSeek(k){const v=document.querySelector('section[data-r=hero] video');if(!v)return;try{v.currentTime=k===0?0.3:2*k+0.25;}catch(e){}const p=v.play();if(p&&p.catch)p.catch(()=>{});this.hchK=-1;this.heroChapter(v);}
+  // jump the film to one part of the complex
+  heroSeek(k){const v=document.querySelector('section[data-r=hero] video');if(!v)return;try{v.currentTime=ZONES[k][1]+0.2;}catch(e){}const p=v.play();if(p&&p.catch)p.catch(()=>{});this.hchK=-1;this.heroChapter(v);}
+  // chapter label: which part of the complex the film is on, and how far through that stretch
   heroChapter(v,state){const root=this.hchRoot&&this.hchRoot.isConnected?this.hchRoot:(this.hchRoot=document.querySelector('section[data-r=hero] [data-r=hero-ch]'));if(!root)return;
     const f=root.querySelector('[data-hch-fill]');if(state){if(f)f.style.animationPlayState=state;if(state==='paused')return;}
-    const LEN=[2.2,2,2,2,2,1.8],t=v.currentTime;let k,st;
-    if(t>=11.6){k=0;st=t-11.6;}else if(t<1.8){k=0;st=t+0.4;}else{k=Math.min(5,Math.floor((t+0.2)/2));st=t-(2*k-0.2);}
-    if(k===this.hchK&&!state)return;this.hchK=k;{const hs=root.parentNode;if(hs){hs.querySelectorAll('[data-hsw]').forEach(b=>b.setAttribute('data-on',+b.getAttribute('data-hsw')===k?'1':'0'));const on=hs.querySelector('[data-hsw="'+k+'"]');if(on)hs.style.setProperty('--hc',on.style.getPropertyValue('--c'));}}const nm=root.querySelector('[data-hch-name]'),kk=root.querySelector('[data-hch-k]');
-    if(nm&&nm.textContent!==HERO_SPORTS[k]){nm.textContent=HERO_SPORTS[k];nm.removeAttribute('data-swap');void nm.offsetWidth;nm.setAttribute('data-swap','');}if(kk)kk.textContent=pad(k+1);
-    if(f){f.style.animation='none';void f.offsetWidth;f.style.animation='hchFill '+LEN[k]+'s linear '+(-st).toFixed(2)+'s both';f.style.animationPlayState=v.paused?'paused':'running';}}
+    const t=v.currentTime;let k=0;for(let i=0;i<ZONES.length;i++)if(ZONES[i][1]<=t)k=i;const len=(ZONES[k+1]?ZONES[k+1][1]:FILM_LEN)-ZONES[k][1],st=t-ZONES[k][1];
+    if(k===this.hchK&&!state)return;this.hchK=k;{const hs=root.parentNode;if(hs){hs.querySelectorAll('[data-hsw]').forEach(b=>b.setAttribute('data-on',+b.getAttribute('data-hsw')===k?'1':'0'));hs.style.setProperty('--hc','#F7C600');}}const nm=root.querySelector('[data-hch-name]'),kk=root.querySelector('[data-hch-k]'),nn=root.querySelector('.hch-n');
+    if(nm&&nm.textContent!==ZONES[k][0]){nm.textContent=ZONES[k][0];nm.removeAttribute('data-swap');void nm.offsetWidth;nm.setAttribute('data-swap','');}if(kk)kk.textContent=pad(k+1);if(nn)nn.textContent='/ '+pad(ZONES.length);
+    if(f){f.style.animation='none';void f.offsetWidth;f.style.animation='hchFill '+len.toFixed(1)+'s linear '+(-st).toFixed(2)+'s both';f.style.animationPlayState=v.paused?'paused':'running';}}
   // muted loop that starts downloading about a screen and a half before it scrolls in; its first frame (poster) shows instantly
   lazyVideo(key,src){return React.createElement('video',{key,loop:true,muted:true,playsInline:true,preload:'none','data-dolly':'1',
     ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;const load=()=>{if(!el.getAttribute('src')){el.poster=src.replace(/(-1080|-720)?\.mp4/,'-poster.webp');el.preload='auto';el.src=src;el.load();}};const near=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){load();near.disconnect();}},{rootMargin:'150% 0px'});near.observe(el.closest('section')||el);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load();const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.01});(this.vios||(this.vios=[])).push(near);io.observe(el);(this.vios||(this.vios=[])).push(io);},
