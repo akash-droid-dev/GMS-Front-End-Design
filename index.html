@@ -835,9 +835,9 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .st-card::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,10,16,.18) 0%,rgba(8,10,16,0) 24%,rgba(8,10,16,0) 42%,rgba(8,10,16,.86) 100%)}
 .st-card figcaption{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px 20px;color:#fff}
 .st-chip{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px 0 9px;border-radius:999px;background:rgba(8,10,16,.38);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:12px;font-weight:600}
-.st-chip .gi{font-size:15px}
+.st-chip .gi{font-size:15px}.st-chip{box-shadow:inset 0 -2px 0 var(--sp,transparent)}.st-chip .gi{color:color-mix(in srgb,var(--sp,#fff) 35%,#fff)}
 .st-q{display:flex;flex-direction:column;gap:12px}
-.st-card blockquote{margin:0;font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(19px,1.55vw,23px);letter-spacing:-.02em;line-height:1.18}
+.st-card .st-line{margin:0;font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(19px,1.55vw,23px);letter-spacing:-.02em;line-height:1.18}
 .st-who{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .st-prog{max-width:1240px;margin:26px auto 0;padding:0 32px}.st-prog>span{display:block;height:2px;border-radius:2px;background:rgba(11,13,18,.1);overflow:hidden}
 .st-prog i{display:block;height:100%;width:30%;background:#0B0D12;border-radius:2px;transition:transform .15s linear}
@@ -1097,7 +1097,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=21"></script>
+<script defer src="./assets/js/gms-plus.js?v=22"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1488,7 +1488,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
     </div>
     <div class="st-track" data-cursor="Drag" role="list" aria-label="The system at work">
       <sc-for list="{{ stories }}" as="t" hint-placeholder-count="6">
-        <figure class="st-card" role="listitem"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><blockquote>{{ t.q }}</blockquote><span class="st-who">{{ t.who }}</span></span></figcaption></figure>
+        <figure class="st-card" role="listitem" style="--sp:{{ t.color }}"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><p class="st-line">{{ t.q }}</p><span class="st-who">{{ t.who }}</span></span></figcaption></figure>
       </sc-for>
     </div>
     <div class="st-prog" aria-hidden="true"><span><i></i></span></div>
@@ -1810,12 +1810,28 @@ const TOURNAMENT={
   firstDay:'2026-11-14',            // date of day 1 (YYYY-MM-DD); later days follow one per entry in `sessions`
   timezone:{label:'IST',offsetMinutes:330,iana:'Asia/Kolkata'},
   registrationCloses:'2026-11-07',
+  // Registration Vault: URL that receives each finished registration as multipart/form-data
+  // (fields plus the uploaded files, and `role`). Reply with JSON {id:'GMS-26-0413'} to show your ID.
+  // Leave empty to keep registrations in the browser only (demo mode).
+  vaultEndpoint:'',
   accreditationFrom:'2026-11-10',
   teamLabel:'Team',                 // what competitors represent: Team, State, Unit, Nation...
   teams:{IND:'India',USA:'United States',BRA:'Brazil',JPN:'Japan',GER:'Germany',ITA:'Italy',ESP:'Spain',AUS:'Australia',GBR:'Great Britain',CHN:'China',KEN:'Kenya',SRB:'Serbia',TUR:'Türkiye',FRA:'France',CAN:'Canada',NED:'Netherlands',JAM:'Jamaica',KOR:'Korea'},
   // venues; `channel` links a venue to a Live TV channel and the live-score feed
   // `pos` places a venue on the venue map (0 to 100 across, 0 to 100 down)
   venues:[{name:'Sabarmati Stadium',channel:'stadium',short:'SABARMATI',icon:'sports_soccer',pos:[30,34]},{name:'Narmada Aquatics Centre',icon:'pool',pos:[70,24]},{name:'Riverfront Arena',channel:'arena',short:'RIVERFRONT',icon:'sports_basketball',pos:[42,72]},{name:'Motera Tennis Centre',channel:'court',short:'MOTERA',icon:'sports_tennis',pos:[80,66]}],
+  // live-score fixtures (sample feed): [venue channel, sport format (2 football, 3 basketball, 4 volleyball, 5 tennis), event, round,
+  //   side A, side B, 'live' | 'next' | 'final', start time]; a side is a team code from `teams`, or [player name, team code]
+  live:[
+['stadium',2,'Men\'s Tournament','Final','IND','BRA','live','16:05'],
+['arena',3,'Men\'s Tournament','Semi-final',['USA','USA'],'SRB','live','16:20'],
+['arena',4,'Women\'s Tournament','Final','ITA','TUR','live','15:45'],
+['court',5,'Men\'s Singles','Final',['A. Rossi','ITA'],['K. Sato','JPN'],'live','15:35'],
+['stadium',2,'Women\'s Tournament','Semi-final','JPN','GER','next','18:25'],
+['arena',3,'Women\'s Tournament','Bronze medal match','ESP','AUS','next','17:50'],
+['court',5,'Women\'s Singles','Semi-final',['M. Silva','BRA'],['L. Chen','CHN'],'next','17:40'],
+['stadium',2,'Five-a-side','Final','KEN','ESP','final','12:55'],
+['court',5,'Mixed Doubles','Final',['Patel / Kaur','IND'],['Novak / Hughes','GBR'],'final','13:20']],
   // shuttle minutes between venues (sample figures; replace with the organiser's transport plan)
   travel:[['Sabarmati Stadium','Narmada Aquatics Centre',14],['Sabarmati Stadium','Riverfront Arena',9],['Sabarmati Stadium','Motera Tennis Centre',22],['Narmada Aquatics Centre','Riverfront Arena',16],['Narmada Aquatics Centre','Motera Tennis Centre',12],['Riverfront Arena','Motera Tennis Centre',15]],
   // sports and their medal events: [full name, MEN | WOMEN | MIXED, code, short name]
@@ -1856,14 +1872,15 @@ const T=(()=>{const c=TOURNAMENT,off=c.timezone.offsetMinutes*60000,[y,mo,d]=c.f
 const BLUE='#2F5BFF';
 const CATS=TOURNAMENT.sports;
 const ALL_EVENTS=CATS.flatMap(c=>c.events.map(e=>({name:e[0],gender:e[1],code:e[2],cat:c})));
-// Athlete stories: portraits cut from the hero footage; the quotes are illustrative, not real people
-const STORIES=[
-{img:'basketball',sport:'Basketball',icon:'sports_basketball',q:'Accreditation is checked once, then the card works at every venue gate.',who:'Accreditation'},
-{img:'athletics',sport:'Athletics',icon:'directions_run',q:'Heat, lane and call time reach every athlete the moment the draw is made.',who:'Start lists'},
-{img:'swimming',sport:'Swimming',icon:'pool',q:'Results are published from the timing desk as each race finishes.',who:'Results'},
-{img:'volleyball',sport:'Volleyball',icon:'sports_volleyball',q:'A whole squad registers from one link, with every member verified.',who:'Team registration'},
-{img:'tennis',sport:'Tennis',icon:'sports_tennis',q:'Practice courts, transport and match times sit in one schedule.',who:'Scheduling'},
-{img:'football',sport:'Football',icon:'sports_soccer',q:'Every match is streamed with its live score beside the picture.',who:'Live coverage'}];
+// Story cards: one per sport (photo in assets/stories/<img>.webp); the caption is worked out from the settings, nothing invented
+const STORIES=[['basketball','Basketball'],['athletics','Athletics'],['swimming','Swimming'],['volleyball','Volleyball'],['tennis','Tennis'],['football','Football']].map(([img,name])=>{
+  const c=TOURNAMENT.sports.find(x=>x.name===name);if(!c)return null;const codes=c.events.map(e=>e[2]),days=[],fin=[];
+  TOURNAMENT.sessions.forEach((d,i)=>d.forEach(([,code,round])=>{if(codes.includes(code)){if(!days.includes(i))days.push(i);if(/^final$/i.test(round)&&!fin.includes(i))fin.push(i);}}));
+  const ev=c.events.map(e=>e[3]),q=(ev.length>1?ev.slice(0,-1).join(', ')+' and '+ev[ev.length-1]:ev[0])+' at '+c.venue+'.';
+  const who=[fin.length?'Finals '+fin.map(i=>T.dayShort(i)).join(', '):days.length?days.length+' days of competition':'',c.outdoor?'Outdoor':'Indoor'].filter(Boolean).join(' · ');
+  return {img,sport:name,icon:c.icon,color:c.color,q,who};}).filter(Boolean);
+// page title and description follow the settings (the static tags in <head> are what link previews and search engines read; keep them in step)
+try{document.title='GMS, Games Management System for the '+TOURNAMENT.name;const md=document.querySelector('meta[name=description]');if(md)md.content='Registration, accreditation, schedules and live results for every athlete, official and venue of the '+TOURNAMENT.name+' in '+TOURNAMENT.city+', '+T.range+'.';}catch(e){}
 // calendar links for a session (local time from the settings, two hours): Google and Outlook open prefilled, Apple downloads an .ics file
 const calLinks=(title,tm,desc,day,venue)=>{const [h,m]=tm.split(':').map(Number),e=String(h+2).padStart(2,'0')+':'+String(m).padStart(2,'0'),loc=venue+', '+TOURNAMENT.city,enc=encodeURIComponent,ds=T.ymd(day||0),di=T.isoDay(day||0),oz=enc(T.offStr);
   const utc=(hh,mm)=>new Date(T.at(day||0,hh+':'+mm)).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
@@ -1898,16 +1915,7 @@ const FIELDS=TOURNAMENT.venues.filter(v=>v.channel).map(v=>({id:v.channel,name:v
 const SPORT_FMT={2:{k:'football',per:'H',plan:'TWO HALVES',help:'Football: two halves of 45 minutes; most goals wins.'},3:{k:'basketball',per:'Q',plan:'FOUR QUARTERS',help:'Basketball: four quarters of 10 minutes; most points wins.'},
   4:{k:'volleyball',per:'S',plan:'BEST OF FIVE SETS',help:'Volleyball: sets to 25 (the fifth to 15), win by two; first to three sets.'},5:{k:'tennis',per:'S',plan:'BEST OF THREE SETS',help:'Tennis: sets to six games, win by two; first to two sets.'}};
 // venue, sport (CATS index), event, round, side A [name, code], side B, state, start time (IST)
-const LIVE_SEED=[
-['stadium',2,'Men\'s Tournament','Final',['India','IND'],['Brazil','BRA'],'live','16:05'],
-['arena',3,'Men\'s Tournament','Semi-final',['USA','USA'],['Serbia','SRB'],'live','16:20'],
-['arena',4,'Women\'s Tournament','Final',['Italy','ITA'],['Türkiye','TUR'],'live','15:45'],
-['court',5,'Men\'s Singles','Final',['A. Rossi','ITA'],['K. Sato','JPN'],'live','15:35'],
-['stadium',2,'Women\'s Tournament','Semi-final',['Japan','JPN'],['Germany','GER'],'next','18:25'],
-['arena',3,'Women\'s Tournament','Bronze medal match',['Spain','ESP'],['Australia','AUS'],'next','17:50'],
-['court',5,'Women\'s Singles','Semi-final',['M. Silva','BRA'],['L. Chen','CHN'],'next','17:40'],
-['stadium',2,'Five-a-side','Final',['Kenya','KEN'],['Spain','ESP'],'final','12:55'],
-['court',5,'Mixed Doubles','Final',['Patel / Kaur','IND'],['Novak / Hughes','GBR'],'final','13:20']];
+const LIVE_SEED=TOURNAMENT.live.map(([f,d,e,r,a,b,st,tm])=>[f,d,e,r,...[a,b].map(x=>typeof x==='string'?[TOURNAMENT.teams[x]||x,x]:x),st,tm]);
 const liveFmt=m=>SPORT_FMT[m.div].k;
 const setDone=(m,p,i)=>{const [a,b]=p,f=liveFmt(m);if(f==='volleyball'){const t=i===4?15:25;return Math.max(a,b)>=t&&Math.abs(a-b)>=2;}if(f==='tennis')return (Math.max(a,b)>=6&&Math.abs(a-b)>=2)||Math.max(a,b)===7;return false;};
 const liveScore=m=>{const f=liveFmt(m);if(f==='football'||f==='basketball'){let A=0,B=0;m.p.forEach(([a,b])=>{A+=a;B+=b;});return [A,B];}
@@ -2063,7 +2071,7 @@ class Component extends DCLogic {
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
     // bridge for assets/js/gms-plus.js (search, medals, My Games, chapter rail): data plus a few safe navigation calls
     try{document.title='GMS, Games Management System for the '+TOURNAMENT.name;const md=document.querySelector('meta[name=description]');if(md)md.content='Registration, accreditation, schedules and live results for every athlete, official and venue of the '+TOURNAMENT.name+' in '+TOURNAMENT.city+', '+T.range+'.';}catch(e){}
-    const app=this;window.GMSApp={tour:{at:T.at,start:T.start,end:T.end,year:T.year,phase:()=>T.phase(Date.now()),dayNow:()=>T.dayNow(Date.now()),nowMin:()=>{const x=T.local(Date.now());return x.getHours()*60+x.getMinutes();},dayLong:T.dayLong,n:T.n},data:{TOURNAMENT,CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
+    const app=this;window.GMSApp={vaultEndpoint:TOURNAMENT.vaultEndpoint||'',tour:{at:T.at,start:T.start,end:T.end,year:T.year,phase:()=>T.phase(Date.now()),dayNow:()=>T.dayNow(Date.now()),nowMin:()=>{const x=T.local(Date.now());return x.getHours()*60+x.getMinutes();},dayLong:T.dayLong,n:T.n},data:{TOURNAMENT,CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
       screen:()=>app.state.screen||'home',home:after=>{if((app.state.screen||'home')!=='home')app.go('home',after);else if(after)after();},
       scrollTo:k=>app.scrollTo(k),showSession:(day,code)=>window.GMSApp.home(()=>{app.setState({day,openRow:code,schView:'time'});setTimeout(()=>app.scrollTo('schedule'),60);}),
       startReg:id=>app.startReg(id),openTv:f=>{app.setState({chan:f||'stadium'});app.go('tv');},openEc:()=>app.openEc(),

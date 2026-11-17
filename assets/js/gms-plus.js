@@ -1082,11 +1082,30 @@
     }
     V.step++; V.max = Math.max(V.max, V.step); vaultRender(); vaultSave(); V.focus();
   }
+  function vaultFinish(id) {
+    V.done = id; V.sending = false; try { localStorage.removeItem('gms-reg-draft'); } catch (e) {}
+    vaultRender(); var f = V.el.querySelector('[data-gv=finish]'); if (f) f.focus({ preventScroll: true });
+  }
   function vaultSubmit() {
     for (var i = 0; i < V.steps.length; i++) if (stepLeft(i)) { V.step = i; vaultRender(); vaultNext(); return; }
-    var id = A.register ? A.register(V.F.name, V.F.email, V.role.name) : 'GMS-26-0000';
-    V.done = id; try { localStorage.removeItem('gms-reg-draft'); } catch (e) {}
-    vaultRender(); V.el.querySelector('[data-gv=finish]').focus({ preventScroll: true });
+    if (V.sending) return;
+    var url = A.vaultEndpoint, local = function () { return A.register ? A.register(V.F.name, V.F.email, V.role.name) : 'GMS-26-0000'; };
+    if (!url) { vaultFinish(local()); return; }
+    // send fields and files to the organiser's endpoint; on any failure keep the draft and let the person try again
+    var fd = new FormData(); fd.append('role', V.role.id);
+    Object.keys(V.F).forEach(function (k) { fd.append(k, V.F[k]); });
+    Object.keys(V.files).forEach(function (k) { fd.append(k, V.files[k], V.files[k].name); });
+    var btn = V.el.querySelector('[data-gv=submit]'), was = btn && btn.innerHTML;
+    V.sending = true; if (btn) { btn.disabled = true; btn.setAttribute('aria-busy', 'true'); btn.textContent = 'Sending…'; }
+    var ctl = 'AbortController' in window ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 30000);
+    fetch(url, { method: 'POST', body: fd, signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
+      .then(function (j) { clearTimeout(to); vaultFinish((j && (j.id || j.registrationId)) ? String(j.id || j.registrationId).slice(0, 40) : local()); })
+      .catch(function () {
+        clearTimeout(to); V.sending = false; vaultSave();
+        if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); btn.innerHTML = was; }
+        toast(navigator.onLine === false ? 'You are offline. Your answers are saved; send again when you are back.' : 'Registration could not be sent. Your answers are saved.', { icon: 'info', action: 'Try again', onAction: vaultSubmit });
+      });
   }
   function openVault(roleId) {
     if (!A) return;
@@ -1124,7 +1143,9 @@
   function topTick() {
     topRaf = 0; if (!topBtn) return;
     var y = window.scrollY, vh = window.innerHeight, max = Math.max(1, doc.documentElement.scrollHeight - vh), home = A && A.screen() === 'home';
-    var show = y > vh * 1.2 && y < max - 260 && !stack.length;
+    var show = y > vh * 1.2 && y < max - 260 && !stack.length, ph = window.innerWidth <= 1024;
+    if (ph) { var up = y < (topBtn.y || 0) - 2; if (up) { clearTimeout(topBtn.idle); topBtn.idle = setTimeout(function () { topBtn.upAt = 0; topTick(); }, 1800); topBtn.upAt = 1; } else if (y > (topBtn.y || 0) + 2) topBtn.upAt = 0; show = show && !!topBtn.upAt; }
+    topBtn.y = y;
     if (show !== topBtn.on) { topBtn.on = show; if (show) topBtn.el.setAttribute('data-on', ''); else topBtn.el.removeAttribute('data-on'); }
     if (show) topBtn.pr.style.strokeDashoffset = (138.2 * (1 - Math.min(1, y / max))).toFixed(1);
     if (home && !memT) memT = setTimeout(function () { memT = 0; if (!A || A.screen() !== 'home') return; var i = secNow(); if (i == null) return; if (i > 0 && window.scrollY > window.innerHeight) LS.set('gms-place', { i: i, n: rail.CH[i][1], at: Date.now() }); else if (window.scrollY < 40) LS.set('gms-place', null); }, 900);
