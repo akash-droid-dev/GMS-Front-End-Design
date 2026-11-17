@@ -1126,6 +1126,41 @@ html[data-theme=dark] .vl-list button[data-on]{background:#F7C600;color:#0B0D12}
 .vl-list b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#F7C600;color:#0B0D12;font:700 12px/1 Inter,system-ui,sans-serif}
 .vl-list span{display:flex;flex-direction:column;gap:3px}.vl-list strong{font-size:14.5px;font-weight:650}.vl-list small{font-size:13px;line-height:1.45;color:var(--d-ink2,#5B6270)}
 @media (max-width:900px){.vl-in{padding:0 20px}.vl-stage{grid-template-columns:1fr}.vl-key{max-height:none}.vl-plan{padding:8px;border-radius:18px}.vl-pin circle{r:16}}
+
+/* ---- two-colour split-flap key words ---- */
+.sfl{display:inline-flex;vertical-align:top;white-space:nowrap;gap:.02em}
+.sfl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sfl-c{display:inline-block;overflow:hidden;height:1.06em;line-height:1.06em;vertical-align:top;border-radius:.06em}
+.sfl-s{display:flex;flex-direction:column;transform:translateY(0);transition:transform .8s cubic-bezier(.76,0,.24,1);transition-delay:calc(var(--i) * 55ms)}
+.sfl-a,.sfl-b{display:block;height:1.06em;padding:0 .015em;text-align:center}
+.sfl-b{color:#0B0D12;background:linear-gradient(180deg,#FFD83A 0 49%,rgba(0,0,0,.18) 49% 51%,#F7C600 51% 100%)}
+[data-flap-on] .sfl-s{transform:translateY(-50%)}
+.has-flap .gms-w:has(.sfl){overflow:visible}
+@media (prefers-reduced-motion:reduce){.sfl-s{transition:none}}
+/* ---- images unmask on entry; buttons lean to the pointer ---- */
+.mr{clip-path:inset(14% 6% 14% 6% round 28px);transition:clip-path 1.1s cubic-bezier(.2,.8,.2,1)}.mr img,.mr svg,.mr video{scale:1.08;transition:scale 1.4s cubic-bezier(.2,.8,.2,1)}
+.mr.mr-in{clip-path:inset(0 0 0 0 round 0)}.mr.mr-in img,.mr.mr-in svg,.mr.mr-in video{scale:1}
+.gms-liquid,.pd-arrow,.ld-go button,.gms-glow,.gms-cta,.nv-ic,.vl-tabs button,[data-hsw]{transition-property:translate,transform,background,color,box-shadow,border-color;transition-duration:.35s;transition-timing-function:cubic-bezier(.2,.8,.2,1)}
+/* ---- the yellow cursor (desktop) ---- */
+.gy-cur{position:fixed;left:0;top:0;z-index:9999;pointer-events:none}
+.gy-cur i{position:absolute;left:0;top:0;border-radius:50%;will-change:transform}
+.gy-dot{width:8px;height:8px;margin:-4px 0 0 -4px;background:#F7C600;box-shadow:0 0 0 1.5px rgba(11,13,18,.55)}
+.gy-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1.5px solid rgba(247,198,0,.9);transition:width .3s,height .3s,margin .3s,background .3s,opacity .3s}
+.gy-cur[data-hot] .gy-ring{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(247,198,0,.16)}
+.gy-cur[data-down] .gy-ring{width:28px;height:28px;margin:-14px 0 0 -14px}
+.gy-cur[data-text] .gy-ring,.gy-cur[data-out]{opacity:0}
+.gms-cur[data-on="1"] ~ .gy-cur{opacity:0}
+.gms-cur>span{background:#F7C600!important;color:#0B0D12!important}
+html.gy-has-cur,html.gy-has-cur *{cursor:none!important}html.gy-has-cur :is(input,textarea,select,[contenteditable]){cursor:text!important}
+/* ---- film grain over the page and a light sweep across yellow buttons ---- */
+body::after{content:'';position:fixed;inset:-50%;z-index:9990;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}}
+.gms-liquid--water,.ld-snd,.pd-arrow:hover{position:relative;overflow:hidden}
+.gms-liquid--water::before,.ld-snd::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:sweep 4.2s cubic-bezier(.6,0,.2,1) infinite;pointer-events:none}
+@keyframes sweep{0%,62%{transform:translateX(-120%)}86%,100%{transform:translateX(120%)}}
+html.gms-low body::after,html.gms-low .gms-liquid--water::before{display:none}
+@media (prefers-reduced-motion:reduce){body::after,.gms-liquid--water::before,.ld-snd::before{animation:none}.mr,.mr img,.mr svg,.mr video{clip-path:none!important;scale:1!important;transition:none}}
+@media (hover:none),(pointer:coarse){body::after{opacity:.035;animation:none}}
 /* ---- batch 5 ---- */
 /* TSR: a timing tag beside the figure */
 .rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0D12;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:#F7C600}
@@ -1218,7 +1253,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-plus.js?v=30"></script>
+<script defer src="./assets/js/gms-motion.js?v=3"></script>
+<script defer src="./assets/js/gms-plus.js?v=31"></script>
 </head>
 <body>
 <!-- Opening: the Gobananas logo slams in while the page, fonts and film load; then the visitor enters with or without sound -->
