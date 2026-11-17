@@ -1024,6 +1024,60 @@ html[data-theme=dark]{--ac:#F7C600}
 /* sound toggle: a tiny equaliser dances while the ambient sound plays */
 .nv-ic--snd{position:relative}.nv-ic--snd .snd-eq{display:none;align-items:flex-end;gap:2px;height:12px}.nv-ic--snd[data-on] .gi{display:none}.nv-ic--snd[data-on] .snd-eq{display:inline-flex}.nv-ic--snd .snd-eq i{width:2.5px;border-radius:2px;background:currentColor;animation:sndEq 1s ease-in-out infinite}.nv-ic--snd .snd-eq i:nth-child(2){animation-delay:-.4s}.nv-ic--snd .snd-eq i:nth-child(3){animation-delay:-.7s}
 @keyframes sndEq{0%,100%{height:3px}50%{height:12px}}@media (prefers-reduced-motion:reduce){.nv-ic--snd .snd-eq i{animation:none;height:8px}}
+
+/* ---- Registration: the accreditation pass deck ---- */
+section.pdk[data-r=roles-section]{height:auto!important;min-height:0!important}
+.pdk{position:relative;background:#0B0D12;color:#fff;padding:clamp(88px,12vh,128px) 0 clamp(72px,10vh,104px);overflow:clip;isolation:isolate}
+.pdk .sx{color:rgba(255,255,255,.62)}.pdk .sx i{color:#F7C600}
+.pd-glow{position:absolute;inset:-20% -10% auto;height:90%;background:radial-gradient(40% 50% at 70% 40%,rgba(247,198,0,.16),transparent 70%),radial-gradient(35% 45% at 18% 70%,rgba(63,182,170,.14),transparent 70%);pointer-events:none;z-index:-1}
+.pd-head{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.pd-copy{display:flex;flex-direction:column;gap:14px;max-width:620px}
+.pd-h{margin:0;font-family:'Archivo Expanded';font-weight:800;font-size:clamp(34px,4.6vw,66px);letter-spacing:-.045em;line-height:.95}
+.pd-h em{font-style:normal;color:#F7C600}
+.pd-p{margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.72)}
+.pd-legend{display:flex;gap:16px;flex-wrap:wrap;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.pd-legend span{display:flex;align-items:center;gap:8px}.pd-legend i{width:10px;height:10px;border-radius:3px;background:var(--gc)}
+.pd-track{position:relative;display:flex;gap:clamp(18px,2.4vw,34px);overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scrollbar-width:none;padding:70px max(32px,calc(50vw - 160px)) 40px;margin-top:20px;cursor:grab;outline:none;overscroll-behavior-x:contain}
+.pd-track::-webkit-scrollbar{display:none}.pd-track[data-drag]{cursor:grabbing;scroll-snap-type:none}.pd-track:focus-visible{box-shadow:inset 0 0 0 2px rgba(247,198,0,.6)}
+.pd-card{--d:0;position:relative;flex:none;width:clamp(250px,24vw,320px);aspect-ratio:.64;scroll-snap-align:center;perspective:1200px}
+.pd-lan{position:absolute;left:50%;bottom:calc(100% - 14px);width:46px;height:78px;transform:translateX(-50%);pointer-events:none}
+.pd-lan::before{content:'';position:absolute;left:50%;bottom:22px;width:22px;height:120px;transform:translateX(-50%);background:repeating-linear-gradient(180deg,var(--gc) 0 16px,color-mix(in srgb,var(--gc) 75%,#000) 16px 18px);border-radius:3px;opacity:.95}
+.pd-lan i{position:absolute;left:50%;bottom:0;width:34px;height:26px;transform:translateX(-50%);border-radius:7px 7px 10px 10px;background:linear-gradient(180deg,#D7DBE3,#9AA1AD);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.35)}
+.pd-lan i::after{content:'';position:absolute;left:50%;top:7px;width:14px;height:6px;margin-left:-7px;border-radius:3px;background:#0B0D12;opacity:.55}
+.pd-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1);transform:translateY(calc(var(--ad,0) * 18px)) rotate(calc(var(--dd,0) * 3.2deg)) scale(calc(1 - var(--ad,0) * .05)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.pd-card[data-flip] .pd-inner{transform:translateY(calc(var(--ad,0) * 18px)) rotate(calc(var(--dd,0) * 3.2deg)) scale(calc(1 - var(--ad,0) * .05)) rotateY(180deg)}
+.pd-face{position:absolute;inset:0;border-radius:20px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;color:#0B0D12;display:flex;flex-direction:column;box-shadow:0 2px 4px rgba(0,0,0,.25),0 30px 60px rgba(0,0,0,.45)}
+.pd-face::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(115deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.55) 46%,rgba(255,255,255,0) 60%);transform:translateX(var(--sheen,-120%));transition:transform 1.1s cubic-bezier(.2,.8,.2,1);mix-blend-mode:soft-light}
+.pd-card:hover .pd-face::after,.pd-card[data-on="1"] .pd-face::after{--sheen:120%}
+.pd-back{transform:rotateY(180deg);padding:20px 20px 18px;gap:10px;background:linear-gradient(180deg,#fff 0%,#F7F8FA 100%)}
+.pd-top{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:var(--gc);color:#0B0D12;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em}
+.pd-back .pd-top{margin:-20px -20px 4px;color:#0B0D12}
+.pd-card[data-k] .pd-top{color:color-mix(in srgb,var(--gc) 8%,#0B0D12)}
+.pd-photo{position:relative;flex:1;min-height:0;background:#fff;border-bottom:1px solid #EEF0F4}
+.pd-photo>span{position:absolute!important;inset:0}
+.pd-id{display:flex;flex-direction:column;gap:3px;padding:14px 16px 8px}
+.pd-id small{font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--gc) 70%,#0B0D12)}
+.pd-id b{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(20px,1.7vw,25px);letter-spacing:-.03em;line-height:1.05}
+.pd-foot{display:flex;justify-content:space-between;align-items:flex-end;padding:4px 16px 14px;gap:12px}
+.pd-num{font:600 11px/1 'JetBrains Mono',monospace;color:#6B7180;letter-spacing:.08em}
+.pd-bc{flex:1;max-width:120px;height:26px;background:repeating-linear-gradient(90deg,#0B0D12 0 2px,transparent 2px 4px,#0B0D12 4px 5px,transparent 5px 8px,#0B0D12 8px 11px,transparent 11px 12px);opacity:.85}
+.pd-more{all:unset;cursor:pointer;position:absolute;right:12px;top:46px;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(11,13,18,.82);color:#fff;font:600 12px/1 Inter,system-ui,sans-serif;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s}
+.pd-card:hover .pd-more,.pd-card[data-on="1"] .pd-more,.pd-more:focus-visible{opacity:1;transform:none}.pd-more:focus-visible{outline:2px solid #F7C600;outline-offset:2px}
+.pd-bn{font-family:'Archivo Expanded';font-weight:800;font-size:24px;letter-spacing:-.03em;line-height:1.05}
+.pd-who{margin:0;font-size:14px;line-height:1.55;color:#4A505C}
+.pd-cap{font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6B7180;margin-top:4px}
+.pd-needs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.pd-needs li{display:flex;align-items:center;gap:8px}.pd-needs li::before{content:'';width:6px;height:6px;border-radius:2px;background:var(--gc);flex:none}
+.pd-reg{all:unset;cursor:pointer;margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-radius:12px;background:#0B0D12;color:#fff;font:600 14px/1.2 Inter,system-ui,sans-serif;transition:background .3s,transform .3s}
+.pd-reg:hover{background:#F7C600;color:#0B0D12}.pd-reg:active{transform:scale(.98)}.pd-reg:focus-visible,.pd-flipback:focus-visible{outline:2px solid #0E7C74;outline-offset:2px}
+.pd-flipback{all:unset;cursor:pointer;align-self:center;font-size:12.5px;font-weight:600;color:#6B7180;padding:4px}
+.pd-ctl{max-width:1240px;margin:8px auto 0;padding:0 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pd-arrow{all:unset;cursor:pointer;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);color:#fff;font-size:18px;transition:background .3s,color .3s,transform .3s}
+.pd-arrow:hover{background:#F7C600;color:#0B0D12;border-color:#F7C600}.pd-arrow:active{transform:scale(.94)}.pd-arrow:focus-visible{outline:2px solid #F7C600;outline-offset:3px}
+.pd-dots{display:flex;gap:6px;align-items:center}.pd-dots i{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.22);transition:width .4s cubic-bezier(.2,.8,.2,1),background .3s}.pd-dots i[data-on]{width:26px;background:#F7C600}
+.pd-all{all:unset;cursor:pointer;margin-left:auto;font-size:14px;font-weight:600;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px}.pd-all:hover{color:#F7C600;border-color:#F7C600}
+@media (max-width:760px){.pd-head,.pd-ctl{padding:0 20px}.pd-track{padding:64px calc(50vw - min(37vw,150px)) 30px;gap:16px}.pd-card{width:min(74vw,300px)}.pd-all{margin-left:0;width:100%}}
+@media (prefers-reduced-motion:reduce){.pd-inner{transition:none}.pd-face::after{display:none}}
 /* ---- batch 5 ---- */
 /* TSR: a timing tag beside the figure */
 .rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0D12;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:#F7C600}
@@ -1116,7 +1170,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-plus.js?v=24"></script>
+<script defer src="./assets/js/gms-plus.js?v=28"></script>
 </head>
 <body>
 <!-- Opening: the Gobananas logo slams in while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1507,65 +1561,46 @@ html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
     </div>
   </section>
 
-  <section ref="{{ regRef }}" data-r="roles-section" style="position:relative;background:var(--d-s0,#FFFFFF);overflow:clip">
-    <div data-r="roles-pin">
-      <div aria-hidden="true" style="position:absolute;right:-14%;top:4%;width:64%;height:90%;background:radial-gradient(closest-side,rgba(14,124,116,.11),rgba(14,124,116,0));pointer-events:none"></div>
-      <div data-r="roles-grid" style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(32px,5vw,84px);align-items:center">
-        <div data-r="roles-left" style="display:flex;flex-direction:column;min-width:0">
-          <span class="sx"><i>05</i>Registration</span>
-          <h2 style="margin:12px 0 0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(30px,min(3.6vw,5.8vh),50px);letter-spacing:-.05em;line-height:.96">Choose how you're taking part</h2>
-          <p data-r="roles-p" style="margin:14px 0 0;max-width:460px;font-size:14.5px;line-height:1.6;color:var(--d-ink2,#4A505C)">{{ roleHint }}</p>
-          <div data-r="roles-window" onMouseLeave="{{ roleLeave }}">
-            <div data-r="roles-index">
-              <sc-for list="{{ roleGroups }}" as="g" hint-placeholder-count="3">
-                <div data-role-group style="margin-top:34px">
-                  <div style="display:flex;align-items:center;gap:10px;padding:0 6px 12px;border-bottom:1.5px solid #0B0D12;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:var(--d-ink,#0B0D12)"><span class="edge edge--v" style="background:{{ g.color }}"></span>{{ g.title }}<span style="margin-left:auto;color:var(--d-ink3,#6B7180)">{{ g.count }}</span></div>
-                  <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
-                    <div data-role-row data-k="{{ r.k }}" data-on="{{ r.on }}" data-open="{{ r.open }}" style="border-bottom:1px solid var(--d-line,#E8EBF0)">
-                      <button onClick="{{ r.click }}" data-cursor="Register" onMouseMove="{{ r.enter }}" onFocus="{{ r.enter }}" aria-expanded="{{ r.open }}" aria-label="{{ r.aria }}" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:14px;padding:var(--row-pad,17px) 6px">
-                        <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink3,#6B7180)">{{ r.num }}</span>
-                        <span data-role-name style="font-family:'Archivo Expanded';font-weight:700;font-size:clamp(19px,min(1.9vw,3.4vh),27px);letter-spacing:-.03em;line-height:1.08;color:var(--d-ink,#0B0D12);overflow-wrap:anywhere">{{ r.name }}</span>
-                        <span data-role-arrow aria-hidden="true" style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="arrow_outward"></i></span>
-                      </button>
-                      <div data-role-drawer>
-                        <div data-role-drawer-in>
-                          <div style="display:flex;flex-direction:column;gap:14px;padding:2px 6px 22px">
-                            <div style="position:relative;border-radius:var(--r-m);overflow:hidden;aspect-ratio:9/7;background:var(--d-s0,#fff);border:1px solid var(--d-line,#EEF0F4)">{{ r.art }}</div>
-                            <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ r.who }}</p>
-                            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ r.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:var(--d-chip,{{ r.gt }});font-size:12.5px;font-weight:600;color:var(--d-ink,#0B0D12)">{{ n.t }}</span></sc-for></span></div>
-                            <button onClick="{{ r.go }}" class="gms-cta" style="align-self:flex-start"><span>{{ r.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </sc-for>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-          <div data-r="roles-progress" aria-hidden="true"><span data-r="roles-bar"></span></div>
-          {{ roleRail }}
-        </div>
-        <aside data-r="roles-preview" aria-label="Selected role" onMouseEnter="{{ rolePrevEnter }}" onMouseLeave="{{ roleLeave }}" style="min-width:0">
-          <div style="border-radius:var(--r-l);background:var(--d-s0,#FFFFFF);border:1px solid var(--d-line,#E8EBF0);box-shadow:var(--sh-3);overflow:hidden">
-            <div data-r="roles-art" style="position:relative;aspect-ratio:16/11;max-height:calc(100vh - 462px);min-height:190px;width:100%;background:var(--d-s0,#FFFFFF);border-bottom:1px solid var(--d-line,#EEF0F4)">
-              <sc-for list="{{ roleArts }}" as="a" hint-placeholder-count="12"><span data-art data-on="{{ a.on }}">{{ a.el }}</span></sc-for>
-              <span style="position:absolute;left:20px;top:18px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">{{ rolePrev.num }}</span>
-              <span data-r="roles-live" style="position:absolute;right:18px;top:15px;display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid var(--d-line,#E8EBF0);font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:var(--d-ink2,#4A505C)">{{ roleLive }}</span>
-            </div>
-            <div data-r="roles-copy" style="padding:18px 24px 20px;display:flex;flex-direction:column;gap:10px">
-              <span style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:{{ rolePrev.gc }}"><span class="edge edge--v" style="background:{{ rolePrev.gc }}"></span>{{ rolePrev.group }}</span>
-              <h3 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(22px,min(2vw,3.6vh),29px);letter-spacing:-.035em;line-height:1.05;color:var(--d-ink,#0B0D12)">{{ rolePrev.name }}</h3>
-              <p style="margin:0;font-size:14px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ rolePrev.who }}</p>
-              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:var(--d-ink3,#6B7180)">WHAT YOU'LL NEED</span><span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="2"><span style="padding:7px 12px;border-radius:999px;background:var(--d-chip,{{ rolePrev.gt }});font-size:12.5px;font-weight:600;color:var(--d-ink,#0B0D12)">{{ n.t }}</span></sc-for></span></div>
-              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px">
-                <button onClick="{{ rolePrev.go }}" class="gms-glow"><span>{{ rolePrev.regLabel }}</span><i aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i></button>
-                <button onClick="{{ heroAllWays }}" style="all:unset;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--d-ink2,#4A505C);border-bottom:1px solid var(--d-line,rgba(11,13,18,.2));padding-bottom:2px" style-hover="color:var(--d-ink,#0B0D12)">Open the registration menu</button>
-              </div>
-            </div>
-          </div>
-        </aside>
+  <section ref="{{ regRef }}" data-r="roles-section" class="pdk">
+    <div class="pd-glow" aria-hidden="true"></div>
+    <div class="pd-head">
+      <div class="pd-copy">
+        <span class="sx"><i>05</i>Registration</span>
+        <h2 class="pd-h">Pick your <em>pass</em></h2>
+        <p class="pd-p">{{ roleHint }}</p>
       </div>
+      <div class="pd-legend" aria-hidden="true"><sc-for list="{{ passGroups }}" as="g" hint-placeholder-count="3"><span style="--gc:{{ g.color }}"><i></i>{{ g.title }}</span></sc-for></div>
+    </div>
+    <div class="pd-track" data-pd-track role="list" aria-label="Accreditation passes" tabindex="0">
+      <sc-for list="{{ passes }}" as="p" hint-placeholder-count="8">
+        <div class="pd-card" role="listitem" data-cart data-pd-card data-k="{{ p.k }}" data-on="{{ p.on }}" style="--gc:{{ p.gc }};--gt:{{ p.gt }}">
+          <span class="pd-lan" aria-hidden="true"><i></i></span>
+          <div class="pd-inner" data-pd-inner>
+            <div class="pd-face pd-front">
+              <div class="pd-top"><span>GMS ACCREDITATION</span><span>AIPT 2026</span></div>
+              <div class="pd-photo">{{ p.art }}</div>
+              <div class="pd-id"><small>{{ p.group }}</small><b>{{ p.name }}</b></div>
+              <div class="pd-foot"><span class="pd-num">{{ p.num }}</span><span class="pd-bc" aria-hidden="true"></span></div>
+              <button type="button" class="pd-more" data-pd-flip aria-label="{{ p.aria }}"><span>Details</span><i class="gi" data-gi="arrow_forward"></i></button>
+            </div>
+            <div class="pd-face pd-back">
+              <div class="pd-top"><span>{{ p.group }}</span><span>{{ p.num }}</span></div>
+              <b class="pd-bn">{{ p.name }}</b>
+              <p class="pd-who">{{ p.who }}</p>
+              <span class="pd-cap">WHAT YOU'LL NEED</span>
+              <ul class="pd-needs"><sc-for list="{{ p.needs }}" as="n" hint-placeholder-count="4"><li>{{ n.t }}</li></sc-for></ul>
+              <button type="button" class="pd-reg" onClick="{{ p.go }}"><span>{{ p.regLabel }}</span><i class="gi" data-gi="arrow_forward"></i></button>
+              <button type="button" class="pd-flipback" data-pd-flip>Back to pass</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="pd-ctl">
+      <button type="button" class="pd-arrow" data-pd-go="-1" aria-label="Previous pass"><i class="gi" data-gi="arrow_forward" style="transform:scaleX(-1)"></i></button>
+      <div class="pd-dots" aria-hidden="true"><sc-for list="{{ passes }}" as="p" hint-placeholder-count="8"><i data-pd-dot data-k="{{ p.k }}"></i></sc-for></div>
+      <button type="button" class="pd-arrow" data-pd-go="1" aria-label="Next pass"><i class="gi" data-gi="arrow_forward"></i></button>
+      <button type="button" class="pd-all" onClick="{{ heroAllWays }}">Open the registration menu</button>
     </div>
   </section>
 
@@ -2067,7 +2102,7 @@ const REG_GROUPS=[['COMPETITION & MEDIA',['athlete','media','official']],['ORGAN
 const REG_GROUP_OF={};REG_GROUPS.forEach(([t,ids],g)=>ids.forEach(id=>REG_GROUP_OF[id]=g));
 const REG_ORDER=REG_GROUPS.flatMap(([t,ids])=>ids).map(id=>REG.findIndex(r=>r.id===id)).filter(i=>i>=0);
 const NR=REG_ORDER.length;
-const REG_GC=[['#0E7C74','#E3F4F2'],['#1C8A53','#E4F4EB'],['#B07A12','#FBF1DF']];
+const REG_GC=[['#F7C600','#FFF6D3'],['#0E7C74','#E1F3F1'],['#E8642C','#FDEBE2']];
 // what each figure is doing (shown on the preview while it plays)
 const ROLE_VERB={athlete:'In competition',staff:'Timing and results',entity:'Running the tournament',lo:'Greeting the delegation',official:'Judging the play',medical:'First aid on call',
   nada:'Sample check',gov:'Addressing the venue',media:'Covering the final',volunteer:'Cheering the venue',service:'Setting up the venue',ema:'Running the show'};
@@ -2183,7 +2218,7 @@ class Component extends DCLogic {
     this.motionT=setInterval(()=>this.motionScan(),600);this.motionScan();
     // bridge for assets/js/gms-plus.js (search, medals, My Games, chapter rail): data plus a few safe navigation calls
     try{document.title='GMS · '+TOURNAMENT.name+' · '+TOURNAMENT.complex;const md=document.querySelector('meta[name=description]');if(md)md.content='Registration, accreditation, schedules and live results for the '+TOURNAMENT.name+', '+TOURNAMENT.featured+', at '+TOURNAMENT.complex+', '+TOURNAMENT.area+', '+TOURNAMENT.city+', '+T.range+'.';}catch(e){}
-    const app=this;window.GMSApp={vaultEndpoint:TOURNAMENT.vaultEndpoint||'',tour:{at:T.at,start:T.start,end:T.end,year:T.year,phase:()=>T.phase(Date.now()),dayNow:()=>T.dayNow(Date.now()),nowMin:()=>{const x=T.local(Date.now());return x.getHours()*60+x.getMinutes();},dayLong:T.dayLong,n:T.n},data:{TOURNAMENT,CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
+    const app=this;window.GMSApp={rolePick:k=>{app.roleOnceK=-1;app.roleHovK=k;if((app.state.roleSel??0)!==k)app.setState({roleSel:k});},vaultEndpoint:TOURNAMENT.vaultEndpoint||'',tour:{at:T.at,start:T.start,end:T.end,year:T.year,phase:()=>T.phase(Date.now()),dayNow:()=>T.dayNow(Date.now()),nowMin:()=>{const x=T.local(Date.now());return x.getHours()*60+x.getMinutes();},dayLong:T.dayLong,n:T.n},data:{TOURNAMENT,CATS,ALL_EVENTS,SESSIONS,DAYS,VENUE_OF,FIELDS,REG,REG_ORDER,REG_GROUPS,STEPS},calLinks,
       screen:()=>app.state.screen||'home',home:after=>{if((app.state.screen||'home')!=='home')app.go('home',after);else if(after)after();},
       scrollTo:k=>app.scrollTo(k),showSession:(day,code)=>window.GMSApp.home(()=>{app.setState({day,openRow:code,schView:'time'});setTimeout(()=>app.scrollTo('schedule'),60);}),
       startReg:id=>app.startReg(id),openTv:f=>{app.setState({chan:f||'stadium'});app.go('tv');},openEc:()=>app.openEc(),
@@ -2233,7 +2268,7 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:HOVER?'Scroll through the eight roles, or hover one to see who it is for and what you will need. Click to register.':(window.innerWidth<=1024?'Swipe through the eight roles and register from any card.':'Keep scrolling: the eight roles slide past one by one.'),
+    return {roleHint:'Eight passes, one for every way into the Games. '+(HOVER?'Drag or use the arrows to look through them;':'Swipe through them;')+' open a pass to see who it is for and what you will need.',
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
@@ -2241,6 +2276,9 @@ class Component extends DCLogic {
           click:e=>{if(window.innerWidth<=1024){this.anchorRow(e&&e.currentTarget);this.setState({roleOpen:op?-1:k,roleSel:k});return;}if(HOVER)this.startReg(I.r.id);else this.roleGoTo(k);},
           who:I.r.desc,needs:I.needs.map(t=>({t})),gt:I.gc[1],art:op?figEl(k,'m'+k):null,regLabel:'Register as '+I.r.name,
           go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};})})),
+      passGroups:REG_GROUPS.map(([title],g)=>({title,color:REG_GC[g][0]})),
+      passes:REG_ORDER.map((ri,k)=>{const I=info(k);return {k:String(k),num:pad(k+1)+' / '+pad(NR),name:I.r.name,group:REG_GROUPS[I.g][0],gc:I.gc[0],gt:I.gc[1],who:I.r.desc,
+        needs:I.needs.map(t=>({t})),on:k===sel?'1':'0',art:figEl(k,'p'+k),aria:'What '+I.r.name+' need',regLabel:'Register as '+I.r.name,go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};}),
       roleRail:this.roleRailEl(),
       roleArts:REG_ORDER.map((ri,k)=>({on:k===sel?'1':'0',el:figEl(k,'a'+k)})),
       roleLive:(ROLE_VERB[cur.r.id]||'').toUpperCase(),

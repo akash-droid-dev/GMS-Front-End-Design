@@ -1184,9 +1184,55 @@
     // a picture that fails to load keeps its box and shows a quiet pattern instead of a broken icon
     doc.addEventListener('error', function (e) { var t = e.target; if (t && t.tagName === 'IMG' && !t.hasAttribute('data-broken') && t.closest('main')) { t.setAttribute('data-broken', ''); t.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='; } }, true);
   }
+  /* ------------------------------------------------------------------ registration pass deck: fan, centre, drag, tilt, flip */
+  function passDeck() {
+    var tr = null, raf = 0, cur = -1, drag = null;
+    function cards() { return tr ? Array.prototype.slice.call(tr.querySelectorAll('[data-pd-card]')) : []; }
+    function layout() {
+      raf = 0; if (!tr || !tr.isConnected) return; var r = tr.getBoundingClientRect(), mid = r.left + r.width / 2, best = -1, bd = 1e9, cs = cards();
+      cs.forEach(function (c, i) {
+        var b = c.getBoundingClientRect(), d = (b.left + b.width / 2 - mid) / (b.width + 24), ad = Math.min(3, Math.abs(d)), inr = c.querySelector('[data-pd-inner]');
+        if (inr) { inr.style.setProperty('--dd', Math.max(-3, Math.min(3, d)).toFixed(3)); inr.style.setProperty('--ad', ad.toFixed(3)); }
+        if (Math.abs(d) < bd) { bd = Math.abs(d); best = i; }
+      });
+      if (best < 0) return; var k = +cs[best].getAttribute('data-k');
+      tr.parentNode.querySelectorAll('[data-pd-dot]').forEach(function (dt) { var on = +dt.getAttribute('data-k') === k; if (dt.hasAttribute('data-on') !== on) dt.toggleAttribute('data-on', on); });
+      if (best !== cur) { cur = best; if (A && A.rolePick) A.rolePick(k); setTimeout(q, 120); setTimeout(q, 480); } // the page redraws after a pick; re-apply
+    }
+    function q() { if (!raf) raf = requestAnimationFrame(layout); }
+    function go(n) { var cs = cards(); if (!cs.length) return; var i = Math.max(0, Math.min(cs.length - 1, (cur < 0 ? 0 : cur) + n)); cs[i].scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'center' }); }
+    function bind() {
+      var t = doc.querySelector('[data-pd-track]'); if (!t || t === tr) return; tr = t; cur = -1;
+      tr.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q);
+      tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+      // mouse drag (touch scrolls natively)
+      tr.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button')) return; drag = { x: e.clientX, s: tr.scrollLeft, moved: false }; });
+      window.addEventListener('pointermove', function (e) { if (!drag) return; var dx = e.clientX - drag.x; if (Math.abs(dx) > 4) { drag.moved = true; tr.setAttribute('data-drag', ''); } tr.scrollLeft = drag.s - dx; });
+      window.addEventListener('pointerup', function () { if (!drag) return; var m = drag.moved; drag = null; tr.removeAttribute('data-drag'); if (m) { var cs = cards(); if (cs[cur]) cs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } });
+      // tilt toward the pointer
+      tr.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse' || drag || REDUCED) return; var c = e.target.closest('[data-pd-card]'); if (!c || c.hasAttribute('data-flip')) return;
+        var b = c.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5, inr = c.querySelector('[data-pd-inner]');
+        if (inr) { inr.style.setProperty('--ry', (x * 14).toFixed(2) + 'deg'); inr.style.setProperty('--rx', (-y * 10).toFixed(2) + 'deg'); }
+      });
+      tr.addEventListener('pointerout', function (e) { var c = e.target.closest('[data-pd-card]'); if (c && !c.contains(e.relatedTarget)) { var inr = c.querySelector('[data-pd-inner]'); if (inr) { inr.style.setProperty('--ry', '0deg'); inr.style.setProperty('--rx', '0deg'); } } });
+      tr.addEventListener('mouseover', function (e) { var c = e.target.closest('[data-pd-card]'); if (c && A && A.rolePick && HOVERING) A.rolePick(+c.getAttribute('data-k')); });
+      // the middle pass comes first
+      setTimeout(function () { var cs = cards(); if (cs[0]) { tr.scrollLeft = 0; } layout(); }, 60);
+    }
+    var HOVERING = window.matchMedia && matchMedia('(hover:hover)').matches;
+    doc.addEventListener('click', function (e) {
+      var f = e.target.closest('[data-pd-flip]'); if (f) { var c = f.closest('[data-pd-card]'); if (c) { var on = !c.hasAttribute('data-flip'); cards().forEach(function (o) { if (o !== c) o.removeAttribute('data-flip'); }); c.toggleAttribute('data-flip', on); var inr = c.querySelector('[data-pd-inner]'); if (inr) { inr.style.setProperty('--ry', '0deg'); inr.style.setProperty('--rx', '0deg'); } var t = c.querySelector(on ? '.pd-reg' : '.pd-more'); if (t) setTimeout(function () { t.focus({ preventScroll: true }); }, 420); } return; }
+      var g = e.target.closest('[data-pd-go]'); if (g) { go(+g.getAttribute('data-pd-go')); return; }
+      var cd = e.target.closest('[data-pd-card]'); if (cd && !e.target.closest('button') && tr && !tr.hasAttribute('data-drag')) { var i = cards().indexOf(cd); if (i !== cur) cd.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'center' }); }
+    });
+    return { bind: bind, q: q };
+  }
+  var Deck = passDeck();
+  window.addEventListener('scroll', function () { Deck.bind(); Deck.q(); }, { passive: true });
   Plus.vault = openVault;
   // the page re-renders its schedule rows (day switch, row open): keep stars and the theme icon in step
-  var moT = 0, mo = new MutationObserver(function () { if (moT) return; moT = requestAnimationFrame(function () { moT = 0; My.sync(); Theme.sync(); openers(); }); });
+  var moT = 0, mo = new MutationObserver(function () { if (moT) return; moT = requestAnimationFrame(function () { moT = 0; My.sync(); Theme.sync(); openers(); Deck.bind(); Deck.q(); }); });
 
   function start() {
     if (A) return; A = window.GMSApp; if (!A) return; D = A.data;
