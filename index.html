@@ -24,6 +24,7 @@
 <meta name="twitter:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B0D12'/%3E%3Cg transform='translate(1.5 0)' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='5'%3E%3Cpath stroke='%23fff' d='M31.6 18.7A14 14 0 1 0 38 32M38 18.5V45.5M38 18.5h5.2a6.75 6.75 0 0 1 0 13.5M44.2 32a6.75 6.75 0 0 1 0 13.5H38'/%3E%3Cpath stroke='%230E7C74' d='M28 32h16.4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preload" href="assets/brand/gobananas.webp" as="image" fetchpriority="high">
 <link rel="preload" href="assets/fonts/archivo-expanded-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -324,6 +325,8 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-gi="close"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 6.5l11 11M17.5 6.5l-11 11'/%3E%3C/svg%3E")}
 [data-gi="sports_badminton"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 3.5l3.5 10.5h4l3.5-10.5'/%3E%3Cpath d='M8 8h8M12 3v11'/%3E%3Cpath d='M10 14h4v2.2a2 2 0 0 1-4 0z'/%3E%3C/svg%3E")}
 [data-gi="sports_tt"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='10' r='6.2'/%3E%3Cpath d='M14.4 14.4l5.1 5.1'/%3E%3Ccircle cx='18.6' cy='5.4' r='1.7'/%3E%3C/svg%3E")}
+[data-gi="volume_up"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z'/%3E%3Cpath d='M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11'/%3E%3C/svg%3E")}
+[data-gi="volume_off"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z'/%3E%3Cpath d='M16 9.5l5 5M21 9.5l-5 5'/%3E%3C/svg%3E")}
 [data-gi="info"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 11v5.5M12 7.6v.1'/%3E%3C/svg%3E")}
 [data-gi="check"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
 [data-gi="menu"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h10'/%3E%3C/svg%3E")}
@@ -1018,6 +1021,9 @@ html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-labe
 :root{--y:#F7C600;--y2:#E2B300;--ac:#0E7C74;--teal:#3FB6AA;--ink:#0B0D12}
 html[data-theme=dark]{--ac:#F7C600}
 ::selection{background:#F7C600;color:#0B0D12}
+/* sound toggle: a tiny equaliser dances while the ambient sound plays */
+.nv-ic--snd{position:relative}.nv-ic--snd .snd-eq{display:none;align-items:flex-end;gap:2px;height:12px}.nv-ic--snd[data-on] .gi{display:none}.nv-ic--snd[data-on] .snd-eq{display:inline-flex}.nv-ic--snd .snd-eq i{width:2.5px;border-radius:2px;background:currentColor;animation:sndEq 1s ease-in-out infinite}.nv-ic--snd .snd-eq i:nth-child(2){animation-delay:-.4s}.nv-ic--snd .snd-eq i:nth-child(3){animation-delay:-.7s}
+@keyframes sndEq{0%,100%{height:3px}50%{height:12px}}@media (prefers-reduced-motion:reduce){.nv-ic--snd .snd-eq i{animation:none;height:8px}}
 /* ---- batch 5 ---- */
 /* TSR: a timing tag beside the figure */
 .rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0D12;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:#F7C600}
@@ -1109,9 +1115,81 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=23"></script>
+<script defer src="./assets/js/gms-sound.js?v=1"></script>
+<script defer src="./assets/js/gms-plus.js?v=24"></script>
 </head>
 <body>
+<!-- Opening: the Gobananas logo slams in while the page, fonts and film load; then the visitor enters with or without sound -->
+<style>
+#gms-ldr{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:radial-gradient(60% 50% at 50% 46%,#1A1608 0%,#0B0D12 62%);color:#fff;font-family:Inter,system-ui,sans-serif;overflow:hidden}
+#gms-ldr .ld-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:26px;width:min(560px,86vw)}
+#gms-ldr .ld-logo{width:100%;height:auto;display:block;transform-origin:50% 85%;filter:drop-shadow(0 18px 40px rgba(247,198,0,.18));animation:ldSlam 1.05s cubic-bezier(.2,.7,.2,1) .15s both}
+#gms-ldr .ld-ring{position:absolute;left:50%;top:38%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:3px solid #F7C600;opacity:0;animation:ldRing .9s cubic-bezier(.1,.7,.2,1) .62s both}
+#gms-ldr .ld-ring+.ld-ring{border-width:1.5px;animation-delay:.7s;animation-duration:1.25s}
+#gms-ldr .ld-dot{position:absolute;left:50%;top:38%;width:9px;height:9px;margin:-4px;border-radius:50%;background:#F7C600;opacity:0;animation:ldDot .8s cubic-bezier(.1,.7,.2,1) .62s both}
+#gms-ldr .ld-shake{animation:ldShake .42s linear .6s both;width:100%;display:flex;flex-direction:column;align-items:center;gap:26px}
+#gms-ldr .ld-meta{font:600 11px/1.5 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62);text-align:center;opacity:0;animation:ldUp .7s ease 1.1s both}
+#gms-ldr .ld-meta b{color:#F7C600;font-weight:600}
+#gms-ldr .ld-bar{position:relative;width:min(280px,64vw);height:2px;border-radius:2px;background:rgba(255,255,255,.12);overflow:hidden;opacity:0;animation:ldUp .6s ease 1.2s both}
+#gms-ldr .ld-bar i{position:absolute;inset:0;background:#F7C600;transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .35s ease}
+#gms-ldr .ld-pc{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;color:rgba(255,255,255,.5);letter-spacing:.1em;margin-top:-14px;opacity:0;animation:ldUp .6s ease 1.25s both}
+#gms-ldr .ld-go{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+#gms-ldr[data-ready] .ld-go{opacity:1;transform:none;pointer-events:auto}#gms-ldr[data-ready] .ld-bar,#gms-ldr[data-ready] .ld-pc{display:none}
+#gms-ldr .ld-go button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border-radius:999px;font:600 15px/1 Inter,system-ui,sans-serif;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s,box-shadow .3s}
+#gms-ldr .ld-go .ld-snd{background:#F7C600;color:#0B0D12;box-shadow:0 10px 30px rgba(247,198,0,.28)}#gms-ldr .ld-go .ld-snd:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(247,198,0,.4)}
+#gms-ldr .ld-go .ld-q{color:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.22)}#gms-ldr .ld-go .ld-q:hover{background:rgba(255,255,255,.08)}
+#gms-ldr .ld-go button:focus-visible{outline:2px solid #F7C600;outline-offset:3px}
+#gms-ldr .ld-go svg{width:18px;height:18px}
+#gms-ldr .ld-wipe{position:absolute;inset:0;background:#F7C600;transform:translateY(101%);pointer-events:none}
+#gms-ldr[data-out] .ld-wipe{animation:ldWipe .5s cubic-bezier(.7,0,.3,1) both}
+#gms-ldr[data-out]{animation:ldLift .75s cubic-bezier(.7,0,.2,1) .42s both}
+html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
+@keyframes ldSlam{0%{opacity:0;transform:translateY(-38vh) scale(2.4) rotate(-8deg);filter:blur(14px)}45%{opacity:1;transform:translateY(0) scale(1.08,.86) rotate(1deg);filter:blur(0)}60%{transform:translateY(-14px) scale(.97,1.05)}76%{transform:translateY(0) scale(1.02,.98)}100%{opacity:1;transform:none}}
+@keyframes ldRing{0%{opacity:.95;transform:scale(1)}100%{opacity:0;transform:scale(16)}}
+@keyframes ldDot{0%{opacity:1;transform:rotate(var(--a)) translateX(0)}100%{opacity:0;transform:rotate(var(--a)) translateX(var(--r,180px)) scale(.4)}}
+@keyframes ldShake{0%,100%{transform:none}20%{transform:translate(6px,-4px)}40%{transform:translate(-5px,3px)}60%{transform:translate(3px,2px)}80%{transform:translate(-2px,-1px)}}
+@keyframes ldUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ldWipe{to{transform:translateY(0)}}
+@keyframes ldLift{to{transform:translateY(-100%)}}
+@media (prefers-reduced-motion:reduce){#gms-ldr .ld-logo,#gms-ldr .ld-shake{animation:ldUp .4s ease both}#gms-ldr .ld-ring,#gms-ldr .ld-dot{display:none}#gms-ldr[data-out]{animation:ldFade .35s ease both}#gms-ldr[data-out] .ld-wipe{animation:none}@keyframes ldFade{to{opacity:0}}}
+</style>
+<div id="gms-ldr" role="dialog" aria-label="Loading" aria-live="polite">
+  <div class="ld-in">
+    <span class="ld-ring"></span><span class="ld-ring"></span>
+    <span class="ld-dot" style="--a:0deg"></span><span class="ld-dot" style="--a:45deg;--r:150px"></span><span class="ld-dot" style="--a:90deg"></span><span class="ld-dot" style="--a:135deg;--r:210px"></span><span class="ld-dot" style="--a:180deg"></span><span class="ld-dot" style="--a:225deg;--r:150px"></span><span class="ld-dot" style="--a:270deg"></span><span class="ld-dot" style="--a:315deg;--r:210px"></span>
+    <div class="ld-shake">
+      <img class="ld-logo" src="assets/brand/gobananas.webp" alt="Gobananas" width="1320" height="618" fetchpriority="high" decoding="sync">
+      <div class="ld-meta"><b>All India Police Tournament 2026</b><br>Veer Savarkar Sports Complex · 19–24 Nov</div>
+      <div class="ld-bar" aria-hidden="true"><i></i></div><div class="ld-pc" aria-hidden="true">0%</div>
+      <div class="ld-go">
+        <button type="button" class="ld-snd" data-enter="sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>Enter with sound</button>
+        <button type="button" class="ld-q" data-enter="quiet">Enter quietly</button>
+      </div>
+    </div>
+  </div>
+  <div class="ld-wipe"></div>
+</div>
+<script>
+/* waits for fonts, the page script and the hero film (never more than 9 s), then offers the way in */
+(function(){var L=document.getElementById('gms-ldr'),R=document.documentElement;if(!L)return;R.classList.add('gms-ldr-on');
+  var bar=L.querySelector('.ld-bar i'),pc=L.querySelector('.ld-pc'),t0=performance.now(),done={},W={fonts:20,dom:15,app:25,film:25,load:15},shown=0,ready=false;
+  function mark(k){if(done[k])return;done[k]=1;}
+  function target(){var p=0;for(var k in W)if(done[k])p+=W[k];return p;}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){mark('fonts');});else mark('fonts');
+  if(document.readyState!=='loading')mark('dom');else document.addEventListener('DOMContentLoaded',function(){mark('dom');});
+  if(document.readyState==='complete')mark('load');else window.addEventListener('load',function(){mark('load');});
+  function film(){var v=document.querySelector('section[data-r=hero] video');if(!v)return false;if(v.readyState>=3){mark('film');return true;}v.addEventListener('canplay',function(){mark('film');},{once:true});return true;}
+  var hooked=false;(function tick(){var now=performance.now();if(window.GMSApp)mark('app');if(!hooked)hooked=film();
+    var tg=target(),age=now-t0;if(age>9000)tg=100;shown+=(tg-shown)*0.12;if(tg-shown<0.6)shown=tg;
+    bar.style.setProperty('--p',(shown/100).toFixed(3));pc.textContent=Math.round(shown)+'%';
+    if(shown>=99.5&&age>1900&&!ready){ready=true;L.setAttribute('data-ready','');var b=L.querySelector('.ld-snd');if(b)setTimeout(function(){try{b.focus({preventScroll:true});}catch(e){}},200);}
+    if(!ready)requestAnimationFrame(tick);})();
+  function go(withSound){if(L.hasAttribute('data-out'))return;if(withSound&&window.GMSSound)window.GMSSound.start();else{try{localStorage.setItem('gms-sound','off');}catch(e){}}
+    L.setAttribute('data-out','');setTimeout(function(){R.classList.remove('gms-ldr-on');window.dispatchEvent(new Event('gms:entered'));},520);setTimeout(function(){L.remove();},1300);}
+  L.addEventListener('click',function(e){var b=e.target.closest('[data-enter]');if(b)go(b.getAttribute('data-enter')==='sound');});
+  document.addEventListener('keydown',function k(e){if(ready&&e.key==='Escape'){go(false);document.removeEventListener('keydown',k);}});
+})();
+</script>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
 <div id="gms-shell" aria-hidden="true" style="position:fixed;inset:0;z-index:90;overflow:hidden;background:#0B0D12">
 <div data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
@@ -1171,7 +1249,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
     <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:var(--d-tint,rgba(11,13,18,.06));font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="{{ menuIcon }}"></i></button>
     <span class="nv-tools"><button type="button" class="nv-ic nv-ic--search" data-plus="search" aria-label="Search the Games" title="Search (Ctrl K)"><i class="gi" data-gi="search"></i></button>
     <button type="button" class="nv-ic nv-ic--my" data-plus="mygames" aria-label="My Games" title="My Games"><i class="gi" data-gi="star"></i><b class="nv-badge" data-my-count></b></button>
-    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button></span>
+    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button><button type="button" class="nv-ic nv-ic--snd" data-snd aria-pressed="false" aria-label="Turn sound on" title="Sound off"><i class="gi" data-gi="volume_off"></i><span class="snd-eq" aria-hidden="true"><i></i><i></i><i></i></span></button></span>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:var(--d-inv,#0B0D12);color:var(--d-on-inv,#fff);font-size:14px;font-weight:600">Admin Login</button>
     <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,#F7C600);color:#0B0D12;font-size:14px;font-weight:600">Login</button>
   </div>
@@ -2059,7 +2137,7 @@ const smooth=t=>t*t*(3-2*t);
 const VRES=()=>window.innerWidth<=760?'720':'1080';
 const HERO_SPORTS=['Basketball','Swimming','Athletics','Volleyball','Tennis','Football'];
 // the hero film (assets/venue-*.mp4) and the part of the complex each stretch shows: [name, start second]
-const ZONES=[['The complex',0],['Centre for Sports Excellence',13],['Tennis courts',22],['Aquatic Stadium',42],['Indoor halls',52],['Community Sports Centre',84]],FILM_LEN=107.5;
+const ZONES=[['The complex',0],['Centre for Sports Excellence',13],['Aquatic Stadium',18],['Tennis courts',22],['Indoor arenas',40],['Community Sports Centre',84]],FILM_LEN=107.5;
 const seg=(p,a,b)=>clamp((p-a)/(b-a));
 const emptyForm=()=>({name:'',email:'',phone:'',country:'',org:'',passport:'',events:[],docs:{}});
 
