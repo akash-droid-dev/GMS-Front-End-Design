@@ -322,6 +322,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-gi="arrow_downward"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M18 13l-6 6-6-6'/%3E%3C/svg%3E")}
 [data-gi="expand_more"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9.5 6 6 6-6'/%3E%3C/svg%3E")}
 [data-gi="close"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 6.5l11 11M17.5 6.5l-11 11'/%3E%3C/svg%3E")}
+[data-gi="info"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 11v5.5M12 7.6v.1'/%3E%3C/svg%3E")}
 [data-gi="check"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
 [data-gi="menu"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h10'/%3E%3C/svg%3E")}
 [data-gi="play_arrow"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath fill='%23000' stroke='none' d='M8 5.6v12.8a1.1 1.1 0 0 0 1.7.93l10-6.4a1.1 1.1 0 0 0 0-1.86l-10-6.4A1.1 1.1 0 0 0 8 5.6z'/%3E%3C/svg%3E")}
@@ -657,12 +658,14 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .flap::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(15,20,40,.10)}
 .flap>i{font-style:normal;display:block;line-height:1;animation:gmsFlap .55s cubic-bezier(.3,.7,.3,1) var(--fd,0s) both}
 @keyframes gmsFlap{0%{transform:rotateX(95deg);opacity:0}55%{transform:rotateX(-16deg);opacity:1}100%{transform:none;opacity:1}}
-/* Programme: at the goal a broadcast lower-third slides in at the bottom-left; then the events spring up (CSS, graphics card only) */
+/* Programme: while the sports pass, a broadcast lower-third names each one at the bottom-left; then the events spring up (CSS, graphics card only) */
 [data-goal-board]{position:absolute;z-index:5;left:clamp(16px,4vw,56px);bottom:clamp(28px,6vh,64px);display:flex;align-items:stretch;height:48px;border-radius:12px;overflow:hidden;pointer-events:none;
  background:#0B0D12;color:#fff;box-shadow:0 2px 6px rgba(15,20,40,.12),0 18px 44px rgba(15,20,40,.22);clip-path:inset(0 100% 0 0 round 12px);opacity:0;
  transition:clip-path .75s var(--gms-ease),opacity .3s ease;will-change:clip-path}
 [data-goal-board][data-on="1"]{clip-path:inset(0 0 0 0 round 12px);opacity:1}
-[data-goal-board] .lt-ball{width:48px;flex:none;display:grid;place-items:center;background:#2F5BFF;font-size:21px}
+[data-goal-board] .lt-ball{width:48px;flex:none;display:grid;place-items:center;background:var(--sc,#2F5BFF);font-size:21px;transition:background .4s ease}
+[data-goal-board][data-swap] :is(.lt-main,.lt-sub){animation:ltSwap .45s var(--gms-ease)}@keyframes ltSwap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){[data-goal-board][data-swap] :is(.lt-main,.lt-sub){animation:none}}
 [data-goal-board] .lt-main{display:flex;align-items:baseline;gap:9px;padding:0 16px;align-self:center}
 [data-goal-board] .lt-main b{font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;letter-spacing:-.02em}
 [data-goal-board] .lt-min{font-family:'JetBrains Mono';font-size:12px;color:rgba(255,255,255,.6)}
@@ -1010,6 +1013,9 @@ html[data-theme=dark] [data-r=admin-btn]{background:transparent!important}
 html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,rgba(47,91,255,.16),rgba(47,91,255,0) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#0B0D12!important}
 
 /* ---- batch 5 ---- */
+/* TSR: a timing tag beside the figure */
+.rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0D12;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:#7C9BFF}
+@media (max-width:760px){.rl-tag{font-size:12px;padding:6px 9px 6px 7px;left:56%}}
 /* Programme scene and role photos are shot on a white studio floor: in dark mode they stay a light stage, with ink text */
 html[data-theme=dark] :is([data-r=ev-section],[data-ev-sticky],[data-r=roles-art],[data-role-drawer] [style*="aspect-ratio:9/7"]){--d-s0:initial;--d-s1:initial;--d-ink:initial;--d-ink2:initial;--d-ink3:initial;--d-line:initial;--d-tint:initial;--d-chip:initial;--d-glass:initial;--d-inv:initial;--d-on-inv:initial;color:#0B0D12}
 html[data-theme=dark] [data-r=ev-section]{background:#F6F7F9!important}
@@ -1035,7 +1041,7 @@ main .nn-it{box-shadow:inset 3px 0 0 var(--sp,transparent)}
 /* empty states */
 .gms-blank{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 28px;border-radius:var(--r-m);background:var(--d-s1,#F6F7F9);color:var(--d-ink2,#5B6270);font-size:15px;line-height:1.5}
 .gms-blank>.gi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--d-tint,#E8EEFF);color:#2F5BFF}
-.gms-blank b{color:var(--d-ink,#0B0D12);font-size:16px}
+.gms-blank b{color:var(--d-ink,#0B0D12);font-size:16px}.gms-ill{width:132px;height:auto;display:block;margin-bottom:4px}
 img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5) 0 12px,var(--d-tint,#E6E9EF) 12px 24px);object-fit:none}
 /* footer */
 .ft{background:#000;color:#fff;padding:64px 32px 40px}
@@ -1097,7 +1103,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-plus.js?v=22"></script>
+<script defer src="./assets/js/gms-plus.js?v=23"></script>
 </head>
 <body>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1340,16 +1346,16 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
         <div data-ev-head>
           <span class="sx"><i>03</i>The programme</span>
           <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">18 medal events<br>across six sports</h2>
-          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">Scroll on and the strike opens the full programme, from the 100 m heats to the football final.</p>
+          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">Scroll through all six sports, then pick any event to register, from the 100 m heats to the football final.</p>
           <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--d-ink2,#5B6270)"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
       </div>
-      <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_soccer"></i></span><span class="lt-main"><b>Goal</b><span class="lt-min">63&#8217;</span></span><span class="lt-sub">18 medal events unlocked</span></div>
+      <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_basketball"></i></span><span class="lt-main"><b>Basketball</b><span class="lt-min">3 events</span></span><span class="lt-sub">Riverfront Arena</span></div>
       <div data-goal-panel data-compact="0" style="position:absolute;left:0;top:0;width:0;height:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none">
         <div data-goal-cols data-mode="ring" style="position:absolute">
           <sc-for list="{{ goalCats }}" as="c" hint-placeholder-count="3">
             <div data-goal-col style="opacity:0;will-change:transform,opacity;--dc:{{ c.color }};--dt:{{ c.tint }}">
-              <span data-goal-ch style="color:{{ c.color }}"><span data-goal-ic style="background:{{ c.tint }}"><i class="gi" data-gi="{{ c.icon }}"></i></span><span data-goal-nm><span>{{ c.name }}</span><span data-goal-sub>{{ c.sub }} · 5 EVENTS</span></span></span>
+              <span data-goal-ch style="color:{{ c.color }}"><span data-goal-ic style="background:{{ c.tint }}"><i class="gi" data-gi="{{ c.icon }}"></i></span><span data-goal-nm><span>{{ c.name }}</span><span data-goal-sub>{{ c.sub }} · {{ c.n }} EVENTS</span></span></span>
               <div data-goal-list>
                 <sc-for list="{{ c.events }}" as="e" hint-placeholder-count="5">
                   <button data-goal-ev onClick="{{ e.pick }}" title="Register for {{ e.full }}" style="--c:{{ c.color }};--t:{{ c.tint }}"><span style="min-width:0">{{ e.name }}</span><span data-goal-g>{{ e.g }}</span></button>
@@ -1411,7 +1417,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
           </sc-for>
         </sc-if>
         <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
-          <div class="gms-blank"><i class="gi" data-gi="event_available"></i><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
+          <div class="gms-blank"><svg class="gms-ill" viewBox="0 0 160 96" aria-hidden="true"><rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E8EEFF)"/><rect x="38" y="14" width="84" height="70" rx="12" fill="none" stroke="#2F5BFF" stroke-width="2"/><path d="M38 34h84M60 8v12M100 8v12" stroke="#2F5BFF" stroke-width="2" stroke-linecap="round"/><path d="M52 48h20M52 60h34M52 72h14" stroke="#2F5BFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)" stroke="#2F5BFF" stroke-width="2"/><path d="M118 62v8l5 4" stroke="#2F5BFF" stroke-width="2" stroke-linecap="round" fill="none"/></svg><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
         </sc-if>
       </div>
     </div>
@@ -1818,8 +1824,8 @@ const TOURNAMENT={
   teamLabel:'Team',                 // what competitors represent: Team, State, Unit, Nation...
   teams:{IND:'India',USA:'United States',BRA:'Brazil',JPN:'Japan',GER:'Germany',ITA:'Italy',ESP:'Spain',AUS:'Australia',GBR:'Great Britain',CHN:'China',KEN:'Kenya',SRB:'Serbia',TUR:'Türkiye',FRA:'France',CAN:'Canada',NED:'Netherlands',JAM:'Jamaica',KOR:'Korea'},
   // venues; `channel` links a venue to a Live TV channel and the live-score feed
-  // `pos` places a venue on the venue map (0 to 100 across, 0 to 100 down)
-  venues:[{name:'Sabarmati Stadium',channel:'stadium',short:'SABARMATI',icon:'sports_soccer',pos:[30,34]},{name:'Narmada Aquatics Centre',icon:'pool',pos:[70,24]},{name:'Riverfront Arena',channel:'arena',short:'RIVERFRONT',icon:'sports_basketball',pos:[42,72]},{name:'Motera Tennis Centre',channel:'court',short:'MOTERA',icon:'sports_tennis',pos:[80,66]}],
+  // `pos` places a venue on the venue map (0 to 100 across, 0 to 100 down); `photo` is shown on the venue map (16:9, stand-in photos from Pexels)
+  venues:[{name:'Sabarmati Stadium',channel:'stadium',photo:'assets/venues/stadium.webp',short:'SABARMATI',icon:'sports_soccer',pos:[30,34]},{name:'Narmada Aquatics Centre',icon:'pool',photo:'assets/venues/aquatics.webp',pos:[70,24]},{name:'Riverfront Arena',channel:'arena',photo:'assets/venues/arena.webp',short:'RIVERFRONT',icon:'sports_basketball',pos:[42,72]},{name:'Motera Tennis Centre',channel:'court',photo:'assets/venues/tennis.webp',short:'MOTERA',icon:'sports_tennis',pos:[80,66]}],
   // live-score fixtures (sample feed): [venue channel, sport format (2 football, 3 basketball, 4 volleyball, 5 tennis), event, round,
   //   side A, side B, 'live' | 'next' | 'final', start time]; a side is a team code from `teams`, or [player name, team code]
   live:[
@@ -1968,18 +1974,20 @@ const ROLE_VERB={athlete:'In competition',staff:'Timing and results',entity:'Run
   nada:'Sample check',gov:'Addressing the venue',media:'Covering the final',volunteer:'Cheering the venue',service:'Setting up the venue',ema:'Running the show'};
 // Role photos (assets/roles/<id>-0..2.webp: rest, mid-action, peak): idle breathes with a slow zoom, the action blends rest -> mid -> peak and back with a gentle push-in.
 // The action frames only download the first time that role plays.
+// file versions per role (bump when a role's photos or film change)
+const ROLE_V={entity:'p2',staff:'p1'},rv=id=>ROLE_V[id]||'g1';
 const ROLE_PHOTOS={athlete:3,staff:3,entity:3,lo:3,official:3,medical:3,nada:3,gov:3,media:3,volunteer:3,service:3,ema:3};
 // roles with a filmed loop (the photo stays underneath as the instant first frame)
-const ROLE_VIDEO=LOW?{}:{athlete:10,entity:10,staff:10,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10,service:10,ema:10};
+const ROLE_VIDEO=LOW?{}:{athlete:10,entity:5.5,staff:4.4,lo:10,official:10,medical:10,gov:10,nada:10,media:10,volunteer:10,service:10,ema:10};
 const PHOTO_KEYS=[[0,0],[0.35,0],[0.55,1],[1,1],[1.2,2],[2.6,2],[2.8,1],[3.1,1],[3.3,0],[3.6,0]];
 const mountRolePhoto=(host,id)=>{const n=ROLE_PHOTOS[id],V=ROLE_VIDEO[id],D=V||3.6;
   host.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;background:#FFFFFF"><div data-ph style="position:absolute;inset:-3%;will-change:transform">'+
-    Array.from({length:n},(_,i)=>'<img alt="" decoding="async" '+(i?'data-src':'src')+'="assets/roles/'+id+'-'+i+'.webp?v=g1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:'+(i?0:1)+'">').join('')+(V?'<video muted loop playsinline preload="none" poster="assets/rolevid/'+id+'-poster.webp?v=g1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:0"></video>':'')+'</div></div>';
+    Array.from({length:n},(_,i)=>'<img alt="" decoding="async" '+(i?'data-src':'src')+'="assets/roles/'+id+'-'+i+'.webp?v='+rv(id)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:'+(i?0:1)+'">').join('')+(V?'<video muted loop playsinline preload="none" poster="assets/rolevid/'+id+'-poster.webp?v='+rv(id)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:24% 58%;opacity:0"></video>':'')+'</div></div>'+(id==='staff'?'<div class="rl-tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5M10 2.8h4M18.4 6.6l1.3-1.3"/></svg><span>00:09.87</span></div>':'');
   const wrap=host.querySelector('[data-ph]'),imgs=[...wrap.querySelectorAll('img')],vid=wrap.querySelector('video'),st={mode:'idle',w:0,tw:0,t0:0,last:0,once:false,loaded:false};
   const frame=tc=>{let i=0;while(i<PHOTO_KEYS.length-2&&tc>PHOTO_KEYS[i+1][0])i++;const a=PHOTO_KEYS[i],b=PHOTO_KEYS[i+1];return a[1]+(b[1]-a[1])*smooth(clamp((tc-a[0])/((b[0]-a[0])||1)));};
   return {el:host,id,_st:st,
     act(mode,now){if(mode==='idle'){st.tw=0;if(vid&&!vid.paused)vid.pause();return;}if(!st.loaded){st.loaded=true;imgs.forEach(im=>{const s=im.getAttribute('data-src');if(s)im.src=s;});
-        if(vid){vid.src='assets/rolevid/'+id+'-'+(window.innerWidth<=760?'m':'d')+'.mp4?v=g1';vid.preload='auto';}}
+        if(vid){vid.src='assets/rolevid/'+id+'-'+(window.innerWidth<=760?'m':'d')+'.mp4?v='+rv(id);vid.preload='auto';}}
       if(vid){if(st.mode==='idle'||mode!==st.mode)try{vid.currentTime=0;}catch(e){}const pl=vid.play();if(pl&&pl.catch)pl.catch(()=>{});}
       if(st.mode==='idle'||st.tw===0||mode!==st.mode)st.t0=now;st.mode=mode;st.tw=1;st.once=mode==='once';},
     tick(now){const dt=Math.min(0.05,(now-(st.last||now))/1000);st.last=now;let tc=(now-st.t0)/1000;if(st.once&&tc>=D)st.tw=0;
@@ -2020,7 +2028,10 @@ const pad=n=>String(n).padStart(2,'0');
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Kick clip: one video scrubbed by the scroll (1080p on desktop, 720p on phones); KV maps clip time to the old 192-step timeline: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
-const KV={n:192,w:1280,h:720,hitT:4.6,goal:[0.234,0.178,0.769,0.68],ball:[0.547,0.349],idx:t=>Math.max(0,Math.min(191,Math.round(t<6?t*24:144+(t-6)*12)))};
+// Programme montage: 192 frames at 16 fps cut from the hero film (six sports, about two seconds each, same order as HERO_SPORTS)
+const KV={n:192,w:1280,h:720,dur:11.5,goal:[0.2,0.16,0.8,0.84],idx:t=>Math.max(0,Math.min(191,Math.round(t*16)))};
+// which sport the montage shows at time t (chapters change at 1.8 s, 3.8 s ... like the hero)
+const montK=t=>t<1.8?0:Math.min(5,Math.floor((t+0.2)/2));
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
 const smooth=t=>t*t*(3-2*t);
 // background videos: 1080p on desktop, 720p on phones
@@ -2097,8 +2108,8 @@ class Component extends DCLogic {
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
       navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
-      evStage:pe<KICK.run0+0.01?'Scroll to kick off':pe<KICK.strike?'The run-up':pe<KICK.board0?'The strike':(HOVER?'Hover an event, click to register':'Tap an event to register'),
-      goalCats:CATS.map(c=>({name:c.name,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
+      evStage:pe<KICK.run0+0.01?'Scroll through the six sports':pe<KICK.board0?'The six sports':(HOVER?'Hover an event, click to register':'Tap an event to register'),
+      goalCats:CATS.map(c=>({name:c.name,n:c.events.length,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.rolesVals(),
       
       
@@ -2440,19 +2451,19 @@ class Component extends DCLogic {
         while(bm.size>10){let far=-1,fd=-1;for(const k of bm.keys()){const d=Math.abs(k-kv.cur);if(d>fd){fd=d;far=k;}}const v=bm.get(far);v&&v.close&&v.close();bm.delete(far);}}).catch(()=>pend.delete(i));};
     want(fi);for(let k=1;k<=6;k++)want(fi+dir*k*st);for(let k=1;k<=2;k++)want(fi-dir*k*st);
     if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
-  kvPreload(){if(this.kv)return;const dir='assets/kickfull/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
-    const order=[0,KV.idx(2),KV.idx(KV.hitT)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
-    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=g2').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
+  kvPreload(){if(this.kv)return;const dir='assets/montage/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
+    const order=[0,KV.idx(2),KV.idx(4),KV.idx(6)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
+    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m1').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
     for(let k=0;k<6;k++)next();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
-  kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/9.8)),dw=KV.w*s,dh=KV.h*s,fx=L.port?(t<2.2?0.32+0.18*smooth(t/2.2):0.5):0.5;
+  kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/KV.dur)),dw=KV.w*s,dh=KV.h*s,fx=L.port?0.42:0.5;
     const ox=Math.min(0,Math.max(L.W-dw,L.W/2-fx*dw)),oy=L.port?L.H*0.17:(L.H-dh)*0.5;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
   kvBuild(host,box){const W=host.clientWidth,H=host.clientHeight,L=this.kickL={W,H,port:W/H<1.1};box.innerHTML='';
     const c=document.createElement('canvas'),dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
     // soft white wash behind the heading, the frosted veil that dissolves the net, and a clean goal frame that stays as the menu's frame
     const wash=document.createElement('div');wash.setAttribute('data-kv-wash','');box.appendChild(wash);
     const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
-    const V=this.kvView(L,9.8),g0=V.pt(KV.goal[0],KV.goal[1]),g1=V.pt(KV.goal[2],KV.goal[3]);L.goal=[g0[0],g0[1],g1[0],g1[1]];
+    const V=this.kvView(L,KV.dur),g0=V.pt(KV.goal[0],KV.goal[1]),g1=V.pt(KV.goal[2],KV.goal[3]);L.goal=[g0[0],g0[1],g1[0],g1[1]];
     const cx0=Math.max(18,(W-1280)/2+32),hh=host.querySelector('[data-ev-head] h2'),h2r=hh?hh.getBoundingClientRect().right-host.getBoundingClientRect().left:W*0.3;
     L.menu=[Math.max(W*0.3,h2r+48),Math.max(96,H*0.13),W-cx0,H-Math.max(36,H*0.07)];
     const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('width','100%');svg.setAttribute('height','100%');Object.assign(svg.style,{position:'absolute',inset:'0',pointerEvents:'none'});
@@ -2473,8 +2484,8 @@ class Component extends DCLogic {
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
     if(this.kickBox!==box||this.kickDirty||!this.kickL||this.kickL.W!==W||this.kickL.H!==H){this.kickBox=box;this.kickDirty=false;this.kvBuild(host,box);}
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),now=performance.now();
-    // scroll -> clip time: run-up, strike and flight take most of the scroll; the drop and celebration move quicker
-    const t=p<KICK.run0?0:p<KICK.hit?KV.hitT*seg(p,KICK.run0,KICK.hit):p<KICK.board0?KV.hitT+(6-KV.hitT)*seg(p,KICK.hit,KICK.board0):6+3.8*seg(p,KICK.board0,KICK.board1),fi=KV.idx(t);this.kvT=t;
+    // scroll -> montage time: the six sports pass at an even pace, then the last frame holds while the programme opens
+    const t=p<KICK.run0?0:p<KICK.board0?KV.dur*seg(p,KICK.run0,KICK.board0):KV.dur,fi=KV.idx(t);this.kvT=t;
     if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<1.4;
     // the picture: redrawn only when the scroll (and so the frame) changes
     const key=fi+'|'+p.toFixed(4);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
@@ -2483,10 +2494,13 @@ class Component extends DCLogic {
       if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
         const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
     // stage caption, written straight to the page
-    const stg=p<KICK.run0+0.01?'Scroll to kick off':p<KICK.strike?'The run-up':p<KICK.board0?'The strike':(HOVER?'Hover an event, click to register':'Tap an event to register');
+    const mk=montK(t),mc=CATS.find(c=>c.name===HERO_SPORTS[mk])||CATS[0];
+    const stg=p<KICK.run0+0.01?'Scroll through the six sports':p<KICK.board0?(mk+1)+' of 6 · '+mc.name:(HOVER?'Hover an event, click to register':'Tap an event to register');
     if(stg!==this.kvStage){this.kvStage=stg;host.querySelectorAll('[data-ev-stage]').forEach(el=>{el.textContent=stg;});}
-    // the goal strip: a broadcast lower-third from the moment of impact until the events have risen
-    const gon=p>=KICK.score0&&p<KICK.score1+0.03?'1':'0';if(gon!==this.kvGoalOn){this.kvGoalOn=gon;host.querySelectorAll('[data-goal-board]').forEach(el=>el.setAttribute('data-on',gon));}
+    // the sport strip: a broadcast lower-third naming the sport on screen, its medal events and venue, in its own colour
+    const gon=p>=KICK.run0&&p<KICK.board0?'1':'0';if(gon!==this.kvGoalOn){this.kvGoalOn=gon;host.querySelectorAll('[data-goal-board]').forEach(el=>el.setAttribute('data-on',gon));}
+    if(mk!==this.kvSport){this.kvSport=mk;host.querySelectorAll('[data-goal-board]').forEach(el=>{el.style.setProperty('--sc',mc.color);const i=el.querySelector('.lt-ball i');if(i)i.setAttribute('data-gi',mc.icon);
+      const b=el.querySelector('.lt-main b'),n=el.querySelector('.lt-min'),u=el.querySelector('.lt-sub');if(b)b.textContent=mc.name;if(n)n.textContent=mc.events.length+' events';if(u)u.textContent=mc.venue;el.removeAttribute('data-swap');void el.offsetWidth;el.setAttribute('data-swap','');});}
     // the events: one CSS spring each (staggered), started once when the reveal begins
     const Pn=host.querySelector('[data-goal-panel]');if(Pn){const pin=rt>0||REDUCED?'1':'0';if(Pn.getAttribute('data-in')!==pin){Pn.setAttribute('data-in',pin);Pn.style.visibility=pin==='1'?'visible':'hidden';Pn.style.opacity=pin;}}
     // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in and opens out into the menu frame

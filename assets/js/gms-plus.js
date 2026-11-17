@@ -49,7 +49,7 @@
     '.gp-it-s{display:block;margin-top:2px;font-size:12.5px;color:var(--d-ink2,#5B6270);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
     '.gp-it mark{background:none;color:#2F5BFF}',
     '.gp-it-go{font-size:16px;color:var(--d-ink3,#8A909C);opacity:0}.gp-it[data-on] .gp-it-go{opacity:1}',
-    '.gp-empty{padding:34px 16px;text-align:center;color:var(--d-ink2,#5B6270);font-size:14px}',
+    '.gp-empty{padding:34px 16px;text-align:center;color:var(--d-ink2,#5B6270);font-size:14px}.gp-ill{display:block;width:128px;height:auto;margin:0 auto 12px}.gp-blank .gp-ill{margin:0 0 6px}',
     '.gp-pal-ft{display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--d-line,#EEF0F4);font-size:12px;color:var(--d-ink3,#6B7180)}',
     '.gp-pal-ft span{display:flex;align-items:center;gap:6px}',
     '@media (max-width:640px){.gp-pal{top:12px;max-height:calc(100svh - 24px)}.gp-pal-ft{display:none}.gp-pal-in input{font-size:16px}}',
@@ -144,6 +144,7 @@
     'html[data-theme=dark] .gm-river{stroke:#1F3566}html[data-theme=dark] .gm-river2{stroke:#2A4582}',
     '.gm-l{stroke:var(--d-ink3,#A9B0BB);stroke-width:.35;stroke-dasharray:1.2 1.2;opacity:.55;vector-effect:non-scaling-stroke}.gm-l[data-on]{stroke:#2F5BFF;stroke-width:.6;opacity:1;stroke-dasharray:none}',
     '.gm-min{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:5px 9px;border-radius:999px;background:#2F5BFF;color:#fff;font:600 11px/1 "JetBrains Mono",monospace;white-space:nowrap;pointer-events:none;box-shadow:0 2px 6px rgba(8,10,16,.2)}',
+    '.gm-ph{position:relative;margin:20px 0 0;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:var(--d-s1,#EEF1F5)}.gm-ph img{width:100%;height:100%;object-fit:cover;display:block}.gm-ph figcaption{position:absolute;right:8px;bottom:8px;padding:4px 8px;border-radius:999px;background:rgba(8,10,16,.5);color:#fff;font:500 10px/1.2 "Instrument Sans",system-ui,sans-serif}',
     '.gm-pin{all:unset;box-sizing:border-box;position:absolute;transform:translate(-18px,-18px);display:flex;align-items:center;gap:8px;cursor:pointer;max-width:46%}',
     '.gm-dot{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:17px;background:var(--d-s0,#fff);color:var(--d-ink,#0B0D12);box-shadow:0 2px 8px rgba(8,10,16,.18),0 0 0 1px var(--d-line,rgba(11,13,18,.08));transition:background .25s,color .25s,transform .35s var(--gms-ease,ease)}',
     '.gm-pin[data-side=l]{flex-direction:row-reverse;transform:translate(18px,-18px)}@media (max-width:560px){.gm-pin[data-side=l]{transform:translate(15px,-15px)}}',
@@ -435,7 +436,7 @@
     var h = previewNote() + '<div class="gp-stats"><div class="gp-stat"><b>' + done + ' / ' + D.ALL_EVENTS.length + '</b><span>Medal events decided</span></div><div class="gp-stat"><b>' + live + '</b><span>Finals live now</span></div><div class="gp-stat"><b>' + (lead ? esc(lead.name) : '–') + '</b><span>Leading the table</span></div></div>';
     h += '<div class="gp-chips" role="group" aria-label="Sport"><button type="button" class="gp-chip" data-act="sport" data-v=""' + (!sport ? ' data-on' : '') + '>All sports</button>' + D.CATS.map(function (c) { return '<button type="button" class="gp-chip" data-act="sport" data-v="' + esc(c.name) + '"' + (sport === c.name ? ' data-on' : '') + '>' + ICON(c.icon) + esc(c.name) + '</button>'; }).join('') + '</div>';
     h += '<div class="gp-chips" role="group" aria-label="Order"><button type="button" class="gp-chip" data-act="sort" data-v="gold"' + (sort === 'gold' ? ' data-on' : '') + '>By gold</button><button type="button" class="gp-chip" data-act="sort" data-v="total"' + (sort === 'total' ? ' data-on' : '') + '>By total</button></div>';
-    if (!rows.length) return h + '<div class="gp-empty">No medals decided in this sport yet.</div>';
+    if (!rows.length) return h + '<div class="gp-empty">' + ILL('medal') + 'No medals decided in this sport yet.</div>';
     h += '<table class="gp-mt"><thead><tr><th scope="col">#</th><th scope="col">' + esc(D.TOURNAMENT.teamLabel || 'Team') + '</th><th scope="col"><span class="gp-m gp-g"></span>G</th><th scope="col"><span class="gp-m gp-s"></span>S</th><th scope="col"><span class="gp-m gp-b"></span>B</th><th scope="col">Total</th></tr></thead><tbody>';
     var rank = 0, prev = null;
     rows.forEach(function (r, i) {
@@ -483,6 +484,14 @@
     if (rounds.length) h += '<div class="gp-h4">ROUNDS AT THE GAMES</div>' + rounds.map(function (s) { return sesRow(s, { title: s.round, showDay: true }); }).join('');
     return h;
   }
+  // small line drawings for empty states (royal blue, follows the theme tint)
+  function ILL(k) {
+    var B = '#2F5BFF', a = '<svg class="gp-ill" viewBox="0 0 160 96" aria-hidden="true" fill="none" stroke="' + B + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+    if (k === 'search') return a + '<rect x="30" y="20" width="76" height="56" rx="10" fill="var(--d-tint,#E8EEFF)" stroke="none"/><path d="M42 36h40M42 48h28M42 60h34" stroke-dasharray="2 6" opacity=".55"/><circle cx="104" cy="52" r="17" fill="var(--d-s0,#fff)"/><path d="M116.5 64.5L130 78"/><path d="M99 47.5c1-3 3.2-4.5 5.6-4.5 3 0 5.2 2 5.2 4.6 0 3.6-5 3.8-5 7.4M104.8 60.5v.1"/></svg>';
+    if (k === 'medal') return a + '<path d="M66 12l14 26 14-26" fill="var(--d-tint,#E8EEFF)"/><circle cx="80" cy="58" r="22" fill="var(--d-tint,#E8EEFF)"/><circle cx="80" cy="58" r="14" stroke-dasharray="3 5"/><path d="M80 51v14M75 56l5-5"/></svg>';
+    if (k === 'star') return a + '<rect x="38" y="16" width="84" height="66" rx="12" fill="var(--d-tint,#E8EEFF)" stroke="none"/><rect x="38" y="16" width="84" height="66" rx="12"/><path d="M38 34h84M60 10v12M100 10v12"/><path d="M80 44l4.6 9.2 10.2 1.5-7.4 7.2 1.8 10.1-9.2-4.8-9.2 4.8 1.8-10.1-7.4-7.2 10.2-1.5z" fill="var(--d-s0,#fff)"/></svg>';
+    return a + '<rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E8EEFF)" stroke="none"/><rect x="38" y="14" width="84" height="70" rx="12"/><path d="M38 34h84M60 8v12M100 8v12"/><path d="M52 48h20M52 60h34M52 72h14" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)"/><path d="M118 62v8l5 4"/></svg>';
+  }
   function myHTML(arg) {
     var shared = arg && arg.shared ? arg.shared.map(sessFromKey).filter(Boolean) : null;
     if (shared && shared.length) {
@@ -490,7 +499,7 @@
       return '<div class="gp-note">' + ICON('link') + '<span>Someone shared their plan with you: ' + shared.length + ' session' + (shared.length > 1 ? 's' : '') + '.</span></div><div class="gp-row-acts">' + (add ? '<button type="button" class="gp-btn gp-btn--pri" data-act="import">Add ' + add + ' to my plan' + ICON('star') + '</button>' : '') + '<button type="button" class="gp-btn" data-act="tab" data-v="mygames">See my own plan</button></div>' + dayList(shared, false);
     }
     var list = My.keys().map(sessFromKey).filter(Boolean);
-    if (!list.length) return '<div class="gp-blank">' + ICON('star') + '<b>Plan your Games</b><p>Tap the star on any session in the schedule. Your sessions collect here with clash warnings, and go to your calendar in one file.</p><button type="button" class="gp-btn gp-btn--pri" data-act="schedule">Open the schedule' + ICON('arrow_forward') + '</button></div>';
+    if (!list.length) return '<div class="gp-blank">' + ILL('star') + '<b>Plan your Games</b><p>Tap the star on any session in the schedule. Your sessions collect here with clash warnings, and go to your calendar in one file.</p><button type="button" class="gp-btn gp-btn--pri" data-act="schedule">Open the schedule' + ICON('arrow_forward') + '</button></div>';
     var cl = clashes(list), n = Object.keys(cl).length;
     var h = '<div class="gp-stats"><div class="gp-stat"><b>' + list.length + '</b><span>Sessions in your plan</span></div><div class="gp-stat"><b>' + new Set(list.map(function (s) { return s.day; })).size + '</b><span>Days at the Games</span></div><div class="gp-stat"><b>' + n + '</b><span>' + (n === 1 ? 'Tight change' : 'Tight changes') + ' between venues</span></div></div>';
     h += '<div class="gp-row-acts"><button type="button" class="gp-btn gp-btn--pri" data-act="ics">' + ICON('download') + 'Add all to my calendar (.ics)</button><button type="button" class="gp-btn" data-act="share">' + ICON('link') + 'Copy a link to this plan</button></div>';
@@ -577,13 +586,14 @@
       h += '<button type="button" class="gm-pin" data-act="venue" data-v="' + esc(v.name) + '" data-st="' + st.k + '"' + (v.name === sel.name ? ' data-on aria-pressed="true"' : ' aria-pressed="false"') + (p[0] > 55 ? ' data-side="l"' : '') + ' style="' + (p[0] > 55 ? 'right:' + (100 - p[0]) + '%' : 'left:' + p[0] + '%') + ';top:' + p[1] + '%"><span class="gm-dot">' + ICON(v.icon || 'corporate_fare') + '</span><span class="gm-lab"><b>' + esc(v.name) + '</b><span>' + esc(st.label) + '</span></span></button>';
     });
     h += badges + '</div>';
+    if (sel.photo) h += '<figure class="gm-ph"><img src="' + esc(sel.photo) + '?v=1" alt="' + esc(sel.name) + '" decoding="async"><figcaption>Stand-in photo · Pexels</figcaption></figure>';
     var st = venueNow(sel.name), sports = D.CATS.filter(function (c) { return c.venue === sel.name; }).map(function (c) { return c.name; });
     h += '<div class="gp-evh" style="margin-top:20px"><div><span class="gp-code">' + esc(sports.join(' · ').toUpperCase() || 'VENUE') + '</span><h3>' + esc(sel.name) + '</h3></div><span class="gp-st" data-k="' + (st.k === 'live' ? 'live' : st.k === 'done' ? 'done' : '') + '">' + esc(st.label.toUpperCase()) + '</span></div>';
     if (st.s) h += '<div class="gp-note">' + ICON('event_available') + '<span>' + (st.k === 'live' ? 'On now: ' : 'Next up: ') + esc(st.s.ev.name + ', ' + st.s.round) + ' (' + esc(dayLabel(st.s.day) + ' ' + st.s.tm) + ').</span></div>';
     var hops = tr.filter(function (t) { return t[0] === sel.name || t[1] === sel.name; }).map(function (t) { return { to: t[0] === sel.name ? t[1] : t[0], m: t[2] }; }).sort(function (a, b) { return a.m - b.m; });
     if (hops.length) h += '<div class="gp-chips">' + hops.map(function (x) { return '<button type="button" class="gp-chip" data-act="venue" data-v="' + esc(x.to) + '">' + x.m + ' min to ' + esc(x.to) + '</button>'; }).join('') + '</div><p class="gb-tip" style="margin-top:-8px">Shuttle times are sample figures.</p>';
     var list = allSessions().filter(function (s) { return s.venue === sel.name; });
-    return h + '<div class="gp-h4">SESSIONS AT THIS VENUE</div>' + (list.length ? dayList(list, false) : '<div class="gp-empty">No sessions at this venue.</div>');
+    return h + '<div class="gp-h4">SESSIONS AT THIS VENUE</div>' + (list.length ? dayList(list, false) : '<div class="gp-empty">' + ILL('cal') + 'No sessions at this venue.</div>');
   }
   /* ------------------------------------------------------------------ sharing: links that open the exact view */
   function shareLink(hash) { return location.href.split('#')[0] + '#' + hash; }
@@ -682,7 +692,7 @@
     if (pre.length) { h += P.recentHTML; pre.forEach(function (it) { h += itemHTML(it, i++, ''); }); }
     order.forEach(function (g) { if (!groups[g]) return; h += '<div class="gp-grp" role="presentation">' + g.toUpperCase() + '</div>'; groups[g].forEach(function (it) { items.push(it); h += itemHTML(it, i++, q); }); });
     P.items = items; P.idx = 0;
-    P.list.innerHTML = items.length ? h : '<div class="gp-empty">Nothing found for “' + esc(q) + '”. Try a sport, a team, a venue or a day.</div>';
+    P.list.innerHTML = items.length ? h : '<div class="gp-empty">' + ILL('search') + 'Nothing found for “' + esc(q) + '”. Try a sport, a team, a venue or a day.</div>';
     palMark(true);
   }
   function itemHTML(it, i, q) {
