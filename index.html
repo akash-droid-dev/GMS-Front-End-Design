@@ -1135,7 +1135,6 @@ html[data-theme=dark] .vl-list button[data-on]{background:#F7C600;color:#0B0D12}
 .sfl-a,.sfl-b{display:block;height:1.06em;padding:0 .015em;text-align:center}
 .sfl-b{color:#0B0D12;background:linear-gradient(180deg,#FFD83A 0 49%,rgba(0,0,0,.18) 49% 51%,#F7C600 51% 100%)}
 [data-flap-on] .sfl-s{transform:translateY(-50%)}
-.has-flap .gms-w:has(.sfl){overflow:visible}
 @media (prefers-reduced-motion:reduce){.sfl-s{transition:none}}
 /* ---- images unmask on entry; buttons lean to the pointer ---- */
 .mr{clip-path:inset(14% 6% 14% 6% round 28px);transition:clip-path 1.1s cubic-bezier(.2,.8,.2,1)}.mr img,.mr svg,.mr video{scale:1.08;transition:scale 1.4s cubic-bezier(.2,.8,.2,1)}
@@ -1254,7 +1253,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
 <script defer src="./assets/js/gms-motion.js?v=3"></script>
-<script defer src="./assets/js/gms-plus.js?v=31"></script>
+<script defer src="./assets/js/gms-plus.js?v=32"></script>
 </head>
 <body>
 <!-- Opening: the Gobananas logo slams in while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1597,7 +1596,7 @@ html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
           <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--d-ink2,#5B6270)"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
       </div>
-      <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_basketball"></i></span><span class="lt-main"><b>Basketball</b><span class="lt-min">3 events</span></span><span class="lt-sub">Riverfront Arena</span></div>
+      <div data-goal-board data-on="0" aria-hidden="true"><span class="lt-ball"><i class="gi" data-gi="sports_badminton"></i></span><span class="lt-main"><b>Badminton Hall</b><span class="lt-min">5 events</span></span><span class="lt-sub">Badminton</span></div>
       <div data-goal-panel data-compact="0" style="position:absolute;left:0;top:0;width:0;height:0;z-index:3;opacity:0;visibility:hidden;pointer-events:none">
         <div data-goal-cols data-mode="ring" style="position:absolute">
           <sc-for list="{{ goalCats }}" as="c" hint-placeholder-count="3">
@@ -2271,10 +2270,12 @@ const pad=n=>String(n).padStart(2,'0');
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Kick clip: one video scrubbed by the scroll (1080p on desktop, 720p on phones); KV maps clip time to the old 192-step timeline: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
-// Programme montage: 192 frames at 16 fps cut from the hero film (six sports, about two seconds each, same order as HERO_SPORTS)
+// Programme montage: 192 frames at 16 fps cut from the venue film, two seconds per venue in MONT order
 const KV={n:192,w:1280,h:720,dur:11.5,goal:[0.2,0.16,0.8,0.84],idx:t=>Math.max(0,Math.min(191,Math.round(t*16)))};
 // which sport the montage shows at time t (chapters change at 1.8 s, 3.8 s ... like the hero)
-const montK=t=>t<1.8?0:Math.min(5,Math.floor((t+0.2)/2));
+const MONT=['Badminton Hall','Table Tennis Hall','Aquatic Stadium','Tennis Courts','Community Sports Centre','Outdoor Sports Ground'];
+const montK=t=>Math.min(5,Math.floor(t/2));
+const montV=k=>{const v=TOURNAMENT.venues.find(x=>x.name===MONT[k])||TOURNAMENT.venues[0],sp=CATS.filter(c=>c.venue===v.name);return {v,sp,color:(sp[0]||CATS[0]).color,n:sp.reduce((a,c)=>a+c.events.length,0)};};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
 const smooth=t=>t*t*(3-2*t);
 // background videos: 1080p on desktop, 720p on phones
@@ -2353,7 +2354,7 @@ class Component extends DCLogic {
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
       navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
-      evTotal:ALL_EVENTS.length,sportTotal:CATS.length,evStage:pe<KICK.run0+0.01?'Scroll through the six sports':pe<KICK.board0?'The six sports':(HOVER?'Hover an event, click to register':'Tap an event to register'),
+      evTotal:ALL_EVENTS.length,sportTotal:CATS.length,evStage:pe<KICK.run0+0.01?'Scroll through the complex':pe<KICK.board0?'Six venues':(HOVER?'Hover an event, click to register':'Tap an event to register'),
       goalCats:CATS.map(c=>({name:c.name,n:c.events.length,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.rolesVals(),
       
@@ -2702,7 +2703,7 @@ class Component extends DCLogic {
     if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
   kvPreload(){if(this.kv)return;const dir='assets/montage/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
     const order=[0,KV.idx(2),KV.idx(4),KV.idx(6)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
-    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m1').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
+    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m2').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
     for(let k=0;k<6;k++)next();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/KV.dur)),dw=KV.w*s,dh=KV.h*s,fx=L.port?0.42:0.5;
@@ -2743,13 +2744,13 @@ class Component extends DCLogic {
       if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
         const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
     // stage caption, written straight to the page
-    const mk=montK(t),mc=CATS.find(c=>c.name===HERO_SPORTS[mk])||CATS[0];
-    const stg=p<KICK.run0+0.01?'Scroll through the six sports':p<KICK.board0?(mk+1)+' of 6 · '+mc.name:(HOVER?'Hover an event, click to register':'Tap an event to register');
+    const mk=montK(t),mv=montV(mk);
+    const stg=p<KICK.run0+0.01?'Scroll through the complex':p<KICK.board0?(mk+1)+' of 6 · '+mv.v.name:(HOVER?'Hover an event, click to register':'Tap an event to register');
     if(stg!==this.kvStage){this.kvStage=stg;host.querySelectorAll('[data-ev-stage]').forEach(el=>{el.textContent=stg;});}
     // the sport strip: a broadcast lower-third naming the sport on screen, its medal events and venue, in its own colour
     const gon=p>=KICK.run0&&p<KICK.board0?'1':'0';if(gon!==this.kvGoalOn){this.kvGoalOn=gon;host.querySelectorAll('[data-goal-board]').forEach(el=>el.setAttribute('data-on',gon));}
-    if(mk!==this.kvSport){this.kvSport=mk;host.querySelectorAll('[data-goal-board]').forEach(el=>{el.style.setProperty('--sc',mc.color);const i=el.querySelector('.lt-ball i');if(i)i.setAttribute('data-gi',mc.icon);
-      const b=el.querySelector('.lt-main b'),n=el.querySelector('.lt-min'),u=el.querySelector('.lt-sub');if(b)b.textContent=mc.name;if(n)n.textContent=mc.events.length+' events';if(u)u.textContent=mc.venue;el.removeAttribute('data-swap');void el.offsetWidth;el.setAttribute('data-swap','');});}
+    if(mk!==this.kvSport){this.kvSport=mk;host.querySelectorAll('[data-goal-board]').forEach(el=>{el.style.setProperty('--sc',mv.color);const i=el.querySelector('.lt-ball i');if(i)i.setAttribute('data-gi',mv.v.icon||'corporate_fare');
+      const b=el.querySelector('.lt-main b'),n=el.querySelector('.lt-min'),u=el.querySelector('.lt-sub');if(b)b.textContent=mv.v.name;if(n)n.textContent=mv.n+' events';if(u)u.textContent=mv.sp.map(c=>c.name).join(' · ');el.removeAttribute('data-swap');void el.offsetWidth;el.setAttribute('data-swap','');});}
     // the events: one CSS spring each (staggered), started once when the reveal begins
     const Pn=host.querySelector('[data-goal-panel]');if(Pn){const pin=rt>0||REDUCED?'1':'0';if(Pn.getAttribute('data-in')!==pin){Pn.setAttribute('data-in',pin);Pn.style.visibility=pin==='1'?'visible':'hidden';Pn.style.opacity=pin;}}
     // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in and opens out into the menu frame
