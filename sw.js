@@ -1,12 +1,12 @@
 /* GMS service worker: the page and its code work offline (schedule, My Games, results), media stays network-only.
    Pages are network-first so a new deploy shows up on the next visit; versioned files are cache-first. */
-const CACHE = 'gms-v17';
+const CACHE = 'gms-v18';
 const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=1', 'assets/js/gms-motion.js?v=3', 'assets/js/gms-plus.js?v=32',
   'assets/fonts/bricolage-grotesque-latin.woff2', 'assets/fonts/instrument-sans-latin.woff2', 'assets/fonts/jetbrains-mono-latin.woff2',
-  'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/hero-poster.webp?v=g1', 'manifest.webmanifest'];
+  'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/venue-poster.webp?v=v1', 'assets/brand/gobananas.webp', 'assets/brand/gobananas-sm.webp', 'manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
-const SKIP = /\.(mp4|webm|m4v)(\?|$)|\/kickfull\/|\/rolevid\//;
+const SKIP = /\.(mp4|webm|m4v)(\?|$)|\/kickfull\/|\/montage\/|\/rolevid\//;
 self.addEventListener('fetch', e => {
   const r = e.request, u = new URL(r.url);
   if (r.method !== 'GET' || u.origin !== location.origin || r.headers.has('range') || SKIP.test(u.pathname)) return;
