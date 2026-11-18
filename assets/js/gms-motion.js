@@ -29,7 +29,7 @@
     tn.parentNode.replaceChild(frag, tn); return true;
   }
   function flaps() {
-    doc.querySelectorAll('main h2, section[data-r=hero] h1').forEach(function (h) {
+    doc.querySelectorAll('main h2').forEach(function (h) {
       if (h.__flap || h.closest('[data-r=ecx],[data-r=tv-section]')) return; // live headings are redrawn by the page; leave them alone
       if (h.matches('main h2') && !h.querySelector('.gms-w') && !h.closest('.pdk,.vl')) return; // wait until the line reveal has split it
       var em = h.querySelector('em'), tn = lastTextNode(em || h); if (!tn) return;
@@ -95,6 +95,11 @@
   new MutationObserver(stepPhoto).observe(doc.body || root, { subtree: true, attributes: true, attributeFilter: ['data-on'] });
   /* buttons that scroll to a section, e.g. Explore the venue */
   doc.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-goto]'); if (!b) return; var t = doc.getElementById(b.getAttribute('data-goto')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); } });
+
+  /* ---------------- scroll direction (phones tuck the Ask Vision button away while reading down) ---------------- */
+  var lastY = window.scrollY, dirRaf = 0;
+  window.addEventListener('scroll', function () { if (dirRaf) return; dirRaf = requestAnimationFrame(function () { dirRaf = 0; var y = window.scrollY, d = y - lastY; root.classList.toggle('gy-top', y < window.innerHeight * 0.6); if (Math.abs(d) > 6) { root.classList.toggle('gy-down', d > 0 && y > 200); lastY = y; } }); }, { passive: true });
+  root.classList.toggle('gy-top', window.scrollY < window.innerHeight * 0.6);
 
   /* ---------------- run as the page draws ---------------- */
   var t = 0;

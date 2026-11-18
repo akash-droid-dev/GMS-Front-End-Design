@@ -1229,6 +1229,24 @@ section[data-r=steps-section] .step-desc{color:rgba(242,238,229,.7)!important;ma
 body::after{animation:none!important;opacity:.035!important}
 .mr{transition-duration:1.4s!important}.mr img,.mr svg,.mr video{transition-duration:2s!important}
 .ft-gb{display:block;width:min(260px,60vw);height:auto;margin-bottom:22px}
+
+/* ---- rollout: every section on the shared grid, type and ink/paper rhythm ---- */
+:is([data-r=sch-section],[data-r=stories],[data-r=ecx]) h2{font:var(--t-h2)!important;letter-spacing:-.035em!important}
+section[data-r=sch-section]{padding:var(--sec-y) var(--gut)!important}
+html:not([data-theme=dark]) section[data-r=sch-section]{background:var(--paper)!important}
+section[data-r=ev-section],html[data-theme=dark] section[data-r=ev-section]{background:var(--paper)!important}
+section[data-r=ev-section] [data-ev-sticky]{background:radial-gradient(70% 60% at 70% 40%,#FBF9F4 0%,rgba(251,249,244,0) 70%)!important}
+section[data-r=ev-section] [data-ev-sticky]::before,html[data-theme=dark] [data-ev-sticky]::before{background:linear-gradient(180deg,var(--paper) 0%,rgba(242,238,229,.94) 26%,rgba(242,238,229,.55) 44%,rgba(242,238,229,0) 66%)!important}
+section[data-r=ev-section] h2{font-weight:800!important;letter-spacing:-.035em!important}
+section[data-r=ev-section] [data-ev-sticky] canvas{-webkit-mask-image:linear-gradient(180deg,transparent 0,transparent 20%,rgba(0,0,0,.6) 34%,#000 50%);mask-image:linear-gradient(180deg,transparent 0,transparent 20%,rgba(0,0,0,.6) 34%,#000 50%)}
+section[data-r=stories]{--d-s0:var(--ink-0);--d-s1:var(--ink-1);--d-ink:#F2EEE5;--d-ink2:rgba(242,238,229,.66);--d-ink3:rgba(242,238,229,.45);--d-line:rgba(242,238,229,.12);background:var(--ink-0)!important;color:#F2EEE5}
+section[data-r=ecx]{background:var(--ink-0)!important}
+section:is(.vl,[data-r=ev-section],[data-r=sch-section]) .sx i{color:#A67C00}
+section:is(.vl,[data-r=ev-section],[data-r=sch-section]) .sx{color:#5B6270}
+html[data-theme=dark] section[data-r=sch-section] .sx{color:inherit}
+/* ---- Ask Vision on phones: small, above the bar, out of the way while scrolling down ---- */
+@media (max-width:760px){[data-r=bot]{transform:scale(.56)!important;transform-origin:100% 100%;bottom:calc(84px + env(safe-area-inset-bottom))!important;right:4px!important;transition:opacity .5s var(--gms-ease),translate .6s var(--gms-ease)!important}
+html:is(.gy-down,.gy-top) [data-r=bot]{opacity:0!important;pointer-events:none!important;translate:0 24px}}
 /* ---- batch 5 ---- */
 /* TSR: a timing tag beside the figure */
 .rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0D12;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:#F7C600}
@@ -1321,7 +1339,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=4"></script>
+<script defer src="./assets/js/gms-motion.js?v=6"></script>
 <script defer src="./assets/js/gms-plus.js?v=33"></script>
 </head>
 <body>
@@ -1657,7 +1675,7 @@ html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
         <div data-ev-head>
           <span class="sx"><i>04</i>The programme</span>
           <h2 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">{{ evTotal }} medal events<br>across {{ sportTotal }} sports</h2>
-          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">Scroll through the complex, then pick any event to register, from the badminton first round to the table tennis team final.</p>
+          <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">Badminton leads the cluster. Scroll on and the full programme opens: pick any event to register, from the badminton first round to the table tennis team final.</p>
           <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--d-ink2,#5B6270)"><span style="width:22px;height:1.5px;background:#0B0D12;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
       </div>
@@ -2335,10 +2353,10 @@ const pad=n=>String(n).padStart(2,'0');
 const REDUCED=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Kick clip: one video scrubbed by the scroll (1080p on desktop, 720p on phones); KV maps clip time to the old 192-step timeline: every frame up to 6 s, then every
 // second frame for the celebration. idx(t) maps clip time (s) to a frame; hitT = ball in the net; goal = posts box (0-1); ball = where it strikes the net.
-// Programme montage: 192 frames at 16 fps cut from the venue film, two seconds per venue in MONT order
-const KV={n:192,w:1280,h:720,dur:11.5,goal:[0.2,0.16,0.8,0.84],idx:t=>Math.max(0,Math.min(191,Math.round(t*16)))};
+// Programme scene: 192 frames of one badminton clip (Pexels 8052833, free licence) scrubbed by the scroll
+const KV={n:192,w:1280,h:720,dur:11.9,goal:[0.2,0.16,0.8,0.84],idx:t=>Math.max(0,Math.min(191,Math.round(t*16)))};
 // which sport the montage shows at time t (chapters change at 1.8 s, 3.8 s ... like the hero)
-const MONT=['Badminton Hall','Table Tennis Hall','Aquatic Stadium','Tennis Courts','Community Sports Centre','Outdoor Sports Ground'];
+const MONT=Array(6).fill('Badminton Hall');
 const montK=t=>Math.min(5,Math.floor(t/2));
 const montV=k=>{const v=TOURNAMENT.venues.find(x=>x.name===MONT[k])||TOURNAMENT.venues[0],sp=CATS.filter(c=>c.venue===v.name);return {v,sp,color:(sp[0]||CATS[0]).color,n:sp.reduce((a,c)=>a+c.events.length,0)};};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
@@ -2419,7 +2437,7 @@ class Component extends DCLogic {
       regSeeAll:()=>{this.setState({regOpen:false});this.scrollTo('reg');},regClose:()=>{clearTimeout(this.regT);this.setState({regOpen:false});},
       navBack:s.regOpen||s.menuOpen?'1':'0',closeNavMenus:()=>{clearTimeout(this.regT);this.setState({regOpen:false,menuOpen:false});},
       regGroups:REG_GROUPS.map(([title,ids])=>({title,items:ids.map(id=>REG.find(r=>r.id===id)).filter(Boolean).map(r=>({name:r.name,icon:r.icon,desc:r.desc,go:()=>{this.setState({regOpen:false});this.startReg(r.id);}}))})),
-      evTotal:ALL_EVENTS.length,sportTotal:CATS.length,evStage:pe<KICK.run0+0.01?'Scroll through the complex':pe<KICK.board0?'Six venues':(HOVER?'Hover an event, click to register':'Tap an event to register'),
+      evTotal:ALL_EVENTS.length,sportTotal:CATS.length,evStage:pe<KICK.run0+0.01?'Scroll to play':pe<KICK.board0?'Badminton, the featured sport':(HOVER?'Hover an event, click to register':'Tap an event to register'),
       goalCats:CATS.map(c=>({name:c.name,n:c.events.length,icon:c.icon,color:c.color,tint:c.tint,sub:c.outdoor?'OUTDOOR':'INDOOR',events:c.events.map(e=>({name:e[3]||e[0].replace(c.name+' ',''),full:e[0],g:e[1],pick:()=>this.startReg('athlete',e[2])}))})),
       ...this.rolesVals(),
       
@@ -2769,7 +2787,7 @@ class Component extends DCLogic {
     if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
   kvPreload(){if(this.kv)return;const dir='assets/montage/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
     const order=[0,KV.idx(2),KV.idx(4),KV.idx(6)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
-    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m2').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
+    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m3').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
     for(let k=0;k<6;k++)next();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/KV.dur)),dw=KV.w*s,dh=KV.h*s,fx=L.port?0.42:0.5;
@@ -2811,7 +2829,7 @@ class Component extends DCLogic {
         const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
     // stage caption, written straight to the page
     const mk=montK(t),mv=montV(mk);
-    const stg=p<KICK.run0+0.01?'Scroll through the complex':p<KICK.board0?(mk+1)+' of 6 · '+mv.v.name:(HOVER?'Hover an event, click to register':'Tap an event to register');
+    const stg=p<KICK.run0+0.01?'Scroll to play':p<KICK.board0?'Badminton, the featured sport':(HOVER?'Hover an event, click to register':'Tap an event to register');
     if(stg!==this.kvStage){this.kvStage=stg;host.querySelectorAll('[data-ev-stage]').forEach(el=>{el.textContent=stg;});}
     // the sport strip: a broadcast lower-third naming the sport on screen, its medal events and venue, in its own colour
     const gon=p>=KICK.run0&&p<KICK.board0?'1':'0';if(gon!==this.kvGoalOn){this.kvGoalOn=gon;host.querySelectorAll('[data-goal-board]').forEach(el=>el.setAttribute('data-on',gon));}
