@@ -1,9 +1,9 @@
 /* GMS service worker: the page and its code work offline (schedule, My Games, results), media stays network-only.
    Pages are network-first so a new deploy shows up on the next visit; versioned files are cache-first. */
-const CACHE = 'gms-v19';
-const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=1', 'assets/js/gms-motion.js?v=3', 'assets/js/gms-plus.js?v=33',
+const CACHE = 'gms-v21';
+const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=1', 'assets/js/gms-motion.js?v=4', 'assets/js/gms-plus.js?v=33',
   'assets/fonts/bricolage-grotesque-latin.woff2', 'assets/fonts/instrument-sans-latin.woff2', 'assets/fonts/jetbrains-mono-latin.woff2',
-  'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/venue-poster.webp?v=v1', 'assets/brand/gobananas.webp', 'assets/brand/gobananas-sm.webp', 'manifest.webmanifest'];
+  'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/venue-poster.webp?v=v2', 'assets/brand/gobananas-full.webp', 'assets/brand/gobananas-mark.webp', 'manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 const SKIP = /\.(mp4|webm|m4v)(\?|$)|\/kickfull\/|\/montage\/|\/rolevid\//;

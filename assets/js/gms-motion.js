@@ -10,7 +10,7 @@
 
   /* ---------------- split-flap: the key word of each heading rolls into yellow scoreboard tiles ---------------- */
   var flapIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting) e.target.setAttribute('data-flap-on', ''); else if (e.boundingClientRect.top > 0) e.target.removeAttribute('data-flap-on'); });
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.setAttribute('data-flap-on', ''); flapIO.unobserve(e.target); } });
   }, { threshold: 0.55 }) : null;
   function lastTextNode(el) {
     var w = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return n.nodeValue.trim() && !(n.parentNode.closest && n.parentNode.closest('.hero-dot,.sfl,.sx')) ? 1 : 3; } }), n, last = null;
@@ -83,6 +83,18 @@
     doc.addEventListener('mousedown', function () { cur.setAttribute('data-down', ''); });
     doc.addEventListener('mouseup', function () { cur.removeAttribute('data-down'); });
   }
+
+  /* ---------------- road to the podium: the active step picks its photo ---------------- */
+  function stepPhoto() {
+    var sec = doc.querySelector('[data-r=steps-section]'); if (!sec) return; var steps = sec.querySelectorAll('[data-step]'), k = 0;
+    steps.forEach(function (st, i) { if (st.getAttribute('data-on') === '1') k = i; });
+    var fig = sec.querySelector('[data-ps]'); if (!fig) return; var imgs = fig.querySelectorAll('img');
+    imgs.forEach(function (im, i) { if ((i === k) !== im.hasAttribute('data-on')) im.toggleAttribute('data-on', i === k); });
+    var cap = fig.querySelector('figcaption'); if (cap && imgs[k] && cap.textContent !== imgs[k].getAttribute('data-cap')) cap.textContent = imgs[k].getAttribute('data-cap');
+  }
+  new MutationObserver(stepPhoto).observe(doc.body || root, { subtree: true, attributes: true, attributeFilter: ['data-on'] });
+  /* buttons that scroll to a section, e.g. Explore the venue */
+  doc.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-goto]'); if (!b) return; var t = doc.getElementById(b.getAttribute('data-goto')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); } });
 
   /* ---------------- run as the page draws ---------------- */
   var t = 0;
