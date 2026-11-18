@@ -1381,8 +1381,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=11"></script>
-<script defer src="./assets/js/gms-plus.js?v=37"></script>
+<script defer src="./assets/js/gms-motion.js?v=12"></script>
+<script defer src="./assets/js/gms-plus.js?v=38"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1435,7 +1435,7 @@ main h2 em,.hx-h em{font-style:italic}
 :is(.hx-pri,[data-r=tabbar] .tb-reg,.pd-reg) .gi{display:none}
 [data-r=regdock] .rd-go{background:#F2F1EC!important;color:#0B0B0C!important}
 /* faint grid on the black sections */
-:is([data-r=steps-section],[data-r=stories],[data-r=ecx],[data-r=roles-section],footer.ft){background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px)!important;background-size:72px 72px!important}
+:is([data-r=stories],[data-r=ecx],[data-r=roles-section],footer.ft){background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px)!important;background-size:72px 72px!important}
 /* hairline rules on bone sections */
 :is(section.vl,section[data-r=sch-section],section[data-r=ev-section]){box-shadow:inset 0 1px 0 rgba(11,11,12,.14)}
 .sx{font-family:'JetBrains Mono',ui-monospace,monospace!important;letter-spacing:.14em!important;text-transform:uppercase}
@@ -1448,13 +1448,13 @@ main h2 em,.hx-h em{font-style:italic}
  background:radial-gradient(60% 55% at 50% 45%,rgba(242,241,236,.07),transparent 70%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px}
 .ecs-stage[data-drag]{cursor:grabbing}
 .ecs-rot{position:absolute;left:50%;top:44%;transform-style:preserve-3d}
-.ecs-card{all:unset;box-sizing:border-box;position:absolute;left:0;top:0;width:min(300px,62vw);cursor:pointer;transform-style:preserve-3d;transition:opacity .35s ease}
+.ecs-card{all:unset;box-sizing:border-box;position:absolute;left:0;top:0;width:min(340px,70vw);backface-visibility:hidden;-webkit-font-smoothing:antialiased;cursor:pointer;transform-style:preserve-3d;transition:opacity .35s ease}
 .ecs-stage.ecs-ease .ecs-card{transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s ease}
 .ecs-in{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:16px 18px;border-radius:18px;background:linear-gradient(160deg,#1A1A1D,#0F0F11);border:1px solid rgba(255,255,255,.09);color:#F2F1EC;box-shadow:0 30px 60px rgba(0,0,0,.45);transform-origin:50% 50%;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s,box-shadow .4s}
 .ecs-in .ec-meta{grid-column:1/-1;display:flex;justify-content:space-between;font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.08em;color:rgba(242,241,236,.55);text-transform:uppercase}
 .ecs-in .ec-ev{grid-column:1/-1;font-weight:600;font-size:14px;margin-bottom:6px}.ecs-in .ec-ev span{color:rgba(242,241,236,.5)!important}
 .ecs-in .ec-nm{font-size:14px;color:rgba(242,241,236,.82)}.ecs-in .ec-nm small{display:block;font:500 10px 'JetBrains Mono',monospace;color:rgba(242,241,236,.45)}
-.ecs-in .ec-sc{font:400 30px/1 'Instrument Serif',serif;color:#fff;text-align:right}
+.ecs-in .ec-sc{font:400 34px/1 'Instrument Serif',serif;color:#fff;text-align:right}
 .ecs-in .pill{font-size:10px}
 .ecs-card[data-front] .ecs-in{border-color:#F2F1EC;box-shadow:0 0 0 1px rgba(242,241,236,.25),0 40px 80px rgba(0,0,0,.55)}
 .ecs-card[data-live] .ecs-in::before{content:"";position:absolute;top:14px;right:14px;width:7px;height:7px;border-radius:50%;background:#F2F1EC;box-shadow:0 0 0 0 rgba(242,241,236,.6);animation:ecsPulse 2s infinite}
@@ -1484,6 +1484,34 @@ html[data-theme=dark] .gyf-h em{background:#F2F1EC;color:#0B0B0C}
 .gyb:hover{transform:scale(1.06)}.gyb:focus-visible{outline:2px solid #F2F1EC;outline-offset:4px}
 html.gy-top .gyb{opacity:0;pointer-events:none}
 @media (max-width:900px){.gyb{display:none}}
+
+/* the bot's hello */
+.gyh{position:fixed;right:134px;bottom:44px;z-index:72;transform-origin:100% 100%;opacity:0;transform:translate(18px,14px) scale(.6) rotate(4deg);transition:opacity .45s ease,transform .7s cubic-bezier(.34,1.56,.64,1)}
+.gyh[data-on]{opacity:1;transform:none}.gyh[data-off]{opacity:0;transform:translate(10px,8px) scale(.8);transition:opacity .35s ease,transform .45s ease}
+.gyh-b{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px 14px 14px;border-radius:22px 22px 6px 22px;background:#F2F1EC;color:#0B0B0C;box-shadow:0 18px 40px rgba(0,0,0,.28),0 0 0 1px rgba(11,11,12,.08);font:500 14px/1.25 'Inter',sans-serif}
+.gyh-b::after{content:"";position:absolute;right:-7px;bottom:10px;width:16px;height:16px;background:#F2F1EC;clip-path:polygon(0 0,100% 100%,0 100%)}
+.gyh-w{font-size:26px;display:inline-block;transform-origin:70% 80%;animation:gyhWave 1.6s ease-in-out .5s 2}
+@keyframes gyhWave{0%,100%{transform:rotate(0)}15%{transform:rotate(16deg)}30%{transform:rotate(-8deg)}45%{transform:rotate(14deg)}60%{transform:rotate(-4deg)}75%{transform:rotate(10deg)}}
+.gyh-t{display:flex;flex-direction:column}.gyh-t b{font:400 22px/1 'Instrument Serif',serif}
+.gyh-go{margin-left:6px;padding:7px 12px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font-size:12px;font-weight:600;white-space:nowrap}
+.gyh-x{all:unset;cursor:pointer;position:absolute;top:-9px;left:-9px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#0B0B0C;color:#F2F1EC;font-size:15px;line-height:1;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+@media (max-width:760px){.gyh{right:12px;bottom:calc(150px + env(safe-area-inset-bottom))}.gyh-b{padding:12px 14px;border-radius:20px 20px 6px 20px}.gyh-b::after{right:22px;bottom:-7px;clip-path:polygon(0 0,100% 0,100% 100%)}}
+@media (prefers-reduced-motion:reduce){.gyh{transition:opacity .3s}.gyh-w{animation:none}}
+
+/* the Games at a glance: a pinned scoreboard that fills row by row as you scroll */
+.gyk{position:relative;z-index:3;height:260vh;background:#F2F1EC;color:#0B0B0C}
+html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
+.gyk-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 var(--gut,32px);max-width:1320px;margin:0 auto;box-sizing:border-box}
+.gyk-k{font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;opacity:.55;margin-bottom:clamp(18px,3vh,34px)}
+.gyk-rows{display:grid;grid-template-rows:repeat(3,auto)}
+.gyk-row{position:relative;display:grid;grid-template-columns:minmax(120px,.7fr) 1.6fr 1fr;align-items:end;gap:24px;padding:clamp(10px,1.8vh,20px) 0 clamp(12px,2vh,22px);overflow:hidden}
+.gyk-l{position:absolute;left:0;top:0;height:1px;width:100%;background:currentColor;opacity:.22;transform-origin:0 50%;transform:scaleX(var(--ln,0))}
+.gyk-n,.gyk-w{font:400 clamp(72px,13vh,168px)/.86 'Instrument Serif',Georgia,serif;letter-spacing:-.03em;display:block;transform:translateY(calc((1 - var(--in,0)) * 105%))}
+.gyk-w{font-style:italic;transition-delay:.05s}
+.gyk-d{font:500 12px/1.4 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;text-align:right;padding-bottom:1.1em;opacity:calc(var(--in,0) * .7);transform:translateY(calc((1 - var(--in,0)) * 12px))}
+.gyk-row{opacity:var(--op,1)}
+@media (max-width:760px){.gyk{height:220vh}.gyk-row{grid-template-columns:auto 1fr;gap:6px 14px}.gyk-d{grid-column:1/-1;text-align:left;padding:0}.gyk-n,.gyk-w{font-size:clamp(64px,19vw,104px)}}
+@media (prefers-reduced-motion:reduce){.gyk{height:auto}.gyk-pin{position:static;height:auto;padding-block:96px}.gyk-n,.gyk-w,.gyk-d{transform:none!important;opacity:1!important}.gyk-l{transform:none}}
 </style>
 <div id="gms-ldr" role="dialog" aria-label="Loading" aria-live="polite">
   <div class="ld-in">
@@ -1630,9 +1658,14 @@ html.gy-top .gyb{opacity:0;pointer-events:none}
   </section>
 
 
-  <section class="gyf" aria-label="The Games at a glance"><canvas class="gyf-cv" aria-hidden="true"></canvas>
-    <div class="gyf-copy"><span class="sx"><i>AIPT</i>19–24 November 2026</span><p class="gyf-h">Six days. Eight sports.<br><em>One</em> complex.</p><p class="gyf-s">Veer Savarkar Sports Complex · Naranpura, Ahmedabad</p></div>
-  </section>
+  <section class="gyk" aria-label="The Games at a glance"><div class="gyk-pin">
+    <span class="gyk-k">All India Police Tournament 2026</span>
+    <div class="gyk-rows">
+      <div class="gyk-row"><i class="gyk-l"></i><span class="gyk-n">6</span><span class="gyk-w">days</span><span class="gyk-d">19–24 November 2026</span></div>
+      <div class="gyk-row"><i class="gyk-l"></i><span class="gyk-n">8</span><span class="gyk-w">sports</span><span class="gyk-d">28 medal events</span></div>
+      <div class="gyk-row"><i class="gyk-l"></i><span class="gyk-n">1</span><span class="gyk-w">complex</span><span class="gyk-d">Veer Savarkar · Naranpura, Ahmedabad</span></div>
+    </div>
+  </div></section>
   <section data-r="venue-section" class="vl" id="venue" aria-label="The venue">
     <div class="vl-in">
       <div class="vl-head">
@@ -2762,7 +2795,7 @@ class Component extends DCLogic {
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
   heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
-    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/venue-poster.webp?v=v2',src:'assets/venue-'+(small?'720':'1080')+'.mp4?v=v2','aria-hidden':'true',
+    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/venue-poster.webp?v=v2',src:'assets/venue-1080.mp4?v=v3','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         el.addEventListener('timeupdate',()=>this.heroChapter(el));el.addEventListener('pause',()=>this.heroChapter(el,'paused'));el.addEventListener('play',()=>this.heroChapter(el,'running'));
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});const go=()=>io.observe(el);if(LITE&&document.readyState!=='complete')window.addEventListener('load',()=>setTimeout(go,350),{once:true});else go();(this.vios||(this.vios=[])).push(io);},

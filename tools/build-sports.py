@@ -10,6 +10,12 @@ def cats():
         out[m.group(1)] = dict(venue=m.group(2), events=[(e[3].replace("\\'", "’"), e[1], e[2]) for e in evs])
     return out
 
+DAYS=[("Thu","19 Nov","2026-11-19"),("Fri","20 Nov","2026-11-20"),("Sat","21 Nov","2026-11-21"),("Sun","22 Nov","2026-11-22"),("Mon","23 Nov","2026-11-23"),("Tue","24 Nov","2026-11-24")]
+def sessions():
+    i = SRC.find("sessions:["); j = SRC.find("]]]", i)
+    block = SRC[i:j+3]; days = re.findall(r"\[(\['[^\]]*'\](?:,\['[^\]]*'\])*)\]", block)
+    return [re.findall(r"\['([\d:]+)','([A-Z0-9]+)','([^']+)'\]", d) for d in days]
+
 def plan_key(k):
     i = SRC.find(f'data-vl-key="{k}"'); j = SRC.find("</ol>", i); seg = SRC[i:j]
     return re.findall(r'data-vl-item="(\d+)"><b>\d+</b><span><strong>([^<]+)</strong><small>([^<]+)</small>', seg)
@@ -29,7 +35,7 @@ SPORTS = {
           ("Win by two", "A game goes to 21, but must be won by two clear points. At 29–29 the next point wins it, 30 caps the game."),
           ("Best of three games", "The first player or pair to take two games wins the match."),
           ("Intervals", "A 60-second break when the leader reaches 11, and up to two minutes between games. Ends change after each game, and at 11 in a deciding game."),
-          ("Knockout draw", "Rounds of 16, quarter-finals, semi-finals and a final for every event.")],
+          ("Knockout draw", "Knockout from the first round to the final, for every event.")],
    arrive=[("Athletes", "Two athletes’ entries at the far end of the hall, straight from the team locker rooms and hydration area."),
            ("VIP and VVIP guests", "VIP entries either side of the stage end; the VVIP route comes onto the floor beside the stage."),
            ("Spectators", "Enter from the plaza on the first floor of Block C. Lunch and refreshment areas run along both long sides.")],
@@ -43,7 +49,7 @@ SPORTS.update({
  "tabletennis": dict(name="Table Tennis", sport="Table Tennis", photo="tabletennis", kicker="Featured sport", plan="tabletennis", plan_label="Table tennis hall, Block C ground floor", pdf="",
    lead="Twelve tables on the ground floor of Block C. Singles, mixed doubles and team events, played to 11 at the speed of a rally.",
    facts=[("12","tables"),("5","medal events"),("11","points a game"),("19–24","Nov 2026")], big="11", big_label="points to win a game",
-   rules=[("Games to 11","A game goes to 11 points and must be won by two clear points."),("Best of five games","The first player or pair to take three games wins the match."),("Service","Service passes every two points, and every point once the game reaches 10–10."),("Team events","Players from the same unit meet another unit in a series of singles and doubles matches."),("Knockout draw","Rounds of 16, quarter-finals, semi-finals and a final for every event.")],
+   rules=[("Games to 11","A game goes to 11 points and must be won by two clear points."),("Best of five games","The first player or pair to take three games wins the match."),("Service","Service passes every two points, and every point once the game reaches 10–10."),("Team events","Players from the same unit meet another unit in a series of singles and doubles matches."),("Knockout draw","Knockout from the first round to the final, for every event.")],
    arrive=[("Athletes","The athletes’ entrance on the side of Block C leads past the registration desk to the team and players’ rooms."),("VIP and media","The VIP and media entrance is on the far side of the hall, with its own reception and waiting area."),("Spectators","Enter from the plaza through the VIP/athletes’ entry; the merchandise stalls sit along the passage.")], next_="athletics"),
  "athletics": dict(name="Athletics", sport="Athletics", photo="athletics", kicker="On the track", plan=None,
    lead="Sprints and the relay on the outdoor ground: the 100m for men and women, then the 4×400m to close the meet.",
@@ -68,7 +74,7 @@ SPORTS.update({
  "tennis": dict(name="Tennis", sport="Tennis", photo="tennis", kicker="On the courts", plan=None,
    lead="Singles for men and women and a mixed doubles event on the outdoor Tennis Courts of the complex.",
    facts=[("3","medal events"),("6","games a set"),("Best of 3","sets"),("19–24","Nov 2026")], big="6", big_label="games to win a set",
-   rules=[("Sets to six games","A set goes to six games, won by two; at 6–6 a tie-break decides it."),("Best of three sets","The first player or pair to win two sets wins the match."),("Scoring","Points run 15, 30, 40 and game; at 40–40 a player needs two clear points."),("Mixed doubles","One man and one woman per side, serving in turn."),("Knockout draw","Rounds of 16, quarter-finals, semi-finals and a final for every event.")],
+   rules=[("Sets to six games","A set goes to six games, won by two; at 6–6 a tie-break decides it."),("Best of three sets","The first player or pair to win two sets wins the match."),("Scoring","Points run 15, 30, 40 and game; at 40–40 a player needs two clear points."),("Mixed doubles","One man and one woman per side, serving in turn."),("Knockout draw","Knockout from the first round to the final, for every event.")],
    arrive=None, next_="football"),
  "football": dict(name="Football", sport="Football", photo="football", kicker="On the pitch", plan=None,
    lead="Men’s and women’s tournaments and a five-a-side event on the Outdoor Sports Ground.",
@@ -154,6 +160,23 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .vph-k{padding:22px;border-radius:18px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}.vph-k ul{list-style:none;margin:16px 0;padding:0}.vph-k li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-top:1px solid rgba(11,11,12,.1)}
 .vph-k li b{font:400 30px/1 'Instrument Serif',serif;min-width:84px}.vph-k p{margin:0;font-size:13px;color:var(--ink2)}
 @media (max-width:1000px){.vph{grid-template-columns:1fr}}
+.sub{position:fixed;left:50%;top:78px;z-index:19;display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(242,241,236,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px rgba(11,11,12,.1),0 10px 30px rgba(0,0,0,.12);transform:translate(-50%,-14px);opacity:0;pointer-events:none;transition:opacity .45s var(--ease),transform .6s var(--ease);overflow:hidden}
+.sub.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.sub a{padding:8px 14px;border-radius:999px;font:600 13px 'Inter';text-decoration:none;color:#0B0B0C;transition:background .3s,color .3s}.sub a[aria-current]{background:#0B0B0C;color:#F2F1EC}
+.sub .prog{position:absolute;left:0;bottom:0;height:2px;width:100%;background:#0B0B0C;transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.hx2{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:22px}
+.cd{display:inline-flex;align-items:baseline;gap:12px;padding:10px 16px;border-radius:999px;border:1px solid rgba(242,241,236,.25)}.cd-k{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:rgba(242,241,236,.6)}.cd-v{font:400 24px/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums}
+.fol{all:unset;cursor:pointer;padding:12px 18px;border-radius:999px;font:600 13px 'Inter';color:#F2F1EC;border:1px solid rgba(242,241,236,.25);transition:background .3s,color .3s}.fol[aria-pressed=true]{background:#F2F1EC;color:#0B0B0C}
+[data-split] .ch{display:inline-block;transform:translateY(105%);opacity:0;animation:chIn 1.1s var(--ease) forwards;animation-delay:calc(var(--i) * 45ms + .15s)}[data-split]{overflow:hidden;padding-bottom:.06em}
+@keyframes chIn{to{transform:none;opacity:1}}
+.ev .nx{font:500 11.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--ink2)}
+.sch{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.sd{padding:22px;border-radius:20px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}.sd h3{margin:0 0 10px;display:flex;align-items:baseline;gap:12px;font:400 28px/1 'Instrument Serif',serif}.sd h3 span{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.sd ol{list-style:none;margin:0;padding:0}.sr{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid rgba(11,11,12,.09)}
+.sr time{font:400 26px/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums}.sr b{display:block;font-size:14.5px}.sr span{font-size:12.5px;color:var(--ink2)}
+.sa{display:flex;gap:6px}.sa button{all:unset;cursor:pointer;height:32px;padding:0 11px;border-radius:999px;border:1px solid rgba(11,11,12,.16);font:600 12px 'Inter';display:grid;place-items:center;transition:background .3s,color .3s}.sa button:hover,.sa .rm[aria-pressed=true]{background:#0B0B0C;color:#F2F1EC}
+.toast{position:fixed;left:50%;bottom:28px;z-index:30;transform:translate(-50%,20px);opacity:0;padding:12px 18px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font:600 13px 'Inter';transition:opacity .4s,transform .5s var(--ease);pointer-events:none}.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:640px){.sub{top:auto;bottom:16px;transform:translate(-50%,14px)}.sub.on{transform:translate(-50%,0)}.sub a{padding:8px 10px;font-size:12px}.sr{grid-template-columns:54px 1fr}.sa{grid-column:2}}
+@media (prefers-reduced-motion:reduce){[data-split] .ch{animation:none;transform:none;opacity:1}}
 .arrive{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
 .arrive div{--acc:#F2F1EC;padding:22px;border-radius:18px;background:#0B0B0C;color:#F2F1EC}.arrive h3{margin:0 0 8px;font:700 16px 'Inter';color:var(--acc)}.arrive p{margin:0;font-size:14.5px;color:rgba(244,239,230,.75)}
 .addr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:14px;padding:22px;border-radius:18px;border:1px solid rgba(15,27,45,.12)}
@@ -188,11 +211,45 @@ function up(e){delete pts[e.pointerId];if(!Object.keys(pts).length)v.removeAttri
 v.addEventListener('pointerup',up);v.addEventListener('pointercancel',up);addEventListener('resize',function(){ap(true);});})();
 """
 
+JS2 = r"""
+(function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
+function toast(t){var x=D.querySelector('.toast');if(!x){x=D.createElement('div');x.className='toast';D.body.appendChild(x);}x.textContent=t;x.classList.add('on');clearTimeout(x.t);x.t=setTimeout(function(){x.classList.remove('on');},2200);}
+var h=D.querySelector('[data-split]');if(h){var w=h.textContent;h.textContent='';h.setAttribute('aria-label',w);w.split('').forEach(function(c,i){var s=D.createElement('span');s.className='ch';s.setAttribute('aria-hidden','true');s.style.setProperty('--i',i);s.textContent=c===' '?' ':c;h.appendChild(s);});}
+var cd=D.querySelector('.cd');if(cd&&cd.dataset.first){var f=Date.parse(cd.dataset.first),l=Date.parse(cd.dataset.last)+3*3600e3,k=cd.querySelector('.cd-k'),v=cd.querySelector('.cd-v');
+ function tick(){var n=Date.now();if(n<f){var s=Math.floor((f-n)/1000),dd=Math.floor(s/86400),hh=Math.floor(s%86400/3600),mm=Math.floor(s%3600/60),ss=s%60;k.textContent='First session in';v.textContent=(dd?dd+'d ':'')+String(hh).padStart(2,'0')+'h '+String(mm).padStart(2,'0')+'m '+String(ss).padStart(2,'0')+'s';}else if(n<l){k.textContent='Status';v.textContent='Live now';}else{k.textContent='Status';v.textContent='Medals decided';}}
+ tick();setInterval(tick,1000);}
+function store(){try{return JSON.parse(localStorage.getItem('gms-sport-follow')||'{}');}catch(e){return{};}}function save(o){try{localStorage.setItem('gms-sport-follow',JSON.stringify(o));}catch(e){}}
+var fo=D.querySelector('.fol');if(fo){var st=store(),key='sport:'+fo.dataset.sport,lab=fo.textContent.replace('☆ ','');function sf(){var on=!!store()[key];fo.setAttribute('aria-pressed',on);fo.textContent=(on?'★ Following ':'☆ Follow ')+lab.replace(/^Follow(ing)? /,'');}sf();fo.addEventListener('click',function(){var o=store();if(o[key])delete o[key];else o[key]=1;save(o);sf();toast(o[key]?'You will see '+lab.replace(/^Follow /,'')+' first in My Games':'Unfollowed');});}
+D.querySelectorAll('.rm').forEach(function(b){var o=store();b.setAttribute('aria-pressed',!!o[b.dataset.rm]);b.textContent=o[b.dataset.rm]?'★':'☆';});
+D.addEventListener('click',function(e){var r=e.target.closest('.rm');if(r){var o=store(),k=r.dataset.rm;if(o[k])delete o[k];else o[k]=1;save(o);r.setAttribute('aria-pressed',!!o[k]);r.textContent=o[k]?'★':'☆';toast(o[k]?'Saved on this device':'Removed');return;}
+ var c=e.target.closest('.ic');if(c){var s=new Date(c.dataset.ics),en=new Date(s.getTime()+90*60e3),z=function(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');};
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//GMS//AIPT 2026//EN','BEGIN:VEVENT','UID:'+z(s)+'-'+Math.random().toString(36).slice(2)+'@gms','DTSTAMP:'+z(new Date()),'DTSTART:'+z(s),'DTEND:'+z(en),'SUMMARY:'+c.dataset.title,'LOCATION:'+c.dataset.loc,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  var a=D.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=c.dataset.title.replace(/[^\w]+/g,'-').toLowerCase()+'.ics';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);toast('Calendar file ready');}});
+var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=[].slice.call(sub.querySelectorAll('a')),secs=links.map(function(a){return D.querySelector(a.getAttribute('href'));}),raf=0;
+ function paint(){raf=0;var y=scrollY,vh=innerHeight;sub.classList.toggle('on',hero.getBoundingClientRect().bottom<vh*0.35);sub.style.setProperty('--p',(y/Math.max(1,D.documentElement.scrollHeight-vh)).toFixed(4));var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.4)cur=i;});links.forEach(function(a,i){a.toggleAttribute('aria-current',i===cur);});}
+ addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(paint);},{passive:true});paint();}
+})();
+"""
+
 def page(key):
     d = SPORTS[key]; c = cats()[d["sport"]]; e = html.escape
+    codes = {code: title for title, cat, code in c["events"]}
+    ses = [(di, t, code, rnd) for di, day in enumerate(sessions()) for t, code, rnd in day if code in codes]
+    ses.sort(key=lambda x: (x[0], x[1]))
+    nxt = {}
+    for di, t, code, rnd in ses: nxt.setdefault(code, (di, t, rnd))
+    def iso(di, t): return DAYS[di][2] + "T" + t + ":00+05:30"
+    first = iso(*ses[0][:2]) if ses else ""; last = iso(*ses[-1][:2]) if ses else ""
+    sched = ""
+    for di in sorted(set(x[0] for x in ses)):
+        rows = "".join(f'<li class="sr"><time>{t}</time><div><b>{e(codes[code])}</b><span>{e(rnd)} · {code}</span></div>'
+                       f'<span class="sa"><button type="button" class="ic" data-ics="{iso(di,t)}" data-title="{e(d["name"]+" · "+codes[code]+" · "+rnd)}" data-loc="{e(c["venue"])}, Veer Savarkar Sports Complex, Naranpura, Ahmedabad">+ Calendar</button>'
+                       f'<button type="button" class="rm" data-rm="{key}-{code}-{di}" aria-pressed="false" aria-label="Remind me">☆</button></span></li>'
+                       for d_, t, code, rnd in ses if d_ == di)
+        sched += f'<div class="sd rv"><h3><span>Day {di+1:02d}</span>{DAYS[di][0]} {DAYS[di][1]}</h3><ol>{rows}</ol></div>'
     evs = "".join(
         f'<a class="rv" style="transition-delay:{i*90}ms" href="../index.html#register"><code>{code}</code><span class="pill">{CAT_LABEL[cat]}</span>'
-        f'<h3>{e(title)}</h3><span class="md"><i style="background:#D4A63A"></i><i style="background:#B9BEC7"></i><i style="background:#B07A4A"></i>Gold, silver, bronze</span><span class="go">Register for this event →</span></a>'
+        f'<h3>{e(title)}</h3>' + (f'<span class="nx">Next · {DAYS[nxt[code][0]][0]} {DAYS[nxt[code][0]][1]} · {nxt[code][1]} · {e(nxt[code][2])}</span>' if code in nxt else '') + f'<span class="md"><i style="background:#D4A63A"></i><i style="background:#B9BEC7"></i><i style="background:#B07A4A"></i>Gold, silver, bronze</span><span class="go">Register for this event →</span></a>'
         for i, (title, cat, code) in enumerate(c["events"]))
     rules = "".join(f'<li class="rv"><b>{i+1:02d}</b><div><h3>{e(t)}</h3><p>{e(p)}</p></div></li>' for i, (t, p) in enumerate(d["rules"]))
     facts = "".join(f'<div><b>{a}</b><span>{b}</span></div>' for a, b in d["facts"])
@@ -224,22 +281,25 @@ def page(key):
 <nav class="top-r"><a class="back" href="../index.html#sports">← All sports</a><a class="btn btn-g sm" href="../index.html#register">Register</a></nav></header>
 <main>
 <section class="hero"><img src="../assets/sports/{d['photo']}.webp" alt="" fetchpriority="high"><div class="wrap">
-<span class="kick">{d['kicker']} · {c['venue']}</span><h1>{d['name']}</h1><p class="lead">{e(d['lead'])}</p>
+<span class="kick">{d['kicker']} · {c['venue']}</span><h1 data-split>{d['name']}</h1><p class="lead">{e(d['lead'])}</p>
 <div class="cta"><a class="btn btn-g" href="../index.html#register">Register to compete →</a><a class="btn btn-o" href="#venue">{"See the hall plan" if d.get("plan") else "Find the venue"}</a></div>
+<div class="hx2"><div class="cd" data-first="{first}" data-last="{last}" aria-live="polite"><span class="cd-k">First session in</span><span class="cd-v">—</span></div><button type="button" class="fol" data-sport="{key}" aria-pressed="false">☆ Follow {d['name']}</button></div>
 <div class="facts">{facts}</div></div></section>
-<section class="s"><div class="wrap"><div class="head"><div><span class="kick">01 · Medal events</span><h2>{len(c['events'])} events, <em>one</em> venue</h2></div>
+<nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
+<section class="s" id="events"><div class="wrap"><div class="head"><div><span class="kick">01 · Medal events</span><h2>{len(c['events'])} events, <em>one</em> venue</h2></div>
 <p>Every event is open to accredited police athletes from each unit. Pick an event to start your registration.</p></div><div class="ev">{evs}</div></div></section>
-<section class="s dark"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">02 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
+<section class="s" id="schedule"><div class="wrap"><div class="head"><div><span class="kick">02 · Schedule</span><h2>Every <em>session</em>, day by day</h2></div><p>All times IST. Add a session to your calendar, or star it to keep it on this device.</p></div><div class="sch">{sched}</div></div></section>
+<section class="s dark" id="format"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">03 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
 <ol class="rules">{rules}</ol></div>
 <div class="medals"><div class="rv"><i style="background:#D4A63A"></i><b>Gold</b><span>Winner of the final</span></div><div class="rv" style="transition-delay:90ms"><i style="background:#B9BEC7"></i><b>Silver</b><span>Runner-up in the final</span></div><div class="rv" style="transition-delay:180ms"><i style="background:#B07A4A"></i><b>Bronze</b><span>Awarded from the semi-finals</span></div></div>
 <div class="mt rv"><p>The live medal table opens with the first {d['name'].lower()} final on 24 November.</p><a class="btn btn-n sm" href="../index.html#medals">Open the medal table</a></div></div></section>
-<section class="s" id="venue"><div class="wrap"><div class="head"><div><span class="kick">03 · The venue</span><h2>{('Inside the <em>'+c['venue'].split()[0].lower()+'</em> hall') if d.get('plan') else ('Find the <em>'+c['venue'].lower()+'</em>')}</h2></div>
+<section class="s" id="venue"><div class="wrap"><div class="head"><div><span class="kick">04 · The venue</span><h2>{('Inside the <em>'+c['venue'].split()[0].lower()+'</em> hall') if d.get('plan') else ('Find the <em>'+c['venue'].lower()+'</em>')}</h2></div>
 <p>{'The real layout from the organising team. Tap a number to zoom to it, pinch or Ctrl+scroll to zoom, and drag to look around.' if d.get('plan') else 'Where the '+e(d['name'].lower())+' is played inside the complex, and how far it is from the other venues.'}</p></div>{plan}
 <div class="arrive">{arrive}</div>
 <div class="addr rv"><div><b>Veer Savarkar Sports Complex</b><span>Naranpura, Ahmedabad, Gujarat · Accreditation card required at every entry</span></div><a class="btn btn-n" href="{MAPS}" target="_blank" rel="noopener">Directions in Google Maps ↗</a></div></div></section>
 <section class="deep"><div class="wrap"><a class="next" href="{nx}.html"><span style="display:block">Next sport<b>{NAMES[nx]}</b></span><i>→</i></a></div>
 <footer><div class="wrap"><span>All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster · 19–24 Nov 2026</span><a href="../index.html">Back to the Games</a></div></footer></section>
-</main><script>{JS}</script></body></html>"""
+</main><script>{JS}</script><script>{JS2}</script></body></html>"""
 
 os.makedirs("sports", exist_ok=True)
 for k in sys.argv[1:]:

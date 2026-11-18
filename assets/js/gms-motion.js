@@ -123,11 +123,11 @@
     }
     function scrollTheta() { var r = sec.getBoundingClientRect(), vh = window.innerHeight, k = Math.max(0, Math.min(1, (vh * 0.5 - r.top) / Math.max(1, r.height))); return -k * step * Math.max(0, cards.length - 1); }
     function place() {
-      raf = 0; if (!cards.length) return; var w = stage.clientWidth; R = Math.max(240, Math.min(520, w * 0.36)); theta = scrollTheta() + drag;
+      raf = 0; if (!cards.length) return; var w = stage.clientWidth; R = Math.max(240, Math.min(520, w * 0.36)); theta = scrollTheta() + drag; rot.style.transform = 'translateZ(' + (-R).toFixed(0) + 'px)';
       var front = 0, best = 1e9;
       cards.forEach(function (c, i) {
         var a = i * step + theta, n = ((a % 360) + 540) % 360 - 180, cs = Math.cos(n * Math.PI / 180), y = (i * step + theta) / step * yStep;
-        c.style.transform = 'translate(-50%,-50%) translateY(' + y.toFixed(1) + 'px) rotateY(' + a.toFixed(2) + 'deg) translateZ(' + R.toFixed(0) + 'px) rotateY(' + (-n * 0.18).toFixed(2) + 'deg)';
+        c.style.transform = 'translate(-50%,-50%) translateY(' + y.toFixed(1) + 'px) rotateY(' + a.toFixed(2) + 'deg) translateZ(' + R.toFixed(0) + 'px) rotateY(' + (-n * 0.18).toFixed(2) + 'deg)'; c.style.setProperty('--n', n.toFixed(1));
         c.style.opacity = cs < -0.15 ? 0 : (0.28 + 0.72 * Math.max(0, cs)).toFixed(3); c.style.zIndex = Math.round(cs * 100) + 100; c.style.pointerEvents = cs < 0.2 ? 'none' : '';
         var d = Math.abs(n) + Math.abs(y) * 0.2; if (d < best) { best = d; front = i; }
       });
@@ -151,6 +151,10 @@
     var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (panel.getAttribute('data-ecs') === 'spiral') build(); }, 300); }).observe(list, { childList: true, subtree: true, characterData: true });
     new MutationObserver(function () { if (panel.getAttribute('data-open') === '1' && panel.getAttribute('data-ecs') === 'spiral') { built = ''; build(); intro(); } }).observe(panel, { attributes: true, attributeFilter: ['data-open'] });
     build();
+    var userClosed = false; try { userClosed = sessionStorage.getItem('gms-ec-closed') === '1'; } catch (e) {}
+    var tog = sec.querySelector('.ecx-toggle'), auto = false;
+    if (tog) tog.addEventListener('click', function () { if (auto) { auto = false; return; } var closing = panel.getAttribute('data-open') === '1'; userClosed = closing; try { sessionStorage.setItem('gms-ec-closed', closing ? '1' : '0'); } catch (e) {} }, true);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && !userClosed && panel.getAttribute('data-open') !== '1' && tog) { auto = true; tog.click(); } }); }, { threshold: 0.2 }).observe(sec);
   }
 
   /* ---------------- cursor field: small shuttles turn to the pointer (gev.design) ---------------- */
@@ -203,10 +207,40 @@
     new MutationObserver(function () { setTimeout(scanSecs, 200); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     setTimeout(scanSecs, 600); window.addEventListener('gms:entered', function () { setTimeout(scanSecs, 400); });
   }
+
+  /* ---------------- sideways card rows never stall the page: mostly vertical gestures scroll the page on ---------------- */
+  function rowsPass() { doc.querySelectorAll('.st-track').forEach(function (t) { if (t.__wp) return; t.__wp = 1; t.addEventListener('wheel', function (e) { if (e.ctrlKey) return; if (Math.abs(e.deltaY) > Math.abs(e.deltaX) * 1.2) { e.preventDefault(); window.scrollBy(0, e.deltaY * (e.deltaMode === 1 ? 40 : 1)); } }, { passive: false }); }); }
+
+  /* ---------------- the bot says hello once per visit ---------------- */
+  function botHello() {
+    if (root.__hello) return; root.__hello = 1; try { if (sessionStorage.getItem('gms-hello') === '1') return; } catch (e) {}
+    function show() {
+      if (doc.querySelector('.gyh')) return; var b = doc.createElement('div'); b.className = 'gyh'; b.setAttribute('role', 'status');
+      b.innerHTML = '<button type="button" class="gyh-x" aria-label="Dismiss">×</button><button type="button" class="gyh-b"><span class="gyh-w" aria-hidden="true">👋</span><span class="gyh-t"><b>Hey!</b>How can I help?</span><span class="gyh-go">Ask Vision</span></button>';
+      doc.body.appendChild(b); requestAnimationFrame(function () { b.setAttribute('data-on', ''); });
+      function bye() { b.removeAttribute('data-on'); b.setAttribute('data-off', ''); try { sessionStorage.setItem('gms-hello', '1'); } catch (e) {} setTimeout(function () { b.remove(); }, 600); }
+      b.querySelector('.gyh-x').addEventListener('click', bye);
+      b.querySelector('.gyh-b').addEventListener('click', function () { var t = doc.querySelector('[data-r=bot] button[aria-label="Chat with Vision"]'); if (t) t.click(); bye(); });
+      setTimeout(function () { if (b.isConnected) bye(); }, 12000);
+    }
+    var go = function () { setTimeout(show, 1100); };
+    if (doc.getElementById('gms-ldr')) window.addEventListener('gms:entered', go, { once: true }); else go();
+  }
+
+  /* ---------------- the Games at a glance: rows fill in with the scroll ---------------- */
+  function glance() {
+    var sec = doc.querySelector('.gyk'); if (!sec || sec.__g) return; sec.__g = 1; var rows = sec.querySelectorAll('.gyk-row'), raf = 0;
+    function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : 1 - Math.pow(1 - x, 3); }
+    function paint() { raf = 0; var r = sec.getBoundingClientRect(), span = Math.max(1, r.height - window.innerHeight), p = REDUCED ? 1 : Math.max(0, Math.min(1, -r.top / span)), n = rows.length;
+      rows.forEach(function (row, i) { var a = i / (n + 0.4), k = ease((p * 1.15 - a) / 0.26), active = p * 1.15 >= a && (i === n - 1 || p * 1.15 < (i + 1) / (n + 0.4));
+        row.style.setProperty('--in', k.toFixed(3)); row.style.setProperty('--ln', ease((p * 1.15 - a + 0.06) / 0.3).toFixed(3)); row.style.setProperty('--op', (k < 1 || active || p > 0.92 ? 1 : 0.32).toFixed(2)); }); }
+    function q() { if (!raf) raf = requestAnimationFrame(paint); }
+    window.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q); paint();
+  }
   /* ---------------- run as the page draws ---------------- */
   var t = 0;
-  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); inverter(); }
+  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); inverter(); rowsPass(); glance(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
-  scan();
+  scan(); botHello();
 })();

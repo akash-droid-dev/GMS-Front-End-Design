@@ -1209,6 +1209,8 @@
     function bind() {
       var t = doc.querySelector('[data-pd-track]'); if (!t || t === tr) return; tr = t; cur = -1;
       tr.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q);
+      // a mostly vertical wheel or trackpad gesture over the passes scrolls the page on: the track only takes clearly sideways swipes, so the page never stalls here
+      tr.addEventListener('wheel', function (e) { if (e.ctrlKey) return; var dx = Math.abs(e.deltaX), dy = Math.abs(e.deltaY); if (dy > dx * 1.2) { e.preventDefault(); window.scrollBy(0, e.deltaY * (e.deltaMode === 1 ? 40 : 1)); } }, { passive: false });
       tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
       // mouse drag (touch scrolls natively)
       tr.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button')) return; drag = { x: e.clientX, s: tr.scrollLeft, moved: false }; });
