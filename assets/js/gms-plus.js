@@ -1191,7 +1191,7 @@
     var tr = null, raf = 0, cur = -1, drag = null;
     function cards() { return tr ? Array.prototype.slice.call(tr.querySelectorAll('[data-pd-card]')) : []; }
     function layout() {
-      raf = 0; if (!tr || !tr.isConnected) return; var r = tr.getBoundingClientRect(), mid = r.left + r.width / 2, best = -1, bd = 1e9, cs = cards();
+      raf = 0; if (!tr || !tr.isConnected) return; var r = tr.getBoundingClientRect(), cs = cards(), best = -1, bd = 1e9, w0 = cs[0] ? cs[0].getBoundingClientRect().width : 0, mid = r.left + (parseFloat(getComputedStyle(tr).paddingLeft) || 0) + w0 / 2; // the active pass sits in the first slot, under the heading
       cs.forEach(function (c, i) {
         var b = c.getBoundingClientRect(), d = (b.left + b.width / 2 - mid) / (b.width + 24), ad = Math.min(3, Math.abs(d)), inr = c.querySelector('[data-pd-inner]');
         if (inr) { inr.style.setProperty('--dd', Math.max(-3, Math.min(3, d)).toFixed(3)); inr.style.setProperty('--ad', ad.toFixed(3)); }
@@ -1202,7 +1202,7 @@
       if (best !== cur) { cur = best; if (A && A.rolePick) A.rolePick(k); setTimeout(q, 120); setTimeout(q, 480); } // the page redraws after a pick; re-apply
     }
     function q() { if (!raf) raf = requestAnimationFrame(layout); }
-    function go(n) { var cs = cards(); if (!cs.length) return; var i = Math.max(0, Math.min(cs.length - 1, (cur < 0 ? 0 : cur) + n)); cs[i].scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'center' }); }
+    function go(n) { var cs = cards(); if (!cs.length) return; var i = Math.max(0, Math.min(cs.length - 1, (cur < 0 ? 0 : cur) + n)); cs[i].scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'start' }); }
     function bind() {
       var t = doc.querySelector('[data-pd-track]'); if (!t || t === tr) return; tr = t; cur = -1;
       tr.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q);
@@ -1210,7 +1210,7 @@
       // mouse drag (touch scrolls natively)
       tr.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button')) return; drag = { x: e.clientX, s: tr.scrollLeft, moved: false }; });
       window.addEventListener('pointermove', function (e) { if (!drag) return; var dx = e.clientX - drag.x; if (Math.abs(dx) > 4) { drag.moved = true; tr.setAttribute('data-drag', ''); } tr.scrollLeft = drag.s - dx; });
-      window.addEventListener('pointerup', function () { if (!drag) return; var m = drag.moved; drag = null; tr.removeAttribute('data-drag'); if (m) { var cs = cards(); if (cs[cur]) cs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } });
+      window.addEventListener('pointerup', function () { if (!drag) return; var m = drag.moved; drag = null; tr.removeAttribute('data-drag'); if (m) tr.__dragEnd = Date.now(); if (m) { var cs = cards(); if (cs[cur]) cs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }); } });
       // tilt toward the pointer
       tr.addEventListener('pointermove', function (e) {
         if (e.pointerType !== 'mouse' || drag || REDUCED) return; var c = e.target.closest('[data-pd-card]'); if (!c || c.hasAttribute('data-flip')) return;
@@ -1226,7 +1226,7 @@
     doc.addEventListener('click', function (e) {
       var f = e.target.closest('[data-pd-flip]'); if (f) { var c = f.closest('[data-pd-card]'); if (c) { var on = !c.hasAttribute('data-flip'); cards().forEach(function (o) { if (o !== c) o.removeAttribute('data-flip'); }); c.toggleAttribute('data-flip', on); var inr = c.querySelector('[data-pd-inner]'); if (inr) { inr.style.setProperty('--ry', '0deg'); inr.style.setProperty('--rx', '0deg'); } var t = c.querySelector(on ? '.pd-reg' : '.pd-more'); if (t) setTimeout(function () { t.focus({ preventScroll: true }); }, 420); } return; }
       var g = e.target.closest('[data-pd-go]'); if (g) { go(+g.getAttribute('data-pd-go')); return; }
-      var cd = e.target.closest('[data-pd-card]'); if (cd && !e.target.closest('button') && tr && !tr.hasAttribute('data-drag')) { var i = cards().indexOf(cd); if (i !== cur) cd.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest', inline: 'center' }); }
+      var cd = e.target.closest('[data-pd-card]'); if (cd && !e.target.closest('button') && tr && !tr.hasAttribute('data-drag') && Date.now() - (tr.__dragEnd || 0) > 350) { var reg = cd.querySelector('.pd-reg'); if (reg) reg.click(); } // a pass opens its own registration wizard
     });
     return { bind: bind, q: q };
   }
