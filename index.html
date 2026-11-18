@@ -2131,7 +2131,7 @@ html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
   </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sy6emSOKlQY&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;enable3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;showChatbot&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;register&quot;,&quot;login&quot;,&quot;scores&quot;,&quot;tv&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;youtubeVideoId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AUYoy6Owok8&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Live TV&quot;}}">
 
 // Set in <head> before render: phones, tablets and touch-first devices use CSS stand-ins for the Spline scenes.
 const LITE=typeof document!=='undefined'&&document.documentElement.classList.contains('gms-lite');
@@ -2566,10 +2566,15 @@ class Component extends DCLogic {
   // captions off and HD asked for through the player's message channel (the URL flags alone are not always honoured)
   ytQuiet(f){if(!f)return;const send=(func,args)=>{try{f.contentWindow.postMessage(JSON.stringify({event:'command',func,args:args||[]}),'*');}catch(e){}};
     [600,1800,4000,9000].forEach(t=>setTimeout(()=>{send('unloadModule',['captions']);send('unloadModule',['cc']);send('setPlaybackQuality',['hd1080']);},t));}
+  // YouTube in the TV: privacy-enhanced embed, sized to cover its box like object-fit:cover
+  ytEl(key,id,o){const h=React.createElement,q='autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&enablejsapi=1&loop=1&playlist='+id+'&controls='+(o.controls?1:0)+'&origin='+encodeURIComponent(location.origin);
+    return h('div',{key,style:{position:'absolute',inset:0,overflow:'hidden',containerType:'size',background:'#0A1524'}},
+      h('iframe',{src:'https://www.youtube-nocookie.com/embed/'+id+'?'+q,title:o.title,allow:'autoplay; encrypted-media; picture-in-picture; fullscreen',allowFullScreen:true,referrerPolicy:'strict-origin-when-cross-origin',loading:'lazy',tabIndex:o.controls?0:-1,'aria-hidden':o.controls?undefined:'true',onLoad:e=>this.ytQuiet(e.currentTarget),
+        style:{position:'absolute',top:'50%',left:'50%',width:'max(100%, 177.78cqh)',height:'max(100%, 56.25cqw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:o.controls?'auto':'none'}}));}
   tvFeedEl(){const h=React.createElement,cov={position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',pointerEvents:'none'};
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0F1B2D'}},
       h('img',{src:'assets/tv/badminton-poster.webp?v=t1',alt:'',decoding:'async',loading:'lazy',style:cov}),
-      this.state.tvNear&&!REDUCED&&!LOW?h('video',{key:'tvv',src:'assets/tv/badminton.mp4?v=t1',autoPlay:true,muted:true,loop:true,playsInline:true,preload:'auto','aria-hidden':'true',style:cov}):null);}
+      this.state.tvNear&&!LOW?this.ytEl('tvv',(this.props.youtubeVideoId||'AUYoy6Owok8').trim(),{title:'Live TV: Badminton Hall'}):null);}
   // Event centre: sport and status filters, live-first match list, and the picked match period by period with a momentum chart
   ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
     const list=byDiv.filter(v=>s.liveState==='all'||v.state===s.liveState),d=views.find(v=>v.id===s.sel)||views[0],m=s.live.find(x=>x.id===d.id),F=SPORT_FMT[m.div];
@@ -2596,10 +2601,10 @@ class Component extends DCLogic {
   // Broadcast hub: one channel per field, the picked channel's match under the player, its now/next running order, and live matches elsewhere
   tvVals(screen){const s=this.state,h=React.createElement,views=liveOrder(s.live).map(liveView),chan=s.chan||'stadium';
     const onField=f=>views.filter(v=>v.field===f),cur=f=>{const l=onField(f);return l.find(v=>v.live)||l.find(v=>v.state==='next')||l[0];};
-    const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'Sy6emSOKlQY').trim(),up=x=>String(x).toUpperCase();
+    const F=FIELDS.find(f=>f.id===chan)||FIELDS[0],now=cur(F.id),id=(this.props.youtubeVideoId||'AUYoy6Owok8').trim(),up=x=>String(x).toUpperCase();
     const open=v=>()=>{this.setState({sel:v.id});this.go('scores');};
     return {tv:{
-      player:screen==='tv'?h('video',{key:'tvp'+chan,src:'assets/tv/'+({stadium:'badminton',arena:'tabletennis',court:'courts'}[chan]||'badminton')+'.mp4?v=t1',poster:'assets/tv/'+({stadium:'badminton',arena:'tabletennis',court:'courts'}[chan]||'badminton')+'-poster.webp?v=t1',autoPlay:true,muted:true,loop:true,playsInline:true,title:'Live TV: '+F.name,style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}):null,
+      player:screen==='tv'&&chan==='stadium'?this.ytEl('tvp'+chan,id,{controls:true,title:'Live TV: '+F.name}):screen==='tv'?h('video',{key:'tvp'+chan,src:'assets/tv/'+({stadium:'badminton',arena:'tabletennis',court:'courts'}[chan]||'badminton')+'.mp4?v=t1',poster:'assets/tv/'+({stadium:'badminton',arena:'tabletennis',court:'courts'}[chan]||'badminton')+'-poster.webp?v=t1',autoPlay:true,muted:true,loop:true,playsInline:true,title:'Live TV: '+F.name,style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}):null,
       flash:REDUCED?null:h('div',{key:'sw'+chan,className:'tvh-flash','aria-hidden':'true'}),
       now:{...now,num:'CH 0'+(FIELDS.indexOf(F)+1),fieldName:F.name,fieldUp:up(F.name),eventUp:up(now.event),roundUp:up(now.round),liveAttr:now.live?'1':'0'},
       channels:FIELDS.map((f,i)=>{const c=cur(f.id);return {num:'0'+(i+1),name:f.name,icon:f.icon,on:f.id===chan?'1':'0',pressed:String(f.id===chan),live:c&&c.live?'1':'0',
