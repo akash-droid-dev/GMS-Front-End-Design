@@ -685,13 +685,24 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  64%{transform:translate(0,0) scale(1.035) rotate(calc(var(--spin,0deg) * -.15));animation-timing-function:cubic-bezier(.45,0,.55,1)}
  84%{transform:scale(.992)}
  100%{opacity:1;transform:none}}
-[data-kv-burst]{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
-[data-kv-burst] .kb-flash{position:absolute;left:50%;top:47%;width:140vmax;height:140vmax;margin:-70vmax 0 0 -70vmax;border-radius:50%;background:radial-gradient(circle,rgba(255,250,240,.95) 0%,rgba(244,239,230,.6) 18%,rgba(227,167,47,.18) 34%,rgba(244,239,230,0) 52%);opacity:0;transform:scale(.2)}
-[data-kv-burst] .kb-f{position:absolute;left:50%;top:47%;width:3.2vmax;height:12vmax;margin:-12vmax 0 0 -1.6vmax;transform-origin:50% 100%;opacity:0;background:linear-gradient(180deg,#FFFDF8 0%,#F4EFE6 70%,#D9CFBD 100%);clip-path:polygon(50% 0,100% 18%,78% 100%,22% 100%,0 18%);filter:drop-shadow(0 6px 10px rgba(15,27,45,.25))}
-[data-kv-burst][data-go] .kb-flash{animation:kbFlash 1s cubic-bezier(.16,1,.3,1) both}
-[data-kv-burst][data-go] .kb-f{animation:kbFeather 1.7s cubic-bezier(.12,.8,.25,1) both}
-@keyframes kbFlash{0%{opacity:0;transform:scale(.2)}18%{opacity:1}100%{opacity:0;transform:scale(1.15)}}
-@keyframes kbFeather{0%{opacity:0;transform:rotate(var(--a)) translateY(0) scale(calc(var(--s) * .6))}10%{opacity:1}70%{opacity:.9}100%{opacity:0;transform:rotate(calc(var(--a) + var(--t))) translateY(calc(var(--r) * -1)) scale(var(--s))}}
+[data-kick] canvas{transform-origin:50% 48.5%;transition:transform .9s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1),opacity .9s ease}
+[data-kick] canvas[data-burst]{transform:scale(1.32);filter:blur(16px) saturate(.8);opacity:.55}
+[data-kv-burst]{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2;--bx:50%;--by:48%;--R:1400px}
+[data-kv-burst] i{position:absolute;left:var(--bx);top:var(--by);opacity:0}
+[data-kv-burst] .kb-flash{width:calc(var(--R) * 1.6);height:calc(var(--R) * 1.6);margin:calc(var(--R) * -.8) 0 0 calc(var(--R) * -.8);border-radius:50%;background:radial-gradient(circle,rgba(255,252,244,.92) 0%,rgba(250,240,220,.55) 14%,rgba(227,167,47,.16) 30%,rgba(244,239,230,0) 50%);transform:scale(.25)}
+[data-kv-burst] .kb-cork{width:calc(var(--R) * .2);height:calc(var(--R) * .2);margin:calc(var(--R) * -.1) 0 0 calc(var(--R) * -.1);border-radius:50%;background:radial-gradient(circle at 40% 36%,#B98E60 0%,#8A6440 46%,#5E4128 78%,#3A2818 100%);box-shadow:0 0 0 calc(var(--R) * .008) rgba(60,40,24,.7),inset 0 0 calc(var(--R) * .03) rgba(0,0,0,.45);filter:blur(.4px)}
+[data-kv-burst] .kb-f{width:calc(var(--R) * .085);height:calc(var(--R) * .29);margin:calc(var(--R) * -.29) 0 0 calc(var(--R) * -.0425);transform-origin:50% 100%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 200'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='0' y2='0'%3E%3Cstop offset='0' stop-color='%23EDE3CF'/%3E%3Cstop offset='.55' stop-color='%23FBF7EE'/%3E%3Cstop offset='1' stop-color='%23FFFFFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M27 198 L23 92 C8 84 3 52 6 26 C9 10 18 3 30 3 C42 3 51 10 54 26 C57 52 52 84 37 92 L33 198 Z' fill='url(%23g)' fill-opacity='.96'/%3E%3Cpath d='M9 40 L30 70 M51 40 L30 70 M8 58 L30 84 M52 58 L30 84' stroke='%23D8CBB1' stroke-width='.8' fill='none' opacity='.7'/%3E%3Cpath d='M30 198 L30 10' stroke='%23E7DAC0' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;filter:drop-shadow(0 calc(var(--R) * .006) calc(var(--R) * .012) rgba(10,21,36,.35))}
+[data-kv-burst] .kb-p{width:calc(var(--R) * .012 * var(--z));height:calc(var(--R) * .012 * var(--z));margin:calc(var(--R) * -.006) 0 0 calc(var(--R) * -.006);border-radius:50%;background:radial-gradient(circle,#FFFDF8 0%,rgba(250,244,232,.85) 45%,rgba(250,244,232,0) 72%)}
+[data-kv-burst][data-go] .kb-flash{animation:kbFlash 1.1s cubic-bezier(.16,1,.3,1) both}
+[data-kv-burst][data-go] .kb-cork{animation:kbCork .55s cubic-bezier(.3,0,.2,1) both}
+[data-kv-burst][data-go] .kb-f{animation:kbFeather 1.9s cubic-bezier(.1,.75,.22,1) var(--d) both}
+[data-kv-burst][data-go] .kb-p{animation:kbFluff 2.2s cubic-bezier(.12,.7,.25,1) var(--d) both}
+@keyframes kbFlash{0%{opacity:0;transform:scale(.25)}16%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
+@keyframes kbCork{0%{opacity:.9;transform:scale(1)}30%{opacity:.55;transform:scale(1.7)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes kbFeather{0%{opacity:1;transform:rotate(var(--a)) translateY(calc(var(--R) * -.08)) scale(1)}
+ 18%{opacity:1;transform:rotate(calc(var(--a) + var(--t) * .2)) translateY(calc(var(--R) * -.14)) scale(1.06)}
+ 100%{opacity:0;transform:rotate(calc(var(--a) + var(--t))) translateY(calc(var(--R) * -.72 * var(--go))) scale(1.45) rotateY(55deg)}}
+@keyframes kbFluff{0%{opacity:0;transform:rotate(var(--a)) translateY(calc(var(--R) * -.12))}12%{opacity:.95}100%{opacity:0;transform:rotate(calc(var(--a) + 18deg)) translateY(calc(var(--R) * -.62 * var(--go))) scale(1.6)}}
 @keyframes chipIn{0%{opacity:0;transform:translateY(var(--rise,80px)) rotate(var(--spin,0deg));animation-timing-function:cubic-bezier(.2,.75,.35,1)}
  12%{opacity:1}
  52%{transform:translateY(-8px) rotate(calc(var(--spin,0deg) * -.3));animation-timing-function:cubic-bezier(.45,0,.55,1)}
@@ -2382,8 +2393,8 @@ const KV={n:192,w:1280,h:720,dur:11.9,goal:[0.2,0.16,0.8,0.84],idx:t=>Math.max(0
 // which sport the montage shows at time t (chapters change at 1.8 s, 3.8 s ... like the hero)
 const MONT=Array(6).fill('Badminton Hall');
 // the smash: frame 68 is racket contact; from there a drawn shuttle flies at the lens and bursts into the programme
-const SH={f0:68,x:0.275,y:0.28,tx:0.5,ty:0.47};
-const SH_IMG=(()=>{const i=new Image();let f='';for(let k=0;k<16;k++){const a=k*22.5;f+='<path transform="rotate('+a+' 100 100)" d="M100 100 L92 14 Q100 6 108 14 Z" fill="#F4EFE6" stroke="rgba(15,27,45,.28)" stroke-width="1.2"/>';}i.src='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><radialGradient id="c" cx=".42" cy=".38"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#E9E1D2"/><stop offset="1" stop-color="#B9AE98"/></radialGradient></defs>'+f+'<circle cx="100" cy="100" r="40" fill="none" stroke="#E3A72F" stroke-width="5"/><circle cx="100" cy="100" r="30" fill="url(#c)"/></svg>');return i;})();
+const SH={tx:0.5,ty:0.485};// the cork's centre in the film's last frame: the feathers and the 28 events burst from here
+
 const montK=t=>Math.min(5,Math.floor(t/2));
 const montV=k=>{const v=TOURNAMENT.venues.find(x=>x.name===MONT[k])||TOURNAMENT.venues[0],sp=CATS.filter(c=>c.venue===v.name);return {v,sp,color:(sp[0]||CATS[0]).color,n:sp.reduce((a,c)=>a+c.events.length,0)};};
 const KICK={run0:0.03,strike:0.21,hit:0.45,score0:0.45,score1:0.58,board0:0.56,board1:0.84};
@@ -2819,7 +2830,7 @@ class Component extends DCLogic {
     if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
   kvPreload(){if(this.kv)return;const dir='assets/montage/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
     const order=[0,KV.idx(2),KV.idx(4),KV.idx(6)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
-    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m6').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
+    const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m7').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
     for(let k=0;k<6;k++)next();}
   // video frame -> screen for time t: full-bleed cover; on tall screens the crop follows the run-in, then centres on the goal
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/KV.dur)),dw=KV.w*s,dh=KV.h*s,fx=L.port?0.42:0.5;
@@ -2829,7 +2840,8 @@ class Component extends DCLogic {
     // soft white wash behind the heading, the frosted veil that dissolves the net, and a clean goal frame that stays as the menu's frame
     const wash=document.createElement('div');wash.setAttribute('data-kv-wash','');box.appendChild(wash);
     const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
-    const burst=document.createElement('div');burst.setAttribute('data-kv-burst','');burst.innerHTML='<i class="kb-flash"></i>'+Array.from({length:16},(_,k)=>'<i class="kb-f" style="--a:'+(k*22.5+((k*7)%9))+'deg;--r:'+(46+(k*13)%30)+'vmax;--s:'+(0.8+((k*5)%7)/10)+';--t:'+(((k*29)%40)-20)+'deg"></i>').join('');box.appendChild(burst);
+    const burst=document.createElement('div');burst.setAttribute('data-kv-burst','');{const Vb=this.kvView(L,KV.dur),ip=Vb.pt(SH.tx,SH.ty),R=Math.max(W,H);burst.style.setProperty('--bx',ip[0].toFixed(1)+'px');burst.style.setProperty('--by',ip[1].toFixed(1)+'px');burst.style.setProperty('--R',R.toFixed(0)+'px');}
+    burst.innerHTML='<i class="kb-flash"></i>'+Array.from({length:16},(_,k)=>'<i class="kb-f" style="--a:'+(k*22.5)+'deg;--t:'+(((k*29)%46)-23)+'deg;--d:'+(((k*7)%5)*0.03).toFixed(2)+'s;--go:'+(0.95+((k*11)%9)/10).toFixed(2)+'"></i>').join('')+Array.from({length:22},(_,k)=>'<i class="kb-p" style="--a:'+((k*47)%360)+'deg;--go:'+(0.35+((k*13)%10)/14).toFixed(2)+';--z:'+(0.5+((k*7)%6)/6).toFixed(2)+';--d:'+(0.08+((k*5)%7)*0.04).toFixed(2)+'s"></i>').join('')+'<i class="kb-cork"></i>';box.appendChild(burst);
     const V=this.kvView(L,KV.dur),g0=V.pt(KV.goal[0],KV.goal[1]),g1=V.pt(KV.goal[2],KV.goal[3]);L.goal=[g0[0],g0[1],g1[0],g1[1]];
     const cx0=Math.max(18,(W-1280)/2+32),hh=host.querySelector('[data-ev-head] h2'),h2r=hh?hh.getBoundingClientRect().right-host.getBoundingClientRect().left:W*0.3;
     L.menu=[Math.max(W*0.3,h2r+48),Math.max(96,H*0.13),W-cx0,H-Math.max(36,H*0.07)];
@@ -2847,7 +2859,7 @@ class Component extends DCLogic {
         C.style.zoom='';if(C.scrollHeight>C.clientHeight*1.01){const z=Math.max(0.72,C.clientHeight/C.scrollHeight);C.style.zoom=z.toFixed(3);['left','top','width','height'].forEach(k=>{C.style[k]=(parseFloat(C.style[k])/z).toFixed(1)+'px';});}
         const hr=host.getBoundingClientRect();C.querySelectorAll('[data-goal-col]').forEach(el=>{Object.assign(el.style,{opacity:'1',transform:'',clipPath:'',left:'',top:'',width:'',height:''});});
         const items=[...C.querySelectorAll('[data-goal-ch],[data-goal-ev]')];items.forEach(el=>{el.style.transform='';el.style.opacity='';});
-        const IX=W*SH.tx,IY=H*SH.ty;items.forEach((el,i)=>{const b=el.getBoundingClientRect(),dx=IX-(b.left-hr.left+b.width/2),dy=IY-(b.top-hr.top+b.height/2);el.style.setProperty('--fx',Math.round(dx)+'px');el.style.setProperty('--fy',Math.round(dy)+'px');el.style.setProperty('--rise',Math.round(H-(b.top-hr.top)+40+((i*37)%60))+'px');el.style.setProperty('--spin',(((i*53)%24)-12)*(el.hasAttribute('data-goal-ch')?0.4:1)+'deg');el.style.setProperty('--d',(0.32+Math.hypot(dx,dy)/2600+(i%4)*0.03).toFixed(3)+'s');L.chips.push(el);});}}}
+        const IP=this.kvView(L,KV.dur).pt(SH.tx,SH.ty),IX=IP[0],IY=IP[1];items.forEach((el,i)=>{const b=el.getBoundingClientRect(),dx=IX-(b.left-hr.left+b.width/2),dy=IY-(b.top-hr.top+b.height/2);el.style.setProperty('--fx',Math.round(dx)+'px');el.style.setProperty('--fy',Math.round(dy)+'px');el.style.setProperty('--rise',Math.round(H-(b.top-hr.top)+40+((i*37)%60))+'px');el.style.setProperty('--spin',(((i*53)%24)-12)*(el.hasAttribute('data-goal-ch')?0.4:1)+'deg');el.style.setProperty('--d',(0.55+Math.hypot(dx,dy)/2600+(i%4)*0.03).toFixed(3)+'s');L.chips.push(el);});}}}
   kickAnim(){const box=document.querySelector('[data-kick]');if(!box){this.kickBox=null;return;}
     const host=box.parentElement,sec=host.parentElement,vh=window.innerHeight,r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;
     const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;
@@ -2855,14 +2867,11 @@ class Component extends DCLogic {
     const L=this.kickL,K=this.kickK,p=REDUCED?1:((this.P||this.state.p).ev||0),now=performance.now();
     // scroll -> montage time: the six sports pass at an even pace, then the last frame holds while the programme opens
     const t=p<KICK.run0?0:p<KICK.board0?KV.dur*seg(p,KICK.run0,KICK.board0):KV.dur,fi=KV.idx(t);this.kvT=t;
-    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<1.4;
+    if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<2;
     // the picture: redrawn only when the scroll (and so the frame) changes
     const key=fi+'|'+p.toFixed(4);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
       if(L.port){const bg=x.createLinearGradient(0,0,0,L.H);bg.addColorStop(0,'#DCE4EE');bg.addColorStop(1,'#EDF0F4');x.fillStyle=bg;x.fillRect(0,0,L.W,L.H);}
       x.drawImage(src.img,V.ox,V.oy,KV.w*V.s,dh);
-      const t0=SH.f0/16,u=p<KICK.board0?(t-t0)/(KV.dur-t0):-1;if(u>0&&SH_IMG.complete){const e=u*u*u,m=ease(clamp(u*1.1)),P0=V.pt(SH.x,SH.y),P1=V.pt(SH.tx,SH.ty),R=Math.max(L.W,L.H);
-        for(let g=3;g>=0;g--){const ug=Math.max(0,u-g*0.018),eg=ug*ug*ug,mg=ease(clamp(ug*1.1)),sz=R*(0.014+1.05*eg),cx=P0[0]+(P1[0]-P0[0])*mg,cy=P0[1]+(P1[1]-P0[1])*mg;x.save();x.globalAlpha=g?0.16:1;x.translate(cx,cy);x.rotate(ug*2.2);x.drawImage(SH_IMG,-sz/2,-sz/2,sz,sz);x.restore();}
-        if(u>0.82){x.fillStyle='rgba(244,239,230,'+((u-0.82)/0.18*0.55).toFixed(3)+')';x.fillRect(0,0,L.W,L.H);}}
       if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
         const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
     // stage caption, written straight to the page
@@ -2874,11 +2883,11 @@ class Component extends DCLogic {
     if(mk!==this.kvSport){this.kvSport=mk;host.querySelectorAll('[data-goal-board]').forEach(el=>{el.style.setProperty('--sc',mv.color);const i=el.querySelector('.lt-ball i');if(i)i.setAttribute('data-gi',mv.v.icon||'corporate_fare');
       const b=el.querySelector('.lt-main b'),n=el.querySelector('.lt-min'),u=el.querySelector('.lt-sub');if(b)b.textContent=mv.v.name;if(n)n.textContent=mv.n+' events';if(u)u.textContent=mv.sp.map(c=>c.name).join(' · ');el.removeAttribute('data-swap');void el.offsetWidth;el.setAttribute('data-swap','');});}
     // the events: one CSS spring each (staggered), started once when the reveal begins
-    const Pn=host.querySelector('[data-goal-panel]');if(Pn){const pin=rt>0||REDUCED?'1':'0';if(Pn.getAttribute('data-in')!==pin){Pn.setAttribute('data-in',pin);if(K.burst)K.burst.toggleAttribute('data-go',pin==='1'&&!REDUCED);Pn.style.visibility=pin==='1'?'visible':'hidden';Pn.style.opacity=pin;}}
+    const Pn=host.querySelector('[data-goal-panel]');if(Pn){const pin=rt>0||REDUCED?'1':'0';if(Pn.getAttribute('data-in')!==pin){Pn.setAttribute('data-in',pin);if(K.burst)K.burst.toggleAttribute('data-go',pin==='1'&&!REDUCED);if(K.c)K.c.toggleAttribute('data-burst',pin==='1'&&!REDUCED);Pn.style.visibility=pin==='1'?'visible':'hidden';Pn.style.opacity=pin;}}
     // the net fades: a frosted veil washes over the clip while a clean white goal frame draws in and opens out into the menu frame
     if(!live&&this.kvOverlayDone===(this.kvRevealT?1:0))return;this.kvOverlayDone=live?-1:(this.kvRevealT?1:0);
-    const nf=REDUCED?1:ease(clamp(rt/0.9));K.veil.style.opacity=nf.toFixed(3);K.frame.setAttribute('stroke-dashoffset',(L.port?1:1-ease(clamp((rt-0.1)/0.7))).toFixed(4));
-    if(!L.port){const m=REDUCED?1:ease(clamp((rt-0.25)/0.9)),G=L.goal,M=L.menu,lx=G[0]+(M[0]-G[0])*m,ty=G[1]+(M[1]-G[1])*m,rx=G[2]+(M[2]-G[2])*m,by=G[3]+(M[3]-G[3])*m;
+    const nf=REDUCED?1:ease(clamp((rt-0.5)/0.9));// the feathers fly over the clear frame first, then the veil washes inK.veil.style.opacity=nf.toFixed(3);K.frame.setAttribute('stroke-dashoffset',(L.port?1:1-ease(clamp((rt-0.6)/0.7))).toFixed(4));
+    if(!L.port){const m=REDUCED?1:ease(clamp((rt-0.75)/0.9)),G=L.goal,M=L.menu,lx=G[0]+(M[0]-G[0])*m,ty=G[1]+(M[1]-G[1])*m,rx=G[2]+(M[2]-G[2])*m,by=G[3]+(M[3]-G[3])*m;
       K.frame.setAttribute('d','M'+lx.toFixed(1)+' '+by.toFixed(1)+'V'+ty.toFixed(1)+'H'+rx.toFixed(1)+'V'+by.toFixed(1));}
     const fo=(1-nf).toFixed(3);host.querySelectorAll('[data-r=ev-p]').forEach(el=>{el.style.opacity=fo;});}
   patchSpline(){
