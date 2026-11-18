@@ -59,7 +59,7 @@
 
   /* ---------------- magnetic buttons and the yellow cursor (desktop) ---------------- */
   var MAG = '.gms-liquid, .pd-arrow, .ld-go button, .gms-glow, .gms-cta, .nv-ic, .vl-tabs button, [data-hsw]';
-  if (FINE && !REDUCED) {
+  if (false) { /* magnetic buttons and the custom cursor were retired in the cleanup */
     var magEl = null;
     doc.addEventListener('pointermove', function (e) {
       var b = e.target.closest && e.target.closest(MAG);

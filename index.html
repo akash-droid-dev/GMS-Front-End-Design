@@ -25,7 +25,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B0D12'/%3E%3Cg transform='translate(1.5 0)' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='5'%3E%3Cpath stroke='%23fff' d='M31.6 18.7A14 14 0 1 0 38 32M38 18.5V45.5M38 18.5h5.2a6.75 6.75 0 0 1 0 13.5M44.2 32a6.75 6.75 0 0 1 0 13.5H38'/%3E%3Cpath stroke='%230E7C74' d='M28 32h16.4'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preload" href="assets/brand/gobananas-full.webp" as="image" fetchpriority="high">
-<link rel="preload" href="assets/fonts/archivo-expanded-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>
@@ -44,8 +44,8 @@ if(low)document.documentElement.classList.add('gms-low');
 window.__gmsLoadBot=function(){if(window.__gmsBot)return;window.__gmsBot=1;var sc=document.createElement('script');sc.type='module';sc.src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js";h.appendChild(sc);};})();
 </script>
 <style>
-@font-face{font-family:'Instrument Serif';src:url(assets/fonts/instrument-serif-latin.woff2) format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'Instrument Serif';src:url(assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url(assets/fonts/instrument-serif-latin.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url(assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
 
 /* palette: black + acid lime on dark surfaces, bone + ink + electric violet on light ones; the accent follows the surface it sits on */
 :root{--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C;--ink:#0B0B0C;--bone:#F2F1EC}
@@ -53,78 +53,6 @@ html[data-theme=dark],#gms-ldr,nav[data-r=nav],nav[data-r=tabbar],section[data-h
 html[data-theme=dark] :is(section.vl,section[data-r=ev-section]){--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C}
 
 /* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 800;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Archivo Expanded';
-  font-style: normal;
-  font-weight: 800;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("assets/fonts/archivo-expanded-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -269,11 +197,11 @@ html,body{background:#F4F5F7}
 .hero-pill{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:7px 15px 7px 11px;border-radius:999px;background:rgba(8,10,16,.34);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);font-size:12.5px;color:rgba(255,255,255,.82);white-space:nowrap}
 .hero-pill b{font-weight:600;color:#fff}
 .hp-mono{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em}
-.hero-dot{display:inline-block;color:#5B84FF;font-weight:700;animation:heroDot .7s 1.05s cubic-bezier(.3,1.6,.5,1) both}
+.hero-dot{display:inline-block;color:#3A3A3F;font-weight:700;animation:heroDot .7s 1.05s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes heroDot{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
 [data-r=hero-ch]{position:absolute;right:clamp(24px,5vw,72px);top:max(104px,13vh);z-index:3;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--r-s);background:rgba(8,10,16,.34);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);color:#fff;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;pointer-events:none;animation:gmsRise 1s 1.2s cubic-bezier(.2,.8,.2,1) both}
 .hch-m{display:flex;flex-direction:column;gap:7px;min-width:128px}
-.hch-m b{font-family:'Archivo Expanded';font-weight:600;font-size:16px;letter-spacing:-.01em;line-height:1}
+.hch-m b{font-family:'Instrument Serif';font-weight:600;font-size:16px;letter-spacing:-.01em;line-height:1}
 .hch-m b[data-swap]{animation:hchSwap .6s cubic-bezier(.2,.8,.2,1) both}
 .hch-bar{height:2px;border-radius:2px;background:rgba(255,255,255,.24);overflow:hidden}
 .hch-bar i{display:block;height:100%;background:#fff;transform-origin:0 50%;transform:scaleX(0);animation:hchFill 2.2s linear both}
@@ -438,7 +366,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .fn-units{display:flex;gap:clamp(10px,2vw,22px);align-items:flex-start}
 .fn-unit{display:flex;flex-direction:column;align-items:center;gap:8px}.fn-unit small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.6)}
 .flaps--fin .flap{font-size:clamp(30px,4.6vw,58px);color:#0B0B0C;border-radius:.14em;box-shadow:0 12px 30px rgba(0,0,0,.35),inset 0 0 0 1px rgba(15,20,40,.06)}
-.fn-h{margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(40px,6.6vw,104px);letter-spacing:-.05em;line-height:.95;max-width:980px}
+.fn-h{margin:0;font-family:'Instrument Serif';font-weight:700;font-size:clamp(40px,6.6vw,104px);letter-spacing:-.05em;line-height:.95;max-width:980px}
 .fn-w{display:inline-block;--k:clamp(0,calc(var(--t,0) * 7 - var(--i)),1);opacity:var(--k);transform:translateY(calc((1 - var(--k)) * .45em));filter:blur(calc((1 - var(--k)) * 6px))}
 .fn-p{margin:0;max-width:620px;font-size:16.5px;line-height:1.55;color:rgba(255,255,255,.74);opacity:clamp(0,calc(var(--t,0) * 3 - 1.4),1)}
 .fn-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:clamp(0,calc(var(--t,0) * 3 - 1.9),1);transform:translateY(calc((1 - clamp(0,calc(var(--t,0) * 3 - 1.9),1)) * 16px))}
@@ -457,9 +385,9 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .cc-form input:focus,.cc-form textarea:focus{border-color:var(--ac,var(--acc));background:#fff}.cc-form [aria-invalid=true]{border-color:#E5484D}
 .cc-form .gms-cta{align-self:flex-start;height:38px;font-size:13px}
 .cc-err{font-size:12px;color:#D93D42}
-.cc-ticket{align-self:stretch;flex:none;display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--r-m);background:linear-gradient(160deg,#FFFFFF,#EEF3FF);border:1px solid #DCE4FF;font-size:13px;line-height:1.45;color:#4A505C;animation:gmsBubble .5s var(--gms-ease) both}
-.cc-ticket small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#1C8A53}.cc-ticket b{font-family:'Archivo Expanded';font-size:22px;letter-spacing:-.02em;color:#0B0B0C}
-.cc-tk-ic{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:#1FA463;color:#fff;font-family:'Material Symbols Rounded';font-size:19px}
+.cc-ticket{align-self:stretch;flex:none;display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--r-m);background:linear-gradient(160deg,#FFFFFF,#EEF3FF);border:1px solid #E9E7E0;font-size:13px;line-height:1.45;color:#4A505C;animation:gmsBubble .5s var(--gms-ease) both}
+.cc-ticket small{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;color:#2A2A2E}.cc-ticket b{font-family:'Instrument Serif';font-size:22px;letter-spacing:-.02em;color:#0B0B0C}
+.cc-tk-ic{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:#2A2A2E;color:#fff;font-family:'Material Symbols Rounded';font-size:19px}
 .cc-typing{align-self:flex-start;flex:none;display:flex;gap:4px;padding:13px 15px;border-radius:var(--r-m);border-bottom-left-radius:6px;background:#fff;border:1px solid #EEF0F4}
 .cc-typing i{width:6px;height:6px;border-radius:50%;background:#6B7180;animation:gmsTyping 1s infinite}.cc-typing i:nth-child(2){animation-delay:.15s}.cc-typing i:nth-child(3){animation-delay:.3s}
 @keyframes gmsTyping{0%,60%,100%{transform:none;opacity:.45}30%{transform:translateY(-4px);opacity:1}}
@@ -478,7 +406,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-panel][data-compact="1"] [data-goal-ev]:last-child:nth-child(odd){grid-column:auto!important}
 .bt-grid{position:relative}
 .bt-core{position:absolute;left:50%;top:50%;z-index:4;width:min(460px,70%);padding:34px 30px;margin:0;box-sizing:border-box;border-radius:var(--r-l);background:linear-gradient(160deg,rgba(36,44,68,.85),rgba(14,18,28,.8));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(143,166,255,.45);color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);box-shadow:0 1px 2px rgba(15,20,40,.12),0 0 0 1px rgba(255,255,255,.6);will-change:transform,opacity}
-.bt-core b{font-family:'Archivo Expanded';font-weight:700;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.04em;line-height:1}.bt-core b+b{color:#8FA6FF}
+.bt-core b{font-family:'Instrument Serif';font-weight:700;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.04em;line-height:1}.bt-core b+b{color:#8FA6FF}
 .bt-core small{margin-top:10px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;color:#6B7180}
 .bt-core i{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle,#8FA6FF 0%,var(--ac,var(--acc)) 45%,color-mix(in srgb,var(--acc) 0%,transparent) 72%);opacity:0}
 .bt-dim{position:absolute;inset:0;z-index:5;background:#06080D;opacity:0;pointer-events:none}
@@ -502,7 +430,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  .rc-num{position:absolute;left:14px;top:12px;z-index:2;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;color:#6B7180}
  .rc-copy{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
  .rc-group{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em}
- .rc-copy h3{margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:21px;letter-spacing:-.03em;line-height:1.1}
+ .rc-copy h3{margin:0;font-family:'Instrument Serif';font-weight:700;font-size:21px;letter-spacing:-.03em;line-height:1.1}
  .rc-copy p{margin:0 0 6px;font-size:13.5px;line-height:1.5;color:#4A505C;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
  .rc-go{display:flex;width:100%;font-size:14px}
 }
@@ -559,15 +487,15 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ec-nm{display:flex;align-items:center;gap:8px;font-size:14px;color:#4A505C;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ec-nm small,.ec-pl small,.ec-arw small{flex:none;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;padding:2px 6px;border-radius:6px;background:#F1F3F7;color:#4A505C}
 .ec-nm[data-win="1"]{color:#0B0B0C;font-weight:700}
-.ec-sc{font-family:'Archivo Expanded';font-weight:700;font-size:18px;text-align:right;font-variant-numeric:tabular-nums}
+.ec-sc{font-family:'Instrument Serif';font-weight:700;font-size:18px;text-align:right;font-variant-numeric:tabular-nums}
 [data-r=ec-detail]{position:sticky;top:96px;min-width:0}
 .ec-card{border-radius:var(--r-l);background:#fff;border:1px solid #E6EAF0;box-shadow:var(--sh-3);padding:26px;display:flex;flex-direction:column;gap:20px}
 .ec-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 .ec-vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:center;padding:6px 0}
 .ec-pl{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}.ec-pl:last-child{align-items:flex-end;text-align:right}
-.ec-pl b{font-family:'Archivo Expanded';font-weight:700;font-size:clamp(19px,2.1vw,27px);letter-spacing:-.02em;line-height:1.1}
+.ec-pl b{font-family:'Instrument Serif';font-weight:700;font-size:clamp(19px,2.1vw,27px);letter-spacing:-.02em;line-height:1.1}
 .ec-pl[data-win="true"] small{background:var(--y,var(--acc));color:#0B0B0C}
-.ec-big{display:flex;gap:10px;align-items:center;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(46px,5.6vw,80px);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.ec-big{display:flex;gap:10px;align-items:center;font-family:'Instrument Serif';font-weight:700;font-size:clamp(46px,5.6vw,80px);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
 .ec-big span:nth-child(2){color:#C3C8D2;font-size:.45em}
 .ec-body{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:24px;align-items:start}
 .ec-target svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 30px rgba(15,20,40,.12))}
@@ -585,9 +513,9 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ec-arw{display:flex;align-items:center;gap:5px}
 .ec-arw small{width:30px;text-align:center;padding:2px 0;margin-right:3px}
 .ec-arw>span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;transition:background .4s,color .4s}
-.ec-sum{font-family:'Archivo Expanded';font-weight:700;font-size:16px;text-align:center;color:#4A505C;font-variant-numeric:tabular-nums}
+.ec-sum{font-family:'Instrument Serif';font-weight:700;font-size:16px;text-align:center;color:#4A505C;font-variant-numeric:tabular-nums}
 .ec-sum[data-win="1"]{color:var(--ac,var(--acc))}
-.ec-sp{grid-area:sp;text-align:right;font-family:'Archivo Expanded';font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.ec-sp{grid-area:sp;text-align:right;font-family:'Instrument Serif';font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
 @media (max-width:1100px){.ec-body{grid-template-columns:1fr}.ec-target{max-width:260px;margin:0 auto;width:100%}}
 @media (max-width:960px){[data-r=ec-grid]{grid-template-columns:1fr}[data-r=ec-detail]{position:static;order:-1}}
 /* Live TV: keep the Watch live button clear of the floating Vision robot in the corner */
@@ -616,8 +544,9 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .ecx-toggle:focus-visible{outline:2px solid var(--ac,var(--acc));outline-offset:3px}
 .ecx-toggle[data-open="1"]{border-color:rgba(255,255,255,.3)}
 .ecx-l{display:flex;flex-direction:column;gap:8px;min-width:0}
+.ec-pre{font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:999px;border:1px solid currentColor;opacity:.8;margin-right:8px}
 .ecx-live{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#E5484D}
-.ecx-title{font-family:'Archivo Expanded';font-weight:700;font-size:clamp(30px,3.4vw,48px);letter-spacing:-.05em;line-height:.96}
+.ecx-title{font-family:'Instrument Serif';font-weight:700;font-size:clamp(30px,3.4vw,48px);letter-spacing:-.05em;line-height:.96}
 .ecx-sub{font-size:15px;line-height:1.5;color:rgba(255,255,255,.62)}
 [data-r=ecx] [data-r=ec-list] [style*=dashed]{color:rgba(255,255,255,.7)!important;border-color:rgba(255,255,255,.2)!important}
 .ecx-cta{display:flex;align-items:center;gap:10px;flex:none;padding:0 8px 0 18px;height:46px;border-radius:999px;background:#fff;color:#0B0B0C;font-weight:600;font-size:14px}
@@ -644,7 +573,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .tvh-flash{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px),#0B0B0C;animation:gmsTvSw .7s var(--gms-soft) both}
 @keyframes gmsTvSw{0%{opacity:1;transform:scaleY(1)}55%{opacity:.85;transform:scaleY(.02)}100%{opacity:0;transform:scaleY(.002)}}
 .tvh-info{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 20px;border-radius:var(--r-m);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-.tvh-score{display:flex;align-items:center;gap:10px;font-family:'Archivo Expanded';font-weight:700;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tvh-score{display:flex;align-items:center;gap:10px;font-family:'Instrument Serif';font-weight:700;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .tvh-score i{font-style:normal;color:rgba(255,255,255,.35);font-size:20px}
 .tvh-score small{font-family:'JetBrains Mono';font-size:10px;font-weight:500;letter-spacing:.06em;padding:3px 6px;border-radius:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75)}
 .tvh-chs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -655,14 +584,14 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .tvh-chtop{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;opacity:.8}
 .tvh-side{display:flex;flex-direction:column;gap:16px;min-width:0}
 .tvh-panel{display:flex;flex-direction:column;gap:4px;padding:18px;border-radius:var(--r-m);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.tvh-ttl{font-family:'Archivo Expanded';font-weight:700;font-size:19px;letter-spacing:-.02em;padding:2px 6px 10px}
+.tvh-ttl{font-family:'Instrument Serif';font-weight:700;font-size:19px;letter-spacing:-.02em;padding:2px 6px 10px}
 .tvh-row{appearance:none;border:0;background:none;font:inherit;color:#fff;text-align:left;cursor:pointer;display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 8px;border-radius:var(--r-s);border-top:1px solid rgba(255,255,255,.06);transition:background .3s}
 .tvh-row:hover{background:rgba(255,255,255,.06)}
 .tvh-row[data-now="1"]{background:rgba(229,72,77,.10)}
 .tvh-row b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tvh-row small{font-size:12px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tvh-tag{justify-self:start;white-space:nowrap;padding:4px 7px;border-radius:7px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
 .tvh-tag[data-k=NOW]{background:#E5484D;color:#fff}
-.tvh-rs{font-family:'Archivo Expanded';font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.tvh-rs{font-family:'Instrument Serif';font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
 @media (max-width:1040px){.tvh-grid{grid-template-columns:1fr}}
 @media (max-width:640px){[data-r=tvh]{padding:100px 16px 64px}.tvh-player{border-radius:var(--r-m)}.tvh-chs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:0 16px}.tvh-chs::-webkit-scrollbar{display:none}.tvh-chs button{scroll-snap-align:start}.tvh-info{padding:16px}.tvh-score{font-size:26px}}
 /* Split-flap digits (the finale countdown) */
@@ -680,7 +609,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-goal-board][data-swap] :is(.lt-main,.lt-sub){animation:ltSwap .45s var(--gms-ease)}@keyframes ltSwap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){[data-goal-board][data-swap] :is(.lt-main,.lt-sub){animation:none}}
 [data-goal-board] .lt-main{display:flex;align-items:baseline;gap:9px;padding:0 16px;align-self:center}
-[data-goal-board] .lt-main b{font-family:'Archivo Expanded';font-weight:700;font-size:19px;letter-spacing:-.02em}
+[data-goal-board] .lt-main b{font-family:'Instrument Serif';font-weight:700;font-size:19px;letter-spacing:-.02em}
 [data-goal-board] .lt-min{font-family:'JetBrains Mono';font-size:12px;color:rgba(255,255,255,.6)}
 [data-goal-board] .lt-sub{display:flex;align-items:center;padding:0 16px;background:#161A22;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap;
  clip-path:inset(0 100% 0 0);transition:clip-path .6s var(--gms-ease) .35s}
@@ -834,7 +763,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark{--bt-fill:#0B0B0C;background:transparent!important;color:#0B0B0C!important;border:1px solid rgba(11,11,12,.2)!important;box-shadow:none!important}
 .gms-liquid--clear:hover,.gms-liquid--glass:hover,.gms-liquid--half:hover,.gms-liquid--dark:hover,.gms-liquid--clear:focus-visible,.gms-liquid--glass:focus-visible,.gms-liquid--half:focus-visible{color:#fff!important;border-color:#0B0B0C!important}
 /* on dark sections and over video: white primary, white hairline secondary */
-:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--water,:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--blue{--bt-fill:#DCE4FF;background:#fff!important;color:#0B0B0C!important;border-color:#fff!important;box-shadow:0 1px 2px rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.28)!important}
+:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--water,:is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) .gms-liquid--blue{--bt-fill:#E9E7E0;background:#fff!important;color:#0B0B0C!important;border-color:#fff!important;box-shadow:0 1px 2px rgba(0,0,0,.2),0 10px 26px rgba(0,0,0,.28)!important}
 :is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark){--bt-fill:#fff;color:#fff!important;border-color:rgba(255,255,255,.34)!important;background:rgba(255,255,255,.04)!important}
 :is([data-r=hero],[data-r=tv-section],[data-r=ecx],[data-r=tvh],footer) :is(.gms-liquid--clear,.gms-liquid--glass,.gms-liquid--half,.gms-liquid--dark):hover{color:#0B0B0C!important;border-color:#fff!important}
 /* the nav sits on light glass */
@@ -860,7 +789,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-r=stories]{position:relative;background:#F4F5F7;padding:84px 0 92px;overflow:hidden}
 .st-head{max-width:1240px;margin:0 auto 40px;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .st-l{display:flex;flex-direction:column;gap:14px;max-width:640px}
-.st-h{margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96}
+.st-h{margin:0;font-family:'Instrument Serif';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96}
 .st-p{margin:0;font-size:15px;line-height:1.55;color:#4A505C;max-width:460px}
 .st-nav{display:flex;gap:8px}
 .st-arw{all:unset;box-sizing:border-box;cursor:pointer;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(11,11,12,.18);color:#0B0B0C;font-size:16px;transition:background .35s var(--gms-ease),color .35s,border-color .35s}
@@ -877,7 +806,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 .st-chip{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px 0 9px;border-radius:999px;background:rgba(8,10,16,.38);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:12px;font-weight:600}
 .st-chip .gi{font-size:15px}.st-chip{box-shadow:inset 0 -2px 0 var(--sp,transparent)}.st-chip .gi{color:color-mix(in srgb,var(--sp,#fff) 35%,#fff)}
 .st-q{display:flex;flex-direction:column;gap:12px}
-.st-card .st-line{margin:0;font-family:'Archivo Expanded';font-weight:600;font-size:clamp(19px,1.55vw,23px);letter-spacing:-.02em;line-height:1.18}
+.st-card .st-line{margin:0;font-family:'Instrument Serif';font-weight:600;font-size:clamp(19px,1.55vw,23px);letter-spacing:-.02em;line-height:1.18}
 .st-who{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .st-prog{max-width:1240px;margin:26px auto 0;padding:0 32px}.st-prog>span{display:block;height:2px;border-radius:2px;background:rgba(11,11,12,.1);overflow:hidden}
 .st-prog i{display:block;height:100%;width:30%;background:#0B0B0C;border-radius:2px;transition:transform .15s linear}
@@ -893,18 +822,18 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
  box-shadow:0 10px 30px rgba(15,20,40,.25);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transform:scale(0);opacity:0;transition:transform .45s var(--gms-ease),opacity .3s ease}
 .gms-cur[data-on="1"]>span{transform:scale(1);opacity:1}
 .gms-cur[data-tone=light]>span{background:rgba(255,255,255,.94);color:#0B0B0C}
-@media (hover:hover) and (pointer:fine){[data-cursor]{cursor:none!important}[data-cursor] :is(button,a,input){cursor:pointer!important}}
+
 
 /* Signals instead of dots: a short word with a thin line that sweeps under it (live in red, open in green) */
 .sig{--sig:#E5484D;position:relative;display:inline-block;padding-bottom:3px;font-weight:700;letter-spacing:.02em;color:var(--sig)}
 .sig::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1.5px;border-radius:2px;
  background:linear-gradient(90deg,transparent,var(--sig) 50%,transparent) -60% 0/60% 100% no-repeat,linear-gradient(var(--sig-dim,rgba(229,72,77,.28)),var(--sig-dim,rgba(229,72,77,.28)));animation:sigSweep 2.4s cubic-bezier(.6,0,.4,1) infinite}
 .sig--live{--sig:#E5484D;--sig-dim:rgba(229,72,77,.25)}
-.sig--open{--sig:#3DD68C;--sig-dim:rgba(61,214,140,.28)}
+.sig--open{--sig:#F2F1EC;--sig-dim:rgba(242,241,236,.28)}
 .sig--onred{--sig:#fff;--sig-dim:rgba(255,255,255,.35);color:#fff}
 @keyframes sigSweep{0%{background-position:-60% 0,0 0}100%{background-position:160% 0,0 0}}
 @media (prefers-reduced-motion:reduce){.sig::after{animation:none}}
-[data-r=regdock] .sig--open{--sig:#7BE0A6;font-weight:500;color:rgba(255,255,255,.7)}
+[data-r=regdock] .sig--open{--sig:#F2F1EC;font-weight:500;color:rgba(255,255,255,.7)}
 .hero-pill .sig--open{color:#fff}
 /* Colour as a 2px edge instead of a dot */
 .edge{display:inline-block;flex:none;width:2px;height:14px;border-radius:2px}
@@ -931,7 +860,7 @@ button:not(:disabled):active,[role=tab]:active{scale:.965;transition-duration:.1
 [data-r=navlinks] button[data-cur="1"]::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;border-radius:2px;background:var(--ac,var(--acc))}
 /* Hero: one quiet line of facts */
 .hero-line{display:flex;flex-wrap:wrap;gap:6px 22px;margin:0;font-size:14px;color:rgba(255,255,255,.66)}
-.hero-line b{font-family:'Archivo Expanded';font-weight:600;font-size:17px;letter-spacing:-.01em;color:#fff;margin-right:2px}
+.hero-line b{font-family:'Instrument Serif';font-weight:600;font-size:17px;letter-spacing:-.01em;color:#fff;margin-right:2px}
 /* Flat surfaces: glass only over video and photos */
 [data-r=nav]{background:rgba(255,255,255,.95)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-color:rgba(11,11,12,.07)!important;box-shadow:0 1px 2px rgba(15,20,40,.05)!important}
 [data-regmenu]{background:#fff!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
@@ -1047,7 +976,7 @@ html[data-theme=dark] #gms-shell [data-r=nav] button{color:#ECEEF2!important}
 html[data-theme=dark] #gms-shell [data-r=nav] img{filter:invert(1) hue-rotate(180deg)}
 html[data-theme=dark] #gms-shell [data-r=admin-btn]{background:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
 html[data-theme=dark] [data-r=admin-btn]{background:transparent!important}
-html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 16%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#0B0B0C!important}
+html[data-theme=dark] main:is([data-screen-label=Registration],[data-screen-label=Login]){background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 16%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(42,42,46,.1),rgba(42,42,46,0) 70%),#0B0B0C!important}
 
 /* ---- brand: Gobananas yellow on ink, court teal ---- */
 :root{--y:var(--acc);--y2:var(--acc-2);--ac:var(--acc);--teal:var(--acc-hi);--ink:#0B0B0C}
@@ -1064,7 +993,7 @@ section.pdk[data-r=roles-section]{height:auto!important;min-height:0!important}
 .pd-glow{position:absolute;inset:-20% -10% auto;height:90%;background:radial-gradient(40% 50% at 70% 40%,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%),radial-gradient(35% 45% at 18% 70%,rgba(63,182,170,.14),transparent 70%);pointer-events:none;z-index:-1}
 .pd-head{max-width:1240px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
 .pd-copy{display:flex;flex-direction:column;gap:14px;max-width:620px}
-.pd-h{margin:0;font-family:'Archivo Expanded';font-weight:800;font-size:clamp(34px,4.6vw,66px);letter-spacing:-.045em;line-height:.95}
+.pd-h{margin:0;font-family:'Instrument Serif';font-weight:800;font-size:clamp(34px,4.6vw,66px);letter-spacing:-.045em;line-height:.95}
 .pd-h em{font-style:normal;color:var(--acc)}
 .pd-p{margin:0;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.72)}
 .pd-legend{display:flex;gap:16px;flex-wrap:wrap;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
@@ -1089,13 +1018,13 @@ section.pdk[data-r=roles-section]{height:auto!important;min-height:0!important}
 .pd-photo>span{position:absolute!important;inset:0}
 .pd-id{display:flex;flex-direction:column;gap:3px;padding:14px 16px 8px}
 .pd-id small{font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--gc) 70%,#0B0B0C)}
-.pd-id b{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(20px,1.7vw,25px);letter-spacing:-.03em;line-height:1.05}
+.pd-id b{font-family:'Instrument Serif';font-weight:800;font-size:clamp(20px,1.7vw,25px);letter-spacing:-.03em;line-height:1.05}
 .pd-foot{display:flex;justify-content:space-between;align-items:flex-end;padding:4px 16px 14px;gap:12px}
 .pd-num{font:600 11px/1 'JetBrains Mono',monospace;color:#6B7180;letter-spacing:.08em}
 .pd-bc{flex:1;max-width:120px;height:26px;background:repeating-linear-gradient(90deg,#0B0B0C 0 2px,transparent 2px 4px,#0B0B0C 4px 5px,transparent 5px 8px,#0B0B0C 8px 11px,transparent 11px 12px);opacity:.85}
 .pd-more{all:unset;cursor:pointer;position:absolute;right:12px;top:46px;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(11,11,12,.82);color:#fff;font:600 12px/1 Inter,system-ui,sans-serif;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s}
 .pd-card:hover .pd-more,.pd-card[data-on="1"] .pd-more,.pd-more:focus-visible{opacity:1;transform:none}.pd-more:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.pd-bn{font-family:'Archivo Expanded';font-weight:800;font-size:24px;letter-spacing:-.03em;line-height:1.05}
+.pd-bn{font-family:'Instrument Serif';font-weight:800;font-size:24px;letter-spacing:-.03em;line-height:1.05}
 .pd-who{margin:0;font-size:14px;line-height:1.55;color:#4A505C}
 .pd-cap{font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6B7180;margin-top:4px}
 .pd-needs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
@@ -1116,7 +1045,7 @@ section.pdk[data-r=roles-section]{height:auto!important;min-height:0!important}
 html[data-theme=dark] .vl{background:#13151B;color:#fff}
 .vl-in{max-width:1240px;margin:0 auto;padding:0 32px}
 .vl-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
-.vl-h{margin:12px 0 0;font-family:'Archivo Expanded';font-weight:800;font-size:clamp(32px,4.4vw,62px);letter-spacing:-.045em;line-height:.95}
+.vl-h{margin:12px 0 0;font-family:'Instrument Serif';font-weight:800;font-size:clamp(32px,4.4vw,62px);letter-spacing:-.045em;line-height:.95}
 .vl-h em{font-style:normal;background:linear-gradient(transparent 62%,var(--acc) 62%);padding:0 .06em}
 html[data-theme=dark] .vl-h em{background:none;color:var(--acc)}
 .vl-p{margin:0;max-width:440px;font-size:15px;line-height:1.6;color:var(--d-ink2,#4A505C)}
@@ -1148,13 +1077,13 @@ html[data-theme=dark] .vl-tabs button[aria-selected=true]{background:var(--acc);
 .vl-hall{fill:#E3E5EA;stroke:#C6CAD2;stroke-width:1.5}
 .vl-z{stroke:rgba(11,11,12,.12);stroke-width:1}
 .vl-z--cyan{fill:#8FE5EC}.vl-z--y{fill:var(--acc)}.vl-z--y2{fill:#FBE38A}.vl-z--green{fill:#BFE6B2}.vl-z--olive{fill:#D8D46A}.vl-z--lilac{fill:#D9C1EA}.vl-z--blue{fill:#A9C7F0}.vl-z--rose{fill:#F4A9A6}.vl-z--navy{fill:#7FA2DD}
-.vl-z--hatch{fill:url(#vlHatch);stroke:#C9C3AE}.vl-z--green2{fill:#7FE0A8}.vl-z--stage{fill:#D5D8DE;stroke:#9AA1AD}.vl-z--led{fill:#E5007E}.vl-z--seat{fill:#fff;stroke:var(--acc-hi)}.vl-z--stand{fill:#E9E4D3;stroke:#C9C3AE}
-.vl-z--field{fill:#CFE6F7;stroke:#9CC3E0}.vl-z--aisle{fill:#24507F}.vl-z--aisle+text{fill:#fff}.vl-z--mag{fill:#E5007E}.vl-z--mag+text{fill:#fff}
+.vl-z--hatch{fill:url(#vlHatch);stroke:#C9C3AE}.vl-z--green2{fill:#7FE0A8}.vl-z--stage{fill:#D5D8DE;stroke:#9AA1AD}.vl-z--led{fill:#0B0B0C}.vl-z--seat{fill:#fff;stroke:var(--acc-hi)}.vl-z--stand{fill:#E9E4D3;stroke:#C9C3AE}
+.vl-z--field{fill:#CFE6F7;stroke:#9CC3E0}.vl-z--aisle{fill:#24507F}.vl-z--aisle+text{fill:#fff}.vl-z--mag{fill:#0B0B0C}.vl-z--mag+text{fill:#fff}
 .vl-t{text-anchor:middle;font-weight:600;fill:#0B0B0C;pointer-events:none;letter-spacing:.01em}
 .vl-court rect{fill:var(--acc-hi);stroke:#fff;stroke-width:1.2}.vl-court path{stroke:rgba(255,255,255,.85);stroke-width:1;fill:none}
 .vl-tt rect{fill:#1F4E8C;stroke:#fff;stroke-width:1}.vl-tt path{stroke:#fff;stroke-width:1}.vl-ump{fill:#5B6270}
 .vl-chairs{fill:var(--acc);stroke:#B08F00;stroke-width:.6}
-.vl-route{fill:none;stroke:#E5007E;stroke-width:2.5;stroke-dasharray:6 5}
+.vl-route{fill:none;stroke:#0B0B0C;stroke-width:2.5;stroke-dasharray:6 5}
 .vl-pin{cursor:pointer}.vl-pin circle{fill:#0B0B0C;stroke:var(--acc);stroke-width:2.5;transition:r .3s,fill .3s}
 .vl-pin text{text-anchor:middle;font:700 12px Inter,system-ui,sans-serif;fill:#fff;pointer-events:none}
 .vl-pin:hover circle,.vl-pin[data-on] circle{fill:var(--acc);r:16}.vl-pin:hover text,.vl-pin[data-on] text{fill:#0B0B0C}
@@ -1192,7 +1121,7 @@ html[data-theme=dark] .vl-list button[data-on]{background:var(--acc);color:var(-
 .gy-cur[data-text] .gy-ring,.gy-cur[data-out]{opacity:0}
 .gms-cur[data-on="1"] ~ .gy-cur{opacity:0}
 .gms-cur>span{background:var(--acc)!important;color:var(--acc-on)!important}
-html.gy-has-cur,html.gy-has-cur *{cursor:none!important}html.gy-has-cur :is(input,textarea,select,[contenteditable]){cursor:text!important}
+
 /* ---- film grain over the page and a light sweep across yellow buttons ---- */
 body::after{content:'';position:fixed;inset:-50%;z-index:9990;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(6) infinite}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}}
@@ -1204,15 +1133,16 @@ html.gms-low body::after,html.gms-low .gms-liquid--water::before{display:none}
 @media (hover:none),(pointer:coarse){body::after{opacity:.035;animation:none}}
 
 /* ---- design system: one grid, spacing and type scale ---- */
-:root{--gms-ease:cubic-bezier(.16,1,.3,1);--wrap:1280px;--gut:clamp(20px,5vw,72px);--sec-y:clamp(96px,13vh,152px);--t-kick:500 11.5px/1.4 'JetBrains Mono',ui-monospace,monospace;--t-h2:800 clamp(34px,4.2vw,64px)/.98 'Archivo Expanded',system-ui,sans-serif;--ink-0:#070708;--ink-1:#141416;--ink-2:#1C1C1F;--paper:#F2F1EC;--paper-2:#E7E5DE;--cream:#E9E7E0}
+:root{--gms-ease:cubic-bezier(.16,1,.3,1);--wrap:1280px;--gut:clamp(20px,5vw,72px);--sec-y:clamp(96px,13vh,152px);--t-kick:500 11.5px/1.4 'JetBrains Mono',ui-monospace,monospace;--t-h2:800 clamp(34px,4.2vw,64px)/.98 'Instrument Serif',system-ui,sans-serif;--ink-0:#070708;--ink-1:#141416;--ink-2:#1C1C1F;--paper:#F2F1EC;--paper-2:#E7E5DE;--cream:#E9E7E0}
 .sx{font:var(--t-kick);letter-spacing:.2em;text-transform:uppercase}
-#gms-shell [data-r=hero-copy],#gms-shell [data-r=hero-ch]{visibility:hidden}
+#gms-shell [data-r=hero-ch]{visibility:hidden}
+#gms-shell .gms-hl>span,#gms-shell [style*=gmsRise]{animation:none!important}
 /* ---- hero: editorial, bottom left ---- */
 section[data-r=hero] [data-r=hero-scrim]{background:linear-gradient(180deg,rgba(7,7,8,.55) 0%,rgba(7,7,8,0) 22%,rgba(7,7,8,0) 42%,rgba(7,7,8,.72) 76%,rgba(7,7,8,.94) 100%),linear-gradient(90deg,rgba(7,7,8,.55) 0%,rgba(7,7,8,0) 55%)!important}
 .hx{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(132px + clamp(0px,4vh,40px));z-index:3;max-width:780px;display:flex;flex-direction:column;align-items:flex-start;gap:22px}
 .hx-k{display:inline-flex;align-items:center;gap:14px;font:var(--t-kick);letter-spacing:.2em;text-transform:uppercase;color:rgba(237,231,219,.78)}
 .hx-k .sig{font:600 10.5px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:none}
-.hx-h{margin:0;font-family:'Archivo Expanded';font-weight:800;font-size:clamp(40px,6.2vw,104px);line-height:.94;letter-spacing:-.035em;color:#fff;text-wrap:balance}
+.hx-h{margin:0;font-family:'Instrument Serif';font-weight:800;font-size:clamp(40px,6.2vw,104px);line-height:.94;letter-spacing:-.035em;color:#fff;text-wrap:balance}
 .hx-p{margin:0;max-width:560px;font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:rgba(237,231,219,.82)}
 .hx-cta{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:6px}
 :is(section,div)[data-r=hero] .hx-pri.gms-liquid--water,.hx-pri{all:unset;cursor:pointer;display:inline-flex!important;align-items:center;gap:12px;padding:16px 26px!important;border-radius:999px;background:var(--acc)!important;color:#070708!important;font:600 15px/1 Inter,system-ui,sans-serif!important;border:0!important;box-shadow:none!important}
@@ -1221,7 +1151,7 @@ section[data-r=hero] [data-r=hero-scrim]{background:linear-gradient(180deg,rgba(
 .hx-pri:focus-visible,.hx-sec:focus-visible{outline:1.5px solid var(--acc);outline-offset:4px}
 .hx-facts{position:absolute;left:var(--gut);right:var(--gut);bottom:64px;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:18px;border-top:1px solid rgba(237,231,219,.16)}
 .hx-facts .hero-line{margin:0;display:flex;gap:clamp(18px,3vw,44px);flex-wrap:wrap;color:rgba(237,231,219,.7);font-size:13px}
-.hx-facts .hero-line b{font-family:'Archivo Expanded';font-weight:700;font-size:15px;color:#fff;margin-right:6px}
+.hx-facts .hero-line b{font-family:'Instrument Serif';font-weight:700;font-size:15px;color:#fff;margin-right:6px}
 .hx-clock{font:var(--t-kick);letter-spacing:.16em;color:rgba(237,231,219,.55)}
 section[data-r=hero] [data-r=hero-ch],section[data-r=hero] [data-r=hero-cue]{display:none!important}
 section[data-r=hero] [data-r=hero-sw]{position:absolute!important;right:var(--gut)!important;left:auto!important;top:auto!important;bottom:calc(132px + clamp(0px,4vh,40px))!important;z-index:3;display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:2px!important;transform:none!important;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
@@ -1317,7 +1247,7 @@ main :is(.st-card,.nn-it,[data-r=sch-days] button,.sr-head>button:first-child):a
 main .nn-it{box-shadow:inset 3px 0 0 var(--sp,transparent)}
 /* empty states */
 .gms-blank{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 28px;border-radius:var(--r-m);background:var(--d-s1,#F6F7F9);color:var(--d-ink2,#5B6270);font-size:15px;line-height:1.5}
-.gms-blank>.gi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--d-tint,#E3F4F2);color:var(--ac,var(--acc))}
+.gms-blank>.gi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--d-tint,#E9E7E0);color:var(--ac,var(--acc))}
 .gms-blank b{color:var(--d-ink,#0B0B0C);font-size:16px}.gms-ill{width:132px;height:auto;display:block;margin-bottom:4px}
 img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5) 0 12px,var(--d-tint,#E6E9EF) 12px 24px);object-fit:none}
 /* footer */
@@ -1325,9 +1255,9 @@ img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5)
 .ft-in{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
 .ft-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end}
 .ft-brand{display:flex;flex-direction:column;gap:16px;max-width:460px}.ft-brand p{margin:0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.6)}
-.ft-logo{display:flex;align-items:center;gap:10px}.ft-logo img{display:block;width:34px;height:34px}.ft-logo b{font-family:'Archivo Expanded';font-weight:800;font-size:21px;letter-spacing:-.02em}
+.ft-logo{display:flex;align-items:center;gap:10px}.ft-logo img{display:block;width:34px;height:34px}.ft-logo b{font-family:'Instrument Serif';font-weight:800;font-size:21px;letter-spacing:-.02em}
 .ft-stats{margin:0;display:flex;gap:clamp(18px,3vw,40px);flex-wrap:wrap}.ft-stats div{display:flex;flex-direction:column;gap:6px}
-.ft-stats dd{margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.ft-stats dd{margin:0;font-family:'Instrument Serif';font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
 .ft-stats dt{font:500 10.5px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 .ft-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;padding:34px 0;border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12)}
 .ft-cols>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
@@ -1346,7 +1276,7 @@ img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5)
 .tv-play .gi{width:36px;height:36px;border-radius:50%;background:#E5484D;color:#fff;-webkit-mask:none;mask:none;display:grid;place-items:center}
 .tv-play .gi::before{content:'';width:0;height:0;margin-left:3px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
 /* pinned sections are about a third shorter on phones: fewer swipes for the same animation */
-@media (max-width:760px){[data-r=steps-section]{height:180vh!important}[data-r=tv-section]{height:135vh!important}[data-r=ev-section]{height:230vh!important}[data-r=fn-section]{height:150vh!important}}
+@media (max-width:760px){[data-r=steps-section]{height:140vh!important}[data-r=tv-section]{height:118vh!important}[data-r=ev-section]{height:165vh!important}[data-r=fn-section]{height:125vh!important}}
 /* Low mode */
 .gms-low *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .gms-low [data-r=hero-media]{transform:none!important;width:100%!important}
@@ -1357,7 +1287,7 @@ img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5)
 [data-r=hero-sw] button i{order:2;width:14px;height:2px;border-radius:2px;background:currentColor;opacity:.5;transition:width .4s var(--gms-ease),background .3s,opacity .3s}
 [data-r=hero-sw] button:hover{color:#fff}[data-r=hero-sw] button[data-on="1"]{color:#fff;font-weight:600}[data-r=hero-sw] button[data-on="1"] i{width:30px;background:var(--c);opacity:1}
 [data-r=hero-sw] button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease}
+section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease}
 @media (max-width:760px){[data-r=hero-sw]{left:0;right:0;top:84px;flex-direction:row;align-items:center;gap:6px;padding:0 16px;overflow-x:auto;scrollbar-width:none}[data-r=hero-sw]::-webkit-scrollbar{display:none}
  [data-r=hero-sw] button{flex:none;padding:8px 12px;background:rgba(8,10,16,.38);border:1px solid rgba(255,255,255,.16);font-size:12.5px}[data-r=hero-sw] button i{display:none}[data-r=hero-sw] button[data-on="1"]{background:rgba(255,255,255,.94);color:#0B0B0C;border-color:transparent;box-shadow:inset 0 -3px 0 var(--c)}
  section[data-r=hero] [data-r=hero-ch]{display:none}}
@@ -1367,7 +1297,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 .sv-seg{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:var(--d-s1,#F1F3F7)}
 .sv-seg button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--d-ink2,#4A505C);transition:background .25s,color .25s}
 .sv-seg button[data-on="1"]{background:var(--d-inv,#0B0B0C);color:var(--d-on-inv,#fff)}.sv-seg button:focus-visible{outline:2px solid var(--ac,var(--acc));outline-offset:2px}
-.sg-head{font-family:'Archivo Expanded';font-weight:700;font-size:17px;letter-spacing:-.01em;line-height:1.15}.sg-head:empty{display:none}
+.sg-head{font-family:'Instrument Serif';font-weight:700;font-size:17px;letter-spacing:-.01em;line-height:1.15}.sg-head:empty{display:none}
 [data-sg][data-wide="1"]{grid-template-columns:150px minmax(0,1fr)!important}[data-sg][data-wide="1"]>div:first-child>span:first-child{display:none}
 @media (max-width:760px){[data-sg][data-wide="1"]{grid-template-columns:1fr!important;gap:6px!important}[data-sg][data-wide="1"]>div:first-child{flex-direction:row!important;align-items:baseline;gap:10px!important;padding-top:0!important}}
 .nn{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
@@ -1381,8 +1311,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=12"></script>
-<script defer src="./assets/js/gms-plus.js?v=38"></script>
+<script defer src="./assets/js/gms-motion.js?v=13"></script>
+<script defer src="./assets/js/gms-plus.js?v=39"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1407,8 +1337,10 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 #gms-ldr .ld-q{all:unset;cursor:pointer;font:500 14px/1 Inter,system-ui,sans-serif;color:rgba(237,231,219,.7);padding:6px 0;border-bottom:1px solid rgba(237,231,219,.25);transition:color .4s,border-color .4s}
 #gms-ldr .ld-q:hover{color:#E9E7E0;border-color:#E9E7E0}
 #gms-ldr button:focus-visible{outline:1.5px solid var(--acc);outline-offset:4px}
-#gms-ldr[data-out] .ld-in{animation:ldAway .7s cubic-bezier(.7,0,.84,0) both}
-#gms-ldr[data-out]{animation:ldLift 1.05s cubic-bezier(.76,0,.24,1) .45s both}
+#gms-ldr[data-out] .ld-in{animation:ldAway .35s cubic-bezier(.7,0,.84,0) both}
+#gms-ldr[data-out]{animation:ldLift .55s cubic-bezier(.76,0,.24,1) .2s both}
+#gms-ldr .ld-go,#gms-ldr .ld-prog{display:none!important}
+#gms-ldr .ld-logo,#gms-ldr .ld-meta,#gms-ldr .ld-sheen{animation-duration:.6s!important;animation-delay:0s!important}
 html.gms-ldr-on,html.gms-ldr-on body{overflow:hidden!important}
 @keyframes ldReveal{to{-webkit-mask-position:0 0;mask-position:0 0}}
 @keyframes ldSettle{to{transform:none}}
@@ -1499,7 +1431,7 @@ html.gy-top .gyb{opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.gyh{transition:opacity .3s}.gyh-w{animation:none}}
 
 /* the Games at a glance: a pinned scoreboard that fills row by row as you scroll */
-.gyk{position:relative;z-index:3;height:260vh;background:#F2F1EC;color:#0B0B0C}
+.gyk{position:relative;z-index:3;height:180vh;background:#F2F1EC;color:#0B0B0C}
 html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 .gyk-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 var(--gut,32px);max-width:1320px;margin:0 auto;box-sizing:border-box}
 .gyk-k{font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;opacity:.55;margin-bottom:clamp(18px,3vh,34px)}
@@ -1510,8 +1442,55 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 .gyk-w{font-style:italic;transition-delay:.05s}
 .gyk-d{font:500 12px/1.4 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;text-align:right;padding-bottom:1.1em;opacity:calc(var(--in,0) * .7);transform:translateY(calc((1 - var(--in,0)) * 12px))}
 .gyk-row{opacity:var(--op,1)}
-@media (max-width:760px){.gyk{height:220vh}.gyk-row{grid-template-columns:auto 1fr;gap:6px 14px}.gyk-d{grid-column:1/-1;text-align:left;padding:0}.gyk-n,.gyk-w{font-size:clamp(64px,19vw,104px)}}
+@media (max-width:760px){.gyk{height:160vh}.gyk-row{grid-template-columns:auto 1fr;gap:6px 14px}.gyk-d{grid-column:1/-1;text-align:left;padding:0}.gyk-n,.gyk-w{font-size:clamp(64px,19vw,104px)}}
 @media (prefers-reduced-motion:reduce){.gyk{height:auto}.gyk-pin{position:static;height:auto;padding-block:96px}.gyk-n,.gyk-w,.gyk-d{transform:none!important;opacity:1!important}.gyk-l{transform:none}}
+
+
+/* slim nav: one more-menu holds search, favourites, theme, sound and login */
+.nv-more-wrap{position:relative;display:inline-flex}
+.nv-more-wrap>.nv-ic--search,.nv-more-wrap>.nv-ic--my,.nv-more-wrap>.nv-ic--theme{display:none!important}
+.nv-more{position:absolute;right:0;top:calc(100% + 12px);min-width:220px;padding:6px;border-radius:16px;background:#111113;color:#F2F1EC;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 22px 50px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:1px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:100% 0;pointer-events:none;transition:opacity .22s ease,transform .3s cubic-bezier(.16,1,.3,1);z-index:80}
+.nv-more[data-open="1"]{opacity:1;transform:none;pointer-events:auto}
+.nv-more button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;font:500 14px/1 Inter,system-ui,sans-serif;color:inherit;width:100%}
+.nv-more button:hover,.nv-more button:focus-visible{background:rgba(255,255,255,.08)}
+.nv-more button .gi{font-size:19px;opacity:.75;width:20px}
+.nv-more kbd{margin-left:auto;font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;opacity:.45}
+.nv-more .nv-badge{margin-left:auto}
+.nv-more .snd-eq{margin-left:auto}
+.nv-more hr{border:0;height:1px;background:rgba(255,255,255,.08);margin:4px 6px}
+[data-r=nav] [data-r=login-btn]{min-width:0}
+@media (max-width:900px){.nv-more-wrap{display:none!important}}
+
+
+/* audience paths: chips under the hero, each opens a short guide */
+.hx-paths{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px;font:500 12px/1 Inter,system-ui,sans-serif;color:rgba(255,255,255,.6)}
+.hx-paths>span{margin-right:4px;letter-spacing:.02em}
+.hx-paths button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);color:#F2F1EC;transition:background .25s,border-color .25s,color .25s}
+.hx-paths button:hover,.hx-paths button:focus-visible{background:#F2F1EC;color:#0B0B0C;border-color:#F2F1EC}
+.gp-path{position:fixed;inset:0;z-index:260;pointer-events:none}
+.gp-path[data-open="1"]{pointer-events:auto}
+.gp-path-scrim{position:absolute;inset:0;background:rgba(8,8,9,.5);opacity:0;transition:opacity .3s}
+.gp-path[data-open="1"] .gp-path-scrim{opacity:1}
+.gp-path-sh{position:absolute;top:0;right:0;bottom:0;width:min(440px,100%);background:#F2F1EC;color:#0B0B0C;box-shadow:-20px 0 60px rgba(0,0,0,.25);transform:translateX(102%);transition:transform .5s cubic-bezier(.16,1,.3,1);overflow-y:auto;overscroll-behavior:contain;padding:28px 28px 40px;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+.gp-path[data-open="1"] .gp-path-sh{transform:none}
+.gp-path-x{all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(11,11,12,.06);font-size:20px}
+.gp-path-k{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;opacity:.55}
+.gp-path-h{font:400 44px/1 'Instrument Serif',serif;letter-spacing:-.02em;margin:14px 0 8px}
+.gp-path-p{font-size:15px;line-height:1.55;opacity:.75;margin:0 0 22px}
+.gp-path-b{border-top:1px solid rgba(11,11,12,.12);padding:16px 0}
+.gp-path-b h3{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;opacity:.55;margin:0 0 10px}
+.gp-path-b ul{margin:0;padding:0 0 0 18px;font-size:14.5px;line-height:1.6}
+.gp-path-go{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;width:100%;margin-top:18px;padding:15px 20px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font-weight:600;font-size:15px}
+@media (prefers-reduced-motion:reduce){.gp-path-sh{transition:none}}
+
+
+.gp-toast{width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;white-space:nowrap}
+.gp-toast>*{flex:none}
+@media (max-width:560px){.hx{bottom:206px!important}.hx-paths{gap:6px;margin-top:18px}.hx-paths>span{flex-basis:100%;margin:0 0 2px}.hx-paths button{padding:7px 12px}}
+
+/* effects retired in the cleanup: grain, custom cursors, side rail */
+body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{background-image:none!important;animation:none!important;opacity:0!important}
+.gy-cur,.gms-cur,.gp-rail{display:none!important}
 </style>
 <div id="gms-ldr" role="dialog" aria-label="Loading" aria-live="polite">
   <div class="ld-in">
@@ -1525,24 +1504,14 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
   </div>
 </div>
 <script>
-/* waits for fonts, the page script and the hero film (never more than 9 s), then offers the way in */
+/* brief brand moment (under 1.5 s), then straight in; sound stays off until the visitor turns it on */
 (function(){var L=document.getElementById('gms-ldr'),R=document.documentElement;if(!L)return;R.classList.add('gms-ldr-on');
-  var bar=L.querySelector('.ld-bar i'),pc=L.querySelector('.ld-pc'),t0=performance.now(),done={},W={fonts:20,dom:15,app:25,film:25,load:15},shown=0,ready=false;
-  function mark(k){if(done[k])return;done[k]=1;}
-  function target(){var p=0;for(var k in W)if(done[k])p+=W[k];return p;}
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){mark('fonts');});else mark('fonts');
-  if(document.readyState!=='loading')mark('dom');else document.addEventListener('DOMContentLoaded',function(){mark('dom');});
-  if(document.readyState==='complete')mark('load');else window.addEventListener('load',function(){mark('load');});
-  function film(){var v=document.querySelector('section[data-r=hero] video');if(!v)return false;if(v.readyState>=3){mark('film');return true;}v.addEventListener('canplay',function(){mark('film');},{once:true});return true;}
-  var hooked=false;(function tick(){var now=performance.now();if(window.GMSApp)mark('app');if(!hooked)hooked=film();
-    var tg=target(),age=now-t0;if(age>9000)tg=100;shown+=(tg-shown)*0.08;if(tg-shown<0.6)shown=tg;
-    bar.style.setProperty('--p',(shown/100).toFixed(3));pc.textContent=Math.round(shown)+'%';
-    if(shown>=99.5&&age>3000&&!ready){ready=true;L.setAttribute('data-ready','');var b=L.querySelector('.ld-snd');if(b)setTimeout(function(){try{b.focus({preventScroll:true});}catch(e){}},300);}
-    if(!ready)requestAnimationFrame(tick);})();
-  function go(withSound){if(L.hasAttribute('data-out'))return;if(withSound&&window.GMSSound)window.GMSSound.start();else{try{localStorage.setItem('gms-sound','off');}catch(e){}}
-    L.setAttribute('data-out','');setTimeout(function(){R.classList.remove('gms-ldr-on');window.dispatchEvent(new Event('gms:entered'));},900);setTimeout(function(){L.remove();},1600);}
-  L.addEventListener('click',function(e){var b=e.target.closest('[data-enter]');if(b)go(b.getAttribute('data-enter')==='sound');});
-  document.addEventListener('keydown',function k(e){if(ready&&e.key==='Escape'){go(false);document.removeEventListener('keydown',k);}});
+  var t0=performance.now();
+  function go(){if(L.hasAttribute('data-out'))return;L.setAttribute('data-out','');setTimeout(function(){R.classList.remove('gms-ldr-on');window.dispatchEvent(new Event('gms:entered'));},420);setTimeout(function(){L.remove();},900);}
+  function soon(){var age=performance.now()-t0;setTimeout(go,Math.max(0,700-age));}
+  if(document.readyState!=='loading')soon();else document.addEventListener('DOMContentLoaded',soon);
+  setTimeout(go,1100);
+  L.addEventListener('click',go);
 })();
 </script>
 <!-- Static first paint: a copy of the nav + hero drawn before any script runs; the live page takes over underneath and this fades away -->
@@ -1550,29 +1519,29 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 <div data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
   <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
     <img src="assets/brand/gobananas-mark.webp" alt="Gobananas" class="gb-logo" width="520" height="238" style="display:block;width:auto;height:34px">
-    <span style="font-family:'Archivo Expanded';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
+    <span style="font-family:'Instrument Serif';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
   <div data-r="navlinks" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
-    <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Overview<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Schedule<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Events<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Registration<span style="font-family:'Material Symbols Rounded';font-size:18px;width:18px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Live<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button>
+    <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Schedule<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Sports<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Live<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button><button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:2px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;background:transparent;color:#0B0B0C;transition:background .2s ease,color .2s ease">Results<span style="font-family:'Material Symbols Rounded';font-size:18px;width:0px;overflow:hidden;transition:transform .3s ease;transform:rotate(0deg)"><i class="gi" data-gi="expand_more"></i></span></button>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:rgba(11,11,12,.06);font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="menu"></i></button>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:#0B0B0C;color:#fff;font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Register</button>
   </div>
   </div>
 <div data-r="hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#0B0B0C;color:#fff">
     <div data-r="hero-media" style="position:absolute;left:0;top:0;width:120%;height:100%;will-change:transform"></div>
     <div data-r="hero-scrim" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(95% 80% at 0% 100%,rgba(8,10,16,.84) 0%,rgba(8,10,16,.58) 34%,rgba(8,10,16,.12) 64%,rgba(8,10,16,0) 80%),linear-gradient(180deg,rgba(8,10,16,.42) 0%,rgba(8,10,16,0) 20%,rgba(8,10,16,0) 70%,rgba(8,10,16,.38) 100%)"></div>
-    <div data-r="hero-copy" style="position:absolute;left:clamp(24px,6vw,104px);bottom:clamp(96px,14vh,150px);z-index:3;width:min(680px,calc(100vw - 48px));display:flex;flex-direction:column;gap:20px;will-change:transform,opacity">
-      <span class="hero-pill" style="animation:gmsRise .8s .1s cubic-bezier(.2,.8,.2,1) both"><b class="sig sig--open">Registration open</b><span>AIPT 2026</span><span class="hp-mono"><span data-shell-clock>--:--:--</span> IST</span></span>
-      <h1 data-r="hero-h1" style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(38px,5.4vw,92px);line-height:.92;letter-spacing:-.04em;color:#fff"><span class="gms-hl"><span style="animation-delay:.25s">Veer Savarkar</span></span> <span class="gms-hl"><span style="animation-delay:.43s">Sports</span></span> <span class="gms-hl"><span style="animation-delay:.61s">Complex<b class="hero-dot">.</b></span></span></h1>
-      <p style="margin:0;max-width:640px;font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:rgba(255,255,255,.8);animation:gmsRise 1s .82s cubic-bezier(.2,.8,.2,1) both">All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster, Naranpura, Ahmedabad. Registration, accreditation, schedules and live results, run from one system.</p>
-      <p data-r="hero-facts" class="hero-line" style="animation:gmsRise 1s .98s cubic-bezier(.2,.8,.2,1) both"><span><b>6</b> days of competition</span><span><b>6</b> venues</span><span><b>8</b> sports</span><span><b>34</b> medal events</span></p>
-      <div data-r="hero-ctas" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;animation:gmsRise 1s 1.08s cubic-bezier(.2,.8,.2,1) both">
-        <button class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;padding:15px 24px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-weight:600;font-size:15px;box-shadow:0 1px 2px rgba(15,20,40,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease">Register as Participants</button>
-        <button style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:14px 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)">All 8 ways to take part<span style="font-family:'Material Symbols Rounded';font-size:18px"><i class="gi" data-gi="arrow_forward"></i></span></button>
+    <div data-r="hero-copy" class="hx">
+      <span class="hx-k"><b class="sig sig--open">Opens 19 Nov</b><span>All India Police Tournament 2026</span></span>
+      <h1 class="hx-h"><span class="gms-hl"><span style="animation-delay:.2s">Veer Savarkar</span></span><br><span class="gms-hl"><span style="animation-delay:.38s">Sports Complex</span></span></h1>
+      <p class="hx-p">Badminton &amp; Table Tennis Cluster at Naranpura, Ahmedabad. Registration, accreditation, schedules and live results, in one system.</p>
+      <div class="hx-cta">
+        <button class="gms-liquid gms-liquid--water hx-pri">Register now<i class="gi" data-gi="arrow_forward"></i></button>
+        <button class="hx-sec" data-goto="venue">Explore the venue</button>
       </div>
+      <div class="hx-paths" role="group" aria-label="Guides by role"><span>I'm coming as</span><button type="button" data-path="athlete">Athlete</button><button type="button" data-path="official">Official</button><button type="button" data-path="media">Media</button><button type="button" data-path="spectator">Spectator</button></div>
     </div>
     <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>The complex</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
     <div data-r="hero-cue" aria-hidden="true" style="position:absolute;right:clamp(24px,5vw,72px);bottom:86px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.6);pointer-events:none;animation:gmsRise 1s 1s cubic-bezier(.2,.8,.2,1) both"><span>SCROLL</span><span style="width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));animation:gmsCue 1.8s ease-in-out infinite;transform-origin:50% 0"></span></div>
@@ -1589,7 +1558,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 <nav data-r="nav" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(1240px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 18px;background:var(--d-glass,rgba(255,255,255,.62));backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.8);border-radius:999px;box-shadow:var(--sh-1);box-sizing:border-box">
   <button onClick="{{ goHome }}" aria-label="GMS home" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px">
     <img src="assets/brand/gobananas-mark.webp" alt="Gobananas" class="gb-logo" width="520" height="238" style="display:block;width:auto;height:34px">
-    <span style="font-family:'Archivo Expanded';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
+    <span style="font-family:'Instrument Serif';font-weight:800;font-size:18px;letter-spacing:-.02em">GMS</span>
   </button>
   <div data-r="navlinks" data-open="{{ menuOpen }}" style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
@@ -1598,19 +1567,28 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <button type="button" class="nv-mi" data-plus="search"><i class="gi" data-gi="search"></i>Search</button>
     <button type="button" class="nv-mi" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
     <button type="button" class="nv-mi" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
+    <button type="button" class="nv-mi" data-snd aria-pressed="false"><i class="gi" data-gi="volume_off"></i>Sound</button>
+    <button type="button" class="nv-mi" onClick="{{ goLogin }}"><i class="gi" data-gi="login"></i>Log in</button>
     <button data-r="menu-admin" onClick="{{ goAdminLogin }}">Admin login</button>
   </div>
   <div data-r="navcta" style="display:flex;gap:6px;align-items:center">
     <button data-r="navburger" onClick="{{ toggleMenu }}" aria-label="Menu" style="all:unset;cursor:pointer;display:none;width:40px;height:40px;border-radius:50%;place-items:center;background:var(--d-tint,rgba(11,11,12,.06));font-family:'Material Symbols Rounded';font-size:22px"><i class="gi" data-gi="{{ menuIcon }}"></i></button>
-    <span class="nv-tools"><button type="button" class="nv-ic nv-ic--search" data-plus="search" aria-label="Search the Games" title="Search (Ctrl K)"><i class="gi" data-gi="search"></i></button>
-    <button type="button" class="nv-ic nv-ic--my" data-plus="mygames" aria-label="My Games" title="My Games"><i class="gi" data-gi="star"></i><b class="nv-badge" data-my-count></b></button>
-    <button type="button" class="nv-ic nv-ic--theme" data-plus="theme" aria-label="Switch to dark mode" title="Theme"><i class="gi" data-gi="dark_mode"></i></button><button type="button" class="nv-ic nv-ic--snd" data-snd aria-pressed="false" aria-label="Turn sound on" title="Sound off"><i class="gi" data-gi="volume_off"></i><span class="snd-eq" aria-hidden="true"><i></i><i></i><i></i></span></button></span>
+    <span class="nv-tools nv-more-wrap"><button type="button" class="nv-ic nv-ic--more" data-more aria-haspopup="menu" aria-expanded="false" aria-label="More" title="More"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="19" cy="12" r="1.8" fill="currentColor"/></svg></button>
+      <span class="nv-more" role="menu" data-open="0">
+        <button type="button" role="menuitem" data-plus="search"><i class="gi" data-gi="search"></i>Search<kbd>Ctrl K</kbd></button>
+        <button type="button" role="menuitem" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
+        <button type="button" role="menuitem" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
+        <button type="button" role="menuitem" class="nv-ic--snd" data-snd aria-pressed="false"><i class="gi" data-gi="volume_off"></i><span>Sound</span><span class="snd-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>
+        <hr>
+        <button type="button" role="menuitem" onClick="{{ goLogin }}"><i class="gi" data-gi="login"></i>Log in</button>
+        <button type="button" role="menuitem" onClick="{{ goAdminLogin }}"><i class="gi" data-gi="admin_panel_settings"></i>Admin login</button>
+      </span></span>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:var(--d-inv,#0B0B0C);color:var(--d-on-inv,#fff);font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Login</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ tabReg }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Register</button>
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:var(--r-l);background:var(--d-glass,rgba(255,255,255,.96));backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid var(--d-line,#E6E9EF);box-shadow:var(--sh-3);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
-      <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span class="sx">Registration, 8 ways to take part</span><span style="font-family:'Archivo Expanded';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Games.</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><span class="sx">Registration, 8 ways to take part</span><span style="font-family:'Instrument Serif';font-weight:700;font-size:24px;letter-spacing:-.03em">Choose how you're joining the Games.</span></div>
       <div style="display:flex;align-items:center;gap:8px"><button data-r="regmenu-all" onClick="{{ regSeeAll }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,11,12,.1));font-size:13px;font-weight:600;transition:background .2s ease" style-hover="background:var(--d-s1,#F3F5F9)">See them all on the page<span style="font-family:'Material Symbols Rounded';font-size:17px"><i class="gi" data-gi="arrow_downward"></i></span></button><button data-r="regmenu-close" onClick="{{ regClose }}" aria-label="Close registration menu" style="all:unset;cursor:pointer;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--d-s1,#F1F3F7);font-family:'Material Symbols Rounded';font-size:21px;transition:background .2s ease" style-hover="background:#E4E8EF"><i class="gi" data-gi="close"></i></button></div>
     </div>
     <div data-r="regmenu-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
@@ -1647,6 +1625,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
         <button class="gms-liquid gms-liquid--water hx-pri" onClick="{{ regAthlete }}">Register now<i class="gi" data-gi="arrow_forward"></i></button>
         <button class="hx-sec" data-goto="venue">Explore the venue</button>
       </div>
+      <div class="hx-paths" role="group" aria-label="Guides by role"><span>I'm coming as</span><button type="button" data-path="athlete">Athlete</button><button type="button" data-path="official">Official</button><button type="button" data-path="media">Media</button><button type="button" data-path="spectator">Spectator</button></div>
     </div>
     <div class="hx-facts" aria-label="At a glance"><p data-r="hero-facts" class="hero-line">{{ heroLine }}</p><span class="hx-clock">{{ clock }} {{ tzLabel }}</span></div>
     <div data-r="hero-ch" aria-hidden="true"><span class="hch-k" data-hch-k>01</span><span class="hch-m"><b data-hch-name>The complex</b><span class="hch-bar"><i data-hch-fill></i></span></span><span class="hch-n">/ 06</span></div>
@@ -1690,19 +1669,19 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
       </div>
     </div>
   </section>
-  <section ref="{{ stepsRef }}" data-r="steps-section" style="position:relative;z-index:2;height:260vh;background:var(--d-s0,#FFFFFF)">
+  <section ref="{{ stepsRef }}" data-r="steps-section" style="position:relative;z-index:2;height:180vh;background:var(--d-s0,#FFFFFF)">
     <div data-r="steps-grid" style="position:sticky;top:0;height:100vh;max-width:1240px;margin:0 auto;padding:100px 32px 40px;box-sizing:border-box;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
       <div data-r="steps-photo" style="position:relative;height:min(600px,74vh);border-radius:var(--r-l);background:var(--d-s1,#F1F3F7);overflow:hidden">
         {{ photoLoop }}
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,0) 86%,rgba(255,255,255,.5) 100%);pointer-events:none"></div>
-        <div style="position:absolute;left:18px;bottom:18px;padding:10px 18px;border-radius:var(--r-m);background:rgba(255,255,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);font-family:'Archivo Expanded';font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1" data-step-num>{{ stepNum }}</div>
+        <div style="position:absolute;left:18px;bottom:18px;padding:10px 18px;border-radius:var(--r-m);background:rgba(255,255,255,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);font-family:'Instrument Serif';font-weight:700;font-size:44px;letter-spacing:-.04em;line-height:1" data-step-num>{{ stepNum }}</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px">
         <div class="sx" style="margin-bottom:18px"><i>02</i>The road to the podium</div>
         <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
           <div data-step data-on="{{ s.on }}" style="padding:9px 0">
             <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
-              <div style="font-family:'Archivo Expanded';font-weight:700;font-size:clamp(30px,3.6vw,52px);letter-spacing:-.04em;line-height:1.05">{{ s.title }}</div>
+              <div style="font-family:'Instrument Serif';font-weight:700;font-size:clamp(30px,3.6vw,52px);letter-spacing:-.04em;line-height:1.05">{{ s.title }}</div>
               <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ s.when }}</span>
             </div>
           </div>
@@ -1712,7 +1691,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     </div>
   </section>
 
-  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:190vh;background:var(--d-s0,#FFFFFF)">
+  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:145vh;background:var(--d-s0,#FFFFFF)">
     <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
       <div data-r="tv-cinema" data-cursor="Watch" data-cursor-tone="light" onClick="{{ goTv }}" style="position:absolute;inset:0;cursor:pointer;background:#0B0B0C;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
         {{ tvVideo }}
@@ -1720,12 +1699,12 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
         <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11.5px;font-weight:700;letter-spacing:.1em"><b class="sig sig--onred">Live</b>Channel 1</span>
-            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:0">{{ tvHome.round }}</span>
+            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:0">Court feed</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
             <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
-              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7);letter-spacing:0;font-family:'Inter';font-size:13px">{{ tvHome.where }}</span>
-              <span data-r="tv-title" style="font-family:'Archivo Expanded';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">{{ tvHome.a }} <span style="opacity:.55">vs</span> {{ tvHome.b }}</span>
+              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7);letter-spacing:0;font-family:'Inter';font-size:13px">Veer Savarkar Sports Complex, Naranpura</span>
+              <span data-r="tv-title" style="font-family:'Instrument Serif';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">Badminton Hall <span style="opacity:.55">·</span> Live</span>
             </div>
             <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="play_arrow"></i></span>Watch live</button>
           </div>
@@ -1738,7 +1717,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <div class="ecx-wrap">
       <button class="ecx-toggle" onClick="{{ ecToggle }}" aria-expanded="{{ ecAria }}" data-open="{{ ecOpenAttr }}">
         <span class="ecx-l">
-          <span class="ecx-live"><span class="sx sx--dark"><i>03</i>Event centre</span><span class="ecx-now"><b class="sig sig--live">Live</b>{{ liveNowCount }} matches at three venues</span></span>
+          <span class="ecx-live"><span class="sx sx--dark"><i>03</i>Event centre</span><span class="ecx-now"><b class="{{ ecSigCls }}">{{ ecSigTxt }}</b>{{ ecNowTxt }}</span></span>
           <span class="ecx-title">Event centre</span>
           <span class="ecx-sub">Scores from every venue, updated as each point is played. Open a match to follow it period by period.</span>
         </span>
@@ -1778,7 +1757,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
                   <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="padding:6px 11px;border-radius:999px;background:{{ ec.d.tint }};color:{{ ec.d.color }};font-size:12px;font-weight:700">{{ ec.d.divName }}</span><span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:#6B7180">{{ ec.d.fieldUp }} · {{ ec.d.fmtLabel }}</span></span>
                   <span class="pill" data-live="{{ ec.d.liveAttr }}"><span class="pd"></span>{{ ec.d.status }}</span>
                 </div>
-                <h2 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#6B7180">· {{ ec.d.round }}</span></h2>
+                <h2 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;line-height:1.1">{{ ec.d.ev }} <span style="color:#6B7180">· {{ ec.d.round }}</span></h2>
                 <div class="ec-vs">
                   <div class="ec-pl" data-win="{{ ec.d.winA }}"><small>{{ ec.d.A1 }}</small><b>{{ ec.d.A0 }}</b></div>
                   <div class="ec-big"><span>{{ ec.d.sa }}</span><span>:</span><span>{{ ec.d.sb }}</span></div>
@@ -1811,13 +1790,13 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
   </section>
 
   <div class="seam seam-dl" aria-hidden="true"></div>
-  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:330vh;background:var(--d-s1,#F6F7F9)">
+  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:215vh;background:var(--d-s1,#F6F7F9)">
     <div data-ev-sticky style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(70% 60% at 70% 40%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
       <div data-kick aria-hidden="true" style="position:absolute;inset:0"></div>
       <div data-r="ev-head" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:78px 32px 0;box-sizing:border-box;pointer-events:none">
         <div data-ev-head>
           <span class="sx"><i>04</i>The programme</span>
-          <h2 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">{{ evTotal }} medal events<br>across {{ sportTotal }} sports</h2>
+          <h2 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:clamp(32px,min(3.8vw,7vh),56px);letter-spacing:-.05em;line-height:.96">{{ evTotal }} medal events<br>across {{ sportTotal }} sports</h2>
           <p data-r="ev-p" style="margin:0;font-size:15px;line-height:1.5;color:var(--d-ink2,#4A505C)">One smash opens the programme. Keep scrolling: the shuttle bursts into all 28 medal events, from the badminton first round to the table tennis team final.</p>
           <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--d-ink2,#5B6270)"><span style="width:22px;height:1.5px;background:#0B0B0C;opacity:.5"></span><span data-ev-stage>{{ evStage }}</span></span>
         </div>
@@ -1844,7 +1823,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <div data-r="sch-grid" style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.75fr) minmax(0,1.6fr);gap:56px;align-items:start">
       <div data-r="sch-left" style="position:sticky;top:110px;display:flex;flex-direction:column;gap:22px">
         <span class="sx"><i>05</i>Schedule</span>
-        <h2 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96">Every session, day by day</h2>
+        <h2 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:var(--h2);letter-spacing:-.05em;line-height:.96">Every session, day by day</h2>
         <p style="margin:0;font-size:15px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ schLead }}</p>
         <div data-rise data-r="sch-days" style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
@@ -1866,7 +1845,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
         <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
             <div data-sg data-wide="{{ g.wide }}" style="display:grid;grid-template-columns:86px minmax(0,1fr);gap:20px">
-              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Archivo Expanded';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span class="sg-head">{{ g.head }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:var(--d-ink3,#6B7180)">{{ g.part }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:4px;padding-top:12px"><span style="font-family:'Instrument Serif';font-weight:700;font-size:26px;letter-spacing:-.02em">{{ g.time }}</span><span class="sg-head">{{ g.head }}</span><span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;color:var(--d-ink3,#6B7180)">{{ g.part }}</span></div>
               <div style="display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--d-line,#E8EAEE);padding-left:14px">
                 <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="3">
                   <div style="display:flex;flex-direction:column;border-radius:var(--r-s);background:{{ r.bg }};box-shadow:inset 2px 0 0 {{ r.dot }};transition:background .3s ease">
@@ -1889,7 +1868,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
           </sc-for>
         </sc-if>
         <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
-          <div class="gms-blank"><svg class="gms-ill" viewBox="0 0 160 96" aria-hidden="true"><rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E3F4F2)"/><rect x="38" y="14" width="84" height="70" rx="12" fill="none" stroke="#0B0B0C" stroke-width="2"/><path d="M38 34h84M60 8v12M100 8v12" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round"/><path d="M52 48h20M52 60h34M52 72h14" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)" stroke="#0B0B0C" stroke-width="2"/><path d="M118 62v8l5 4" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" fill="none"/></svg><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
+          <div class="gms-blank"><svg class="gms-ill" viewBox="0 0 160 96" aria-hidden="true"><rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E9E7E0)"/><rect x="38" y="14" width="84" height="70" rx="12" fill="none" stroke="#0B0B0C" stroke-width="2"/><path d="M38 34h84M60 8v12M100 8v12" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round"/><path d="M52 48h20M52 60h34M52 72h14" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)" stroke="#0B0B0C" stroke-width="2"/><path d="M118 62v8l5 4" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" fill="none"/></svg><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
         </sc-if>
       </div>
     </div>
@@ -1953,7 +1932,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <div class="st-prog" aria-hidden="true"><span><i></i></span></div>
   </section>
 
-  <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:220vh;background:var(--d-s1,#F4F5F7)">
+  <section ref="{{ closeRef }}" data-r="fn-section" style="position:relative;height:160vh;background:var(--d-s1,#F4F5F7)">
     <div style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden">
       <div data-fn-win class="fn-win">
         <div data-fn-vid class="fn-vid">{{ finaleVideo }}</div>
@@ -1973,8 +1952,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     </div>
   </section>
 
-  <button type="button" class="gyb" aria-label="Open Live TV"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="gybp" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs><text><textPath href="#gybp">AIPT 2026 • LIVE NOW • 19–24 NOV • LIVE TV • </textPath></text></svg><i></i></button>
-<footer class="ft">
+  <footer class="ft">
     <div class="ft-in">
       <div class="ft-top" data-rise>
         <div class="ft-brand"><span class="ft-logo"><img src="assets/brand/gms-mark-dark.svg" alt="" width="34" height="34" loading="lazy"><b>GMS</b></span><p>{{ footLine }}</p></div>
@@ -1993,13 +1971,13 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 </sc-if>
 
 <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
-<main data-screen-label="Registration" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 14%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
+<main data-screen-label="Registration" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 14%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(42,42,46,.1),rgba(42,42,46,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
   <div style="position:relative;z-index:2;width:min(640px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,11,12,.07));box-shadow:var(--sh-3);box-sizing:border-box">
     <sc-if value="{{ regFormOpen }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-direction:column;gap:22px">
         <div style="display:flex;align-items:center;gap:14px">
           <span style="width:56px;height:56px;border-radius:var(--r-m);background:color-mix(in srgb,var(--acc) 10%,transparent);color:var(--ac,var(--acc));display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:30px"><i class="gi" data-gi="{{ rt.icon }}"></i></span>
-          <div style="display:flex;flex-direction:column;gap:2px"><span class="sx">Register as</span><span style="font-family:'Archivo Expanded';font-weight:700;font-size:32px;letter-spacing:-.03em;line-height:1.05">{{ rt.name }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:2px"><span class="sx">Register as</span><span style="font-family:'Instrument Serif';font-weight:700;font-size:32px;letter-spacing:-.03em;line-height:1.05">{{ rt.name }}</span></div>
         </div>
         <div data-r="form-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
           <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
@@ -2040,8 +2018,8 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     </sc-if>
     <sc-if value="{{ regDone }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:20px 0">
-        <span style="width:72px;height:72px;border-radius:50%;background:#E7F7EE;color:#1FA463;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:40px"><i class="gi" data-gi="check"></i></span>
-        <h2 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:34px;letter-spacing:-.03em">Registration submitted</h2>
+        <span style="width:72px;height:72px;border-radius:50%;background:#E7F7EE;color:#2A2A2E;display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:40px"><i class="gi" data-gi="check"></i></span>
+        <h2 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:34px;letter-spacing:-.03em">Registration submitted</h2>
         <span style="font-size:15px;color:var(--d-ink2,#4A505C);max-width:400px">Your application is with the verification team. Log in with this email to track it.</span>
         <span style="font-family:'JetBrains Mono';font-size:17px;padding:12px 18px;border-radius:var(--r-s);background:var(--d-glass,rgba(255,255,255,.85))">{{ lastRegId }}</span>
         <button onClick="{{ goLogin }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--d-inv,#0B0B0C);color:var(--d-on-inv,#fff);font-weight:600;font-size:14px">Go to login</button>
@@ -2052,7 +2030,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 </sc-if>
 
 <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
-<main data-screen-label="Login" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 14%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(31,164,99,.1),rgba(31,164,99,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
+<main data-screen-label="Login" style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(60% 50% at 85% 8%,color-mix(in srgb,var(--acc) 14%,transparent),color-mix(in srgb,var(--acc) 0%,transparent) 70%),radial-gradient(50% 45% at 8% 92%,rgba(42,42,46,.1),rgba(42,42,46,0) 70%),#EEF1F6;padding:120px 24px 80px;box-sizing:border-box">
   <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
     <form onSubmit="{{ submitLogin }}" style="position:relative;z-index:2;width:min(440px,100%);margin:6vh auto 0;display:flex;flex-direction:column;gap:18px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,11,12,.07));box-shadow:var(--sh-3);box-sizing:border-box">
       <div style="display:flex;padding:4px;border-radius:999px;background:var(--d-tint,rgba(11,11,12,.06))">
@@ -2060,7 +2038,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
           <button type="button" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border-radius:999px;font-size:14px;font-weight:600;background:{{ t.bg }};box-shadow:{{ t.sh }}">{{ t.label }}</button>
         </sc-for>
       </div>
-      <h1 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:34px;letter-spacing:-.035em">{{ loginTitle }}</h1>
+      <h1 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:34px;letter-spacing:-.035em">{{ loginTitle }}</h1>
       <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:var(--d-ink2,#4A505C)">Email
         <input type="email" value="{{ loginEmail }}" onChange="{{ onLoginEmail }}" placeholder="you@example.com" style="padding:13px 15px;border-radius:var(--r-s);border:1px solid var(--d-line,rgba(11,11,12,.1));background:var(--d-glass,rgba(255,255,255,.85));font-size:15px;outline:none">
       </label>
@@ -2073,7 +2051,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
   </sc-if>
   <sc-if value="{{ isParticipant }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;z-index:2;width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:22px;padding:34px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,11,12,.07));box-shadow:var(--sh-3);box-sizing:border-box">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">My registration</span><span style="font-family:'Archivo Expanded';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:var(--d-ink2,#5B6270)">{{ me.type }} · {{ me.id }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">My registration</span><span style="font-family:'Instrument Serif';font-weight:700;font-size:32px;letter-spacing:-.03em">{{ me.name }}</span><span style="font-size:14px;color:var(--d-ink2,#5B6270)">{{ me.type }} · {{ me.id }}</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,11,12,.12));font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ me.timeline }}" as="t" hint-placeholder-count="4">
@@ -2084,11 +2062,11 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
   </sc-if>
   <sc-if value="{{ isAdminSession }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;z-index:2;width:min(1000px,100%);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:30px;border-radius:var(--r-l);background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,11,12,.07));box-shadow:var(--sh-3);box-sizing:border-box">
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">Admin verification</span><span style="font-family:'Archivo Expanded';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><span class="sx">Admin verification</span><span style="font-family:'Instrument Serif';font-weight:700;font-size:32px;letter-spacing:-.03em">Registrations</span></div>
       <button onClick="{{ logout }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid var(--d-line,rgba(11,11,12,.12));font-size:13px;font-weight:600">Log out</button></div>
       <div data-r="grid4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
         <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
-          <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-m);background:rgba(255,255,255,.8)"><span style="font-size:12px;color:var(--d-ink2,#5B6270)">{{ k.label }}</span><span style="font-family:'Archivo Expanded';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-m);background:rgba(255,255,255,.8)"><span style="font-size:12px;color:var(--d-ink2,#5B6270)">{{ k.label }}</span><span style="font-family:'Instrument Serif';font-weight:700;font-size:30px;color:{{ k.c }}">{{ k.v }}</span></div>
         </sc-for>
       </div>
       <div style="display:flex;flex-direction:column;border-radius:var(--r-m);background:var(--d-glass,rgba(255,255,255,.85));overflow:hidden">
@@ -2106,7 +2084,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
         </sc-for>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px"><span style="font-family:'Archivo Expanded';font-weight:700;font-size:20px;letter-spacing:-.02em">Help desk enquiries</span><span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ enqCount }} NEW</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px"><span style="font-family:'Instrument Serif';font-weight:700;font-size:20px;letter-spacing:-.02em">Help desk enquiries</span><span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ enqCount }} NEW</span></div>
         <sc-if value="{{ noEnq }}" hint-placeholder-val="{{ true }}">
           <div style="padding:18px;border-radius:var(--r-m);background:rgba(255,255,255,.7);font-size:14px;color:var(--d-ink2,#5B6270)">No enquiries yet. Messages sent from the Contact section on the home page appear here.</div>
         </sc-if>
@@ -2117,7 +2095,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
                 <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--d-ink2,#5B6270)">{{ q.ref }}</span>
                 <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:14px">{{ q.name }}</span><span style="font-size:12px;color:var(--d-ink2,#5B6270);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ q.snip }}</span></span>
                 <span style="font-size:13px;color:var(--d-ink2,#4A505C)">{{ q.desk }} · {{ q.time }}</span>
-                <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#E3F4F2;color:var(--ac,var(--acc))">{{ q.status }}</span>
+                <span style="justify-self:start;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#E9E7E0;color:var(--ac,var(--acc))">{{ q.status }}</span>
               </div>
             </sc-for>
           </div>
@@ -2135,7 +2113,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;animation:gmsRise .7s cubic-bezier(.2,.8,.2,1) both">
       <div style="display:flex;flex-direction:column;gap:12px">
         <span class="sx sx--dark"><b class="sig sig--live" style="font-size:12px;text-transform:uppercase;letter-spacing:.06em">Live</b>Broadcast on three channels, {{ clock }} IST</span>
-        <h1 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Live TV</h1>
+        <h1 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:clamp(42px,5.4vw,78px);letter-spacing:-.045em;line-height:.98">Live TV</h1>
       </div>
       <span style="font-size:15px;color:rgba(255,255,255,.6);max-width:380px;line-height:1.5">One channel per venue. Switch channels to follow any match, with the live score beside the picture.</span>
     </div>
@@ -2149,7 +2127,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
         <div class="tvh-info">
           <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
             <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.55)">{{ tv.now.eventUp }} · {{ tv.now.roundUp }}</span>
-            <span style="font-family:'Archivo Expanded';font-weight:700;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em;line-height:1.1">{{ tv.now.A0 }} <span style="color:rgba(255,255,255,.4)">vs</span> {{ tv.now.B0 }}</span>
+            <span style="font-family:'Instrument Serif';font-weight:700;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em;line-height:1.1">{{ tv.now.A0 }} <span style="color:rgba(255,255,255,.4)">vs</span> {{ tv.now.B0 }}</span>
           </div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
             <span class="tvh-score"><small>{{ tv.now.A1 }}</small>{{ tv.now.sa }}<i>:</i>{{ tv.now.sb }}<small>{{ tv.now.B1 }}</small></span>
@@ -2162,7 +2140,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
             <button onClick="{{ c.pick }}" data-on="{{ c.on }}" aria-pressed="{{ c.pressed }}">
               <span class="tvh-chtop"><span>CH {{ c.num }}</span><span class="pill pill--dark" data-live="{{ c.live }}"><span class="pd"></span>{{ c.status }}</span></span>
               <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px"><span style="font-family:'Material Symbols Rounded';font-size:20px;opacity:.7"><i class="gi" data-gi="{{ c.icon }}"></i></span>{{ c.name }}</span>
-              <span style="display:flex;justify-content:space-between;gap:8px;font-size:13px;opacity:.75"><span>{{ c.line }}</span><b style="font-family:'Archivo Expanded';font-size:15px">{{ c.score }}</b></span>
+              <span style="display:flex;justify-content:space-between;gap:8px;font-size:13px;opacity:.75"><span>{{ c.line }}</span><b style="font-family:'Instrument Serif';font-size:15px">{{ c.score }}</b></span>
             </button>
           </sc-for>
         </div>
@@ -2203,7 +2181,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
       <span style="width:66px;height:66px;border-radius:var(--r-m);background:var(--d-glass,rgba(255,255,255,.85));border:1px solid #fff;box-shadow:var(--sh-1);display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:34px;color:var(--ac,var(--acc))"><i class="gi" data-gi="{{ modal.icon }}"></i></span>
       <div style="display:flex;flex-direction:column;gap:10px">
         <span class="sx">Register as</span>
-        <h3 style="margin:0;font-family:'Archivo Expanded';font-weight:700;font-size:36px;letter-spacing:-.04em;line-height:1.02">{{ modal.name }}</h3>
+        <h3 style="margin:0;font-family:'Instrument Serif';font-weight:700;font-size:36px;letter-spacing:-.04em;line-height:1.02">{{ modal.name }}</h3>
         <p style="margin:0;font-size:16px;line-height:1.55;color:var(--d-ink2,#4A505C)">{{ modal.desc }}</p>
       </div>
       <button onClick="{{ startFlow }}" style="all:unset;cursor:pointer;text-align:center;padding:16px;border-radius:999px;background:var(--d-inv,#0B0B0C);color:var(--d-on-inv,#fff);font-weight:600;font-size:15px">Register</button>
@@ -2215,7 +2193,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
   <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
     <div data-r="chat" class="vz-chat" style="position:fixed;right:24px;bottom:132px;z-index:70;width:min(370px,calc(100vw - 48px));height:min(500px,calc(100vh - 220px));display:flex;flex-direction:column;border-radius:var(--r-l);overflow:hidden;background:var(--d-s0,#fff);border:1px solid var(--d-line,rgba(11,11,12,.08));box-shadow:var(--sh-3)">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--d-line,rgba(11,11,12,.06))">
-        <div style="display:flex;flex-direction:column"><span style="font-family:'Archivo Expanded';font-weight:700;font-size:19px">Vision</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--d-ink2,#5B6270)">{{ chatSub }}</span></div>
+        <div style="display:flex;flex-direction:column"><span style="font-family:'Instrument Serif';font-weight:700;font-size:19px">Vision</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--d-ink2,#5B6270)">{{ chatSub }}</span></div>
         <button onClick="{{ toggleChat }}" aria-label="Close chat" style="all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:var(--d-tint,rgba(11,11,12,.06));display:grid;place-items:center;font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="close"></i></button>
       </div>
       <div ref="{{ chatScrollRef }}" style="flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px">
@@ -2237,7 +2215,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
     <button type="button" data-plus="search"><i class="gi" data-gi="search"></i><span>Search</span></button>
     <button type="button" data-tab="reg" class="tb-reg" onClick="{{ tabReg }}"><span>Register</span><i class="gi" data-gi="arrow_forward"></i></button>
   </nav>
-  <button type="button" data-r="regdock" data-show="{{ dockShow }}" data-hide="1" onClick="{{ tabReg }}"><span class="rd-k sig sig--open">{{ regTag }}</span><b>Register for the Games</b><span class="rd-go"><i class="gi" data-gi="arrow_forward"></i></span></button>
+  
   <div data-r="bot" data-zoop="{{ visionZoop }}" style="position:fixed;right:12px;bottom:8px;z-index:71;width:120px;height:120px;transition:opacity .25s ease;opacity:{{ botOp }};pointer-events:{{ botPe }}">
     <img src="assets/bot-still.webp" alt="" width="120" height="120" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:{{ botStillOp }};transition:opacity .7s ease .15s">
     <sc-if value="{{ botReady }}" hint-placeholder-val="{{ false }}">
@@ -2306,14 +2284,14 @@ const TOURNAMENT={
   travel:[['Badminton Hall','Table Tennis Hall',4],['Badminton Hall','Tennis Courts',6],['Badminton Hall','Community Sports Centre',5],['Table Tennis Hall','Aquatic Stadium',5],['Table Tennis Hall','Outdoor Sports Ground',7],['Aquatic Stadium','Community Sports Centre',6],['Aquatic Stadium','Outdoor Sports Ground',5],['Tennis Courts','Community Sports Centre',4]],
   // sports and their medal events: [full name, MEN | WOMEN | MIXED, code, short name]; the first two are the featured cluster
   sports:[
-{name:'Badminton',venue:'Badminton Hall',icon:'sports_badminton',color:'#C99700',tint:'#FFF6D3',outdoor:false,events:[['Badminton Men\'s Singles','MEN','BDMS','Men\'s Singles'],['Badminton Women\'s Singles','WOMEN','BDWS','Women\'s Singles'],['Badminton Men\'s Doubles','MEN','BDMD','Men\'s Doubles'],['Badminton Women\'s Doubles','WOMEN','BDWD','Women\'s Doubles'],['Badminton Mixed Doubles','MIXED','BDXD','Mixed Doubles']]},
-{name:'Table Tennis',venue:'Table Tennis Hall',icon:'sports_tt',color:'var(--acc)',tint:'#E1F3F1',outdoor:false,events:[['Table Tennis Men\'s Singles','MEN','TTMS','Men\'s Singles'],['Table Tennis Women\'s Singles','WOMEN','TTWS','Women\'s Singles'],['Table Tennis Men\'s Team','MEN','TTMT','Men\'s Team'],['Table Tennis Women\'s Team','WOMEN','TTWT','Women\'s Team'],['Table Tennis Mixed Doubles','MIXED','TTXD','Mixed Doubles']]},
-{name:'Athletics',venue:'Outdoor Sports Ground',icon:'directions_run',color:'#B23A62',tint:'#FBE8EE',outdoor:true,events:[['Athletics 100m Men','MEN','ATH100M','100m Men'],['Athletics 100m Women','WOMEN','ATH100W','100m Women'],['Athletics 4×400m Mixed Relay','MIXED','ATH4X4','4×400m Relay']]},
-{name:'Swimming',venue:'Aquatic Stadium',icon:'pool',color:'#0E8FB8',tint:'#E1F4FA',outdoor:false,events:[['Swimming 50m Freestyle Men','MEN','SWM50M','50m Free Men'],['Swimming 50m Freestyle Women','WOMEN','SWM50W','50m Free Women'],['Swimming 4×100m Mixed Medley','MIXED','SWMMED','Medley Relay']]},
-{name:'Football',venue:'Outdoor Sports Ground',icon:'sports_soccer',color:'#1F8A4C',tint:'#E4F5EA',outdoor:true,events:[['Football Men\'s Tournament','MEN','FBM','Men'],['Football Women\'s Tournament','WOMEN','FBW','Women'],['Football Five-a-side','MIXED','FB5','Five-a-side']]},
-{name:'Basketball',venue:'Community Sports Centre',icon:'sports_basketball',color:'#D9601E',tint:'#FDEDE3',outdoor:false,events:[['Basketball Men\'s Tournament','MEN','BKM','Men'],['Basketball Women\'s Tournament','WOMEN','BKW','Women'],['Basketball 3×3 Mixed','MIXED','BK3','3×3 Mixed']]},
-{name:'Volleyball',venue:'Community Sports Centre',icon:'sports_volleyball',color:'#A9741E',tint:'#FBF1DF',outdoor:false,events:[['Volleyball Men\'s Tournament','MEN','VBM','Men'],['Volleyball Women\'s Tournament','WOMEN','VBW','Women'],['Volleyball Beach Mixed','MIXED','VBB','Beach Mixed']]},
-{name:'Tennis',venue:'Tennis Courts',icon:'sports_tennis',color:'#7A4FD6',tint:'#EFE9FC',outdoor:true,events:[['Tennis Men\'s Singles','MEN','TNM','Men\'s Singles'],['Tennis Women\'s Singles','WOMEN','TNW','Women\'s Singles'],['Tennis Mixed Doubles','MIXED','TNX','Mixed Doubles']]}],
+{name:'Badminton',venue:'Badminton Hall',icon:'sports_badminton',color:'#8A8A90',tint:'#ECEBE6',outdoor:false,events:[['Badminton Men\'s Singles','MEN','BDMS','Men\'s Singles'],['Badminton Women\'s Singles','WOMEN','BDWS','Women\'s Singles'],['Badminton Men\'s Doubles','MEN','BDMD','Men\'s Doubles'],['Badminton Women\'s Doubles','WOMEN','BDWD','Women\'s Doubles'],['Badminton Mixed Doubles','MIXED','BDXD','Mixed Doubles']]},
+{name:'Table Tennis',venue:'Table Tennis Hall',icon:'sports_tt',color:'#8A8A90',tint:'#ECEBE6',outdoor:false,events:[['Table Tennis Men\'s Singles','MEN','TTMS','Men\'s Singles'],['Table Tennis Women\'s Singles','WOMEN','TTWS','Women\'s Singles'],['Table Tennis Men\'s Team','MEN','TTMT','Men\'s Team'],['Table Tennis Women\'s Team','WOMEN','TTWT','Women\'s Team'],['Table Tennis Mixed Doubles','MIXED','TTXD','Mixed Doubles']]},
+{name:'Athletics',venue:'Outdoor Sports Ground',icon:'directions_run',color:'#8A8A90',tint:'#ECEBE6',outdoor:true,events:[['Athletics 100m Men','MEN','ATH100M','100m Men'],['Athletics 100m Women','WOMEN','ATH100W','100m Women'],['Athletics 4×400m Mixed Relay','MIXED','ATH4X4','4×400m Relay']]},
+{name:'Swimming',venue:'Aquatic Stadium',icon:'pool',color:'#8A8A90',tint:'#ECEBE6',outdoor:false,events:[['Swimming 50m Freestyle Men','MEN','SWM50M','50m Free Men'],['Swimming 50m Freestyle Women','WOMEN','SWM50W','50m Free Women'],['Swimming 4×100m Mixed Medley','MIXED','SWMMED','Medley Relay']]},
+{name:'Football',venue:'Outdoor Sports Ground',icon:'sports_soccer',color:'#8A8A90',tint:'#ECEBE6',outdoor:true,events:[['Football Men\'s Tournament','MEN','FBM','Men'],['Football Women\'s Tournament','WOMEN','FBW','Women'],['Football Five-a-side','MIXED','FB5','Five-a-side']]},
+{name:'Basketball',venue:'Community Sports Centre',icon:'sports_basketball',color:'#8A8A90',tint:'#ECEBE6',outdoor:false,events:[['Basketball Men\'s Tournament','MEN','BKM','Men'],['Basketball Women\'s Tournament','WOMEN','BKW','Women'],['Basketball 3×3 Mixed','MIXED','BK3','3×3 Mixed']]},
+{name:'Volleyball',venue:'Community Sports Centre',icon:'sports_volleyball',color:'#8A8A90',tint:'#ECEBE6',outdoor:false,events:[['Volleyball Men\'s Tournament','MEN','VBM','Men'],['Volleyball Women\'s Tournament','WOMEN','VBW','Women'],['Volleyball Beach Mixed','MIXED','VBB','Beach Mixed']]},
+{name:'Tennis',venue:'Tennis Courts',icon:'sports_tennis',color:'#8A8A90',tint:'#ECEBE6',outdoor:true,events:[['Tennis Men\'s Singles','MEN','TNM','Men\'s Singles'],['Tennis Women\'s Singles','WOMEN','TNW','Women\'s Singles'],['Tennis Mixed Doubles','MIXED','TNX','Mixed Doubles']]}],
   // one array per day: [start time, event code, round]
   sessions:[
 [['07:30','ATH100M','Heats'],['08:30','BDMS','Round of 64'],['08:30','TTMT','Group stage'],['09:15','SWM50M','Heats'],['10:00','BDWS','Round of 32'],['11:00','FBM','Group stage'],['11:30','TTWT','Group stage'],['13:45','BKM','Group stage'],['16:30','VBW','Pool A'],['18:15','TNM','Round of 16']],
@@ -2430,7 +2408,7 @@ const SEED=[
 {id:'GMS-26-0391',name:'Anita Desai',type:'Technical Official',status:'Accredited'},
 {id:'GMS-26-0385',name:'James Carter',type:'Media & Broadcasting',status:'Pending'},
 {id:'GMS-26-0362',name:'Dr. Meera Shah',type:'Medical',status:'Rejected'}];
-const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E3F4F2','var(--acc)'],Accredited:['#E7F7EE','#1C8A53'],Rejected:['#FDECEC','#C2383D']};
+const ST={Pending:['#FFF4DB','#9A6B00'],Verified:['#E9E7E0','var(--acc)'],Accredited:['#E7F7EE','#2A2A2E'],Rejected:['#FDECEC','#C2383D']};
 const EVENT_START=T.start;
 // Registration mega-menu groups (role ids from REG).
 const REG_GROUPS=[['COMPETITION & MEDIA',['athlete','media','official']],['ORGANISING & MEDICAL',['entity','medical','staff']],['OPERATIONS & SERVICES',['ema','service']]];
@@ -2682,7 +2660,7 @@ class Component extends DCLogic {
     window.scrollTo({top:window.scrollY+r.top+span*(k+0.3)/NR,behavior:REDUCED?'auto':'smooth'});}
   // Live: how many matches are live now, and the home TV feed
   liveVals(){const live=liveOrder(this.state.live).filter(m=>m.state==='live'),v=liveOrder(this.state.live).map(liveView),m=v.find(x=>x.field==='stadium'&&x.live)||v.find(x=>x.field==='stadium')||v[0],fl=FIELDS[0];
-    return {liveNowCount:String(live.length),tvVideo:this.tvFeedEl(),tvHome:{round:m?(m.event+' · '+m.round):'',where:(fl?fl.name+', ':'')+TOURNAMENT.complex,a:m?m.A0:'',b:m?m.B0:''}};}
+    return {ecSigCls:((this.state.now||Date.now())<T.start)?'ec-pre':'sig sig--live',ecSigTxt:((this.state.now||Date.now())<T.start)?'Preview · sample':'Live',ecNowTxt:((this.state.now||Date.now())<T.start)?'Live scores start '+T.dayShort(0):live.length+' matches at three venues',liveNowCount:String(live.length),tvVideo:this.tvFeedEl(),tvHome:{round:m?(m.event+' · '+m.round):'',where:(fl?fl.name+', ':'')+TOURNAMENT.complex,a:m?m.A0:'',b:m?m.B0:''}};}
   // home cinema feed: the event's YouTube stream (muted, no controls) once the section is near; its thumbnail until then
   // captions off and HD asked for through the player's message channel (the URL flags alone are not always honoured)
   ytQuiet(f){if(!f)return;const send=(func,args)=>{try{f.contentWindow.postMessage(JSON.stringify({event:'command',func,args:args||[]}),'*');}catch(e){}};
@@ -2840,7 +2818,7 @@ class Component extends DCLogic {
     const up=()=>{if(!down)return;down=null;t.classList.remove('drag');const c=t.querySelector('.st-card');if(c){const s=c.offsetWidth+18;t.scrollTo({left:Math.round(t.scrollLeft/s)*s,behavior:'smooth'});}};
     t.addEventListener('pointerup',up);t.addEventListener('pointercancel',up);t.addEventListener('click',e=>{if(moved>6){e.preventDefault();e.stopPropagation();}},true);}
   // desktop cursor: over videos and cards a small bubble follows the pointer and says what a click does (Watch, Open, Details, Register, Drag)
-  cursorInit(){if(this.curOn||REDUCED||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;this.curOn=1;
+  cursorInit(){return;/* the label cursor is retired: the system cursor is clearer */if(this.curOn||REDUCED||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;this.curOn=1;
     const c=document.createElement('div');c.className='gms-cur';c.setAttribute('aria-hidden','true');c.innerHTML='<span></span>';document.body.appendChild(c);const lab=c.firstChild;
     let x=0,y=0,cx=0,cy=0,raf=0,on=false;const loop=()=>{cx+=(x-cx)*0.24;cy+=(y-cy)*0.24;c.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0)';raf=on||Math.abs(x-cx)+Math.abs(y-cy)>1?requestAnimationFrame(loop):0;};
     const upd=el=>{el=el&&el.closest?el:null;const t=el&&el.closest('[data-cursor]'),ctl=el&&el.closest('button,a,input,select,textarea'),want=t&&!(ctl&&ctl!==t&&t.contains(ctl))?t.getAttribute('data-cursor'):'';
@@ -3057,10 +3035,10 @@ class Component extends DCLogic {
     if(/thank/.test(t))return 'Happy to help. Anything else?';
     return 'I can help with registration, accreditation, the schedule, venues, scores and streams.';}
   tickerEl(){
-    const h=React.createElement;const items=liveOrder(this.state.live).map(liveView).filter(v=>v.live).map(v=>`${v.fieldName}   ${v.event}, ${v.round}   ${v.A1} ${v.sa}–${v.sb} ${v.B1}   ${v.status}`);
+    const h=React.createElement;const pre=(this.state.now||Date.now())<T.start;const items=liveOrder(this.state.live).map(liveView).filter(v=>v.live).map(v=>`${v.fieldName}   ${v.event}, ${v.round}   ${v.A1} ${v.sa}–${v.sb} ${v.B1}   ${v.status}`);
     const row=items.concat(items);
     return h('div',{style:{display:'flex',gap:56,width:'max-content',animation:'gmsMarquee 80s linear infinite',fontSize:14,fontWeight:500,color:'#2A2F3A',whiteSpace:'nowrap'}},
-      row.map((t,i)=>h('span',{key:i,style:{display:'flex',alignItems:'center',gap:10}},h('b',{className:'sig sig--live',style:{fontSize:11,letterSpacing:'.06em'}},'LIVE'),t)));
+      row.map((t,i)=>h('span',{key:i,style:{display:'flex',alignItems:'center',gap:10}},pre?h('b',{className:'tk-pre',style:{fontSize:10.5,letterSpacing:'.12em',textTransform:'uppercase',padding:'3px 8px',borderRadius:999,border:'1px solid rgba(11,11,12,.25)',color:'#0B0B0C'}},'Preview · sample'):h('b',{className:'sig sig--live',style:{fontSize:11,letterSpacing:'.06em'}},'LIVE'),t)));
   }
   renderVals(){
     const s=this.state,P=this.props;const screen=s.screen||P.startScreen||'home';const show3D=(P.enable3D??true)&&!LITE;
@@ -3074,12 +3052,12 @@ class Component extends DCLogic {
     const meStatus=mine?mine.status:'Pending';const stIdx={Pending:1,Verified:2,Accredited:3,Rejected:1}[meStatus];
     const setStatus=(id,status)=>this.setState(x=>({admin:x.admin.map(r=>r.id===id?{...r,status}:r)}));
     const regBtn=r=>({...r,open:()=>this.setState({modal:r.id})});
-    const nav=[['Overview',()=>this.scrollTo('overview')],['Schedule',()=>this.scrollTo('schedule')],['Events',()=>this.scrollTo('events')],['Registration',()=>this.scrollTo('reg')],['Live',()=>this.scrollTo('tv'),'tv'],['Medals',()=>{window.GMSPlus&&window.GMSPlus.open('medals');}]];
+    const nav=[['Schedule',()=>this.scrollTo('schedule')],['Sports',()=>this.scrollTo('events')],['Live',()=>this.scrollTo('tv'),'tv'],['Results',()=>{window.GMSPlus&&window.GMSPlus.open('medals');}]];
     return {
       isHome:screen==='home',isRegister:screen==='register',isLogin:screen==='login',isScores:screen==='scores',isTv:screen==='tv',show3D,showChat:P.showChatbot??true,
       overviewRef:this.ref('overview'),tvRef:this.ref('tv'),stepsRef:this.ref('steps'),eventsRef:this.ref('events'),scheduleRef:this.ref('schedule'),regRef:this.ref('reg'),closeRef:this.ref('close'),chatScrollRef:this.ref('chat'),
       menuOpen:s.menuOpen?'1':'0',menuIcon:s.menuOpen?'close':'menu',toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
-      navItems:nav.map(([label,go,k])=>({label,sec:{Overview:'overview',Schedule:'schedule',Events:'events',Registration:'reg',Live:'tv'}[label]||'',...(label==='Registration'?{
+      navItems:nav.map(([label,go,k])=>({label,sec:{Schedule:'schedule',Sports:'events',Live:'tv'}[label]||'',...(label==='Registration'?{
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'var(--d-inv,#0B0B0C)':'transparent',fg:k&&screen===k?'var(--d-on-inv,#fff)':'var(--d-ink,#0B0B0C)'})),
@@ -3129,7 +3107,7 @@ class Component extends DCLogic {
       fields:[fld('name','Full name','As on passport'),fld('email','Email','you@example.com','email'),fld('phone','Mobile','+91','tel'),fld('country','Country / NPC','India'),fld('passport','Passport / ID number',''),fld('org',isAth?'Federation / club':'Organisation','')],
       isAthleteForm:isAth,selCount:String(f.events.length),
       eventPicker:CATS.map(c=>({name:c.name,color:c.color,events:c.events.map(e=>{const on=f.events.includes(e[2]);return {name:e[3]||e[0].replace(c.name+' ',''),bg:on?c.color:'var(--d-glass,rgba(255,255,255,.8))',fg:on?'#fff':'var(--d-ink,#0B0B0C)',bd:on?c.color:'rgba(11,11,12,.1)',toggle:()=>this.setF('events',on?f.events.filter(x=>x!==e[2]):f.events.concat(e[2]))};})})),
-      docs:docs.map(d=>{const on=!!f.docs[d];return {name:d,icon:on?'task':'upload_file',ic:on?'#1FA463':'#5B6270',status:on?'Attached':'Attach',bd:on?'#9ED9B8':'rgba(11,11,12,.15)',bg:on?'rgba(231,247,238,.8)':'rgba(255,255,255,.6)',toggle:()=>this.setF('docs',{...f.docs,[d]:!on})};}),
+      docs:docs.map(d=>{const on=!!f.docs[d];return {name:d,icon:on?'task':'upload_file',ic:on?'#2A2A2E':'#5B6270',status:on?'Attached':'Attach',bd:on?'#9ED9B8':'rgba(11,11,12,.15)',bg:on?'rgba(231,247,238,.8)':'rgba(255,255,255,.6)',toggle:()=>this.setF('docs',{...f.docs,[d]:!on})};}),
       loggedOut:!s.session,isParticipant:!!s.session&&s.session.role==='participant',isAdminSession:!!s.session&&s.session.role==='admin',
       loginTabs:[['participant','Login'],['admin','Admin Login']].map(([k,label])=>({label,pick:()=>this.setState({loginTab:k,loginError:''}),bg:s.loginTab===k?'var(--d-s0,#fff)':'transparent',sh:s.loginTab===k?'0 2px 10px rgba(15,20,40,.08)':'none'})),
       loginTitle:s.loginTab==='admin'?'Admin Login':'Login',loginEmail:s.loginEmail,loginPass:s.loginPass,loginError:s.loginError,loginBtnBg:s.loginTab==='admin'?'#0B0B0C':BLUE,
@@ -3137,8 +3115,8 @@ class Component extends DCLogic {
       submitLogin:e=>{e.preventDefault();if(!/^\S+@\S+\.\S+$/.test(s.loginEmail)||s.loginPass.length<4){this.setState({loginError:'Enter a valid email and a password of at least 4 characters.'});return;}this.setState({session:{role:s.loginTab,email:s.loginEmail}});},
       logout:()=>this.setState({session:null,loginPass:''}),
       me:{name:mine?mine.name:s.loginEmail.split('@')[0],type:mine?mine.type:'Participant',id:mine?mine.id:'No registration on this email yet',
-        timeline:['Submitted','Verified','Accredited','On field'].map((label,i)=>{const rej=meStatus==='Rejected'&&i===1;return {label:rej?'Rejected':label,bar:rej?'#E5484D':i<stIdx?'#1FA463':'rgba(11,11,12,.1)',fg:rej?'#C2383D':i<stIdx?'#0B0B0C':'#6B7180'};})},
-      kpis:[['Total',s.admin.length,'#0B0B0C'],['Pending',s.admin.filter(r=>r.status==='Pending').length,'#9A6B00'],['Verified',s.admin.filter(r=>r.status==='Verified').length,BLUE],['Accredited',s.admin.filter(r=>r.status==='Accredited').length,'#1C8A53']].map(([label,v,c])=>({label,v:String(v),c})),
+        timeline:['Submitted','Verified','Accredited','On field'].map((label,i)=>{const rej=meStatus==='Rejected'&&i===1;return {label:rej?'Rejected':label,bar:rej?'#E5484D':i<stIdx?'#2A2A2E':'rgba(11,11,12,.1)',fg:rej?'#C2383D':i<stIdx?'#0B0B0C':'#6B7180'};})},
+      kpis:[['Total',s.admin.length,'#0B0B0C'],['Pending',s.admin.filter(r=>r.status==='Pending').length,'#9A6B00'],['Verified',s.admin.filter(r=>r.status==='Verified').length,BLUE],['Accredited',s.admin.filter(r=>r.status==='Accredited').length,'#2A2A2E']].map(([label,v,c])=>({label,v:String(v),c})),
       adminRows:s.admin.map(r=>{const done=r.status==='Accredited'||r.status==='Rejected';return {...r,sBg:ST[r.status][0],sFg:ST[r.status][1],actOp:done?'0.3':'1',
         approve:()=>!done&&setStatus(r.id,r.status==='Pending'?'Verified':'Accredited'),reject:()=>!done&&setStatus(r.id,'Rejected')};}),
       ...this.liveVals(),...this.ecVals(),...this.tvVals(screen),

@@ -88,9 +88,24 @@ CAT_LABEL = {"MEN": "Men", "WOMEN": "Women", "MIXED": "Mixed", "OPEN": "Open"}
 MAPS = "https://www.google.com/maps/search/?api=1&query=Veer+Savarkar+Sports+Complex+Naranpura+Ahmedabad"
 
 CSS = r"""
-@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-latin.woff2) format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:'Archivo Expanded';src:url(../assets/fonts/archivo-expanded-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
+.btabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.bt-t{all:unset;cursor:pointer;padding:9px 16px;border-radius:999px;border:1px solid rgba(11,11,12,.18);font:500 14px/1 Inter,system-ui,sans-serif}
+.bt-t[aria-pressed="true"]{background:#0B0B0C;color:#F2F1EC;border-color:#0B0B0C}
+.br{display:flex;gap:18px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+.bc{flex:0 0 230px;scroll-snap-align:start;display:flex;flex-direction:column}
+.bc h4{margin:0 0 12px;font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+.bs{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:12px}
+.bm{border:1px solid rgba(11,11,12,.14);border-radius:12px;overflow:hidden;background:#fff}
+.bm span{display:flex;align-items:center;gap:10px;padding:11px 12px;font-size:13.5px;color:rgba(11,11,12,.45)}
+.bm span+span{border-top:1px solid rgba(11,11,12,.08)}
+.bm i{width:6px;height:6px;border-radius:50%;border:1px solid rgba(11,11,12,.3)}
+.bsum{border:1px dashed rgba(11,11,12,.2);border-radius:12px;padding:18px 14px;display:flex;flex-direction:column;gap:6px}
+.bsum b{font:400 40px/1 'Instrument Serif',serif}
+.bsum span{font-size:13px;opacity:.6}
+@media (max-width:640px){.bc{flex-basis:78vw}.btabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-20px;padding-inline:20px}.btabs::-webkit-scrollbar{display:none}.bt-t{flex:none}}
+
+@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
 @font-face{font-family:'Inter';src:url(../assets/fonts/inter-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
 @font-face{font-family:'JetBrains Mono';src:url(../assets/fonts/jetbrains-mono-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
 :root{--navy:#0B0B0C;--deep:#070708;--navy-2:#141416;--ivory:#F2F1EC;--paper-2:#E7E5DE;--acc:#0B0B0C;--acc-on:#F2F1EC;--gold:var(--acc);--gold-d:var(--acc);--steel:var(--acc);--ink2:#55555C;
@@ -105,7 +120,7 @@ h2{font:var(--h2);letter-spacing:-.018em;margin:14px 0 0}
 .hero,.dark,.deep,.top,footer{--acc:#F2F1EC;--acc-on:#0B0B0C}
 h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{color:var(--acc)}
 .top{position:fixed;inset:14px var(--gut) auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(11,11,12,.72);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(244,239,230,.1);color:var(--ivory);max-width:var(--wrap);margin:0 auto}
-.top-l{display:flex;align-items:center;gap:14px;text-decoration:none}.top-l img{height:28px;width:auto}.top-l b{font:800 15px 'Archivo Expanded';letter-spacing:-.02em}
+.top-l{display:flex;align-items:center;gap:14px;text-decoration:none}.top-l img{height:28px;width:auto}.top-l b{font:800 15px 'Instrument Serif';letter-spacing:-.02em}
 .top-r{display:flex;gap:8px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;font:600 14px 'Inter';text-decoration:none;transition:background .4s var(--ease),color .4s,border-color .4s,transform .4s var(--ease);white-space:nowrap}
 .btn-g{background:#F2F1EC;color:#0B0B0C}.btn-g::after{content:'';width:6px;height:6px;border-radius:50%;background:#0B0B0C;transition:background .35s,transform .35s}.btn-g:hover{background:#fff}.btn-g:hover::after{transform:scale(1.8)}
@@ -122,7 +137,7 @@ h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{col
 .hero p.lead{max-width:560px;font-size:clamp(16px,1.4vw,19px);color:rgba(244,239,230,.82);margin:0 0 28px}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(36px,7vh,72px);border-top:1px solid rgba(244,239,230,.16)}
-.facts div{padding:18px 18px 0 0}.facts b{display:block;font:800 clamp(24px,2.6vw,38px)/1 'Archivo Expanded';letter-spacing:-.03em}.facts span{font:var(--kick);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.6)}
+.facts div{padding:18px 18px 0 0}.facts b{display:block;font:800 clamp(24px,2.6vw,38px)/1 'Instrument Serif';letter-spacing:-.03em}.facts span{font:var(--kick);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.6)}
 .facts div+div{padding-left:18px;border-left:1px solid rgba(244,239,230,.12)}
 section.s{padding:clamp(80px,12vh,140px) 0}
 .dark{background:#0B0B0C;color:var(--ivory);background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:72px 72px}.deep{background:var(--deep);color:var(--ivory)}
@@ -141,7 +156,7 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .medals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px}
 .medals div{padding:22px;border-radius:18px;background:rgba(244,239,230,.05);border:1px solid rgba(244,239,230,.1)}
 .medals i{display:block;width:34px;height:34px;border-radius:50%;margin-bottom:16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
-.medals b{display:block;font:800 20px 'Archivo Expanded'}.medals span{font-size:13.5px;color:rgba(244,239,230,.65)}
+.medals b{display:block;font:800 20px 'Instrument Serif'}.medals span{font-size:13.5px;color:rgba(244,239,230,.65)}
 .mt{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:14px;padding:20px 22px;border-radius:18px;background:var(--acc);color:var(--acc-on)}.mt p{margin:0;font-weight:600}
 .plan{display:grid;grid-template-columns:1.45fr .55fr;gap:20px}
 .vlz{position:relative;overflow:hidden;border-radius:18px;background:#fff;aspect-ratio:1400/989;cursor:grab;touch-action:pan-y;border:1px solid rgba(15,27,45,.08)}
@@ -180,7 +195,7 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .arrive{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
 .arrive div{--acc:#F2F1EC;padding:22px;border-radius:18px;background:#0B0B0C;color:#F2F1EC}.arrive h3{margin:0 0 8px;font:700 16px 'Inter';color:var(--acc)}.arrive p{margin:0;font-size:14.5px;color:rgba(244,239,230,.75)}
 .addr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:14px;padding:22px;border-radius:18px;border:1px solid rgba(15,27,45,.12)}
-.addr b{display:block;font:800 18px 'Archivo Expanded';letter-spacing:-.02em}.addr span{color:var(--ink2);font-size:14px}
+.addr b{display:block;font:800 18px 'Instrument Serif';letter-spacing:-.02em}.addr span{color:var(--ink2);font-size:14px}
 .next{display:flex;justify-content:space-between;align-items:center;gap:20px;text-decoration:none;padding:clamp(48px,8vh,88px) 0}
 .next span{font:var(--kick);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.next b{display:block;font:400 clamp(56px,9vw,150px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;transition:color .5s}
 .next:hover b{color:var(--acc)}.next i{font-style:normal;font-size:clamp(40px,6vw,90px);transition:transform .6s var(--ease)}.next:hover i{transform:translateX(12px)}
@@ -212,6 +227,8 @@ v.addEventListener('pointerup',up);v.addEventListener('pointercancel',up);addEve
 """
 
 JS2 = r"""
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-bt]');if(!b)return;var k=b.getAttribute('data-bt');document.querySelectorAll('[data-bt]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});document.querySelectorAll('[data-bp]').forEach(function(p){p.hidden=p.getAttribute('data-bp')!==k;});});
+
 (function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
 function toast(t){var x=D.querySelector('.toast');if(!x){x=D.createElement('div');x.className='toast';D.body.appendChild(x);}x.textContent=t;x.classList.add('on');clearTimeout(x.t);x.t=setTimeout(function(){x.classList.remove('on');},2200);}
 var h=D.querySelector('[data-split]');if(h){var w=h.textContent;h.textContent='';h.setAttribute('aria-label',w);w.split('').forEach(function(c,i){var s=D.createElement('span');s.className='ch';s.setAttribute('aria-hidden','true');s.style.setProperty('--i',i);s.textContent=c===' '?' ':c;h.appendChild(s);});}
@@ -251,6 +268,25 @@ def page(key):
         f'<a class="rv" style="transition-delay:{i*90}ms" href="../index.html#register"><code>{code}</code><span class="pill">{CAT_LABEL[cat]}</span>'
         f'<h3>{e(title)}</h3>' + (f'<span class="nx">Next · {DAYS[nxt[code][0]][0]} {DAYS[nxt[code][0]][1]} · {nxt[code][1]} · {e(nxt[code][2])}</span>' if code in nxt else '') + f'<span class="md"><i style="background:#D4A63A"></i><i style="background:#B9BEC7"></i><i style="background:#B07A4A"></i>Gold, silver, bronze</span><span class="go">Register for this event →</span></a>'
         for i, (title, cat, code) in enumerate(c["events"]))
+    SLOTS = {"Quarter-finals": 4, "Semi-finals": 2, "Final": 1}
+    MATCHES = {"Round of 64": 32, "Round of 32": 16, "Round of 16": 8}
+    tabs = ""; panes = ""
+    for i, (title, cat, code) in enumerate(c["events"]):
+        rds = []
+        for di, t, cd, rnd in ses:
+            if cd == code and rnd not in rds: rds.append(rnd)
+        cols = ""
+        for rnd in rds:
+            if rnd in SLOTS:
+                slots = "".join('<div class="bm"><span><i></i>To be decided</span><span><i></i>To be decided</span></div>' for _ in range(SLOTS[rnd]))
+                cols += f'<div class="bc"><h4>{e(rnd)}</h4><div class="bs">{slots}</div></div>'
+            else:
+                n = MATCHES.get(rnd)
+                cols += f'<div class="bc bc-sum"><h4>{e(rnd)}</h4><div class="bsum"><b>{n if n else "—"}</b><span>{"matches" if n else "Results list after the session"}</span></div></div>'
+        if not cols: cols = '<div class="bc bc-sum"><h4>Draw</h4><div class="bsum"><b>—</b><span>Published with the draw</span></div></div>'
+        tabs += f'<button type="button" class="bt-t" data-bt="{code}" aria-pressed="{"true" if i == 0 else "false"}">{e(title)}</button>'
+        panes += f'<div class="bp" data-bp="{code}"{"" if i == 0 else " hidden"}><div class="br">{cols}</div></div>'
+    bracket = f'<div class="btabs" role="group" aria-label="Event">{tabs}</div>{panes}'
     rules = "".join(f'<li class="rv"><b>{i+1:02d}</b><div><h3>{e(t)}</h3><p>{e(p)}</p></div></li>' for i, (t, p) in enumerate(d["rules"]))
     facts = "".join(f'<div><b>{a}</b><span>{b}</span></div>' for a, b in d["facts"])
     plan = ""
@@ -285,15 +321,16 @@ def page(key):
 <div class="cta"><a class="btn btn-g" href="../index.html#register">Register to compete →</a><a class="btn btn-o" href="#venue">{"See the hall plan" if d.get("plan") else "Find the venue"}</a></div>
 <div class="hx2"><div class="cd" data-first="{first}" data-last="{last}" aria-live="polite"><span class="cd-k">First session in</span><span class="cd-v">—</span></div><button type="button" class="fol" data-sport="{key}" aria-pressed="false">☆ Follow {d['name']}</button></div>
 <div class="facts">{facts}</div></div></section>
-<nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
+<nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
 <section class="s" id="events"><div class="wrap"><div class="head"><div><span class="kick">01 · Medal events</span><h2>{len(c['events'])} events, <em>one</em> venue</h2></div>
 <p>Every event is open to accredited police athletes from each unit. Pick an event to start your registration.</p></div><div class="ev">{evs}</div></div></section>
 <section class="s" id="schedule"><div class="wrap"><div class="head"><div><span class="kick">02 · Schedule</span><h2>Every <em>session</em>, day by day</h2></div><p>All times IST. Add a session to your calendar, or star it to keep it on this device.</p></div><div class="sch">{sched}</div></div></section>
-<section class="s dark" id="format"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">03 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
+<section class="s" id="results"><div class="wrap"><div class="head"><div><span class="kick">03 · Results &amp; brackets</span><h2>The <em>draw</em>, round by round</h2></div><p>Names go in when the draw is made and each result fills in as the match ends. Nothing here is decided yet: competition opens on 19 November.</p></div><div class="brk rv">{bracket}</div></div></section>
+<section class="s dark" id="format"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">04 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
 <ol class="rules">{rules}</ol></div>
 <div class="medals"><div class="rv"><i style="background:#D4A63A"></i><b>Gold</b><span>Winner of the final</span></div><div class="rv" style="transition-delay:90ms"><i style="background:#B9BEC7"></i><b>Silver</b><span>Runner-up in the final</span></div><div class="rv" style="transition-delay:180ms"><i style="background:#B07A4A"></i><b>Bronze</b><span>Awarded from the semi-finals</span></div></div>
 <div class="mt rv"><p>The live medal table opens with the first {d['name'].lower()} final on 24 November.</p><a class="btn btn-n sm" href="../index.html#medals">Open the medal table</a></div></div></section>
-<section class="s" id="venue"><div class="wrap"><div class="head"><div><span class="kick">04 · The venue</span><h2>{('Inside the <em>'+c['venue'].split()[0].lower()+'</em> hall') if d.get('plan') else ('Find the <em>'+c['venue'].lower()+'</em>')}</h2></div>
+<section class="s" id="venue"><div class="wrap"><div class="head"><div><span class="kick">05 · The venue</span><h2>{('Inside the <em>'+c['venue'].split()[0].lower()+'</em> hall') if d.get('plan') else ('Find the <em>'+c['venue'].lower()+'</em>')}</h2></div>
 <p>{'The real layout from the organising team. Tap a number to zoom to it, pinch or Ctrl+scroll to zoom, and drag to look around.' if d.get('plan') else 'Where the '+e(d['name'].lower())+' is played inside the complex, and how far it is from the other venues.'}</p></div>{plan}
 <div class="arrive">{arrive}</div>
 <div class="addr rv"><div><b>Veer Savarkar Sports Complex</b><span>Naranpura, Ahmedabad, Gujarat · Accreditation card required at every entry</span></div><a class="btn btn-n" href="{MAPS}" target="_blank" rel="noopener">Directions in Google Maps ↗</a></div></div></section>
