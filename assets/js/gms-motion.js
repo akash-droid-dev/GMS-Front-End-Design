@@ -101,9 +101,84 @@
   window.addEventListener('scroll', function () { if (dirRaf) return; dirRaf = requestAnimationFrame(function () { dirRaf = 0; var y = window.scrollY, d = y - lastY; root.classList.toggle('gy-top', y < window.innerHeight * 0.6); if (Math.abs(d) > 6) { root.classList.toggle('gy-down', d > 0 && y > 200); lastY = y; } }); }, { passive: true });
   root.classList.toggle('gy-top', window.scrollY < window.innerHeight * 0.6);
 
+
+  /* ---------------- Event centre: the live matches open as a 3D spiral of curved cards (pacomepertant-style) ---------------- */
+  function ecSpiral() {
+    var sec = doc.querySelector('[data-r=ecx]'); if (!sec) return; var panel = sec.querySelector('.ecx-panel'), inner = panel && panel.querySelector('.ecx-inner'), list = inner && inner.querySelector('[data-r=ec-list]');
+    if (!list || panel.__sp) return; panel.__sp = 1; panel.setAttribute('data-ecs', 'spiral');
+    var bar = doc.createElement('div'); bar.className = 'ecs-bar'; bar.innerHTML = '<button type="button" data-ecs="spiral" aria-pressed="true">spiral</button><i aria-hidden="true"></i><button type="button" data-ecs="list" aria-pressed="false">list</button>';
+    var stage = doc.createElement('div'); stage.className = 'ecs-stage'; stage.setAttribute('aria-label', 'Matches in a spiral. Drag to turn, click a match to open it.');
+    stage.innerHTML = '<div class="ecs-rot"></div><p class="ecs-hint">Drag or scroll to turn · click a match to open it</p>';
+    var grid = inner.querySelector('[data-r=ec-grid]'); inner.insertBefore(bar, inner.firstChild); inner.insertBefore(stage, grid);
+    var rot = stage.firstChild, cards = [], drag = 0, theta = 0, step = 48, R = 420, yStep = 66, raf = 0, dragging = null, built = '';
+    function rows() { return Array.prototype.slice.call(list.querySelectorAll('[data-r=ec-row]')); }
+    function build() {
+      var rs = rows(), sig = rs.map(function (r) { return r.textContent; }).join('|'); if (sig === built) return; built = sig;
+      var fresh = !cards.length; rot.innerHTML = ''; cards = rs.map(function (r, i) {
+        var c = doc.createElement('button'); c.type = 'button'; c.className = 'ecs-card'; c.style.setProperty('--c', r.style.getPropertyValue('--c') || '#C8FF3D'); c.style.setProperty('--i', i);
+        c.innerHTML = '<span class="ecs-in">' + r.innerHTML + '</span>'; if (r.querySelector('[data-live="1"]')) c.setAttribute('data-live', ''); c.setAttribute('aria-label', r.getAttribute('aria-label') || '');
+        c.__row = r; c.__i = i; rot.appendChild(c); return c;
+      });
+      step = cards.length > 1 ? Math.max(30, Math.min(56, 300 / cards.length)) : 0; place(); if (fresh && panel.getAttribute('data-open') === '1') intro();
+    }
+    function scrollTheta() { var r = sec.getBoundingClientRect(), vh = window.innerHeight, k = Math.max(0, Math.min(1, (vh * 0.5 - r.top) / Math.max(1, r.height))); return -k * step * Math.max(0, cards.length - 1); }
+    function place() {
+      raf = 0; if (!cards.length) return; var w = stage.clientWidth; R = Math.max(240, Math.min(520, w * 0.36)); theta = scrollTheta() + drag;
+      var front = 0, best = 1e9;
+      cards.forEach(function (c, i) {
+        var a = i * step + theta, n = ((a % 360) + 540) % 360 - 180, cs = Math.cos(n * Math.PI / 180), y = (i * step + theta) / step * yStep;
+        c.style.transform = 'translate(-50%,-50%) translateY(' + y.toFixed(1) + 'px) rotateY(' + a.toFixed(2) + 'deg) translateZ(' + R.toFixed(0) + 'px) rotateY(' + (-n * 0.18).toFixed(2) + 'deg)';
+        c.style.opacity = cs < -0.15 ? 0 : (0.28 + 0.72 * Math.max(0, cs)).toFixed(3); c.style.zIndex = Math.round(cs * 100) + 100; c.style.pointerEvents = cs < 0.2 ? 'none' : '';
+        var d = Math.abs(n) + Math.abs(y) * 0.2; if (d < best) { best = d; front = i; }
+      });
+      cards.forEach(function (c, i) { c.toggleAttribute('data-front', i === front); }); stage.__front = front;
+    }
+    function q() { if (!raf) raf = requestAnimationFrame(place); }
+    function intro() { if (REDUCED) return; stage.classList.remove('ecs-go'); void stage.offsetWidth; stage.classList.add('ecs-go'); }
+    function setMode(m) { panel.setAttribute('data-ecs', m); bar.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-ecs') === m ? 'true' : 'false'); }); if (m === 'spiral') { built = ''; build(); intro(); } }
+    bar.addEventListener('click', function (e) { var b = e.target.closest('[data-ecs]'); if (b) setMode(b.getAttribute('data-ecs')); });
+    stage.addEventListener('pointerdown', function (e) { if (e.button) return; dragging = { x: e.clientX, d: drag, moved: 0, id: e.pointerId }; });
+    window.addEventListener('pointermove', function (e) { if (!dragging) return; var dx = e.clientX - dragging.x; dragging.moved = Math.max(dragging.moved, Math.abs(dx)); if (dragging.moved > 4) { stage.setAttribute('data-drag', ''); drag = dragging.d + dx * 0.28; q(); } });
+    window.addEventListener('pointerup', function () { if (!dragging) return; var moved = dragging.moved; dragging = null; stage.removeAttribute('data-drag'); stage.__moved = moved; });
+    stage.addEventListener('click', function (e) {
+      var c = e.target.closest('.ecs-card'); if (!c || stage.__moved > 4) { stage.__moved = 0; return; }
+      if (c.__i !== stage.__front) { var a = c.__i * step + theta, n = ((a % 360) + 540) % 360 - 180; drag -= n; /* turn the clicked match to the front */ stage.classList.add('ecs-ease'); q(); setTimeout(function () { stage.classList.remove('ecs-ease'); }, 700); return; }
+      c.setAttribute('data-fly', ''); var row = c.__row;
+      setTimeout(function () { if (row && row.isConnected) row.click(); setMode('list'); c.removeAttribute('data-fly'); var d = inner.querySelector('[data-r=ec-detail]'); if (d) d.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' }); }, REDUCED ? 0 : 520);
+    });
+    window.addEventListener('scroll', function () { if (panel.getAttribute('data-open') === '1' && panel.getAttribute('data-ecs') === 'spiral') q(); }, { passive: true });
+    window.addEventListener('resize', q);
+    var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (panel.getAttribute('data-ecs') === 'spiral') build(); }, 300); }).observe(list, { childList: true, subtree: true, characterData: true });
+    new MutationObserver(function () { if (panel.getAttribute('data-open') === '1' && panel.getAttribute('data-ecs') === 'spiral') { built = ''; build(); intro(); } }).observe(panel, { attributes: true, attributeFilter: ['data-open'] });
+    build();
+  }
+
+  /* ---------------- cursor field: small shuttles turn to the pointer (gev.design) ---------------- */
+  function field() {
+    var sec = doc.querySelector('.gyf'); if (!sec || sec.__f) return; sec.__f = 1; var cv = sec.querySelector('canvas'), cx = cv.getContext('2d'), pts = [], W = 0, H = 0, dpr = 1, tx = 0, ty = 0, ax = 0, ay = 0, raf = 0, on = false;
+    function size() { var r = sec.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; pts = []; var g = W < 700 ? 54 : 66;
+      for (var y = g / 2; y < H; y += g) for (var x = g / 2; x < W; x += g) { var jx = ((x * 7 + y * 13) % 17) - 8, jy = ((x * 11 + y * 5) % 15) - 7; pts.push({ x: x + jx, y: y + jy, a: 0, s: 0.75 + ((x + y) % 5) / 10 }); }
+      if (!on) { tx = ax = W / 2; ty = ay = H / 2; } draw(); }
+    function glyph(p) { var c = cx, k = p.s; c.save(); c.translate(p.x, p.y); c.rotate(p.a); c.beginPath(); c.arc(7 * k, 0, 3.2 * k, 0, Math.PI * 2); c.fill(); c.beginPath(); c.moveTo(4 * k, -3 * k); c.lineTo(-8 * k, -7 * k); c.moveTo(4 * k, 0); c.lineTo(-9 * k, 0); c.moveTo(4 * k, 3 * k); c.lineTo(-8 * k, 7 * k); c.stroke(); c.restore(); }
+    function draw() { raf = 0; ax += (tx - ax) * 0.18; ay += (ty - ay) * 0.18; var dark = root.getAttribute('data-theme') === 'dark', col = dark ? '#F2F1EC' : '#0B0B0C';
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H); cx.lineWidth = 1.4; cx.lineCap = 'round';
+      pts.forEach(function (p) { var dx = ax - p.x, dy = ay - p.y, d = Math.hypot(dx, dy), t = Math.atan2(dy, dx), near = Math.max(0, 1 - d / 260);
+        p.a = t; cx.globalAlpha = 0.22 + near * 0.78; cx.fillStyle = near > 0.55 ? (dark ? '#C8FF3D' : '#4F33FF') : col; cx.strokeStyle = cx.fillStyle; glyph(p); });
+      cx.globalAlpha = 1; if (Math.abs(tx - ax) + Math.abs(ty - ay) > 0.5) raf = requestAnimationFrame(draw); }
+    function q() { if (!raf) raf = requestAnimationFrame(draw); }
+    sec.addEventListener('pointermove', function (e) { var r = sec.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; on = true; q(); }, { passive: true });
+    sec.addEventListener('pointerleave', function () { tx = W / 2; ty = H / 2; q(); });
+    window.addEventListener('resize', function () { size(); }); new MutationObserver(q).observe(root, { attributes: true, attributeFilter: ['data-theme'] }); size();
+  }
+  /* ---------------- rotating badge: turns with the scroll, opens Live TV ---------------- */
+  function badge() {
+    var b = doc.querySelector('.gyb'); if (!b || b.__b) return; b.__b = 1; var r = 0;
+    window.addEventListener('scroll', function () { if (r) return; r = requestAnimationFrame(function () { r = 0; b.style.setProperty('--gybr', (window.scrollY * 0.12).toFixed(1) + 'deg'); }); }, { passive: true });
+    b.addEventListener('click', function () { var A = window.GMSApp; if (A && A.openTv) A.openTv('stadium'); });
+  }
   /* ---------------- run as the page draws ---------------- */
   var t = 0;
-  function scan() { t = 0; flaps(); masks(); parScan(); }
+  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
   scan();
