@@ -115,7 +115,7 @@
     function build() {
       var rs = rows(), sig = rs.map(function (r) { return r.textContent; }).join('|'); if (sig === built) return; built = sig;
       var fresh = !cards.length; rot.innerHTML = ''; cards = rs.map(function (r, i) {
-        var c = doc.createElement('button'); c.type = 'button'; c.className = 'ecs-card'; c.style.setProperty('--c', r.style.getPropertyValue('--c') || '#C8FF3D'); c.style.setProperty('--i', i);
+        var c = doc.createElement('button'); c.type = 'button'; c.className = 'ecs-card'; c.style.setProperty('--c', r.style.getPropertyValue('--c') || '#F2F1EC'); c.style.setProperty('--i', i);
         c.innerHTML = '<span class="ecs-in">' + r.innerHTML + '</span>'; if (r.querySelector('[data-live="1"]')) c.setAttribute('data-live', ''); c.setAttribute('aria-label', r.getAttribute('aria-label') || '');
         c.__row = r; c.__i = i; rot.appendChild(c); return c;
       });
@@ -163,7 +163,7 @@
     function draw() { raf = 0; ax += (tx - ax) * 0.18; ay += (ty - ay) * 0.18; var dark = root.getAttribute('data-theme') === 'dark', col = dark ? '#F2F1EC' : '#0B0B0C';
       cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H); cx.lineWidth = 1.4; cx.lineCap = 'round';
       pts.forEach(function (p) { var dx = ax - p.x, dy = ay - p.y, d = Math.hypot(dx, dy), t = Math.atan2(dy, dx), near = Math.max(0, 1 - d / 260);
-        p.a = t; cx.globalAlpha = 0.22 + near * 0.78; cx.fillStyle = near > 0.55 ? (dark ? '#C8FF3D' : '#4F33FF') : col; cx.strokeStyle = cx.fillStyle; glyph(p); });
+        p.a = t; cx.globalAlpha = 0.22 + near * 0.78; cx.fillStyle = col; cx.strokeStyle = cx.fillStyle; glyph(p); });
       cx.globalAlpha = 1; if (Math.abs(tx - ax) + Math.abs(ty - ay) > 0.5) raf = requestAnimationFrame(draw); }
     function q() { if (!raf) raf = requestAnimationFrame(draw); }
     sec.addEventListener('pointermove', function (e) { var r = sec.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; on = true; q(); }, { passive: true });
@@ -176,9 +176,36 @@
     window.addEventListener('scroll', function () { if (r) return; r = requestAnimationFrame(function () { r = 0; b.style.setProperty('--gybr', (window.scrollY * 0.12).toFixed(1) + 'deg'); }); }, { passive: true });
     b.addEventListener('click', function () { var A = window.GMSApp; if (A && A.openTv) A.openTv('stadium'); });
   }
+
+  /* ---------------- black and white, continuously: the page background blends from one section's tone to the next as you scroll ---------------- */
+  function inverter() {
+    if (root.__inv) return; var main = doc.getElementById('content'); if (!main) return; root.__inv = 1;
+    var secs = [], raf = 0, last = '';
+    function lum(c) { var m = c.match(/\d+(\.\d+)?/g); if (!m || m.length < 3 || (m[3] !== undefined && +m[3] < 0.5)) return null; return (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255; }
+    function scanSecs() {
+      secs = Array.prototype.slice.call(main.querySelectorAll(':scope > section')).filter(function (s) { return !s.matches('[data-hero-sec],[data-r=hero]') && s.offsetHeight > 120; });
+      secs.forEach(function (s) {
+        if (s.__tone === undefined) { var l = lum(getComputedStyle(s).backgroundColor); s.__tone = l === null ? null : (l < 0.5 ? 0 : 1); if (s.__tone !== null) { s.setAttribute('data-tone', s.__tone ? 'light' : 'dark'); s.style.setProperty('background-color', 'transparent', 'important'); } }
+      });
+      secs = secs.filter(function (s) { return s.__tone !== null; }); q();
+    }
+    function mix(t) { var v = Math.round(11 + (242 - 11) * t), g = Math.round(11 + (241 - 11) * t), b = Math.round(12 + (236 - 12) * t); return 'rgb(' + v + ',' + g + ',' + b + ')'; }
+    function paint() {
+      raf = 0; if (!secs.length) return; var vh = window.innerHeight, mid = vh * 0.5, t = secs[0].__tone, band = vh * 0.35;
+      for (var i = 0; i < secs.length; i++) {
+        var r = secs[i].getBoundingClientRect(); if (r.top <= mid) t = secs[i].__tone;
+        var nx = secs[i + 1]; if (nx && nx.__tone !== secs[i].__tone) { var edge = nx.getBoundingClientRect().top; if (Math.abs(edge - mid) < band) { var k = (mid - edge + band) / (2 * band), e = k * k * (3 - 2 * k); t = secs[i].__tone + (nx.__tone - secs[i].__tone) * e; break; } }
+      }
+      var c = mix(t); if (c !== last) { last = c; root.style.setProperty('background-color', c, 'important'); doc.body.style.setProperty('background-color', c, 'important'); root.style.setProperty('--inv', t.toFixed(3)); }
+    }
+    function q() { if (!raf) raf = requestAnimationFrame(paint); }
+    window.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q);
+    new MutationObserver(function () { setTimeout(scanSecs, 200); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    setTimeout(scanSecs, 600); window.addEventListener('gms:entered', function () { setTimeout(scanSecs, 400); });
+  }
   /* ---------------- run as the page draws ---------------- */
   var t = 0;
-  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); }
+  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); inverter(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
   scan();

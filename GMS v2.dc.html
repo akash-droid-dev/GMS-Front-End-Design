@@ -48,9 +48,9 @@ window.__gmsLoadBot=function(){if(window.__gmsBot)return;window.__gmsBot=1;var s
 @font-face{font-family:'Instrument Serif';src:url(assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:400;font-style:italic;font-display:swap}
 
 /* palette: black + acid lime on dark surfaces, bone + ink + electric violet on light ones; the accent follows the surface it sits on */
-:root{--acc:#4F33FF;--acc-on:#FFFFFF;--acc-2:#3A20E6;--acc-hi:#6B55FF;--acc-t:#4F33FF;--lime:#C8FF3D;--violet:#4F33FF;--ink:#0B0B0C;--bone:#F2F1EC}
-html[data-theme=dark],#gms-ldr,nav[data-r=nav],nav[data-r=tabbar],section[data-hero-sec],[data-r=hero],[data-r=steps-section],[data-r=stories],[data-r=ecx],[data-r=tv-section],[data-r=roles-section],[data-r=fn-section],footer.ft,.gv-media,.gy-cur,.pdk,.st-card,[data-kv-burst]{--acc:#C8FF3D;--acc-on:#0B0B0C;--acc-2:#A9E021;--acc-hi:#DBFF7A;--acc-t:#C8FF3D}
-html[data-theme=dark] :is(section.vl,section[data-r=ev-section]){--acc:#4F33FF;--acc-on:#FFFFFF;--acc-2:#3A20E6;--acc-hi:#6B55FF;--acc-t:#4F33FF}
+:root{--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C;--ink:#0B0B0C;--bone:#F2F1EC}
+html[data-theme=dark],#gms-ldr,nav[data-r=nav],nav[data-r=tabbar],section[data-hero-sec],[data-r=hero],[data-r=steps-section],[data-r=stories],[data-r=ecx],[data-r=tv-section],[data-r=roles-section],[data-r=fn-section],footer.ft,.gv-media,.gy-cur,.pdk,.st-card,[data-kv-burst]{--acc:#F2F1EC;--acc-on:#0B0B0C;--acc-2:#D9D7D0;--acc-hi:#FFFFFF;--acc-t:#F2F1EC}
+html[data-theme=dark] :is(section.vl,section[data-r=ev-section]){--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C}
 
 /* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
 @font-face {
@@ -1381,7 +1381,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#5B84FF);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=9"></script>
+<script defer src="./assets/js/gms-motion.js?v=11"></script>
 <script defer src="./assets/js/gms-plus.js?v=37"></script>
 </head>
 <body>
@@ -1425,13 +1425,13 @@ main h2:not(#_x):not(#_y),.hx-h:not(#_x){font-family:'Instrument Serif',Georgia,
 main h2:not(#_x):not(#_y){font-size:clamp(46px,5.7vw,94px)!important}
 section[data-r=hero] .hx-h{font-size:clamp(56px,7.4vw,124px)!important;line-height:.9!important}
 main h2 em,.hx-h em{font-style:italic}
-.sfl-b{color:#0B0B0C!important;background:linear-gradient(180deg,#DBFF7A 0 49%,rgba(0,0,0,.14) 49% 51%,#C8FF3D 51% 100%)!important}
+.sfl-b{color:var(--acc-on)!important;background:linear-gradient(180deg,var(--acc) 0 49%,color-mix(in srgb,var(--acc-on) 22%,transparent) 49% 51%,var(--acc) 51% 100%)!important}
 .sfl-c{border-radius:.08em}
 /* white pills with a small dot (pacomepertant) */
 :is([data-r=login-btn],.hx-pri,#gms-ldr .ld-snd,[data-r=tabbar] .tb-reg,.pd-reg){background:#F2F1EC!important;color:#0B0B0C!important;border-radius:999px!important;box-shadow:none!important}
 :is([data-r=login-btn],.hx-pri,#gms-ldr .ld-snd,[data-r=tabbar] .tb-reg,.pd-reg)::after{content:"";width:6px;height:6px;border-radius:50%;background:#0B0B0C;margin-left:10px;flex:none;display:inline-block;vertical-align:middle;transition:background .35s,transform .35s}
 :is([data-r=login-btn],.hx-pri,#gms-ldr .ld-snd,[data-r=tabbar] .tb-reg,.pd-reg):hover{background:#FFFFFF!important}
-:is([data-r=login-btn],.hx-pri,#gms-ldr .ld-snd,[data-r=tabbar] .tb-reg,.pd-reg):hover::after{background:#C8FF3D;transform:scale(1.6)}
+:is([data-r=login-btn],.hx-pri,#gms-ldr .ld-snd,[data-r=tabbar] .tb-reg,.pd-reg):hover::after{background:#F2F1EC;transform:scale(1.6)}
 :is(.hx-pri,[data-r=tabbar] .tb-reg,.pd-reg) .gi{display:none}
 [data-r=regdock] .rd-go{background:#F2F1EC!important;color:#0B0B0C!important}
 /* faint grid on the black sections */
@@ -1439,13 +1439,13 @@ main h2 em,.hx-h em{font-style:italic}
 /* hairline rules on bone sections */
 :is(section.vl,section[data-r=sch-section],section[data-r=ev-section]){box-shadow:inset 0 1px 0 rgba(11,11,12,.14)}
 .sx{font-family:'JetBrains Mono',ui-monospace,monospace!important;letter-spacing:.14em!important;text-transform:uppercase}
-::selection{background:#C8FF3D;color:#0B0B0C}
+::selection{background:#0B0B0C;color:#F2F1EC}
 
 /* Event centre spiral */
 .ecs-bar{display:flex;align-items:center;justify-content:center;gap:12px;font:500 15px 'Inter',sans-serif;color:rgba(255,255,255,.45)}
-.ecs-bar button{all:unset;cursor:pointer;padding:4px 2px;transition:color .3s}.ecs-bar button[aria-pressed=true]{color:#fff}.ecs-bar i{width:6px;height:6px;border-radius:50%;background:#C8FF3D}
+.ecs-bar button{all:unset;cursor:pointer;padding:4px 2px;transition:color .3s}.ecs-bar button[aria-pressed=true]{color:#fff}.ecs-bar i{width:6px;height:6px;border-radius:50%;background:#F2F1EC}
 .ecs-stage{position:relative;height:clamp(440px,62vh,620px);perspective:1500px;perspective-origin:50% 42%;overflow:hidden;cursor:grab;touch-action:pan-y;border-radius:22px;
- background:radial-gradient(60% 55% at 50% 45%,rgba(200,255,61,.07),transparent 70%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px}
+ background:radial-gradient(60% 55% at 50% 45%,rgba(242,241,236,.07),transparent 70%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px}
 .ecs-stage[data-drag]{cursor:grabbing}
 .ecs-rot{position:absolute;left:50%;top:44%;transform-style:preserve-3d}
 .ecs-card{all:unset;box-sizing:border-box;position:absolute;left:0;top:0;width:min(300px,62vw);cursor:pointer;transform-style:preserve-3d;transition:opacity .35s ease}
@@ -1456,9 +1456,9 @@ main h2 em,.hx-h em{font-style:italic}
 .ecs-in .ec-nm{font-size:14px;color:rgba(242,241,236,.82)}.ecs-in .ec-nm small{display:block;font:500 10px 'JetBrains Mono',monospace;color:rgba(242,241,236,.45)}
 .ecs-in .ec-sc{font:400 30px/1 'Instrument Serif',serif;color:#fff;text-align:right}
 .ecs-in .pill{font-size:10px}
-.ecs-card[data-front] .ecs-in{border-color:color-mix(in srgb,var(--c) 70%,#C8FF3D);box-shadow:0 0 0 1px rgba(200,255,61,.25),0 40px 80px rgba(0,0,0,.55)}
-.ecs-card[data-live] .ecs-in::before{content:"";position:absolute;top:14px;right:14px;width:7px;height:7px;border-radius:50%;background:#C8FF3D;box-shadow:0 0 0 0 rgba(200,255,61,.6);animation:ecsPulse 2s infinite}
-@keyframes ecsPulse{70%{box-shadow:0 0 0 10px rgba(200,255,61,0)}100%{box-shadow:0 0 0 0 rgba(200,255,61,0)}}
+.ecs-card[data-front] .ecs-in{border-color:#F2F1EC;box-shadow:0 0 0 1px rgba(242,241,236,.25),0 40px 80px rgba(0,0,0,.55)}
+.ecs-card[data-live] .ecs-in::before{content:"";position:absolute;top:14px;right:14px;width:7px;height:7px;border-radius:50%;background:#F2F1EC;box-shadow:0 0 0 0 rgba(242,241,236,.6);animation:ecsPulse 2s infinite}
+@keyframes ecsPulse{70%{box-shadow:0 0 0 10px rgba(242,241,236,0)}100%{box-shadow:0 0 0 0 rgba(242,241,236,0)}}
 .ecs-card[data-fly] .ecs-in{transform:scale(1.25) translateZ(240px);opacity:0;transition:transform .5s cubic-bezier(.6,0,.4,1),opacity .5s ease}
 .ecs-stage.ecs-go .ecs-in{animation:ecsIn 1.25s cubic-bezier(.16,1,.3,1) calc(var(--i) * 70ms) both}
 @keyframes ecsIn{0%{opacity:0;transform:translateZ(-900px) rotateY(-50deg) scale(.6)}100%{opacity:1;transform:none}}
@@ -1473,14 +1473,15 @@ html[data-theme=dark] .gyf{background:#0B0B0C;color:#F2F1EC;box-shadow:inset 0 -
 .gyf-copy{position:relative;text-align:center;padding:28px 40px;pointer-events:none}
 .gyf-copy::before{content:"";position:absolute;inset:-30px -60px;background:radial-gradient(closest-side,#F2F1EC 55%,rgba(242,241,236,0));z-index:-1}
 html[data-theme=dark] .gyf-copy::before{background:radial-gradient(closest-side,#0B0B0C 55%,rgba(11,11,12,0))}
+html[data-theme=dark] .gyf-h em{background:#F2F1EC;color:#0B0B0C}
 .gyf-h{margin:18px 0 14px;font:400 clamp(44px,6.4vw,104px)/.95 'Instrument Serif',Georgia,serif;letter-spacing:-.02em}
-.gyf-h em{font-style:italic;background:#C8FF3D;color:#0B0B0C;padding:0 .12em;border-radius:.08em}
+.gyf-h em{font-style:italic;background:#0B0B0C;color:#F2F1EC;padding:0 .12em;border-radius:.08em}
 .gyf-s{margin:0;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 /* rotating badge (pacomepertant): turns as you scroll, opens Live TV */
 .gyb{all:unset;position:fixed;left:24px;bottom:86px;z-index:40;width:104px;height:104px;cursor:pointer;display:grid;place-items:center;border-radius:50%;background:rgba(11,11,12,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 18px 40px rgba(0,0,0,.35);transition:transform .5s var(--gms-ease),opacity .4s}
 .gyb svg{position:absolute;inset:0;width:100%;height:100%;font:600 9.6px 'JetBrains Mono',monospace;letter-spacing:.14em;fill:#F2F1EC;transform:rotate(var(--gybr,0deg))}
-.gyb i{width:12px;height:12px;border-radius:50%;background:#C8FF3D;box-shadow:0 0 0 0 rgba(200,255,61,.55);animation:ecsPulse 2.2s infinite}
-.gyb:hover{transform:scale(1.06)}.gyb:focus-visible{outline:2px solid #C8FF3D;outline-offset:4px}
+.gyb i{width:12px;height:12px;border-radius:50%;background:#F2F1EC;box-shadow:0 0 0 0 rgba(242,241,236,.55);animation:ecsPulse 2.2s infinite}
+.gyb:hover{transform:scale(1.06)}.gyb:focus-visible{outline:2px solid #F2F1EC;outline-offset:4px}
 html.gy-top .gyb{opacity:0;pointer-events:none}
 @media (max-width:900px){.gyb{display:none}}
 </style>
@@ -1855,7 +1856,7 @@ html.gy-top .gyb{opacity:0;pointer-events:none}
           </sc-for>
         </sc-if>
         <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
-          <div class="gms-blank"><svg class="gms-ill" viewBox="0 0 160 96" aria-hidden="true"><rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E3F4F2)"/><rect x="38" y="14" width="84" height="70" rx="12" fill="none" stroke="#4F33FF" stroke-width="2"/><path d="M38 34h84M60 8v12M100 8v12" stroke="#4F33FF" stroke-width="2" stroke-linecap="round"/><path d="M52 48h20M52 60h34M52 72h14" stroke="#4F33FF" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)" stroke="#4F33FF" stroke-width="2"/><path d="M118 62v8l5 4" stroke="#4F33FF" stroke-width="2" stroke-linecap="round" fill="none"/></svg><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
+          <div class="gms-blank"><svg class="gms-ill" viewBox="0 0 160 96" aria-hidden="true"><rect x="38" y="14" width="84" height="70" rx="12" fill="var(--d-tint,#E3F4F2)"/><rect x="38" y="14" width="84" height="70" rx="12" fill="none" stroke="#0B0B0C" stroke-width="2"/><path d="M38 34h84M60 8v12M100 8v12" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round"/><path d="M52 48h20M52 60h34M52 72h14" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 6" opacity=".55"/><circle cx="118" cy="70" r="15" fill="var(--d-s0,#fff)" stroke="#0B0B0C" stroke-width="2"/><path d="M118 62v8l5 4" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" fill="none"/></svg><b>No sessions listed yet</b><span>Session timings for this day will be published after the draw.</span></div>
         </sc-if>
       </div>
     </div>
