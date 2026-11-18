@@ -6,8 +6,8 @@
   "start_url": "./?source=app",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0B0D12",
-  "theme_color": "#0B0D12",
+  "background_color": "#0F1B2D",
+  "theme_color": "#0F1B2D",
   "lang": "en",
   "categories": ["sports", "events"],
   "icons": [
