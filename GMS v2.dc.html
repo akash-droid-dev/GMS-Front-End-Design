@@ -17,11 +17,11 @@
 <meta property="og:title" content="Veer Savarkar Sports Complex · AIPT 2026">
 <meta property="og:description" content="Registration, accreditation, schedules and live results for the All India Police Tournament 2026 at Veer Savarkar Sports Complex, Ahmedabad.">
 <meta property="og:url" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/">
-<meta property="og:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=2">
+<meta property="og:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=127fe41b">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=2">
+<meta name="twitter:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=127fe41b">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="assets/brand/favicon-64.png">
 <link rel="preload" href="assets/brand/gobananas-full.webp" as="image" fetchpriority="high">
@@ -33,7 +33,7 @@
    the Spline viewer is only used by the chat robot and loads once the page has finished; a still of the robot shows until then. */
 (function(){var lite=false;try{lite=matchMedia('(max-width: 1024px), (hover: none) and (pointer: coarse)').matches;}catch(e){}
 if(lite)document.documentElement.classList.add('gms-lite');
-var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/venue-poster.webp?v=g1';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
+var h=document.head,pl=document.createElement('link');pl.rel='preload';pl.as='image';pl.href='assets/venue-poster.webp?v=0d1f11f4';pl.setAttribute('fetchpriority','high');h.appendChild(pl);
 /* Low mode: weak or data-saving devices get a lighter page (fewer scene frames, no parallax, posters instead of role films).
    Decided from memory, cores, Data Saver and connection speed; ?low=1 / ?low=0 forces it; the page can also switch itself on if scrolling proves slow. */
 var low=false;try{var n=navigator,c=n.connection||n.mozConnection||n.webkitConnection||{},mem=n.deviceMemory||8,cores=n.hardwareConcurrency||8;
@@ -297,7 +297,7 @@ html.gms-shelled .hero-dot,html.gms-shelled [data-r=hero-ch]{animation:none!impo
 [data-gi="volunteer_activism"]{--gi:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 12.8s-4.4-2.6-4.4-5.5A2.3 2.3 0 0 1 12 6.1a2.3 2.3 0 0 1 4.4 1.2c0 2.9-4.4 5.5-4.4 5.5z'/%3E%3Cpath d='M3 15.5h2.5l3.6 2.2h5l5.9-3.3M5.5 15.5v5M10.5 15.5h3.2'/%3E%3C/svg%3E")}
 /* while the static shell covers the first paint, the live hero skips its own entrance (the shell already played it) */
 html.gms-shelled [data-hero-copy] [style*="gmsRise"],html.gms-shelled [data-hero-copy] [style*="gmsLine"],html.gms-shelled [data-hero-copy] .gms-hl>span,html.gms-shelled section[data-r=hero] [data-r=hero-cue]{animation:none!important}
-#gms-shell [data-r=hero-media]{background:#0B0B0C url('assets/venue-poster.webp?v=g1') 0% 42%/cover no-repeat}
+#gms-shell [data-r=hero-media]{background:#0B0B0C url('assets/venue-poster.webp?v=0d1f11f4') 0% 42%/cover no-repeat}
 @media (max-aspect-ratio:11/10){#gms-shell [data-r=hero-media]{background-position:57% 50%}}
 /* Registration: pinned index (desktop + tablet) that glides role by role beside a live figure; phones open rows in place */
 [data-r=roles-pin]{position:relative;padding:130px 32px 140px}
@@ -1314,10 +1314,10 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./vendor/react.production.min.js"></script>
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
-<script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-room.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=27"></script>
-<script defer src="./assets/js/gms-plus.js?v=43"></script>
+<script defer src="./assets/js/gms-sound.js?v=4c79e934"></script>
+<script defer src="./assets/js/gms-room.js?v=da564714"></script>
+<script defer src="./assets/js/gms-motion.js?v=45793ea1"></script>
+<script defer src="./assets/js/gms-plus.js?v=93dc868f"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1667,6 +1667,10 @@ section.cr{position:relative;background:#0B0B0C;color:#F2F1EC;padding:clamp(80px
 .cr-sb span{font:400 clamp(30px,4vw,56px)/1 'Anton',serif}
 .cr-sb small{font:500 11px/1.4 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
 .cr:not([data-pgm="1"]) .cr-sb{display:flex}
+.cr-still iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.cr-still[data-yt] img{filter:none}
+.cr:not([data-pgm="1"]) .cr-sb{display:none!important}
+.cr-cam .cr-mini img{filter:none!important}
 .cr:not([data-pgm="1"]) .cr-lower b{display:none}
 .cr-lower{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:clamp(14px,2.4vw,28px);display:flex;flex-direction:column;gap:6px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.75))}
 .cr-ch{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
@@ -1850,14 +1854,30 @@ section[data-r=ecx] .ecx-tip{left:78px}
 .vt-vec .pf{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
 .vt[data-live] .vt-vec .pf{animation:vtPop .8s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--d) * 1s)}
 @keyframes vtPop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
-.vt-vec .lb{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;fill:rgba(242,241,236,.62)}
+.vt-vec .lb{font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:.12em;fill:rgba(242,241,236,.62)}
 .vt-vec .pin{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.vt-vec .pi{transform-box:fill-box;transform-origin:50% 50%}
+@media (max-width:760px){.vt .vt-vec .pi{transform:scale(1.7)}}
 .vt[data-live] .vt-vec .pin{animation:vtPin .6s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--d) * 1s)}
 @keyframes vtPin{from{opacity:0;transform:translateY(-10px) scale(.6)}to{opacity:1;transform:none}}
 .vt-vec .pin circle{fill:#F2F1EC;stroke:#0B0B0C;stroke-width:2}
 .vt-vec .pin text{font:700 13px/1 Inter,sans-serif;fill:#0B0B0C;text-anchor:middle}
 .vt-vec .lv{opacity:0}.vt[data-live] .vt-vec .lv{opacity:1;transition:opacity .6s ease 2.2s}
 .vt-vec .beam{mix-blend-mode:screen;transform-box:fill-box;transform-origin:50% 0;animation:vtBeam 5s ease-in-out infinite}.vt-vec .beam.b2{animation-delay:-2.5s}
+.vt-zoom{position:absolute;right:clamp(16px,2.4vw,28px);bottom:clamp(20px,3vw,40px);z-index:3;display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border-radius:999px;background:rgba(242,241,236,.12);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px rgba(242,241,236,.25);color:#F2F1EC;font:600 12px/1 Inter,sans-serif;cursor:zoom-in;transition:background .25s}
+.vt-zoom:hover{background:rgba(242,241,236,.22)}.vt-zoom:focus-visible{outline:2px solid #F2F1EC;outline-offset:2px}
+.vt-zoom i{font-style:normal;font-size:14px}
+.vt-lb{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;background:#0B0B0C;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transition:opacity .3s}
+.vt-lb[data-on]{opacity:1}
+.vt-lb-top{display:flex;align-items:center;gap:14px;padding:14px 16px 10px 20px;color:#F2F1EC}
+.vt-lb-top b{font:400 22px/1 var(--f-display);text-transform:uppercase}
+.vt-lb-top span{font:500 10px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-right:auto}
+.vt-lb-x{all:unset;cursor:pointer;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(242,241,236,.1);color:#F2F1EC;font-size:24px}
+.vt-lb-x:focus-visible{outline:2px solid #F2F1EC}
+.vt-lb-sc{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;align-items:center;padding:10px 20px 30px}
+.vt-lb .vt-vec{position:relative;left:auto;top:auto;flex:none;width:max(100%,1180px);max-width:1600px;margin:auto;transform:none;animation:none;filter:none}
+.vt-lb .vt-vec :is(.pf,.pin,.lv){opacity:1!important;animation:none!important}
+@media (max-width:760px){.vt-zoom{bottom:auto;top:14px;right:auto;left:14px;padding:8px 12px}}
 @keyframes vtBeam{0%,100%{transform:rotate(-6deg);opacity:.5}50%{transform:rotate(6deg);opacity:1}}
 .vt-vec *{vector-effect:non-scaling-stroke}
 .vt-vec .o{fill:rgba(242,241,236,.03);stroke:rgba(242,241,236,.75);stroke-width:1.4}
@@ -1907,7 +1927,8 @@ section[data-r=ecx] .ecx-tip{left:78px}
 .vl-plan[data-turn="1"] .vt-back{opacity:1;transform:none;pointer-events:auto}
 .vl-plan[data-turn="0"] .vlz{pointer-events:none}
 @media (prefers-reduced-motion:reduce){.vt{transition:opacity .3s,visibility 0s linear .3s}.vl-plan[data-turn="1"] .vt{transform:none}.vl-plan.vt-nudge,.vl-plan.vt-nudge .vt,.vt-vec{animation:none}.vt[data-live] .vt-vec [data-dw]{animation:none;stroke-dashoffset:0}}
-@media (max-width:760px){.vt-txt{max-width:88%}.vt-cue{font-size:12px}.vt-vec{left:1%;width:98%;top:4%}.vt-txt b{font-size:34px}}
+@media (max-width:760px){.vt-txt{max-width:88%}.vt-cue{font-size:12px}.vt-vec{left:1%;width:98%;top:4%}.vt-txt b{font-size:30px}}
+@media (max-width:760px){.vt .vt-vec{top:13%;left:7%;width:86%}.vt-txt small{font-size:9px}}
 /* colour rhythm: black base; venue card and registration are the paper inserts */
 .seam-dl{background:#0B0B0C!important}
 section[data-r=ev-section],html[data-theme=dark] section[data-r=ev-section]{background:#0B0B0C!important;color:#F2F1EC}
@@ -1917,12 +1938,23 @@ section[data-r=ev-section] [data-ev-sticky] canvas{filter:none!important;-webkit
 section[data-r=ev-section] [data-ev-sticky]::before,html[data-theme=dark] section[data-r=ev-section] [data-ev-sticky]::before{display:none!important}
 section[data-r=ev-section] :is([data-kv-wash]){display:none!important}
 section[data-r=ev-section] h2{color:#F2F1EC!important}
+section[data-r=ev-section] [data-goal-ch]{width:max-content;padding:4px 14px 4px 4px;border-radius:999px;background:rgba(11,11,12,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px rgba(0,0,0,.35),inset 0 0 0 1px rgba(242,241,236,.12);color:#F2F1EC!important;text-shadow:none!important}
+section[data-r=ev-section] [data-goal-ch] [data-goal-ic]{background:#F2F1EC!important;color:#0B0B0C!important}
+section[data-r=ev-section] [data-goal-nm] [data-goal-sub],section[data-r=ev-section] [data-goal-g]{color:rgba(242,241,236,.65)!important}
 section[data-r=ev-section] [data-kv-veil]{background:none!important;-webkit-backdrop-filter:blur(5px)!important;backdrop-filter:blur(5px)!important}
 section[data-r=ev-section] :is(h2,[data-ev-head],[data-r=ev-p],.sx){text-shadow:0 2px 18px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.4)}
 section[data-r=ev-section] :is(.sx,[data-r=ev-p],[data-ev-head]>span:last-child){color:rgba(242,241,236,.88)!important}
 section[data-r=ev-section] .sx i{color:#F2F1EC!important}
 section[data-r=ev-section] [data-ev-head]>span:last-child>span:first-child{background:#F2F1EC!important}
 section[data-r=ev-section]{box-shadow:none!important}
+/* the control room is always a dark room */
+section.cr,html[data-theme=dark] section.cr{background:#0B0B0C!important;color:#F2F1EC}
+section.cr :is(.cr-h,.cr-p,.sx){color:#F2F1EC}
+section.cr .cr-p{color:rgba(242,241,236,.62)}
+/* header: solid, with a soft blurred strip behind it so headings never read through while scrolling */
+html #gms-shell nav[data-r=nav],html[data-theme=dark] #gms-shell nav[data-r=nav],nav[data-r=nav]{background:rgba(11,11,12,.95)!important;-webkit-backdrop-filter:blur(18px) saturate(1.3)!important;backdrop-filter:blur(18px) saturate(1.3)!important}
+html::before{content:"";position:fixed;left:0;right:0;top:0;height:78px;z-index:49;pointer-events:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);-webkit-mask:linear-gradient(180deg,#000 55%,transparent);mask:linear-gradient(180deg,#000 55%,transparent);opacity:var(--topblur,1);transition:opacity .4s}
+html.gy-top::before{opacity:0}
 /* effects retired in the cleanup: grain, custom cursors, side rail */
 body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{background-image:none!important;animation:none!important;opacity:0!important}
 .gy-cur,.gms-cur,.gp-rail{display:none!important}
@@ -2136,9 +2168,9 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
         <div class="cr-pgm">
           <div class="cr-scr" data-cursor="Watch" onClick="{{ goTv }}">
             {{ tvVideo }}
-            <div class="cr-still" data-still="2"><img src="assets/sports/tabletennis.webp?v=s1" alt=""></div>
-            <div class="cr-still" data-still="3"><img src="assets/sports/swimming.webp?v=s1" alt=""></div>
-            <div class="cr-still" data-still="4"><img src="assets/sports/basketball.webp?v=s1" alt=""></div>
+            <div class="cr-still" data-still="2" data-yt="ZALmA5MaqoE"><img src="https://i.ytimg.com/vi/ZALmA5MaqoE/hqdefault.jpg" alt="" loading="lazy"></div>
+            <div class="cr-still" data-still="3" data-yt="mAdKAbH3Iik"><img src="https://i.ytimg.com/vi/mAdKAbH3Iik/hqdefault.jpg" alt="" loading="lazy"></div>
+            <div class="cr-still" data-still="4" data-yt="nxe9rsJppvA"><img src="https://i.ytimg.com/vi/nxe9rsJppvA/hqdefault.jpg" alt="" loading="lazy"></div>
             <div class="cr-sb" aria-hidden="true"><span>Standby</span><small>This camera goes live with its first match</small></div>
             <div class="cr-lower"><span class="cr-ch" data-cr-name>CAM 1 · Badminton Hall</span><b data-r="tv-title">Badminton Hall <span style="opacity:.55">·</span> Live</b></div>
             <span class="cr-tag">PGM</span>
@@ -2149,10 +2181,10 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
           </div>
         </div>
         <div class="cr-cams" role="group" aria-label="Cameras">
-          <button type="button" class="cr-cam" data-cam="1" aria-pressed="true"><span class="cr-mini"><img src="assets/tv/badminton-poster.webp?v=t1" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 1</b>Badminton Hall</span><kbd>1</kbd></button>
-          <button type="button" class="cr-cam" data-cam="2" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/tabletennis.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 2</b>Table Tennis Hall</span><kbd>2</kbd></button>
-          <button type="button" class="cr-cam" data-cam="3" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/swimming.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 3</b>Aquatic Stadium</span><kbd>3</kbd></button>
-          <button type="button" class="cr-cam" data-cam="4" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/basketball.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 4</b>Indoor Arena</span><kbd>4</kbd></button>
+          <button type="button" class="cr-cam" data-cam="1" aria-pressed="true"><span class="cr-mini"><img src="assets/tv/badminton-poster.webp?v=f9b1bb3c" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 1</b>Badminton Hall</span><kbd>1</kbd></button>
+          <button type="button" class="cr-cam" data-cam="2" aria-pressed="false"><span class="cr-mini"><img src="https://i.ytimg.com/vi/ZALmA5MaqoE/mqdefault.jpg" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 2</b>Table Tennis Hall</span><kbd>2</kbd></button>
+          <button type="button" class="cr-cam" data-cam="3" aria-pressed="false"><span class="cr-mini"><img src="https://i.ytimg.com/vi/mAdKAbH3Iik/mqdefault.jpg" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 3</b>Badminton Court 3</span><kbd>3</kbd></button>
+          <button type="button" class="cr-cam" data-cam="4" aria-pressed="false"><span class="cr-mini"><img src="https://i.ytimg.com/vi/nxe9rsJppvA/mqdefault.jpg" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 4</b>Table Tennis Table 2</span><kbd>4</kbd></button>
         </div>
       </div>
     </div>
@@ -3121,7 +3153,7 @@ class Component extends DCLogic {
         style:{position:'absolute',top:'50%',left:'50%',width:'max(100%, 177.78cqh)',height:'max(100%, 56.25cqw)',transform:'translate(-50%,-50%)',border:0,pointerEvents:o.controls?'auto':'none'}}));}
   tvFeedEl(){const h=React.createElement,cov={position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',pointerEvents:'none'};
     return h('div',{key:'tvfeed',style:{position:'absolute',inset:0,overflow:'hidden',background:'#0B0B0C'}},
-      h('img',{src:'assets/tv/badminton-poster.webp?v=t1',alt:'',decoding:'async',loading:'lazy',style:cov}),
+      h('img',{src:'assets/tv/badminton-poster.webp?v=f9b1bb3c',alt:'',decoding:'async',loading:'lazy',style:cov}),
       this.state.tvNear&&!LOW?this.ytEl('tvv',(this.props.youtubeVideoId||'AUYoy6Owok8').trim(),{title:'Live TV: Badminton Hall'}):null);}
   // Event centre: sport and status filters, live-first match list, and the picked match period by period with a momentum chart
   ecVals(){const s=this.state,views=liveOrder(s.live).map(liveView),byDiv=views.filter(v=>s.liveDiv<0||v.div===s.liveDiv);
@@ -3222,7 +3254,7 @@ class Component extends DCLogic {
       chatQuick:['How do I register?','Live scores','Talk to a person','Track a request'].map(l=>chip(l,l,()=>this.send(l))),
       openHelp:()=>this.setState({chatOpen:true})};}
   heroVideoEl(){const small=typeof window!=='undefined'&&window.innerWidth<=760;if(this.av1==null){try{this.av1=document.createElement('video').canPlayType('video/mp4; codecs="av01.0.08M.10"')==='probably';}catch(e){this.av1=false;}}
-    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/venue-poster.webp?v=v2',src:'assets/venue-1080.mp4?v=v3','aria-hidden':'true',
+    return React.createElement('video',{key:'hv',autoPlay:!REDUCED&&!LITE,loop:true,muted:true,playsInline:true,preload:LITE?'metadata':'auto',poster:'assets/venue-poster.webp?v=0d1f11f4',src:'assets/venue-1080.mp4?v=86d3f814','aria-hidden':'true',
       ref:el=>{if(!el||el.__gms)return;el.__gms=1;el.muted=true;el.defaultMuted=true;if(REDUCED)return;
         el.addEventListener('timeupdate',()=>this.heroChapter(el));el.addEventListener('pause',()=>this.heroChapter(el,'paused'));el.addEventListener('play',()=>this.heroChapter(el,'running'));
         const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=el.play();if(p&&p.catch)p.catch(()=>{});}else el.pause();}),{threshold:0.02});const go=()=>io.observe(el);if(LITE&&document.readyState!=='complete')window.addEventListener('load',()=>setTimeout(go,350),{once:true});else go();(this.vios||(this.vios=[])).push(io);},
@@ -3449,8 +3481,8 @@ class Component extends DCLogic {
     try{const io=new IntersectionObserver(es=>es.forEach(e=>{try{if(e.isIntersecting){if(app.isStopped||app._isPaused)app.play();}else if(!app._isPaused)app.stop();}catch(err){}}),{rootMargin:'200px'});io.observe(v);(this.sios||(this.sios=[])).push(io);}catch(e){}
     requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('gms-ready')));}
   // one venue photo per step of the road to the podium; the step in view picks which one shows (assets/js/gms-motion.js)
-  photoLoopEl(){const h=React.createElement,P=[['registration','Registration desk'],['verification','Self-service verification'],['accreditation','Accreditation card'],['competition','Badminton hall, match day'],['finals','On the podium']];
-    return h('figure',{className:'ps','data-ps':'',style:{margin:0}},P.map(([f,c],i)=>h('video',{key:f,src:'assets/podium/'+f+'.mp4',poster:'assets/podium/'+f+'.webp','aria-label':c,'data-cap':c,muted:true,loop:true,playsInline:true,preload:i===0?'auto':'none','data-on':i===0?'':undefined})),h('figcaption',{key:'c'},P[0][1]));}
+  photoLoopEl(){const h=React.createElement,P=[['registration','The registration desk'],['verification','Documents checked at the desk'],['accreditation','The accreditation card'],['competition','Badminton, match day'],['finals','Medals awarded']];
+    return h('figure',{className:'ps','data-ps':'',style:{margin:0}},P.map(([f,c],i)=>h('video',{key:f,src:'assets/podium/'+f+'.mp4?v=p2',poster:'assets/podium/'+f+'.webp?v=p2','aria-label':c,'data-cap':c,muted:true,loop:true,playsInline:true,preload:i===0?'auto':'none','data-on':i===0?'':undefined})),h('figcaption',{key:'c'},P[0][1]));}
   // background re-renders yield to scrolling: React renders them in short slices between frames
   soft(p){const R=window.React;if(R&&R.startTransition)R.startTransition(()=>this.setState(p));else this.setState(p);}
   tick(){this.soft(s=>({live:liveStep(s.live)}));}

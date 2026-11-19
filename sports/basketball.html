@@ -255,7 +255,7 @@ var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=
  function paint(){raf=0;var y=scrollY,vh=innerHeight;sub.classList.toggle('on',hero.getBoundingClientRect().bottom<vh*0.35);sub.style.setProperty('--p',(y/Math.max(1,D.documentElement.scrollHeight-vh)).toFixed(4));var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.4)cur=i;});links.forEach(function(a,i){a.toggleAttribute('aria-current',i===cur);});}
  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(paint);},{passive:true});paint();}
 })();
-</script><script src="../assets/js/gms-room.js?v=1"></script><script>
+</script><script src="../assets/js/gms-room.js?v=da564714"></script><script>
 (function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
 /* hero film scrubbed by the scroll; the title flies apart as the hero ends */
 var hs=D.querySelector('.hs'),hero=hs&&hs.querySelector('.hero'),vid=hero&&hero.querySelector('video'),h1=hero&&hero.querySelector('[data-split]'),cur=0,goal=0,raf=0;

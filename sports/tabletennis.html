@@ -195,7 +195,7 @@ footer{border-top:1px solid rgba(244,239,230,.1);padding:28px 0;font-size:13px;c
 <header class="top"><a class="top-l" href="../index.html"><img src="../assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238"><b>GMS</b></a>
 <nav class="top-r"><a class="back" href="../index.html#sports">← All sports</a><a class="btn btn-g sm" href="../index.html#register">Register</a></nav></header>
 <main>
-<div class="hs"><section class="hero"><img src="../assets/sports/tabletennis.webp" alt="" fetchpriority="high"><span class="scrub-k" aria-hidden="true">Scroll to play</span><div class="wrap">
+<div class="hs"><section class="hero"><img src="../assets/sports/tabletennis.webp" alt="" fetchpriority="high"><video muted playsinline preload="auto" src="../assets/sportfilm/tabletennis.mp4" poster="../assets/sportfilm/tabletennis.webp" aria-hidden="true"></video><span class="scrub-k" aria-hidden="true">Scroll to play</span><div class="wrap">
 <span class="kick">Featured sport · Table Tennis Hall</span><h1 data-split>Table Tennis</h1><p class="lead">Twelve tables on the ground floor of Block C. Singles, mixed doubles and team events, played to 11 at the speed of a rally.</p>
 <div class="cta"><a class="btn btn-g" href="../index.html#register">Register to compete →</a><a class="btn btn-o" href="#venue">See the hall plan</a></div>
 <div class="hx2"><div class="cd" data-first="2026-11-19T08:30:00+05:30" data-last="2026-11-24T15:30:00+05:30" aria-live="polite"><span class="cd-k">First session in</span><span class="cd-v">—</span></div><button type="button" class="fol" data-sport="tabletennis" aria-pressed="false">☆ Follow Table Tennis</button></div>
@@ -255,7 +255,7 @@ var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=
  function paint(){raf=0;var y=scrollY,vh=innerHeight;sub.classList.toggle('on',hero.getBoundingClientRect().bottom<vh*0.35);sub.style.setProperty('--p',(y/Math.max(1,D.documentElement.scrollHeight-vh)).toFixed(4));var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.4)cur=i;});links.forEach(function(a,i){a.toggleAttribute('aria-current',i===cur);});}
  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(paint);},{passive:true});paint();}
 })();
-</script><script src="../assets/js/gms-room.js?v=1"></script><script>
+</script><script src="../assets/js/gms-room.js?v=da564714"></script><script>
 (function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
 /* hero film scrubbed by the scroll; the title flies apart as the hero ends */
 var hs=D.querySelector('.hs'),hero=hs&&hs.querySelector('.hero'),vid=hero&&hero.querySelector('video'),h1=hero&&hero.querySelector('[data-split]'),cur=0,goal=0,raf=0;

@@ -861,7 +861,7 @@
       '.gv-media{position:relative;overflow:hidden;background:#0B0B0C;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:26px;min-height:0}',
       '.gv-media video,.gv-media .gv-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}',
       '.gv-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.72) 0%,rgba(8,10,16,.1) 30%,rgba(8,10,16,.25) 52%,rgba(8,10,16,.9) 100%)}',
-      '.gv-brand,.gv-mcopy{position:relative;z-index:2}.gv-brand{display:flex;align-items:center;gap:10px;font:800 17px/1 "Anton",system-ui,sans-serif;letter-spacing:-.02em}.gv-brand img{width:30px;height:30px}',
+      '.gv-brand,.gv-mcopy{position:relative;z-index:2}.gv-brand{display:flex;align-items:center;gap:10px;font:800 17px/1 "Anton",system-ui,sans-serif;letter-spacing:-.02em}.gv-brand img{width:auto;height:30px}',
       '.gv-mcopy small{display:block;font:500 10.5px/1 "JetBrains Mono",monospace;letter-spacing:.14em;color:rgba(255,255,255,.7)}',
       '.gv-mcopy h2{margin:10px 0 8px;font:700 clamp(30px,3.4vw,46px)/.95 "Anton",system-ui,sans-serif;letter-spacing:-.04em}',
       '.gv-mcopy p{margin:0;max-width:330px;font-size:14px;line-height:1.5;color:rgba(255,255,255,.78)}',
@@ -941,7 +941,7 @@
     if (V) return V;
     vaultCSS();
     var el = doc.createElement('div'); el.className = 'gv'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'gv-title');
-    el.innerHTML = '<div class="gv-box"><div class="gv-media"><div class="gv-brand"><img src="assets/brand/gms-mark-dark.svg" alt="">GMS</div><div><div class="gv-mcopy"><small>REGISTRATION</small><h2 data-gv-role></h2><p data-gv-desc></p></div><div data-gv-pass></div></div></div>' +
+    el.innerHTML = '<div class="gv-box"><div class="gv-media"><div class="gv-brand"><img src="assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238">GMS</div><div><div class="gv-mcopy"><small>REGISTRATION</small><h2 data-gv-role></h2><p data-gv-desc></p></div><div data-gv-pass></div></div></div>' +
       '<div class="gv-main"><div class="gv-hd"><button type="button" class="gv-ib" data-gv="back" aria-label="Previous step">' + ICON('arrow_forward').replace('class="gi"', 'class="gi gi-back"') + '</button><b id="gv-title">REGISTRATION VAULT</b><button type="button" class="gv-ib" data-gv="close" aria-label="Close registration">' + ICON('close') + '</button></div>' +
       '<div class="gv-role"><span data-gv-rolecap></span><button type="button" class="gv-link" data-gv="change">Change</button></div><div class="gv-rail" role="navigation" aria-label="Registration steps" data-gv-rail></div><div class="gv-body" data-gv-body></div><div class="gv-ft" data-gv-ft></div></div></div>';
     doc.body.appendChild(el);
@@ -1455,7 +1455,7 @@
 
 /* control room: running IST timecode and camera cuts to the programme screen */
 (function () {
-  var NAMES = { 1: 'CAM 1 · Badminton Hall', 2: 'CAM 2 · Table Tennis Hall', 3: 'CAM 3 · Aquatic Stadium', 4: 'CAM 4 · Indoor Arena' };
+  var NAMES = { 1: 'CAM 1 · Badminton Hall', 2: 'CAM 2 · Table Tennis Hall', 3: 'CAM 3 · Badminton Court 3', 4: 'CAM 4 · Table Tennis Table 2' }, START = { 2: 60, 3: 3600, 4: 60 };
   function p2(n) { return (n < 10 ? '0' : '') + n; }
   var last = '';
   function tc() {
@@ -1472,6 +1472,11 @@
     cr.setAttribute('data-pgm', k);
     cr.querySelectorAll('[data-cam]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cam') === String(k) ? 'true' : 'false'); });
     var n = cr.querySelector('[data-cr-name]'); if (n) n.textContent = NAMES[k];
+    // cameras 2 to 4 are YouTube feeds: only the camera on air plays, the others are unloaded
+    cr.querySelectorAll('.cr-still[data-yt]').forEach(function (s) { var on = s.getAttribute('data-still') === String(k), f = s.querySelector('iframe');
+      if (on && !f) { var id = s.getAttribute('data-yt'); f = document.createElement('iframe'); f.title = NAMES[k]; f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&loop=1&playlist=' + id + '&start=' + (START[s.getAttribute('data-still')] || 0); s.appendChild(f); }
+      else if (!on && f) f.remove(); });
   }
   document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('section.cr [data-cam]'); if (b) cut(b.getAttribute('data-cam')); });
   document.addEventListener('keydown', function (e) {

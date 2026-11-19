@@ -158,62 +158,78 @@
   }
 
   /* section 01: the chosen photo with a live line drawing of the hall; the card curls at the corner and turns like a heavy page */
+  /* the venue drawings are laid out on the official plans' own coordinates (percent of the sheet), so every room and pin sits where the plan puts it */
   function vtPlan(k) {
-    var o = [], q = 0, f = function (n) { return (+n).toFixed(1); };
-    function pop(svg) { o.push('<g class="pf" style="--d:' + (0.15 + (q++) * 0.035).toFixed(2) + '">' + svg + '</g>'); }
-    function R(x, y, w, h, fill, st, rx) { return '<rect x="' + f(x) + '" y="' + f(y) + '" width="' + f(w) + '" height="' + f(h) + '" rx="' + (rx || 0) + '" fill="' + fill + '"' + (st ? ' stroke="' + st + '" stroke-width="1.2"' : '') + '/>'; }
-    function L(d, st, w) { return '<path d="' + d + '" fill="none" stroke="' + (st || '#F2F1EC') + '" stroke-width="' + (w || 1.2) + '"/>'; }
-    function T(x, y, s, a) { return '<text x="' + f(x) + '" y="' + f(y) + '" text-anchor="' + (a || 'middle') + '" class="lb">' + s + '</text>'; }
-    function pin(n, x, y) { o.push('<g class="pin" style="--d:' + (1.4 + n * 0.06).toFixed(2) + '"><circle cx="' + f(x) + '" cy="' + f(y) + '" r="13"/><text x="' + f(x) + '" y="' + f(y + 4.5) + '">' + n + '</text></g>'); }
-    function door(x, y, dir) { var p = dir === 'l' ? [[x, y - 9], [x + 14, y], [x, y + 9]] : dir === 'r' ? [[x, y - 9], [x - 14, y], [x, y + 9]] : dir === 'u' ? [[x - 9, y], [x, y - 14], [x + 9, y]] : [[x - 9, y], [x, y + 14], [x + 9, y]]; return '<path d="M' + p.map(function (a) { return f(a[0]) + ' ' + f(a[1]); }).join('L') + 'Z" fill="#E5484D"/>'; }
-    function seats(x, y, cols, rows, gap, col) { var s = ''; for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) s += '<rect x="' + f(x + c * gap) + '" y="' + f(y + r * gap) + '" width="' + (gap * 0.7).toFixed(1) + '" height="' + (gap * 0.7).toFixed(1) + '" rx="1.5" fill="' + col + '"/>'; return s; }
-    function podium(x, y) { return R(x, y + 8, 16, 14, '#B8BCC6') + R(x + 16, y, 16, 22, '#D4AF37') + R(x + 32, y + 12, 16, 10, '#B0784A'); }
-    function court(x, y, w, h) { var cx = x + w / 2, my = y + h / 2, ss = h * 0.15, lb = h * 0.055, si = w * 0.075;
-      return R(x - 5, y - 6, w + 10, h + 12, '#14563F') + R(x, y, w, h, '#1E7B5C') + L('M' + f(x) + ' ' + f(y) + 'h' + f(w) + 'v' + f(h) + 'h' + f(-w) + 'Z') + L('M' + f(x + si) + ' ' + f(y) + 'v' + f(h) + 'M' + f(x + w - si) + ' ' + f(y) + 'v' + f(h), '#F2F1EC', 0.8) +
-        L('M' + f(x) + ' ' + f(my - ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(my + ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + lb) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + h - lb) + 'h' + f(w) + 'M' + f(cx) + ' ' + f(y) + 'V' + f(my - ss) + 'M' + f(cx) + ' ' + f(my + ss) + 'V' + f(y + h), '#F2F1EC', 0.8) +
-        L('M' + f(x - 4) + ' ' + f(my) + 'h' + f(w + 8), '#0B0B0C', 2.2) + R(x + w + 6, my - 4, 7, 8, '#F2F1EC', null, 1) + '<circle cx="' + f(cx) + '" cy="' + f(y - 9) + '" r="2.2" fill="#F2F1EC" opacity=".7"/><circle cx="' + f(cx) + '" cy="' + f(y + h + 9) + '" r="2.2" fill="#F2F1EC" opacity=".7"/>'; }
-    function table(x, y, w, h) { return R(x, y, w, h, '#1D4FA3', '#F2F1EC') + L('M' + f(x) + ' ' + f(y + h / 2) + 'h' + f(w), '#F2F1EC', 0.7) + L('M' + f(x + w / 2) + ' ' + f(y - 3) + 'v' + f(h + 6), '#0B0B0C', 2); }
-    var live = '';
-    o.push(R(30, 30, 940, 600, '#1A1B20', '#3A3B42', 10));
+    var o = [], q = 0, f = function (n) { return (+n).toFixed(1); }, X = function (p) { return p * 10; }, Y = function (p) { return p * 7.07; };
+    function pop(svg) { o.push('<g class="pf" style="--d:' + (0.15 + (q++) * 0.03).toFixed(2) + '">' + svg + '</g>'); }
+    function R(x0, y0, x1, y1, fill, st, rx) { return '<rect x="' + f(X(x0)) + '" y="' + f(Y(y0)) + '" width="' + f(X(x1 - x0)) + '" height="' + f(Y(y1 - y0)) + '" rx="' + (rx || 0) + '" fill="' + fill + '"' + (st ? ' stroke="' + st + '" stroke-width="1.2"' : '') + '/>'; }
+    function L(d, st, w) { return '<path d="' + d + '" fill="none" stroke="' + (st || '#F2F1EC') + '" stroke-width="' + (w || 1) + '"/>'; }
+    function T(x, y, s) { return '<text x="' + f(X(x)) + '" y="' + f(Y(y) + 4) + '" text-anchor="middle" class="lb">' + s + '</text>'; }
+    function pin(n, x, y) { o.push('<g class="pin" style="--d:' + (1.5 + n * 0.06).toFixed(2) + '"><g class="pi"><circle cx="' + f(X(x)) + '" cy="' + f(Y(y)) + '" r="13"/><text x="' + f(X(x)) + '" y="' + f(Y(y) + 4.5) + '">' + n + '</text></g></g>'); }
+    function arrow(x, y, dir) { var cx = X(x), cy = Y(y), p = dir === 'l' ? [[cx + 7, cy - 8], [cx - 7, cy], [cx + 7, cy + 8]] : dir === 'r' ? [[cx - 7, cy - 8], [cx + 7, cy], [cx - 7, cy + 8]] : dir === 'u' ? [[cx - 8, cy + 7], [cx, cy - 7], [cx + 8, cy + 7]] : [[cx - 8, cy - 7], [cx, cy + 7], [cx + 8, cy - 7]]; return '<path d="M' + p.map(function (a) { return f(a[0]) + ' ' + f(a[1]); }).join('L') + 'Z" fill="#E5484D"/>'; }
+    function seatsP(x0, y0, x1, y1, col, gap) { var s = '', g = gap || 9; for (var y = Y(y0) + 2; y < Y(y1) - 2; y += g) for (var x = X(x0) + 2; x < X(x1) - 2; x += g) s += '<rect x="' + f(x) + '" y="' + f(y) + '" width="' + (g * 0.66).toFixed(1) + '" height="' + (g * 0.66).toFixed(1) + '" rx="1" fill="' + col + '"/>'; return s; }
+    function podium(x0, y0, x1, y1) { var w = (x1 - x0) / 3; return R(x0, y0 + (y1 - y0) * .35, x0 + w, y1, '#B8BCC6') + R(x0 + w, y0, x0 + 2 * w, y1, '#D4AF37') + R(x0 + 2 * w, y0 + (y1 - y0) * .5, x1, y1, '#B0784A'); }
+    function court(x0, y0, x1, y1, op) { var x = X(x0), y = Y(y0), w = X(x1 - x0), h = Y(y1 - y0), cx = x + w / 2, my = y + h / 2, ss = h * 0.15, lb = h * 0.055, si = w * 0.075;
+      return '<g' + (op ? ' opacity="' + op + '"' : '') + '><rect x="' + f(x) + '" y="' + f(y) + '" width="' + f(w) + '" height="' + f(h) + '" fill="#2AA58C"/>' + L('M' + f(x) + ' ' + f(y) + 'h' + f(w) + 'v' + f(h) + 'h' + f(-w) + 'Z') + L('M' + f(x + si) + ' ' + f(y) + 'v' + f(h) + 'M' + f(x + w - si) + ' ' + f(y) + 'v' + f(h) + 'M' + f(x) + ' ' + f(my - ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(my + ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + lb) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + h - lb) + 'h' + f(w) + 'M' + f(cx) + ' ' + f(y) + 'V' + f(my - ss) + 'M' + f(cx) + ' ' + f(my + ss) + 'V' + f(y + h), '#F2F1EC', 0.6) + L('M' + f(x - 3) + ' ' + f(my) + 'h' + f(w + 6), '#0B0B0C', 1.8) + '</g>'; }
+    function hall(x0, y0, x1, y1) { return '<rect x="' + f(X(x0)) + '" y="' + f(Y(y0)) + '" width="' + f(X(x1 - x0)) + '" height="' + f(Y(y1 - y0)) + '" rx="46" fill="#1A1B20" stroke="#3A3B42" stroke-width="2"/>'; }
+    var live = '', vb;
     if (k === 'tabletennis') {
-      pop(R(110, 80, 760, 480, '#6E2730', '#8A3A44', 6));
-      pop(R(110, 302, 760, 46, '#24252B') + T(490, 330, 'CENTRAL AISLE · 5.5 M'));
-      var rows = [92, 192, 358, 458], cols = [130, 375, 620], n = 0;
-      rows.forEach(function (ry) { cols.forEach(function (cx) { pop(R(cx, ry, 220, 92, 'rgba(0,0,0,.08)', '#1A2B5C') + table(cx + 80, ry + 32, 60, 28)); n++; }); pop(R(848, ry + 26, 16, 40, '#F2F1EC', null, 2)); });
-      pop(R(890, 80, 66, 120, '#2B3A4A', '#46586A', 4) + T(923, 145, 'KIT'));
-      pop(door(970, 270, 'r') + door(970, 420, 'r'));
-      pop(R(380, 580, 240, 40, '#2B2A35', '#4A4858', 4) + T(500, 605, 'REGISTRATION') + door(500, 662, 'u'));
-      pop(R(42, 80, 58, 120, '#2B2A35', '#4A4858', 4) + T(71, 145, 'MEET'));
-      pop(R(42, 420, 58, 140, '#2B3A2F', '#465A4A', 4) + T(71, 495, 'CAFÉ'));
-      pop(podium(46, 296));
-      live = '<circle r="2.6" fill="#FFF7E0" cy="' + (92 + 46) + '"><animate attributeName="cx" values="' + (375 + 82) + ';' + (375 + 138) + ';' + (375 + 82) + '" dur="1.1s" repeatCount="indefinite"/><animate attributeName="r" values="2.6;3.6;2.6;3.6;2.6" dur="1.1s" repeatCount="indefinite"/></circle>';
-      pin(1, 240, 92); pin(2, 300, 325); pin(3, 856, 70); pin(4, 923, 70); pin(5, 950, 345); pin(6, 500, 572); pin(7, 71, 70); pin(8, 71, 410); pin(9, 70, 280);
+      vb = '70 40 860 640';
+      o.push(R(44.5, 3.5, 70, 23, '#202128', '#34353D', 4) + T(57, 13, 'PLAZA · DRIVEWAY')); o.push(hall(9.5, 25.5, 91.5, 92));
+      pop(R(27, 38.5, 74, 75, '#5E6068') + T(50.5, 37.2, 'FIELD OF PLAY 39.4 × 34.2 M'));
+      pop(R(39, 43, 62.5, 70, '#BBD8EE'));
+      pop(R(38.8, 57.3, 62.5, 61.8, '#1F4E7F') + T(50.5, 59.6, 'CENTRAL AISLE · 5.5 M'));
+      [46.7, 52.6, 65.6].forEach(function (ty) { [42.8, 48.2, 53.6, 59.0].forEach(function (tx) { pop(R(tx - 2.6, ty - 3.3, tx + 2.6, ty + 3.3, 'none', '#6B3A8A') + R(tx - 0.9, ty - 1.6, tx + 0.9, ty + 1.6, '#1D4FA3', '#F2F1EC') + L('M' + f(X(tx - 0.9)) + ' ' + f(Y(ty)) + 'h' + f(X(1.8)), '#0B0B0C', 1.6) + R(tx - 2.2, ty - 0.6, tx - 1.4, ty + 0.6, '#C9A57A')); }); });
+      pop(R(43.5, 71.3, 57.5, 73, '#C9A57A', null, 2) + R(49.5, 71, 51.5, 73.4, '#E5A3A3'));
+      pop(podium(45.5, 38.7, 49.5, 40.3));
+      pop(R(62, 34.5, 68, 38.5, '#E8C64A', '#B89A2A', 3));
+      pop(arrow(25.3, 55.2, 'r') + L('M' + f(X(10.5)) + ' ' + f(Y(56.5)) + 'H' + f(X(24)), '#E5484D', 1.5));
+      pop(R(15.6, 51.5, 21.6, 61.9, '#E8C64A', '#B89A2A', 3) + T(18.6, 57, 'REG'));
+      pop(R(42, 78, 50.5, 86, '#E8C64A', '#B89A2A', 3) + T(46.3, 82.4, 'MEETING'));
+      pop(R(56, 78, 62.5, 86, '#E8C64A', '#B89A2A', 3) + T(59.3, 82, 'CAFÉ'));
+      pop(R(21, 28, 33, 30.2, '#3E8E6A') + T(27, 29.3, 'MERCHANDISE') + arrow(52, 26.5, 'd'));
+      live = '<circle r="2.4" fill="#FFF7E0" cx="' + f(X(48.2)) + '"><animate attributeName="cy" values="' + f(Y(51.2)) + ';' + f(Y(54)) + ';' + f(Y(51.2)) + '" dur="1s" repeatCount="indefinite"/></circle>';
+      pin(1, 45, 49.5); pin(2, 50.5, 59.4); pin(3, 50.5, 72.3); pin(4, 65, 36); pin(5, 24.5, 55.2); pin(6, 18.3, 60.1); pin(7, 46.3, 82.4); pin(8, 59.3, 82); pin(9, 47.8, 39.8);
     } else if (k === 'ceremony') {
-      for (var s2 = 0; s2 < 2; s2++) for (var c2 = 0; c2 < 2; c2++) pop('<g opacity=".55">' + court(80 + c2 * 80 + s2 * 680, 140 + 0, 56, 130) + court(80 + c2 * 80 + s2 * 680, 360, 56, 130) + '</g>');
-      pop('<path d="M60 40h880v38H60z" fill="#2A2B33"/>' + seats(70, 46, 86, 3, 10, '#5A5C66') + R(40, 90, 24, 520, '#2A2B33') + R(936, 90, 24, 520, '#2A2B33'));
-      pop(R(404, 214, 192, 16, 'url(#led)', null, 3));
-      pop(R(420, 234, 160, 100, '#3A3326', '#D4AF37', 4) + T(500, 290, 'STAGE'));
-      pop(podium(610, 300));
-      pop(seats(296, 240, 3, 7, 13, '#C9A14A') + seats(664, 240, 3, 7, 13, '#C9A14A'));
-      pop(seats(370, 360, 6, 3, 14, '#E8D9A8') + seats(548, 360, 6, 3, 14, '#E8D9A8'));
-      for (var a = 0; a < 5; a++) { var rr = 140 + a * 28, ar = ''; for (var t = 0; t <= 22; t++) { var th = Math.PI * (0.12 + 0.76 * t / 22); ar += '<rect x="' + f(500 - Math.cos(th) * rr * 1.5 - 3) + '" y="' + f(300 + Math.sin(th) * rr - 3) + '" width="6" height="6" rx="1.5" fill="#8A8D99"/>'; } pop(ar); }
-      live = '<path d="M440 40L380 330H460Z" fill="url(#beam)" class="beam"/><path d="M560 40L540 330H620Z" fill="url(#beam)" class="beam b2"/>';
-      pin(1, 500, 345); pin(2, 410, 410); pin(3, 316, 228); pin(4, 500, 600); pin(5, 500, 30); pin(6, 634, 288); pin(7, 120, 120);
+      vb = '50 90 900 560';
+      o.push(hall(5, 13, 95, 87));
+      pop(R(24.6, 29.5, 75.5, 64, '#55575F'));
+      for (var c = 0; c < 9; c++) pop(court(26 + c * 5.28, 34, 26 + c * 5.28 + 3.9, 46.5, 0.85));
+      [26.5, 31.6, 63, 68.2].forEach(function (cx) { pop(court(cx, 49, cx + 3.9, 61.5, 0.85)); });
+      pop(R(35.2, 45.5, 62.6, 64, '#4FD1A5') + T(49, 47.5, 'CEREMONY FLOOR'));
+      pop(R(46.2, 55.7, 51.6, 62.6, '#3A3326', '#D4AF37', 3) + R(46.2, 54.7, 51.6, 55.7, 'url(#led)', null, 1) + T(48.9, 59.3, 'STAGE'));
+      pop(seatsP(36.5, 56.5, 45, 58.3, '#E8D9A8', 8) + seatsP(53.5, 56.5, 61, 58.3, '#E8D9A8', 8));
+      pop(seatsP(36, 59.8, 45, 61.5, '#C9A14A', 8) + seatsP(53.5, 59.8, 62, 61.5, '#C9A14A', 8));
+      var arc = ''; for (var a = 0; a < 3; a++) { var rx = 230 - a * 16, ry = 152 - a * 14; for (var t = 0; t <= 34; t++) { var th = Math.PI * (0.05 + 0.9 * t / 34), x = X(49) - Math.cos(th) * rx, y = Y(50.5) - Math.sin(th) * ry; arc += '<rect x="' + f(x - 3) + '" y="' + f(y - 3) + '" width="6" height="6" rx="1" fill="#E8D44A"/>'; } } pop(arc);
+      pop(R(23, 18, 77, 27.5, '#2A2B33') + seatsP(23.5, 18.5, 28, 25, '#D65BC8', 8) + seatsP(28.5, 18.5, 40, 25, '#B2454E', 8) + seatsP(40.5, 18.5, 59, 25, '#3B57D6', 8) + seatsP(59.5, 18.5, 71.5, 25, '#B2454E', 8) + seatsP(72, 18.5, 77, 25, '#D65BC8', 8) + seatsP(41, 25.6, 59, 27.4, '#E5484D', 8));
+      pop(R(23, 66, 77, 78.5, '#2A2B33') + seatsP(23.5, 66.5, 77, 76, '#4A6AC8', 8));
+      pop(R(15.3, 34, 21.3, 64, '#2A2B33') + seatsP(15.6, 34.5, 21, 63.5, '#C9A14A', 8) + R(77.3, 34, 83.3, 64, '#2A2B33') + seatsP(77.6, 34.5, 83, 63.5, '#C9A14A', 8));
+      pop(podium(74.1, 51.5, 75.4, 59));
+      live = '<path d="M' + f(X(44)) + ' ' + f(Y(14)) + 'L' + f(X(46.5)) + ' ' + f(Y(55)) + 'H' + f(X(49.5)) + 'Z" fill="url(#beam)" class="beam"/><path d="M' + f(X(54)) + ' ' + f(Y(14)) + 'L' + f(X(48.5)) + ' ' + f(Y(55)) + 'H' + f(X(51.5)) + 'Z" fill="url(#beam)" class="beam b2"/>';
+      pin(1, 48.9, 60.1); pin(2, 40.8, 57.6); pin(3, 57.3, 61.5); pin(4, 48.5, 35.4); pin(5, 50, 23.3); pin(6, 74.8, 55.2); pin(7, 69.5, 39.6);
     } else {
-      pop(R(30, 590, 940, 40, '#26272D') + T(500, 615, 'LUNCH & REFRESHMENT GALLERY'));
-      for (var j = 0; j < 18; j++) { var cc = j % 9, rw = (j / 9) | 0; pop(court(215 + cc * 76, 92 + rw * 262, 56, 196)); }
-      pop(R(50, 230, 90, 170, '#3A3326', '#D4AF37', 4) + T(95, 320, 'STAGE') + podium(146, 300));
-      pop(R(46, 52, 96, 70, '#24302A', '#3E5446', 4) + T(94, 92, 'GREEN') + R(46, 508, 96, 70, '#24302A', '#3E5446', 4) + T(94, 548, 'GREEN'));
-      pop(door(30, 315, 'l') + door(30, 170, 'l') + door(30, 460, 'l'));
-      pop(R(-24, 250, 50, 130, '#2B2A35', '#4A4858', 4));
-      pop(R(904, 52, 52, 70, '#2B3A4A', '#46586A', 4) + T(930, 92, 'KIT') + R(904, 508, 52, 70, '#2B2A35', '#4A4858', 4));
-      pop(door(970, 200, 'r') + door(970, 430, 'r') + R(974, 140, 40, 350, '#24252B', '#3A3B42', 4));
-      pop(R(380, 320, 260, 26, '#2B3A2F', '#465A4A', 4) + T(510, 337, 'HYDRATION'));
-      pop(door(500, 662, 'u'));
-      live = '<circle r="3" fill="#FFF7E0" cx="' + (215 + 4 * 76 + 28) + '"><animate attributeName="cy" values="' + (92 + 30) + ';' + (92 + 166) + ';' + (92 + 30) + '" dur="1.4s" repeatCount="indefinite" calcMode="spline" keySplines=".3 0 .7 1;.3 0 .7 1"/></circle>';
-      pin(1, 557, 80); pin(2, 95, 218); pin(3, 16, 315); pin(4, 16, 170); pin(5, -2, 238); pin(6, 94, 40); pin(7, 984, 200); pin(8, 510, 307); pin(9, 994, 128); pin(10, 930, 40); pin(11, 300, 610); pin(12, 500, 650); pin(13, 930, 496);
+      vb = '70 40 860 620';
+      o.push(R(44, 6.5, 68, 23.5, '#202128', '#34353D', 4) + T(56, 15, 'BLOCK E · PLAZA')); o.push(hall(8, 25.5, 92, 91));
+      pop(R(26, 41.5, 74, 74, '#5E6068'));
+      for (var j = 0; j < 18; j++) { var cc = j % 9, rw = (j / 9) | 0, x0 = 27.3 + cc * 4.94; pop(court(x0, rw ? 59.3 : 45.5, x0 + 3.75, rw ? 71.2 : 57.4)); }
+      pop(seatsP(26.5, 40, 73.5, 41.4, '#3B57D6', 7) + seatsP(36, 72, 70, 73.4, '#C9A57A', 7));
+      pop(R(71.3, 55, 73.3, 61.2, '#3A3326', '#D4AF37', 2) + podium(72.6, 62, 74.1, 69));
+      pop(arrow(75, 58, 'l'));
+      pop(arrow(77.4, 44.5, 'l') + arrow(77, 72.5, 'l'));
+      pop(R(85, 53, 92, 63.5, '#E8A443', '#B87A22', 3) + T(88.5, 58.4, 'VVIP LUNCH'));
+      pop(R(79, 61, 82.6, 74, '#3E8E6A', '#2C6B4E', 3) + T(80.8, 67.5, 'GREEN'));
+      pop(R(79, 44, 82.6, 55, '#8E8D88', '#6B6A66', 3));
+      pop(arrow(23.5, 57.6, 'r') + arrow(23, 73, 'r'));
+      pop(R(8, 53, 14.6, 63.5, '#6F9BD8', '#4A72AC', 3) + T(11.3, 58.4, 'HYDRATION'));
+      pop(R(8, 36, 14.6, 52, '#D86B6B', '#A84848', 3) + T(11.3, 44, 'LOCKERS') + R(8, 64, 14.6, 80, '#3B57D6', '#2A3F9E', 3) + T(11.3, 72, 'LOCKERS'));
+      pop(R(18, 74.5, 24.3, 80, '#E8C64A', '#B89A2A', 3) + T(21.2, 77.4, 'KIT'));
+      pop(R(17.2, 44, 21, 54, '#B48AC8', '#8A62A0', 3) + R(17.2, 61, 21, 71, '#B48AC8', '#8A62A0', 3));
+      pop(R(20.5, 26.5, 44, 29, '#54D6E8') + R(56, 26.5, 79.5, 29, '#54D6E8') + R(26.5, 86.5, 79, 89, '#54D6E8') + T(52.8, 87.9, 'LUNCH & REFRESHMENT'));
+      pop(arrow(50, 30, 'd'));
+      live = '<circle r="2.6" fill="#FFF7E0" cx="' + f(X(27.3 + 4 * 4.94 + 1.9)) + '"><animate attributeName="cy" values="' + f(Y(47)) + ';' + f(Y(56)) + ';' + f(Y(47)) + '" dur="1.4s" repeatCount="indefinite" calcMode="spline" keySplines=".3 0 .7 1;.3 0 .7 1"/></circle>';
+      pin(1, 50, 56.6); pin(2, 73.2, 66); pin(3, 75, 55); pin(4, 77.4, 42.5); pin(5, 88.4, 58); pin(6, 81.1, 65.7); pin(7, 23, 57.6); pin(8, 11.4, 56.6); pin(9, 11.4, 43.5); pin(10, 21.4, 77); pin(11, 32.5, 27.4); pin(12, 49.8, 31.3); pin(13, 81.4, 46.5);
     }
-    return '<svg class="vt-vec" viewBox="-40 -10 1080 700" aria-hidden="true"><defs><linearGradient id="led" x1="0" x2="1"><stop offset="0" stop-color="#E5484D"/><stop offset=".5" stop-color="#F2F1EC"/><stop offset="1" stop-color="#3B82F6"/><animate attributeName="x1" values="0;-1;0" dur="6s" repeatCount="indefinite"/><animate attributeName="x2" values="1;2;1" dur="6s" repeatCount="indefinite"/></linearGradient><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".55"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></linearGradient></defs>' + o.join('') + '<g class="lv">' + live + '</g></svg>';
+    return '<svg class="vt-vec" viewBox="' + vb + '" aria-hidden="true"><defs><linearGradient id="led" x1="0" x2="1"><stop offset="0" stop-color="#E5484D"/><stop offset=".5" stop-color="#F2F1EC"/><stop offset="1" stop-color="#3B82F6"/><animate attributeName="x1" values="0;-1;0" dur="6s" repeatCount="indefinite"/><animate attributeName="x2" values="1;2;1" dur="6s" repeatCount="indefinite"/></linearGradient><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".5"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></linearGradient></defs>' + o.join('') + '<g class="lv">' + live + '</g></svg>';
   }
   function venueTurn() {
     var sec = doc.querySelector('section.vl'); if (!sec || sec.__vt) return; var plan = sec.querySelector('.vl-plan'); if (!plan) return; sec.__vt = 1;
@@ -229,6 +245,14 @@
     cv.addEventListener('click', function () { if (cv.__drag) { cv.__drag = 0; return; } turn(true); });
     cv.addEventListener('pointerdown', function (e) { dx0 = e.clientX; });
     window.addEventListener('pointerup', function (e) { if (dx0 === null) return; var d = e.clientX - dx0; dx0 = null; if (d < -40) { cv.__drag = 1; turn(true); } });
+    var zb = doc.createElement('span'); zb.className = 'vt-zoom'; zb.setAttribute('role', 'button'); zb.tabIndex = 0; zb.setAttribute('aria-label', 'Zoom the drawing'); zb.innerHTML = '<i aria-hidden="true">⤢</i>Zoom'; cv.appendChild(zb);
+    function zoom(e) { e.stopPropagation(); e.preventDefault(); var lb = doc.createElement('div'); lb.className = 'vt-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', (C[k0] || C.badminton)[1] + ' drawing');
+      lb.innerHTML = '<div class="vt-lb-top"><b>' + (C[k0] || C.badminton)[1] + '</b><span>Pinch or drag to look around</span><button type="button" class="vt-lb-x" aria-label="Close">×</button></div><div class="vt-lb-sc">' + vtPlan(k0) + '</div>';
+      doc.body.appendChild(lb); doc.documentElement.style.overflow = 'hidden'; requestAnimationFrame(function () { lb.setAttribute('data-on', ''); var sc = lb.querySelector('.vt-lb-sc'); sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2; sc.scrollTop = (sc.scrollHeight - sc.clientHeight) / 2; });
+      function shut() { lb.removeAttribute('data-on'); doc.documentElement.style.overflow = ''; doc.removeEventListener('keydown', esc); setTimeout(function () { lb.remove(); }, 350); zb.focus(); }
+      function esc(ev) { if (ev.key === 'Escape') shut(); }
+      lb.querySelector('.vt-lb-x').addEventListener('click', shut); lb.addEventListener('click', function (ev) { if (ev.target === lb) shut(); }); doc.addEventListener('keydown', esc); lb.querySelector('.vt-lb-x').focus(); }
+    zb.addEventListener('click', zoom); zb.addEventListener('pointerdown', function (e) { e.stopPropagation(); }); zb.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') zoom(e); });
     var close = doc.createElement('button'); close.type = 'button'; close.className = 'vt-back'; close.innerHTML = '↺ Turn back'; close.addEventListener('click', function () { turn(false); setTimeout(nudge, 1400); }); plan.appendChild(close);
     sec.addEventListener('click', function (e) { var tb = e.target.closest('[data-vl-tab]'); if (tb) { var k = tb.getAttribute('data-vl-tab'); if (k !== k0) { set(k); turn(false); nudge(); } } });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cv.setAttribute('data-live', ''); setTimeout(nudge, 1800); } else { clearTimeout(nudgeT); } }, { threshold: 0.35 }).observe(plan); else cv.setAttribute('data-live', '');
@@ -320,10 +344,10 @@
       b.querySelector('.gyh-x').addEventListener('click', function () { end(true); });
       b.querySelector('.gyh-b').addEventListener('click', function () { var t = doc.querySelector('[data-r=bot] button[aria-label="Chat with Vision"]'); if (t) t.click(); end(true); });
     }
-    function show() { if (stop) return; if (doc.hidden || chatOpen()) { tm = setTimeout(show, 6000); return; } if (!b) build(); b.removeAttribute('data-off'); requestAnimationFrame(function () { b.setAttribute('data-on', ''); }); tm = setTimeout(hide, 6000); }
+    function show() { if (stop) return; if (doc.hidden || chatOpen() || doc.querySelector('.ecx-panel[data-open="1"]')) { tm = setTimeout(show, 6000); return; } if (!b) build(); b.removeAttribute('data-off'); requestAnimationFrame(function () { b.setAttribute('data-on', ''); }); tm = setTimeout(hide, 6000); }
     function hide() { if (!b) return; b.removeAttribute('data-on'); b.setAttribute('data-off', ''); if (!stop) tm = setTimeout(show, 6000); }
     function end(forVisit) { stop = true; clearTimeout(tm); hide(); if (forVisit) try { sessionStorage.setItem('gms-hello', '1'); } catch (e) {} setTimeout(function () { if (b) { b.remove(); b = null; } }, 700); }
-    var go = function () { tm = setTimeout(show, 1100); };
+    var go = function () { tm = setTimeout(show, window.innerWidth <= 760 ? 12000 : 1100); };
     if (doc.getElementById('gms-ldr')) window.addEventListener('gms:entered', go, { once: true }); else go();
   }
 
