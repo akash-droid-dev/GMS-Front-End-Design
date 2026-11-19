@@ -114,55 +114,124 @@
      The camera walks round as you scroll or drag; click a frame to walk up to it, click again to open the match. */
   function galleryRoom(stage, o) { return window.gmsRoom(stage, o); }
 
-  /* section 07: the sports hang in the curved room behind a lit doorway; nothing shows until the visitor walks in */
+  /* section 07: a line-drawn gallery arch; it tilts to the cursor, its doors part on hover and swing open on click */
+  var SG_IC = {
+    badminton: '<path d="M12 21v-3"/><path d="M9 18h6l3-12-6 3-6-3z"/><path d="M12 9v9M9 6l1.5 12M15 6l-1.5 12"/>',
+    tennis: '<circle cx="12" cy="12" r="8"/><path d="M5.5 7.5c3 2 3 7 0 9M18.5 7.5c-3 2-3 7 0 9"/>',
+    table: '<circle cx="9.5" cy="9.5" r="5.5"/><path d="M13.5 13.5l5 5"/><circle cx="18.5" cy="5.5" r="1.6"/>',
+    athletics: '<rect x="3" y="6" width="18" height="12" rx="6"/><rect x="6.5" y="9" width="11" height="6" rx="3"/>',
+    swim: '<path d="M3 15c2 0 2-1.5 4.5-1.5S9.5 15 12 15s2.5-1.5 4.5-1.5S19 15 21 15"/><path d="M3 19c2 0 2-1.5 4.5-1.5S9.5 19 12 19s2.5-1.5 4.5-1.5S19 19 21 19"/><circle cx="15" cy="6" r="1.8"/><path d="M6 12l4-4 3 2"/>',
+    basket: '<circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4v16M6.3 6.3c3 2.2 3 9.2 0 11.4M17.7 6.3c-3 2.2-3 9.2 0 11.4"/>',
+    volley: '<circle cx="12" cy="12" r="8"/><path d="M12 4c-1 4 0 7 3 9M4.5 9.5c4 0 7 1.5 8.5 4.5M7 18.5c2-3.5 5-5 9-4.5"/>',
+    football: '<circle cx="12" cy="12" r="8"/><path d="M12 8.5l3 2.2-1.1 3.5h-3.8L9 10.7z"/><path d="M12 4v4.5M15 10.7l4.3-1.3M13.9 14.2l2.6 3.6M10.1 14.2l-2.6 3.6M9 10.7L4.7 9.4"/>'
+  };
+  function sgIcon(n) { n = (n || '').toLowerCase(); return SG_IC[/table/.test(n) ? 'table' : /badm/.test(n) ? 'badminton' : /tennis/.test(n) ? 'tennis' : /athl|run|track/.test(n) ? 'athletics' : /swim|aqua/.test(n) ? 'swim' : /basket/.test(n) ? 'basket' : /volley/.test(n) ? 'volley' : /foot|soccer/.test(n) ? 'football' : 'badminton']; }
+  function sgScene(names) {
+    // room 264 x 480: back wall 92..172 x 170..260; four frames on each side wall, smaller as they recede
+    var W = 264, H = 480, bx0 = 92, bx1 = 172, by0 = 170, by1 = 260, o = [], fr = [], lines = [];
+    function wy(x, side, f) { var t = side ? (W - x) / (W - bx1) * 0 : 0; var xx = side ? W - x : x, top = by0 * xx / bx0, bot = H - (H - by1) * xx / bx0; return top + (bot - top) * f; }
+    for (var i = 0; i <= 6; i++) { var bxp = bx0 + (bx1 - bx0) * i / 6; lines.push('M' + (W * i / 6).toFixed(1) + ' ' + H + 'L' + bxp.toFixed(1) + ' ' + by1); lines.push('M' + (W * i / 6).toFixed(1) + ' 0L' + bxp.toFixed(1) + ' ' + by0); }
+    [0.62, 0.78, 0.88].forEach(function (k) { var y = by1 + (H - by1) * (1 - k) * 2.2; if (y < H) { var xl = bx0 * (H - y) / (H - by1), xr = W - xl; lines.push('M' + xl.toFixed(1) + ' ' + y.toFixed(1) + 'L' + xr.toFixed(1) + ' ' + y.toFixed(1)); } });
+    lines.push('M0 0L' + bx0 + ' ' + by0 + 'M' + W + ' 0L' + bx1 + ' ' + by0 + 'M' + bx0 + ' ' + by0 + 'H' + bx1 + 'V' + by1 + 'H' + bx0 + 'Z');
+    var xs = [[8, 30], [36, 54], [58, 72], [76, 86]];
+    for (var s = 0; s < 2; s++) xs.forEach(function (r, j) {
+      var a = r[0], b = r[1], f0 = 0.3, f1 = 0.6, n = names[s * 4 + j] || '';
+      function P(x, f) { var y = (by0 * x / bx0) + ((H - (H - by1) * x / bx0) - by0 * x / bx0) * f; return [s ? W - x : x, y]; }
+      var p = [P(a, f0), P(b, f0), P(b, f1), P(a, f1)];
+      fr.push('<path class="sg-fr" pathLength="1" style="transition-delay:' + (0.6 + (s * 4 + j) * 0.08).toFixed(2) + 's" d="M' + p.map(function (q) { return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('L') + 'Z"/>');
+      var cx = (p[0][0] + p[1][0] + p[2][0] + p[3][0]) / 4, cy = (p[0][1] + p[1][1] + p[2][1] + p[3][1]) / 4, hgt = ((p[3][1] - p[0][1]) + (p[2][1] - p[1][1])) / 2, sc = hgt * 0.5 / 24, slope = ((p[1][1] - p[0][1]) / (p[1][0] - p[0][0])), sx = sc * Math.min(1, Math.abs(p[1][0] - p[0][0]) / hgt * 1.25);
+      fr.push('<g class="sg-ic" style="transition-delay:' + (1.2 + (s * 4 + j) * 0.08).toFixed(2) + 's" transform="matrix(' + sx.toFixed(3) + ' ' + (slope * sx).toFixed(3) + ' 0 ' + sc.toFixed(3) + ' ' + (cx - 12 * sx).toFixed(1) + ' ' + (cy - 12 * sc - 12 * slope * sx).toFixed(1) + ')">' + sgIcon(n) + '</g>');
+    });
+    var dust = ''; for (var d = 0; d < 9; d++) dust += '<circle r="' + (0.6 + (d % 3) * 0.35) + '" cx="' + (100 + d * 8 + (d % 2) * 14) + '" cy="' + (250 + (d * 37) % 160) + '" style="animation-delay:' + (-d * 0.8) + 's"/>';
+    return '<span class="sg-room" aria-hidden="true">' +
+      '<svg class="sg-l1" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="sgGlow"><stop offset="0" stop-color="#FFF1D6" stop-opacity=".9"/><stop offset="1" stop-color="#FFF1D6" stop-opacity="0"/></radialGradient></defs>' +
+      '<ellipse class="sg-glow" cx="132" cy="215" rx="70" ry="60"/>' + lines.map(function (l, i) { return '<path class="sg-ln" pathLength="1" style="transition-delay:' + (i * 0.03).toFixed(2) + 's" d="' + l + '"/>'; }).join('') + '<g class="sg-dust">' + dust + '</g></svg>' +
+      '<svg class="sg-l2" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice">' + fr.join('') + '</svg></span>' +
+      '<span class="sg-leaves" aria-hidden="true"><span class="sg-leaf l"></span><span class="sg-leaf r"></span></span>' +
+      '<svg class="sg-archline" viewBox="0 0 300 500" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M18 500V164A132 144 0 0 1 282 164V500"/><path class="thin" pathLength="1" d="M6 500V160A144 156 0 0 1 294 160V500"/><path class="thin" pathLength="1" d="M138 4l12 14 12-14M0 500H300"/></svg>';
+  }
   function sportGallery() {
     var sec = doc.querySelector('[data-r=stories]'); if (!sec || sec.__g) return; var track = sec.querySelector('.st-track'); if (!track || !track.querySelector('.sc2')) return; sec.__g = 1;
+    var names = Array.prototype.map.call(track.querySelectorAll('.sc2 .sc2-n'), function (n) { return n.textContent.trim(); });
     var gate = doc.createElement('div'); gate.className = 'sg-gate';
-    gate.innerHTML = '<button type="button" class="sg-door" data-sg-enter aria-label="Enter the sports gallery"><span class="sg-arch"><span class="sg-light"></span><span class="sg-peek" aria-hidden="true"></span></span><span class="sg-word"><small>Eight sports · one room</small><b>Enter the sports gallery</b><i>Walk in →</i></span></button>';
+    gate.innerHTML = '<button type="button" class="sg-door" data-sg-enter aria-label="Enter the sports gallery"><span class="sg-arch">' + sgScene(names) + '</span><span class="sg-word"><small>' + (names.length || 8) + ' sports · one room</small><b>Enter the sports gallery</b><em>Every sport of the Games hangs in a curved room. Step through the doors and walk round.</em><i>Open the doors <span aria-hidden="true">→</span></i></span></button>';
     var wrap = doc.createElement('div'); wrap.className = 'sg-wrap'; wrap.innerHTML = '<div class="sg-pin"><div class="sg-stage"></div><button type="button" class="sg-exit" data-sg-exit>Leave the gallery</button></div>';
     track.parentNode.insertBefore(gate, track); track.parentNode.insertBefore(wrap, track);
+    var door = gate.querySelector('.sg-door'), raf = 0, tx = 0, ty = 0;
+    if (window.matchMedia && matchMedia('(hover:hover)').matches && !REDUCED) {
+      door.addEventListener('pointermove', function (e) { var r = door.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width; ty = (e.clientY - r.top) / r.height; if (raf) return; raf = requestAnimationFrame(function () { raf = 0; var a = gate.querySelector('.sg-arch').getBoundingClientRect(), cx = (a.left + a.width / 2 - r.left) / r.width, cy = (a.top + a.height / 2 - r.top) / r.height; door.style.setProperty('--mx', Math.max(-1, Math.min(1, (tx - cx) * 2.4)).toFixed(3)); door.style.setProperty('--my', Math.max(-1, Math.min(1, (ty - cy) * 2.4)).toFixed(3)); door.style.setProperty('--px', (tx * 100).toFixed(1) + '%'); door.style.setProperty('--py', (ty * 100).toFixed(1) + '%'); }); });
+      door.addEventListener('pointerleave', function () { door.style.setProperty('--mx', 0); door.style.setProperty('--my', 0); });
+    }
+    if ('IntersectionObserver' in window) { var seen = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { gate.setAttribute('data-seen', ''); seen.disconnect(); } }, { threshold: 0.3 }); seen.observe(gate); } else gate.setAttribute('data-seen', '');
     var stage = wrap.querySelector('.sg-stage');
     function items() { return Array.prototype.map.call(track.querySelectorAll('.sc2'), function (c) { var im = c.querySelector('img'), n = (c.querySelector('.sc2-n') || {}).textContent || '', m = (c.querySelector('.sc2-m') || {}).textContent || '', a = c.querySelector('.sc2-a');
       return { sig: n + m, img: im ? im.getAttribute('src') : '', title: n.trim(), round: '', small: m.trim(), plate: n.trim(), href: a ? a.getAttribute('href') : '#', aria: n.trim() + ', ' + m.trim() }; }); }
-    var peek = gate.querySelector('.sg-peek'), f0 = track.querySelector('.sc2 img'); if (f0) peek.style.backgroundImage = 'url(' + f0.getAttribute('src') + ')';
     var g = galleryRoom(stage, { items: items, capLead: 'You are standing at', openLabel: 'Open the sport page →', active: function () { return sec.hasAttribute('data-in'); },
       walk: function () { var r = wrap.getBoundingClientRect(), vh = window.innerHeight; return Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh))); },
       open: function (it) { if (it.href && it.href !== '#') location.href = it.href; } });
-    function enter() { if (sec.hasAttribute('data-in')) return; sec.setAttribute('data-going', ''); setTimeout(function () { sec.removeAttribute('data-going'); sec.setAttribute('data-in', ''); g.build(); var t = wrap.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: t, behavior: REDUCED ? 'auto' : 'smooth' }); }, REDUCED ? 0 : 900); }
-    function leave() { sec.removeAttribute('data-in'); var t = sec.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: t, behavior: 'auto' }); }
+    function enter() { if (sec.hasAttribute('data-in') || sec.hasAttribute('data-going')) return; gate.setAttribute('data-seen', ''); sec.setAttribute('data-going', ''); setTimeout(function () { sec.removeAttribute('data-going'); sec.setAttribute('data-in', ''); g.build(); var t = wrap.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: t, behavior: REDUCED ? 'auto' : 'smooth' }); }, REDUCED ? 0 : 1350); }
+    function leave() { sec.removeAttribute('data-in'); door.style.setProperty('--mx', 0); door.style.setProperty('--my', 0); var t = sec.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: t, behavior: 'auto' }); }
     sec.addEventListener('click', function (e) { if (e.target.closest('[data-sg-enter]')) enter(); else if (e.target.closest('[data-sg-exit]')) leave(); });
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sec.hasAttribute('data-in') && !stage.hasAttribute('data-focus')) leave(); });
     var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (sec.hasAttribute('data-in')) g.build(); }, 300); }).observe(track, { childList: true, subtree: true });
   }
 
-  /* section 01: each layout sits under a photo card; a small nudge invites the visitor to turn it */
+  /* section 01: the chosen photo with a live line drawing of the hall; the card curls at the corner and turns like a heavy page */
+  function vtPlan(k) {
+    var o = [], dw = function (cls, d, del) { o.push('<path class="' + cls + '" data-dw pathLength="1" style="--d:' + del.toFixed(2) + '" d="' + d + '"/>'); }, R = function (x, y, w, h) { return 'M' + x + ' ' + y + 'h' + w + 'v' + h + 'h' + (-w) + 'Z'; }, dot = function (x, y, r, del) { o.push('<circle class="d" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + r + '" style="--d:' + del.toFixed(2) + '"/>'); };
+    dw('o', R(20, 20, 960, 660), 0);
+    if (k === 'tabletennis') {
+      for (var i = 0; i < 12; i++) { var c = i % 6, r = (i / 6) | 0, x = 50 + c * 152, y = 50 + r * 320, del = 0.25 + i * 0.06; dw('f', R(x, y, 140, 280), del); dw('o', R(x + 47, y + 98, 46, 84), del + 0.2); dw('k', 'M' + (x + 47) + ' ' + (y + 140) + 'h46M' + (x + 70) + ' ' + (y + 98) + 'v84', del + 0.35); }
+      o.push('<circle class="hot" cx="' + (50 + 2 * 152 + 70) + '" cy="' + (50 + 140) + '" r="6"/>');
+      for (var s = 0; s < 22; s++) { dot(60 + s * 40, 32, 3, 1 + s * 0.05); dot(60 + s * 40, 668, 3, 1.2 + s * 0.05); }
+    } else if (k === 'ceremony') {
+      dw('o', R(330, 40, 340, 90), 0.2); dw('k', 'M380 130v40h240v-40', 0.35);
+      for (var a = 0; a < 7; a++) { var rr = 200 + a * 62; dw('f', 'M' + (500 - rr) + ' 170A' + rr + ' ' + rr * 0.92 + ' 0 0 0 ' + (500 + rr) + ' 170', 0.4 + a * 0.1); for (var q = 1; q < 14; q++) { var th = Math.PI * q / 14; dot(500 - Math.cos(th) * rr, 170 + Math.sin(th) * rr * 0.92, 2.6, 1 + a * 0.12 + q * 0.03); } }
+      [-0.5, 0, 0.5].forEach(function (t, i) { dw('k', 'M500 170L' + (500 + Math.sin(t) * 620).toFixed(0) + ' ' + (170 + Math.cos(t) * 560).toFixed(0), 0.9 + i * 0.1); });
+      o.push('<circle class="hot" cx="500" cy="85" r="7"/>');
+    } else {
+      for (var j = 0; j < 18; j++) { var cc = j % 9, rw = (j / 9) | 0, x2 = 44 + cc * 104, y2 = 60 + rw * 330, d2 = 0.2 + j * 0.05; dw('o', R(x2, y2, 88, 250), d2); dw('k', 'M' + x2 + ' ' + (y2 + 125) + 'h88M' + (x2 + 44) + ' ' + y2 + 'v95M' + (x2 + 44) + ' ' + (y2 + 155) + 'v95M' + x2 + ' ' + (y2 + 95) + 'h88M' + x2 + ' ' + (y2 + 155) + 'h88', d2 + 0.3); }
+      o.push('<circle class="hot" cx="' + (44 + 4 * 104 + 44) + '" cy="' + (60 + 125) + '" r="7"/>');
+      for (var e = 0; e < 24; e++) { dot(40 + e * 40, 36, 3, 1 + e * 0.04); dot(40 + e * 40, 664, 3, 1.2 + e * 0.04); }
+    }
+    return '<svg class="vt-vec" viewBox="0 0 1000 700" aria-hidden="true"><defs><linearGradient id="vtSw" x1="0" x2="1"><stop offset="0" stop-color="#F2F1EC" stop-opacity="0"/><stop offset=".5" stop-color="#F2F1EC" stop-opacity=".22"/><stop offset="1" stop-color="#F2F1EC" stop-opacity="0"/></linearGradient></defs>' + o.join('') + '<rect class="vt-sweep" x="-220" y="20" width="220" height="660" fill="url(#vtSw)"/></svg>';
+  }
   function venueTurn() {
     var sec = doc.querySelector('section.vl'); if (!sec || sec.__vt) return; var plan = sec.querySelector('.vl-plan'); if (!plan) return; sec.__vt = 1;
-    var C = { badminton: ['assets/venues/cover-badminton.webp', 'Badminton hall', 'Block C · first floor · 18 courts'], ceremony: ['assets/venues/cover-ceremony.webp', 'Opening ceremony', 'Block C · second floor · seating'], tabletennis: ['assets/venues/cover-tabletennis.webp', 'Table tennis hall', 'Block C · ground floor · 12 tables'] };
+    var C = { badminton: ['assets/venues/cover-badminton.webp?v=2', 'Badminton hall', 'Block C · first floor · 18 courts'], ceremony: ['assets/venues/cover-ceremony.webp?v=2', 'Opening ceremony', 'Block C · second floor · seating'], tabletennis: ['assets/venues/cover-tabletennis.webp?v=2', 'Table tennis hall', 'Block C · ground floor · 12 tables'] };
+    var shade = doc.createElement('span'); shade.className = 'vt-shadow'; plan.appendChild(shade);
     var cv = doc.createElement('button'); cv.type = 'button'; cv.className = 'vt'; cv.setAttribute('aria-label', 'Turn the card to see the layout');
-    cv.innerHTML = '<span class="vt-img"><img alt="" decoding="async" draggable="false"></span><span class="vt-shade"></span><span class="vt-txt"><small data-vt-k></small><b data-vt-t></b><span class="vt-cue"><i class="vt-hand" aria-hidden="true"></i>Turn to see the layout</span></span><span class="vt-corner" aria-hidden="true"></span>';
-    plan.appendChild(cv); plan.setAttribute('data-turn', '0');
+    cv.innerHTML = '<span class="vt-img"><img alt="" decoding="async" draggable="false"></span><span class="vt-shade"></span><span data-vt-vec></span><span class="vt-txt"><small data-vt-k></small><b data-vt-t></b><span class="vt-cue"><i class="vt-hand" aria-hidden="true"></i>Turn to see the layout</span></span><span class="vt-sheen" aria-hidden="true"></span>';
+    plan.appendChild(cv); var flap = doc.createElement('span'); flap.className = 'vt-flap'; flap.setAttribute('aria-hidden', 'true'); plan.appendChild(flap); plan.setAttribute('data-turn', '0');
     var img = cv.querySelector('img'), nudgeT = 0, dx0 = null, k0 = 'badminton';
-    function set(k) { var c = C[k] || C.badminton; k0 = k; img.src = c[0]; img.onerror = function () { img.onerror = null; img.src = k === 'tabletennis' ? 'assets/venues/tabletennis.webp' : k === 'ceremony' ? 'assets/venue-poster.webp' : 'assets/venues/badminton.webp'; }; cv.querySelector('[data-vt-t]').textContent = c[1]; cv.querySelector('[data-vt-k]').textContent = c[2]; }
-    function turn(open) { plan.setAttribute('data-turn', open ? '1' : '0'); cv.tabIndex = open ? -1 : 0; cv.setAttribute('aria-hidden', open ? 'true' : 'false'); }
-    function nudge() { clearTimeout(nudgeT); if (plan.getAttribute('data-turn') === '1' || REDUCED) return; cv.classList.remove('vt-nudge'); void cv.offsetWidth; cv.classList.add('vt-nudge'); nudgeT = setTimeout(nudge, 5200); }
+    function set(k) { var c = C[k] || C.badminton; k0 = k; img.src = c[0]; cv.querySelector('[data-vt-vec]').innerHTML = vtPlan(k); cv.querySelector('[data-vt-t]').textContent = c[1]; cv.querySelector('[data-vt-k]').textContent = c[2]; if (cv.hasAttribute('data-live')) { cv.removeAttribute('data-live'); void cv.offsetWidth; cv.setAttribute('data-live', ''); } }
+    function turn(open) { plan.setAttribute('data-turn', open ? '1' : '0'); cv.tabIndex = open ? -1 : 0; cv.setAttribute('aria-hidden', open ? 'true' : 'false'); if (open) { plan.classList.remove('vt-nudge'); clearTimeout(nudgeT); } }
+    function nudge() { clearTimeout(nudgeT); if (plan.getAttribute('data-turn') === '1' || REDUCED) return; plan.classList.remove('vt-nudge'); void plan.offsetWidth; plan.classList.add('vt-nudge'); nudgeT = setTimeout(nudge, 6000); }
     cv.addEventListener('click', function () { if (cv.__drag) { cv.__drag = 0; return; } turn(true); });
     cv.addEventListener('pointerdown', function (e) { dx0 = e.clientX; });
     window.addEventListener('pointerup', function (e) { if (dx0 === null) return; var d = e.clientX - dx0; dx0 = null; if (d < -40) { cv.__drag = 1; turn(true); } });
-    var close = doc.createElement('button'); close.type = 'button'; close.className = 'vt-back'; close.innerHTML = '↺ Turn back'; close.addEventListener('click', function () { turn(false); nudge(); }); plan.appendChild(close);
+    var close = doc.createElement('button'); close.type = 'button'; close.className = 'vt-back'; close.innerHTML = '↺ Turn back'; close.addEventListener('click', function () { turn(false); setTimeout(nudge, 1400); }); plan.appendChild(close);
     sec.addEventListener('click', function (e) { var tb = e.target.closest('[data-vl-tab]'); if (tb) { var k = tb.getAttribute('data-vl-tab'); if (k !== k0) { set(k); turn(false); nudge(); } } });
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) setTimeout(nudge, 700); else clearTimeout(nudgeT); }, { threshold: 0.4 }).observe(plan);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cv.setAttribute('data-live', ''); setTimeout(nudge, 1800); } else { clearTimeout(nudgeT); } }, { threshold: 0.35 }).observe(plan); else cv.setAttribute('data-live', '');
     set('badminton');
   }
 
-  /* the event centre is a floating cloud: list only, closes on Escape or a click outside */
+  /* the event centre: a small glass orb that morphs into a dark glass panel; rows rise in one by one, scores count up */
   function ecCloud() {
-    var sec = doc.querySelector('[data-r=ecx]'); if (!sec || sec.__c) return; sec.__c = 1;
-    var tog = sec.querySelector('.ecx-toggle'), panel = sec.querySelector('.ecx-panel');
-    function isOpen() { return panel && panel.getAttribute('data-open') === '1'; }
-    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen() && tog) tog.click(); });
-    doc.addEventListener('pointerdown', function (e) { if (isOpen() && !sec.contains(e.target) && !e.target.closest('[data-r=nav],.gp-path,[role=dialog]') && tog) tog.click(); });
-    var x = doc.createElement('button'); x.type = 'button'; x.className = 'ecx-x'; x.setAttribute('aria-label', 'Close the event centre'); x.textContent = '×'; x.addEventListener('click', function () { if (isOpen() && tog) tog.click(); });
+    var sec = doc.querySelector('[data-r=ecx]'); if (!sec || sec.__c) return; var tog = sec.querySelector('.ecx-toggle'), panel = sec.querySelector('.ecx-panel'); if (!tog || !panel) return; sec.__c = 1;
+    var orb = doc.createElement('span'); orb.className = 'ecx-orb'; orb.setAttribute('aria-hidden', 'true'); orb.innerHTML = '<i></i><b>0</b><small>LIVE</small>'; tog.appendChild(orb);
+    var tip = doc.createElement('span'); tip.className = 'ecx-tip'; tip.setAttribute('aria-hidden', 'true'); tog.parentNode.insertBefore(tip, tog.nextSibling);
+    tog.setAttribute('aria-label', 'Open the event centre');
+    var lastN = -1; function count() { var now = sec.querySelector('.ecx-now'), t = now ? now.textContent : '', m = t.match(/(\d+)\s*match/), n = m ? +m[1] : sec.querySelectorAll('[data-r=ec-row]').length; if (n === lastN) return; lastN = n; orb.querySelector('b').textContent = n; tip.textContent = 'Event centre · ' + n + ' live'; }
+    function isOpen() { return panel.getAttribute('data-open') === '1'; }
+    function stagger() { var k = 0; sec.querySelectorAll('.ecx-panel :is(.ec-card>h2,.ec-card>h3,.ec-card>header),.ecx-panel [data-r=ec-row]').forEach(function (el) { el.style.setProperty('--ri', k++); });
+      if (REDUCED) return; sec.querySelectorAll('.ecx-panel .ec-sc').forEach(function (el, i) { var v = el.textContent.trim(); if (!/^\d+$/.test(v) || +v === 0) return; var to = +v, t0 = performance.now() + 450 + i * 50, sp = el.querySelector('span') || el; el.__cu = 1;
+        (function f(now) { var p = Math.max(0, Math.min(1, (now - t0) / 700)); sp.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); else { sp.textContent = v; el.__cu = 0; } })(performance.now()); }); }
+    var was = false; new MutationObserver(function () { var o = isOpen(); if (o && !was) stagger(); was = o; count(); }).observe(panel, { attributes: true, attributeFilter: ['data-open'] }); var nowEl = sec.querySelector('.ecx-now'); if (nowEl) new MutationObserver(count).observe(nowEl, { childList: true, subtree: true, characterData: true });
+    count();
+    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen()) tog.click(); });
+    doc.addEventListener('pointerdown', function (e) { if (isOpen() && !panel.contains(e.target) && !tog.contains(e.target) && !e.target.closest('[data-r=nav],.gp-path,[role=dialog]')) tog.click(); });
+    var x = doc.createElement('button'); x.type = 'button'; x.className = 'ecx-x'; x.setAttribute('aria-label', 'Close the event centre'); x.textContent = '×'; x.addEventListener('click', function () { if (isOpen()) tog.click(); });
     var inner = sec.querySelector('.ecx-inner'); if (inner) inner.insertBefore(x, inner.firstChild);
   }
 
