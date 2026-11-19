@@ -1452,3 +1452,31 @@
   window.addEventListener('resize', function () { if (heat) size(); });
   document.addEventListener('mouseleave', function () { lx = -1; });
 })();
+
+/* control room: running IST timecode and camera cuts to the programme screen */
+(function () {
+  var NAMES = { 1: 'CAM 1 · Badminton Hall', 2: 'CAM 2 · Table Tennis Hall', 3: 'CAM 3 · Aquatic Stadium', 4: 'CAM 4 · Indoor Arena' };
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  var last = '';
+  function tc() {
+    var el = document.querySelectorAll('[data-tc]'); if (el.length) {
+      var d = new Date(Date.now() + (330 + new Date().getTimezoneOffset()) * 60000), f = Math.floor(d.getMilliseconds() / 40);
+      var t = p2(d.getHours()) + ':' + p2(d.getMinutes()) + ':' + p2(d.getSeconds()) + ':' + p2(f);
+      if (t !== last) { last = t; el.forEach(function (e) { e.textContent = t; }); }
+    }
+    setTimeout(tc, 40);
+  }
+  tc();
+  function cut(k) {
+    var cr = document.querySelector('section.cr'); if (!cr) return;
+    cr.setAttribute('data-pgm', k);
+    cr.querySelectorAll('[data-cam]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cam') === String(k) ? 'true' : 'false'); });
+    var n = cr.querySelector('[data-cr-name]'); if (n) n.textContent = NAMES[k];
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('section.cr [data-cam]'); if (b) cut(b.getAttribute('data-cam')); });
+  document.addEventListener('keydown', function (e) {
+    if (!/^[1-4]$/.test(e.key) || e.target.closest('input,textarea,select,[contenteditable]')) return;
+    var cr = document.querySelector('section.cr'); if (!cr) return; var r = cr.getBoundingClientRect();
+    if (r.top < innerHeight * 0.6 && r.bottom > innerHeight * 0.4) cut(e.key);
+  });
+})();

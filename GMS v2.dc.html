@@ -1059,7 +1059,7 @@ html[data-theme=dark] .vl-tabs button[aria-selected=true]{background:var(--acc);
 .vl-stage{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.9fr);gap:22px;align-items:start}
 .vl-plan{position:relative;border-radius:24px;background:#fff;border:1px solid rgba(11,11,12,.08);box-shadow:0 1px 2px rgba(11,11,12,.05),0 24px 60px rgba(11,11,12,.08);padding:14px;overflow:hidden}
 .vlz{position:relative;overflow:hidden;border-radius:16px;background:#fff;aspect-ratio:1400/989;cursor:grab;touch-action:none;outline:none}
-.vlz:active{cursor:grabbing}.vlz-in{position:absolute;inset:0;transform-origin:0 0;will-change:transform;transition:transform .5s var(--gms-ease,ease)}.vlz[data-drag] .vlz-in{transition:none}
+.vlz:active{cursor:grabbing}.vlz-in{position:absolute;inset:0;transform-origin:0 0;transition:transform .5s var(--gms-ease,ease)}.vlz[data-drag] .vlz-in{transition:none}
 .vlz-in img{width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .vlz-pin{all:unset;box-sizing:border-box;position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;display:grid;place-items:center;background:#0B0B0C;color:#F2F1EC;font:700 11.5px/1 'JetBrains Mono',ui-monospace,monospace;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 95%,transparent),0 6px 16px rgba(11,11,12,.35);cursor:pointer;scale:calc(1/var(--z,1));transition:background .25s,color .25s,scale .5s var(--gms-ease,ease)}
 .vlz-pin:hover,.vlz-pin[data-on]{background:var(--acc);color:var(--acc-on);box-shadow:0 0 0 3px #0B0B0C,0 0 0 9px color-mix(in srgb,var(--acc) 35%,transparent)}
@@ -1311,8 +1311,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=14"></script>
-<script defer src="./assets/js/gms-plus.js?v=40"></script>
+<script defer src="./assets/js/gms-motion.js?v=19"></script>
+<script defer src="./assets/js/gms-plus.js?v=42"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1570,6 +1570,114 @@ footer.ft.ft2::before{content:"";position:absolute;inset:0;z-index:-1;pointer-ev
 /* halftone trail drawn behind the cursor (desktop, fine pointers only) */
 .gy-dots{position:fixed;inset:0;z-index:60;pointer-events:none}
 
+
+/* sport cards: photo, name, finals date; hover only zooms the photo and shows one line */
+.st-card.sc2{position:relative;overflow:hidden}
+.st-card.sc2>img{transition:scale 1.1s cubic-bezier(.16,1,.3,1)}
+.st-card.sc2::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,11,12,0) 45%,rgba(11,11,12,.78) 100%)}
+.st-card.sc2 .sc2-cap{position:absolute;inset:auto 0 0 0;justify-content:flex-end;z-index:2;padding:clamp(18px,2vw,26px);display:flex;flex-direction:column;gap:8px;color:#F2F1EC;pointer-events:none}
+.sc2-n{font:400 clamp(34px,3.4vw,48px)/.95 'Instrument Serif',serif;letter-spacing:-.01em}
+.sc2-m,.sc2-go{font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.sc2-m{opacity:.72;transition:opacity .3s,transform .45s cubic-bezier(.16,1,.3,1)}
+.sc2-go{position:absolute;left:clamp(18px,2vw,26px);bottom:clamp(18px,2vw,26px);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .45s cubic-bezier(.16,1,.3,1)}
+.sc2-a{position:absolute;inset:0;z-index:3;border-radius:inherit}
+.sc2-a:focus-visible{outline:2px solid #F2F1EC;outline-offset:-4px}
+@media (hover:hover){.st-card.sc2:hover>img{scale:1.05}.st-card.sc2:hover .sc2-m{opacity:0;transform:translateY(-6px)}.st-card.sc2:hover .sc2-go{opacity:1;transform:none}}
+.st-card.sc2:focus-within .sc2-m{opacity:0}.st-card.sc2:focus-within .sc2-go{opacity:1;transform:none}
+
+
+/* ---- Event centre: gallery corridor (after the curved-gallery reference) ---- */
+.ecx-panel[data-ecs=spiral] .ecs-stage.ecg{display:block}
+.ecg{position:relative;height:clamp(540px,76vh,780px);margin:6px 0 4px;border-radius:22px;overflow:hidden;user-select:none;-webkit-user-select:none;cursor:grab;touch-action:pan-y;
+  background:radial-gradient(70% 30% at 50% 100%,#3A3A3D 0%,#1C1C1F 55%,#121214 100%),linear-gradient(180deg,#0E0F14 0%,#15161B 48%,#1A1A1D 52%,#101012 100%);background-blend-mode:normal}
+.ecg::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;background:radial-gradient(90% 60% at 50% 0%,#191A21,#0D0E12 70%);pointer-events:none}
+.ecg::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-8%;height:44%;background:radial-gradient(50% 40% at 50% 30%,rgba(255,255,255,.08),transparent 70%),repeating-radial-gradient(ellipse at 50% -20%,rgba(255,255,255,.025) 0 2px,transparent 2px 40px);pointer-events:none}
+.ecg[data-drag]{cursor:grabbing}
+.ecg-room{position:absolute;inset:0;z-index:1;overflow:hidden}
+.ecg-room>*{position:absolute;left:50%;top:50%;backface-visibility:hidden}
+.ecg-wall{width:176px;height:var(--wh,560px);background:linear-gradient(180deg,#7E7D79 0%,#C9C8C2 12%,#D6D5CF 50%,#CBCAC4 86%,#8A8985 100%);filter:brightness(calc(1 - var(--fog,0) * .78));pointer-events:none}
+.ecg-wall.ecg-in{width:136px;background:linear-gradient(180deg,#8E8D88 0%,#DCDBD5 18%,#E6E5DF 50%,#D6D5CF 82%,#807F7A 100%)}
+.ecg-f{all:unset;position:absolute;left:50%;top:50%;backface-visibility:hidden;box-sizing:border-box;cursor:pointer;width:var(--fw,300px);display:block;filter:brightness(calc(1 - var(--fog,0) * .8));transition:filter .4s}
+.ecg-glow{position:absolute;left:50%;top:30%;width:150%;height:230%;transform:translate(-50%,-50%);border-radius:50% 50% 46% 46%;background:radial-gradient(60% 55% at 50% 42%,rgba(255,253,246,.98),rgba(255,253,246,.6) 50%,rgba(255,253,246,0) 100%);pointer-events:none}
+.ecg-art{position:relative;display:block;aspect-ratio:4/3;background:#0B0B0C;padding:7px;box-sizing:border-box;box-shadow:0 18px 30px -12px rgba(0,0,0,.55),0 2px 4px rgba(0,0,0,.25)}
+.ecg-art img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.05)}
+.ecg-art::after{content:"";position:absolute;inset:7px;background:linear-gradient(180deg,rgba(11,11,12,0) 45%,rgba(11,11,12,.82) 100%);pointer-events:none}
+.ecg-sc{position:absolute;left:18px;right:18px;bottom:14px;z-index:2;display:flex;flex-direction:column;gap:2px;color:#F2F1EC}
+.ecg-sc>span{display:flex;justify-content:space-between;align-items:baseline}
+.ecg-sc em{font:500 calc(var(--fw) * .036)/1.2 'JetBrains Mono',ui-monospace,monospace;font-style:normal;letter-spacing:.06em;opacity:.85}
+.ecg-sc b{font:400 calc(var(--fw) * .1)/1 'Instrument Serif',serif}
+.ecg-live{position:absolute;top:16px;left:16px;z-index:2;font:600 10px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:#E5484D;padding:5px 8px;border-radius:4px}
+.ecg-lab{position:absolute;left:-4px;top:calc(100% + 14px);display:flex;flex-direction:column;gap:2px;width:68%;padding:9px 11px;background:#FAF9F5;color:#1A1A1A;box-shadow:0 4px 10px rgba(0,0,0,.18);transform:rotate(-1.2deg)}
+.ecg-lab i{font:italic 400 calc(var(--fw) * .052)/1.15 'Instrument Serif',serif}
+.ecg-lab i.ecg-r{opacity:.7}
+.ecg-lab small{margin-top:4px;font:500 calc(var(--fw) * .026)/1.3 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;opacity:.55}
+.ecg-f:focus-visible .ecg-art{outline:2px solid #F2F1EC;outline-offset:4px}
+.ecg-f[data-fly] .ecg-art{transition:transform .38s cubic-bezier(.7,0,.84,0);transform:scale(1.06)}
+.ecg-cap{position:absolute;left:50%;bottom:clamp(16px,3vh,28px);z-index:3;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;color:#F2F1EC;width:min(640px,86%);pointer-events:none;text-shadow:0 2px 18px rgba(0,0,0,.6)}
+.ecg-cap small{font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+.ecg-cap b{font:400 clamp(22px,2.6vw,36px)/1 'Instrument Serif',serif;letter-spacing:-.01em}
+.ecg-open{all:unset;pointer-events:auto;cursor:pointer;font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid currentColor}
+.ecg-nav{position:absolute;right:22px;bottom:clamp(64px,10vh,96px);z-index:3;display:flex;gap:10px}
+.ecg-nav button{all:unset;cursor:pointer;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(11,11,12,.62);color:#F2F1EC;font-size:16px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s}
+.ecg-nav button:hover{background:rgba(11,11,12,.85)}
+.ecg-hint{position:absolute;right:22px;bottom:20px;z-index:3;margin:0;text-align:right;font:500 10px/1.7 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,241,236,.4)}
+.ecg[data-focus] .ecg-hint{opacity:0}
+.ecs-bar{justify-content:flex-end!important}
+.ecg-sw{display:inline-flex;padding:4px;border-radius:999px;background:#0B0B0C;box-shadow:inset 0 0 0 1px rgba(242,241,236,.18)}
+.ecg-sw button{all:unset;cursor:pointer;padding:7px 14px;border-radius:999px;font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,241,236,.55)}
+.ecg-sw button[aria-pressed=true]{background:#F2F1EC;color:#0B0B0C}
+@media (max-width:760px){.ecg{height:520px;border-radius:16px}.ecg-hint{display:none}.ecg-nav{bottom:auto;top:14px;right:14px}.ecg-cap b{font-size:24px}}
+@media (prefers-reduced-motion:reduce){.ecg-f[data-fly] .ecg-art{transition:none}}
+
+
+/* ---- Live TV as a broadcast control room ---- */
+section.cr{position:relative;background:#0B0B0C;color:#F2F1EC;padding:clamp(80px,12vh,128px) 0 clamp(64px,10vh,104px);height:auto!important}
+.cr-in{width:min(1240px,calc(100% - 64px));margin:0 auto}
+.cr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.cr-h{margin:14px 0 10px;font:400 clamp(44px,6vw,88px)/.95 'Instrument Serif',serif;letter-spacing:-.02em}.cr-h em{font-style:italic}
+.cr-p{margin:0;max-width:52ch;color:rgba(242,241,236,.62);line-height:1.55}
+.cr .sx{color:rgba(242,241,236,.55)}
+.cr-status{display:flex;align-items:center;gap:10px}
+.cr-tally{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;background:#E5484D;color:#fff;font:700 11px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.cr-tally i{width:7px;height:7px;border-radius:50%;background:#fff;animation:crBlink 1.2s steps(2,start) infinite}
+@keyframes crBlink{to{visibility:hidden}}
+.cr-tc{font:500 13px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.06em;padding:8px 12px;border-radius:6px;background:rgba(242,241,236,.08);font-variant-numeric:tabular-nums}
+.cr-desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,320px);align-items:start;gap:16px;padding:16px;border-radius:22px;background:linear-gradient(180deg,#141416,#0E0E10);box-shadow:inset 0 0 0 1px rgba(242,241,236,.08),0 30px 60px -30px rgba(0,0,0,.8)}
+.cr-pgm{display:flex;flex-direction:column;gap:12px;min-width:0}
+.cr-scr{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#070708;cursor:pointer;box-shadow:0 0 0 1px rgba(242,241,236,.1),0 0 0 6px #050506}
+.cr-scr::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.45) 100%)}
+.cr-still{position:absolute;inset:0;z-index:2;opacity:0;background:#070708;transition:opacity .25s steps(3)}
+.cr-still img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.55)}
+.cr[data-pgm="2"] [data-still="2"],.cr[data-pgm="3"] [data-still="3"],.cr[data-pgm="4"] [data-still="4"]{opacity:1}
+.cr-sb{position:absolute;inset:0;z-index:3;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+.cr-sb span{font:400 clamp(30px,4vw,56px)/1 'Instrument Serif',serif}
+.cr-sb small{font:500 11px/1.4 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.cr:not([data-pgm="1"]) .cr-sb{display:flex}
+.cr:not([data-pgm="1"]) .cr-lower b{display:none}
+.cr-lower{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:clamp(14px,2.4vw,28px);display:flex;flex-direction:column;gap:6px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.75))}
+.cr-ch{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.cr-lower b{font:400 clamp(28px,3.6vw,52px)/1 'Instrument Serif',serif;letter-spacing:-.01em}
+.cr-tag{position:absolute;top:14px;left:14px;z-index:5;font:700 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;padding:5px 8px;border-radius:4px;background:#E5484D;color:#fff}
+.cr-bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.cr-meter{display:flex;flex-direction:column;gap:4px;width:min(320px,50%)}
+.cr-meter i{height:5px;border-radius:3px;background:linear-gradient(90deg,#F2F1EC 0 70%,#B9B8B2 70% 88%,#E5484D 88%);transform-origin:0 50%;animation:crLvl 1.6s ease-in-out infinite alternate}
+.cr-meter i+i{animation-duration:1.1s;animation-delay:-.4s}
+@keyframes crLvl{0%{transform:scaleX(.35)}35%{transform:scaleX(.72)}60%{transform:scaleX(.5)}100%{transform:scaleX(.86)}}
+.cr-watch{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#F2F1EC;color:#0B0B0C;font-weight:600;font-size:14.5px}
+.cr-cams{display:grid;gap:10px;align-content:start}
+.cr-scr iframe{pointer-events:none}
+.cr-cam{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;grid-template-columns:118px minmax(0,1fr);align-items:center;gap:12px;padding:8px;border-radius:12px;background:#0B0B0C;box-shadow:inset 0 0 0 1px rgba(242,241,236,.1);transition:box-shadow .25s,background .25s}
+.cr-cam:hover{background:#161618}
+.cr-cam[aria-pressed=true]{box-shadow:inset 0 0 0 2px #E5484D}
+.cr-mini{position:relative;display:block;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:#050506}
+.cr-mini img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.8)}
+.cr-cam[data-cam="1"] .cr-mini img{filter:none}
+.cr-live{position:absolute;top:6px;left:6px;font:700 9px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:3px;background:#E5484D;color:#fff}
+.cr-lab{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:rgba(242,241,236,.72)}.cr-lab b{font:600 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.1em;color:#F2F1EC}
+.cr-cam kbd{position:absolute;right:12px;bottom:10px;font:500 10px/1 'JetBrains Mono',ui-monospace,monospace;opacity:.4}
+@media (max-width:900px){.cr-in{width:calc(100% - 40px)}.cr-desk{grid-template-columns:minmax(0,1fr);padding:10px}.cr-cams{grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);overflow-x:auto;scrollbar-width:none}.cr-cam{grid-template-columns:minmax(0,1fr)}.cr-cam kbd{display:none}.cr-meter{display:none}}
+@media (prefers-reduced-motion:reduce){.cr-tally i,.cr-meter i{animation:none}}
+
 /* effects retired in the cleanup: grain, custom cursors, side rail */
 body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{background-image:none!important;animation:none!important;opacity:0!important}
 .gy-cur,.gms-cur,.gp-rail{display:none!important}
@@ -1743,9 +1851,9 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
       </div>
       <div class="vl-stage">
         <div class="vl-plan">
-          <figure data-vl-plan="badminton" data-off="0"><div class="vlz" data-vlz tabindex="0" aria-label="Badminton hall, Block C first floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/badminton-sm.webp" data-hi="assets/plans/badminton.webp" alt="Badminton hall, Block C first floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:50%;top:56.6%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:73.2%;top:66%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:75%;top:55%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:77.4%;top:42.5%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:88.4%;top:58%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:81.1%;top:65.7%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:23%;top:57.6%" aria-label="Point 7">7</button><button type="button" class="vlz-pin" data-vl-pin="8" style="left:11.4%;top:56.6%" aria-label="Point 8">8</button><button type="button" class="vlz-pin" data-vl-pin="9" style="left:11.4%;top:43.5%" aria-label="Point 9">9</button><button type="button" class="vlz-pin" data-vl-pin="10" style="left:21.4%;top:77%" aria-label="Point 10">10</button><button type="button" class="vlz-pin" data-vl-pin="11" style="left:32.5%;top:27.4%" aria-label="Point 11">11</button><button type="button" class="vlz-pin" data-vl-pin="12" style="left:49.8%;top:31.3%" aria-label="Point 12">12</button><button type="button" class="vlz-pin" data-vl-pin="13" style="left:81.4%;top:46.5%" aria-label="Point 13">13</button></div></div><figcaption class="vlz-bar"><span>Badminton hall, Block C first floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/badminton.pdf" download>Download PDF</a></span></figcaption></figure>
-          <figure data-vl-plan="ceremony" data-off="1"><div class="vlz" data-vlz tabindex="0" aria-label="Seating and opening ceremony, Block C second floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/ceremony-sm.webp" data-hi="assets/plans/ceremony.webp" alt="Seating and opening ceremony, Block C second floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:48.9%;top:60.1%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:40.8%;top:57.6%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:57.3%;top:61.5%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:48.5%;top:35.4%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:50%;top:23.3%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:74.8%;top:55.2%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:69.5%;top:39.6%" aria-label="Point 7">7</button></div></div><figcaption class="vlz-bar"><span>Seating and opening ceremony, Block C second floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/ceremony.pdf" download>Download PDF</a></span></figcaption></figure>
-          <figure data-vl-plan="tabletennis" data-off="1"><div class="vlz" data-vlz tabindex="0" aria-label="Table tennis hall, Block C ground floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/tabletennis-sm.webp" data-hi="assets/plans/tabletennis.webp" alt="Table tennis hall, Block C ground floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:45%;top:49.5%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:50.5%;top:59.4%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:50.5%;top:72.3%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:65%;top:36%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:24.5%;top:55.2%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:18.3%;top:60.1%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:46.3%;top:82.4%" aria-label="Point 7">7</button><button type="button" class="vlz-pin" data-vl-pin="8" style="left:59.3%;top:82%" aria-label="Point 8">8</button><button type="button" class="vlz-pin" data-vl-pin="9" style="left:47.8%;top:39.8%" aria-label="Point 9">9</button></div></div><figcaption class="vlz-bar"><span>Table tennis hall, Block C ground floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/tabletennis.pdf" download>Download PDF</a></span></figcaption></figure>
+          <figure data-vl-plan="badminton" data-off="0"><div class="vlz" data-vlz tabindex="0" aria-label="Badminton hall, Block C first floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/badminton-sm.webp" data-hi="assets/plans/badminton-xl.webp" alt="Badminton hall, Block C first floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:50%;top:56.6%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:73.2%;top:66%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:75%;top:55%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:77.4%;top:42.5%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:88.4%;top:58%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:81.1%;top:65.7%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:23%;top:57.6%" aria-label="Point 7">7</button><button type="button" class="vlz-pin" data-vl-pin="8" style="left:11.4%;top:56.6%" aria-label="Point 8">8</button><button type="button" class="vlz-pin" data-vl-pin="9" style="left:11.4%;top:43.5%" aria-label="Point 9">9</button><button type="button" class="vlz-pin" data-vl-pin="10" style="left:21.4%;top:77%" aria-label="Point 10">10</button><button type="button" class="vlz-pin" data-vl-pin="11" style="left:32.5%;top:27.4%" aria-label="Point 11">11</button><button type="button" class="vlz-pin" data-vl-pin="12" style="left:49.8%;top:31.3%" aria-label="Point 12">12</button><button type="button" class="vlz-pin" data-vl-pin="13" style="left:81.4%;top:46.5%" aria-label="Point 13">13</button></div></div><figcaption class="vlz-bar"><span>Badminton hall, Block C first floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/badminton.pdf" download>Download PDF</a></span></figcaption></figure>
+          <figure data-vl-plan="ceremony" data-off="1"><div class="vlz" data-vlz tabindex="0" aria-label="Seating and opening ceremony, Block C second floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/ceremony-sm.webp" data-hi="assets/plans/ceremony-xl.webp" alt="Seating and opening ceremony, Block C second floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:48.9%;top:60.1%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:40.8%;top:57.6%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:57.3%;top:61.5%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:48.5%;top:35.4%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:50%;top:23.3%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:74.8%;top:55.2%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:69.5%;top:39.6%" aria-label="Point 7">7</button></div></div><figcaption class="vlz-bar"><span>Seating and opening ceremony, Block C second floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/ceremony.pdf" download>Download PDF</a></span></figcaption></figure>
+          <figure data-vl-plan="tabletennis" data-off="1"><div class="vlz" data-vlz tabindex="0" aria-label="Table tennis hall, Block C ground floor. Scroll or pinch to zoom, drag to move."><div class="vlz-in"><img src="assets/plans/tabletennis-sm.webp" data-hi="assets/plans/tabletennis-xl.webp" alt="Table tennis hall, Block C ground floor" width="1400" height="989" decoding="async" loading="lazy"><button type="button" class="vlz-pin" data-vl-pin="1" style="left:45%;top:49.5%" aria-label="Point 1">1</button><button type="button" class="vlz-pin" data-vl-pin="2" style="left:50.5%;top:59.4%" aria-label="Point 2">2</button><button type="button" class="vlz-pin" data-vl-pin="3" style="left:50.5%;top:72.3%" aria-label="Point 3">3</button><button type="button" class="vlz-pin" data-vl-pin="4" style="left:65%;top:36%" aria-label="Point 4">4</button><button type="button" class="vlz-pin" data-vl-pin="5" style="left:24.5%;top:55.2%" aria-label="Point 5">5</button><button type="button" class="vlz-pin" data-vl-pin="6" style="left:18.3%;top:60.1%" aria-label="Point 6">6</button><button type="button" class="vlz-pin" data-vl-pin="7" style="left:46.3%;top:82.4%" aria-label="Point 7">7</button><button type="button" class="vlz-pin" data-vl-pin="8" style="left:59.3%;top:82%" aria-label="Point 8">8</button><button type="button" class="vlz-pin" data-vl-pin="9" style="left:47.8%;top:39.8%" aria-label="Point 9">9</button></div></div><figcaption class="vlz-bar"><span>Table tennis hall, Block C ground floor</span><span class="vlz-ctl"><button type="button" data-vlz-act="out" aria-label="Zoom out">−</button><button type="button" data-vlz-act="in" aria-label="Zoom in">+</button><button type="button" data-vlz-act="fit">Fit</button><a href="assets/plans/tabletennis.pdf" download>Download PDF</a></span></figcaption></figure>
         </div>
         <aside class="vl-key"><ol class="vl-list" data-vl-key="badminton" data-off="0"><li><button type="button" data-vl-item="1"><b>1</b><span><strong>Field of play</strong><small>18 courts in two rows of nine, umpire chairs and service judges at every court.</small></span></button></li><li><button type="button" data-vl-item="2"><b>2</b><span><strong>Winner podium &amp; stage</strong><small>Podium 1–2–3 with a 16 × 10 ft backdrop; the 24 × 12 ft stage sits beside it.</small></span></button></li><li><button type="button" data-vl-item="3"><b>3</b><span><strong>VVIP entry</strong><small>Direct VVIP route onto the floor, beside the stage end.</small></span></button></li><li><button type="button" data-vl-item="4"><b>4</b><span><strong>VIP entries</strong><small>Two VIP entries on either side of the stage end.</small></span></button></li><li><button type="button" data-vl-item="5"><b>5</b><span><strong>VVIP lunch</strong><small>Dining for VVIP guests behind the stage end.</small></span></button></li><li><button type="button" data-vl-item="6"><b>6</b><span><strong>Green rooms</strong><small>Green rooms and a reserved green room on each side of the stage end.</small></span></button></li><li><button type="button" data-vl-item="7"><b>7</b><span><strong>Athletes entry</strong><small>Two athletes’ entries at the far end, straight from the locker block.</small></span></button></li><li><button type="button" data-vl-item="8"><b>8</b><span><strong>Athletes hydration area</strong><small>Seated hydration and recovery area for players between matches.</small></span></button></li><li><button type="button" data-vl-item="9"><b>9</b><span><strong>Team locker rooms</strong><small>Separate female and male team showers, washrooms and lockers.</small></span></button></li><li><button type="button" data-vl-item="10"><b>10</b><span><strong>Equipment store</strong><small>Shuttles, nets and court kit, next to the athletes’ entry.</small></span></button></li><li><button type="button" data-vl-item="11"><b>11</b><span><strong>Lunch &amp; refreshment area</strong><small>The long gallery along the side of the hall (4.1 m passage).</small></span></button></li><li><button type="button" data-vl-item="12"><b>12</b><span><strong>Entrance from the plaza</strong><small>Public entrance at first-floor level, with toilets on this side.</small></span></button></li><li><button type="button" data-vl-item="13"><b>13</b><span><strong>VVIP rest rooms</strong><small>Two VVIP rest rooms beside the athletes’ end.</small></span></button></li></ol><ol class="vl-list" data-vl-key="ceremony" data-off="1"><li><button type="button" data-vl-item="1"><b>1</b><span><strong>Ceremony stage</strong><small>32 × 20 ft stage with the LED screen behind it, in the middle of the hall.</small></span></button></li><li><button type="button" data-vl-item="2"><b>2</b><span><strong>DGP / ADGP / IGP seating</strong><small>Two front blocks of 18 seats for the senior officers.</small></span></button></li><li><button type="button" data-vl-item="3"><b>3</b><span><strong>DIG / SSP / SP seating</strong><small>Two blocks of 21 seats behind the stage line.</small></span></button></li><li><button type="button" data-vl-item="4"><b>4</b><span><strong>Audience arc</strong><small>Curved rows of chairs facing the stage across the court side.</small></span></button></li><li><button type="button" data-vl-item="5"><b>5</b><span><strong>Tiered stands</strong><small>Permanent stands on three sides of the hall.</small></span></button></li><li><button type="button" data-vl-item="6"><b>6</b><span><strong>Winner podium</strong><small>Stays in place for the medal moments after the ceremony.</small></span></button></li><li><button type="button" data-vl-item="7"><b>7</b><span><strong>Courts around the ceremony</strong><small>Courts at both ends stay marked; the centre is cleared for the stage.</small></span></button></li></ol><ol class="vl-list" data-vl-key="tabletennis" data-off="1"><li><button type="button" data-vl-item="1"><b>1</b><span><strong>Field of play</strong><small>12 tables in four rows, either side of the central aisle, with barriers between playing areas.</small></span></button></li><li><button type="button" data-vl-item="2"><b>2</b><span><strong>Central aisle</strong><small>A 5.5 m walkway through the middle of the field of play.</small></span></button></li><li><button type="button" data-vl-item="3"><b>3</b><span><strong>Umpire &amp; score tables</strong><small>A score table at the end of each row of tables.</small></span></button></li><li><button type="button" data-vl-item="4"><b>4</b><span><strong>Kit distribution area</strong><small>Collect kit and bibs on arrival, beside the athletes’ route.</small></span></button></li><li><button type="button" data-vl-item="5"><b>5</b><span><strong>Athletes entry</strong><small>Two athletes’ entries from the registration side.</small></span></button></li><li><button type="button" data-vl-item="6"><b>6</b><span><strong>Registration desk</strong><small>Check in and accreditation at the main entrance hall.</small></span></button></li><li><button type="button" data-vl-item="7"><b>7</b><span><strong>Meeting room</strong><small>Team managers’ meetings and the draw.</small></span></button></li><li><button type="button" data-vl-item="8"><b>8</b><span><strong>Athletes refreshment area</strong><small>Seating and refreshments for players.</small></span></button></li><li><button type="button" data-vl-item="9"><b>9</b><span><strong>Winner podium</strong><small>Medal ceremonies at the side of the field of play.</small></span></button></li></ol></aside>
       </div>
@@ -1773,23 +1881,33 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
     </div>
   </section>
 
-  <section data-r="tv-section" ref="{{ tvRef }}" style="position:relative;height:145vh;background:var(--d-s0,#FFFFFF)">
-    <div data-r="tv-sticky" style="position:sticky;top:0;height:100vh;overflow:hidden">
-      <div data-r="tv-cinema" data-cursor="Watch" data-cursor-tone="light" onClick="{{ goTv }}" style="position:absolute;inset:0;cursor:pointer;background:#0B0B0C;clip-path:inset(18vh 19vw 12vh 19vw round 32px);will-change:clip-path">
-        {{ tvVideo }}
-        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.55) 0%,rgba(8,10,16,0) 32%,rgba(8,10,16,0) 52%,rgba(8,10,16,.82) 100%)"></div>
-        <div data-r="tv-ui" style="position:absolute;inset:18vh 19vw 12vh 19vw;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,3vw,40px);box-sizing:border-box;color:#fff">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#E5484D;font-size:11.5px;font-weight:700;letter-spacing:.1em"><b class="sig sig--onred">Live</b>Channel 1</span>
-            <span style="padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:0">Court feed</span>
+  <section data-r="tv-section" ref="{{ tvRef }}" class="cr" data-pgm="1">
+    <div class="cr-in">
+      <div class="cr-head">
+        <div><span class="sx"><i>02</i>Live TV</span><h2 class="cr-h">The control <em>room</em></h2><p class="cr-p">Every court camera comes through here. Cut a camera to the programme screen, or open the full player.</p></div>
+        <div class="cr-status"><span class="cr-tally"><i></i>On air</span><span class="cr-tc" data-tc>00:00:00:00</span></div>
+      </div>
+      <div class="cr-desk">
+        <div class="cr-pgm">
+          <div class="cr-scr" data-cursor="Watch" onClick="{{ goTv }}">
+            {{ tvVideo }}
+            <div class="cr-still" data-still="2"><img src="assets/sports/tabletennis.webp?v=s1" alt=""></div>
+            <div class="cr-still" data-still="3"><img src="assets/sports/swimming.webp?v=s1" alt=""></div>
+            <div class="cr-still" data-still="4"><img src="assets/sports/basketball.webp?v=s1" alt=""></div>
+            <div class="cr-sb" aria-hidden="true"><span>Standby</span><small>This camera goes live with its first match</small></div>
+            <div class="cr-lower"><span class="cr-ch" data-cr-name>CAM 1 · Badminton Hall</span><b data-r="tv-title">Badminton Hall <span style="opacity:.55">·</span> Live</b></div>
+            <span class="cr-tag">PGM</span>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
-            <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
-              <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.7);letter-spacing:0;font-family:'Inter';font-size:13px">Veer Savarkar Sports Complex, Naranpura</span>
-              <span data-r="tv-title" style="font-family:'Instrument Serif';font-weight:700;font-size:clamp(30px,4.4vw,64px);letter-spacing:-.045em;line-height:.98">Badminton Hall <span style="opacity:.55">·</span> Live</span>
-            </div>
-            <button onClick="{{ goTv }}" class="gms-liquid gms-liquid--water" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px"><i class="gi" data-gi="play_arrow"></i></span>Watch live</button>
+          <div class="cr-bar">
+            <div class="cr-meter" aria-hidden="true"><i></i><i></i></div>
+            <button type="button" class="cr-watch" onClick="{{ goTv }}"><i class="gi" data-gi="play_arrow"></i>Watch live</button>
           </div>
+        </div>
+        <div class="cr-cams" role="group" aria-label="Cameras">
+          <button type="button" class="cr-cam" data-cam="1" aria-pressed="true"><span class="cr-mini"><img src="assets/tv/badminton-poster.webp?v=t1" alt="" loading="lazy"><span class="cr-live">Live</span></span><span class="cr-lab"><b>CAM 1</b>Badminton Hall</span><kbd>1</kbd></button>
+          <button type="button" class="cr-cam" data-cam="2" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/tabletennis.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 2</b>Table Tennis Hall</span><kbd>2</kbd></button>
+          <button type="button" class="cr-cam" data-cam="3" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/swimming.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 3</b>Aquatic Stadium</span><kbd>3</kbd></button>
+          <button type="button" class="cr-cam" data-cam="4" aria-pressed="false"><span class="cr-mini"><img src="assets/sports/basketball.webp?v=s1" alt="" loading="lazy"></span><span class="cr-lab"><b>CAM 4</b>Indoor Arena</span><kbd>4</kbd></button>
         </div>
       </div>
     </div>
@@ -2008,7 +2126,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
     </div>
     <div class="st-track" data-cursor="Drag" role="list" aria-label="The system at work">
       <sc-for list="{{ stories }}" as="t" hint-placeholder-count="6">
-        <figure class="st-card" role="listitem" style="--sp:{{ t.color }}"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption><span class="st-chip"><i class="gi" data-gi="{{ t.icon }}"></i>{{ t.sport }}</span><span class="st-q"><p class="st-line">{{ t.q }}</p><span class="st-who">{{ t.who }}</span></span></figcaption><a class="st-link" href="{{ t.href }}" aria-label="{{ t.cta }}"><span>{{ t.cta }} →</span></a></figure>
+        <figure class="st-card sc2" role="listitem"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" draggable="false"><figcaption class="sc2-cap"><b class="sc2-n">{{ t.sport }}</b><span class="sc2-m">{{ t.who }}</span><span class="sc2-go" aria-hidden="true">{{ t.cta }} →</span></figcaption><a class="sc2-a" href="{{ t.href }}" aria-label="{{ t.cta }}"></a></figure>
       </sc-for>
     </div>
     <div class="st-prog" aria-hidden="true"><span><i></i></span></div>

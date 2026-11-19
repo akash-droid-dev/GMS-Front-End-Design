@@ -294,7 +294,7 @@ def page(key):
         pins = "".join(f'<button type="button" class="pin" data-pin="{n}" style="left:{x}%;top:{y}%" aria-label="Point {n}">{n}</button>' for n, x, y in plan_pins(d["plan"]))
         keyl = "".join(f'<li><button type="button" data-item="{n}"><b>{n}</b><span><strong>{t}</strong><small>{s}</small></span></button></li>' for n, t, s in plan_key(d["plan"]))
         plan = (f'<div class="plan rv"><figure style="margin:0"><div class="vlz" data-vlz tabindex="0" aria-label="{d["plan_label"]}. Pinch or Ctrl+scroll to zoom, drag to move.">'
-                f'<div class="in"><img src="../assets/plans/{d["plan"]}-sm.webp" data-hi="../assets/plans/{d["plan"]}.webp" alt="{d["plan_label"]}" width="1400" height="989">{pins}</div></div>'
+                f'<div class="in"><img src="../assets/plans/{d["plan"]}-sm.webp" data-hi="../assets/plans/{d["plan"]}-xl.webp" alt="{d["plan_label"]}" width="1400" height="989">{pins}</div></div>'
                 f'<figcaption class="bar"><span>{d["plan_label"]} · from the organising team</span><span class="ctl"><button type="button" data-act="out" aria-label="Zoom out">−</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="fit">Fit</button><a href="../assets/plans/{d["plan"]}.pdf" download>Download PDF</a></span></figcaption></figure>'
                 f'<ol class="key">{keyl}</ol></div>')
     if not d.get("plan"):
