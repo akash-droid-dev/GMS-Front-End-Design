@@ -239,7 +239,108 @@
   }
   /* ---------------- run as the page draws ---------------- */
   var t = 0;
-  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); inverter(); rowsPass(); glance(); }
+
+  /* Registration lanyard: a strap simulated as a rope of points (verlet + distance constraints),
+     the pass hangs from its last point as a damped pendulum. Grab and throw it, brush it to make it
+     jiggle, a soft breeze keeps it alive when idle. */
+  function lanyard() {
+    var st = doc.querySelector('[data-ly-stage]'); if (!st || st.__ly) return; st.__ly = 1;
+    var cv = st.querySelector('[data-ly-strap]'), bd = st.querySelector('[data-ly-badge]'), hd = st.querySelector('.ly-holder');
+    if (!cv || !bd || !hd) return;
+    var cx = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+    var N = 16, P = [], rest = 0, W = 0, H = 0, UP = 0, SW = 46, BW = 300;
+    var th = 0.12, om = 0, grab = null, moved = 0, lastPX = 0, lastPY = 0, vis = false, raf = 0, tPrev = 0, tAcc = 0, wind = Math.random() * 6;
+    var G = 2200, DAMP = 0.988, ITERS = 10, MEND = 7;
+    function size() {
+      var r = st.getBoundingClientRect(); W = r.width; H = r.height;
+      UP = parseFloat(getComputedStyle(cv).top) * -1 || 0;
+      cv.width = Math.round(W * dpr); cv.height = Math.round((H + UP) * dpr); cv.style.width = W + 'px'; cv.style.height = (H + UP) + 'px';
+      BW = bd.offsetWidth || 300; SW = Math.round(BW * 0.155);
+      var len = UP + Math.max(110, H * 0.14); rest = len / N;
+      var x0 = W / 2, y0 = 0; P = [];
+      for (var i = 0; i <= N; i++) { var x = x0 + Math.sin(i * 0.3) * 2, y = y0 + i * rest; P.push({ x: x, y: y, px: x, py: y }); }
+    }
+    function step(dt) {
+      var t = performance.now() / 1000, breeze = grab ? 0 : Math.sin(t * 0.7 + wind) * 14 + Math.sin(t * 1.9) * 6;
+      for (var i = 1; i <= N; i++) {
+        var q = P[i]; if (grab && i === N) continue;
+        var vx = (q.x - q.px) * DAMP, vy = (q.y - q.py) * DAMP; q.px = q.x; q.py = q.y;
+        q.x += vx + breeze * (i / N) * dt * dt; q.y += vy + G * dt * dt;
+      }
+      if (grab) { var e = P[N], tx = grab.x, ty = grab.y; e.px = e.x; e.py = e.y; e.x += (tx - e.x) * 0.5; e.y += (ty - e.y) * 0.5; }
+      for (var k = 0; k < ITERS; k++) {
+        for (var j = 0; j < N; j++) {
+          var a = P[j], b = P[j + 1], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1e-4, diff = (d - rest) / d;
+          var wa = j === 0 ? 0 : 1, wb = (j + 1 === N) ? (grab ? 0 : 1 / MEND) : 1, sum = wa + wb; if (!sum) continue;
+          a.x += dx * diff * wa / sum; a.y += dy * diff * wa / sum; b.x -= dx * diff * wb / sum; b.y -= dy * diff * wb / sum;
+        }
+        P[0].x = W / 2; P[0].y = 0;
+      }
+      /* the pass: a pendulum hanging from the strap end, pushed by how the end accelerates */
+      var e2 = P[N], f = P[N - 2], phi = Math.atan2(e2.x - f.x, e2.y - f.y), ax = (e2.x - e2.px) - (lastPX || 0); lastPX = e2.x - e2.px;
+      var alpha = -38 * (th - phi * 0.8) - 3.2 * om - ax * 2.6;
+      om += alpha * dt; th += om * dt; if (th > 1.25) { th = 1.25; om *= -0.3; } if (th < -1.25) { th = -1.25; om *= -0.3; }
+    }
+    function draw() {
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H + UP);
+      cx.lineJoin = 'round'; cx.lineCap = 'butt';
+      cx.beginPath(); cx.moveTo(P[0].x, P[0].y - 4);
+      for (var i = 1; i < N; i++) { var mx = (P[i].x + P[i + 1].x) / 2, my = (P[i].y + P[i + 1].y) / 2; cx.quadraticCurveTo(P[i].x, P[i].y, mx, my); }
+      cx.lineTo(P[N].x, P[N].y);
+      cx.strokeStyle = '#111113'; cx.lineWidth = SW; cx.stroke();
+      cx.strokeStyle = 'rgba(255,255,255,.05)'; cx.lineWidth = SW - 6; cx.stroke();
+      cx.strokeStyle = '#141416'; cx.lineWidth = SW - 8; cx.stroke();
+      /* woven lettering running down the strap */
+      var txt = 'GMS · AIPT 2026 · AHMEDABAD · ', fs = Math.max(9, SW * 0.24);
+      cx.font = '600 ' + fs + 'px "JetBrains Mono", ui-monospace, monospace'; cx.fillStyle = 'rgba(255,255,255,.13)'; cx.textBaseline = 'middle';
+      var ci = 0, need = 0, acc = 0;
+      for (var s = 0; s < N; s++) {
+        var A = P[s], B = P[s + 1], dx = B.x - A.x, dy = B.y - A.y, L = Math.sqrt(dx * dx + dy * dy), an = Math.atan2(dy, dx);
+        var pos = 0;
+        while (acc + L - pos > need) {
+          var u = need - acc; if (u < 0) u = 0; var x = A.x + dx * (u / L), y = A.y + dy * (u / L);
+          var ch = txt[ci % txt.length]; var cw = cx.measureText(ch).width + 1.5;
+          cx.save(); cx.translate(x, y); cx.rotate(an); cx.fillText(ch, 0, 0); cx.restore();
+          ci++; need += cw; pos = need - acc; if (ci > 600) break;
+        }
+        acc += L;
+      }
+      var e = P[N], ry = Math.max(-16, Math.min(16, om * 9)), rx = Math.max(-8, Math.min(8, (e.y - e.py) * -0.8));
+      bd.style.transform = 'translate3d(' + (e.x - BW / 2).toFixed(2) + 'px,' + (e.y - UP).toFixed(2) + 'px,0) rotate(' + (-th).toFixed(4) + 'rad) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg)';
+      hd.style.setProperty('--shade', (0.5 + ry / 40).toFixed(3));
+    }
+    function loop(now) {
+      raf = 0; if (!vis) return;
+      var d = Math.min(0.05, (now - (tPrev || now)) / 1000); tPrev = now; tAcc += d;
+      var h = 1 / 120, n = 0; while (tAcc >= h && n < 8) { step(h); tAcc -= h; n++; }
+      draw(); raf = requestAnimationFrame(loop);
+    }
+    function go() { if (!raf && vis) { tPrev = 0; raf = requestAnimationFrame(loop); } }
+    function local(e) { var r = st.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top + UP }; }
+    hd.addEventListener('pointerdown', function (e) {
+      if (REDUCED || e.button > 0) return; e.preventDefault(); var p = local(e), en = P[N];
+      grab = { x: en.x, y: en.y, dx: en.x - p.x, dy: en.y - p.y, ox: p.x - en.x, id: e.pointerId }; moved = 0;
+      try { hd.setPointerCapture(e.pointerId); } catch (x) {} st.setAttribute('data-grab', '');
+    });
+    hd.addEventListener('pointermove', function (e) {
+      var p = local(e);
+      if (grab) { var nx = p.x + grab.dx, ny = p.y + grab.dy; moved += Math.abs(nx - grab.x) + Math.abs(ny - grab.y); grab.x = nx; grab.y = Math.max(rest * 3, ny); return; }
+      if (REDUCED || e.pointerType !== 'mouse') return;
+      var mx = e.movementX || 0, my = e.movementY || 0, en = P[N];
+      en.px -= Math.max(-6, Math.min(6, mx)) * 0.22; en.py -= Math.max(-6, Math.min(6, my)) * 0.08; om += Math.max(-8, Math.min(8, mx)) * 0.05;
+    });
+    function drop() { if (!grab) return; grab = null; st.removeAttribute('data-grab'); }
+    hd.addEventListener('pointerup', drop); hd.addEventListener('pointercancel', drop);
+    hd.addEventListener('click', function (e) { if (moved > 8) { e.stopPropagation(); e.preventDefault(); } moved = 0; });
+    hd.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hd.click(); } });
+    window.addEventListener('gms:ly-swap', function () { om += (Math.random() < 0.5 ? -1 : 1) * (1.6 + Math.random()); P[N].px -= 5; go(); });
+    var io = new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) go(); }, { rootMargin: '120px' }); io.observe(st);
+    window.addEventListener('resize', function () { size(); go(); });
+    size();
+    if (REDUCED) { for (var i = 0; i < 400; i++) step(1 / 120); vis = true; draw(); vis = false; io.disconnect(); }
+  }
+
+  function scan() { t = 0; flaps(); masks(); parScan(); ecSpiral(); field(); badge(); inverter(); rowsPass(); glance(); lanyard(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
   scan(); botHello();

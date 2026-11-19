@@ -49,7 +49,7 @@ window.__gmsLoadBot=function(){if(window.__gmsBot)return;window.__gmsBot=1;var s
 
 /* palette: black + acid lime on dark surfaces, bone + ink + electric violet on light ones; the accent follows the surface it sits on */
 :root{--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C;--ink:#0B0B0C;--bone:#F2F1EC}
-html[data-theme=dark],#gms-ldr,nav[data-r=nav],nav[data-r=tabbar],section[data-hero-sec],[data-r=hero],[data-r=steps-section],[data-r=stories],[data-r=ecx],[data-r=tv-section],[data-r=roles-section],[data-r=fn-section],footer.ft,.gv-media,.gy-cur,.pdk,.st-card,[data-kv-burst]{--acc:#F2F1EC;--acc-on:#0B0B0C;--acc-2:#D9D7D0;--acc-hi:#FFFFFF;--acc-t:#F2F1EC}
+html[data-theme=dark],#gms-ldr,nav[data-r=nav],nav[data-r=tabbar],section[data-hero-sec],[data-r=hero],[data-r=steps-section],[data-r=stories],[data-r=ecx],[data-r=tv-section],[data-r=fn-section],footer.ft,.gv-media,.gy-cur,.pdk,.st-card,[data-kv-burst]{--acc:#F2F1EC;--acc-on:#0B0B0C;--acc-2:#D9D7D0;--acc-hi:#FFFFFF;--acc-t:#F2F1EC}
 html[data-theme=dark] :is(section.vl,section[data-r=ev-section]){--acc:#0B0B0C;--acc-on:#F2F1EC;--acc-2:#2A2A2E;--acc-hi:#3A3A3F;--acc-t:#0B0B0C}
 
 /* self-hosted fonts (latin + latin-ext); the icon font is a subset of the icons this page uses - regenerate it if new icons are added */
@@ -1311,8 +1311,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=1"></script>
-<script defer src="./assets/js/gms-motion.js?v=13"></script>
-<script defer src="./assets/js/gms-plus.js?v=39"></script>
+<script defer src="./assets/js/gms-motion.js?v=14"></script>
+<script defer src="./assets/js/gms-plus.js?v=40"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1488,6 +1488,88 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 .gp-toast>*{flex:none}
 @media (max-width:560px){.hx{bottom:206px!important}.hx-paths{gap:6px;margin-top:18px}.hx-paths>span{flex-basis:100%;margin:0 0 2px}.hx-paths button{padding:7px 12px}}
 
+
+/* ---- Registration lanyard (after the studio pass reference): light paper, black strap and holder ---- */
+.pdk.ly-sec{background:#F2F1EC!important;color:#0B0B0C;--acc:#0B0B0C;--acc-on:#F2F1EC;overflow:clip}
+.pdk.ly-sec::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(rgba(11,11,12,.11) .8px,transparent 1.1px),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.35'/></svg>");background-size:5px 5px,180px 180px;-webkit-mask-image:radial-gradient(120% 90% at 70% 40%,#000 30%,rgba(0,0,0,.35) 80%);mask-image:radial-gradient(120% 90% at 70% 40%,#000 30%,rgba(0,0,0,.35) 80%)}
+.pdk.ly-sec .pd-glow,.pdk.ly-sec .pd-legend{display:none}
+.pdk.ly-sec>*{position:relative;z-index:1}
+.pdk.ly-sec .sx{color:rgba(11,11,12,.55)}.pdk.ly-sec .sx i{color:#0B0B0C}
+.pdk.ly-sec .pd-h,.pdk.ly-sec .pd-h em{color:#0B0B0C}.pdk.ly-sec .pd-p{color:rgba(11,11,12,.62)}
+.ly{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:clamp(24px,4vw,64px);width:min(1240px,calc(100% - 64px));margin:clamp(24px,4vh,48px) auto 0;align-items:start}
+.ly-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(11,11,12,.14)}
+.ly-it{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 18px;align-items:center;gap:12px;padding:13px 12px;border-bottom:1px solid rgba(11,11,12,.12);transition:background .25s,color .25s,padding .35s cubic-bezier(.16,1,.3,1)}
+.ly-n{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.06em;opacity:.5}
+.ly-t{display:flex;flex-direction:column;gap:4px;min-width:0}.ly-t b{font:500 17px/1.15 Inter,system-ui,sans-serif;letter-spacing:-.01em}
+.ly-t small{font:500 10px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;opacity:.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ly-it .gi{font-size:16px;opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .35s cubic-bezier(.16,1,.3,1)}
+.ly-it:hover{background:rgba(11,11,12,.05)}.ly-it:hover .gi{opacity:.6;transform:none}
+.ly-it[data-on="1"]{background:#0B0B0C;color:#F2F1EC;padding-left:16px;border-radius:10px;border-bottom-color:transparent}.ly-it[data-on="1"] .gi{opacity:1;transform:none}
+.ly-it:focus-visible{outline:2px solid #0B0B0C;outline-offset:2px}
+.ly-info{margin-top:22px;padding:20px;border-radius:14px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(11,11,12,.08)}
+.ly-who{margin:0 0 14px;font-size:14.5px;line-height:1.55;color:rgba(11,11,12,.72)}
+.ly-cap{font:500 10px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;opacity:.5}
+.ly-needs{margin:10px 0 16px;padding:0 0 0 18px;font-size:13.5px;line-height:1.6}
+.ly-reg{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font-weight:600;font-size:14.5px;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.ly-reg:hover{transform:translateY(-2px)}
+.ly-stage{position:relative;height:clamp(700px,90vh,860px);user-select:none;-webkit-user-select:none;perspective:1400px;touch-action:pan-y}
+.ly-strap{position:absolute;left:0;top:-220px;pointer-events:none}
+.ly-badge{--bw:300px;position:absolute;left:0;top:0;width:var(--bw);transform-origin:50% 0;will-change:transform;transform-style:preserve-3d}
+.ly-clip{position:absolute;left:50%;top:-2px;width:calc(var(--bw) * .19);height:15px;margin-left:calc(var(--bw) * -.095);background:#0F0F11;border-radius:2px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.ly-ring{position:absolute;left:50%;top:10px;width:20px;height:20px;margin-left:-10px;border:4.2px solid #111113;border-radius:50%;box-sizing:border-box}
+.ly-hook{position:absolute;left:50%;top:27px;width:32px;height:50px;margin-left:-16px;z-index:2}.ly-hook svg{display:block;width:100%;height:100%}
+.ly-holder{position:absolute;left:0;top:98px;width:var(--bw);box-sizing:border-box;padding:calc(var(--bw) * .075);padding-top:calc(var(--bw) * .085);border-radius:calc(var(--bw) * .065);background:linear-gradient(180deg,#19191B,#0E0E10);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 0 rgba(0,0,0,.4),0 34px 60px -24px rgba(11,11,12,.55),0 10px 22px rgba(11,11,12,.18);cursor:grab;outline:none;--shade:.5;touch-action:none}
+.ly-holder::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,rgba(255,255,255,calc(.06 * var(--shade))),transparent 40%,rgba(0,0,0,calc(.25 * (1 - var(--shade)))))}
+.ly-stage[data-grab] .ly-holder{cursor:grabbing}
+.ly-holder:focus-visible{box-shadow:0 0 0 3px #F2F1EC,0 0 0 5px #0B0B0C,0 34px 60px -24px rgba(11,11,12,.55)}
+.ly-tab{position:absolute;left:50%;top:-24px;width:calc(var(--bw) * .23);height:28px;margin-left:calc(var(--bw) * -.115);background:#141416;border-radius:10px 10px 0 0;display:grid;place-items:center}
+.ly-tab i{width:42%;height:6px;margin-top:-4px;border-radius:4px;background:#F2F1EC;box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.ly-holder>.ly-card{display:none}
+.ly-holder>.ly-card[data-on="1"]{display:flex}
+.ly-card{position:relative;flex-direction:column;aspect-ratio:.72;border-radius:5px;padding:7.5% 8%;box-sizing:border-box;background:linear-gradient(170deg,#ECECEA,#DCDCDA);color:#111;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);animation:lyIn .45s cubic-bezier(.16,1,.3,1) both}
+@keyframes lyIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ly-ct,.ly-cf{display:flex;justify-content:space-between;font:500 calc(var(--bw) * .03)/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.06em;color:#4C4C4E}
+.ly-ico{align-self:center;margin-top:12%;width:42%;aspect-ratio:1;border-radius:24%;background:linear-gradient(160deg,#202023,#0F0F11);display:grid;place-items:center;color:#F2F1EC;box-shadow:inset 0 0 0 2.5px #2C2C30,inset 0 2px 1px rgba(255,255,255,.12),0 6px 14px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.6)}
+.ly-ico .gi{font-size:calc(var(--bw) * .14)}
+.ly-nm{margin-top:auto;display:flex;flex-direction:column;gap:4px}
+.ly-nm b{font:600 calc(var(--bw) * .083)/1.05 Inter,system-ui,sans-serif;letter-spacing:-.03em;color:#0E0E0E}
+.ly-nm>span{font-size:calc(var(--bw) * .05);color:#6A6A6C;letter-spacing:-.01em;text-transform:lowercase}.ly-nm>span::first-letter{text-transform:uppercase}
+.ly-cf{margin-top:7%;padding-top:5.5%;border-top:1px solid rgba(0,0,0,.14);color:#2A2A2C}
+.ly-hint{position:absolute;right:0;bottom:8px;font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.45}
+@media (max-width:900px){
+  .ly{grid-template-columns:minmax(0,1fr);width:calc(100% - 40px)}
+  .ly-stage{order:-1;height:560px}
+  .ly-badge{--bw:250px}
+  .ly-list{display:flex;gap:8px;overflow-x:auto;border:0;padding:4px 0 6px;scrollbar-width:none;margin:0 -20px;padding-inline:20px;scroll-snap-type:x proximity}
+  .ly-list::-webkit-scrollbar{display:none}.ly-list li{flex:none;scroll-snap-align:start}
+  .ly-it{grid-template-columns:auto auto;padding:10px 14px;border:1px solid rgba(11,11,12,.16);border-radius:999px}.ly-it .gi,.ly-t small{display:none}.ly-t b{font-size:14px}
+  .ly-it[data-on="1"]{padding-left:14px;border-radius:999px}
+  .ly-hint{left:0;right:0;text-align:center}
+}
+@media (pointer:coarse){.ly-holder{touch-action:pan-y}}
+@media (max-width:900px){.ly-strap{top:-30px}.ly-hint{display:none}.ly-stage{height:600px}}
+@media (prefers-reduced-motion:reduce){.ly-card{animation:none}}
+
+
+/* ---- Footer after the reference: one gutter, mono status pills, grain + halftone on black ---- */
+footer.ft.ft2{position:relative;overflow:clip;isolation:isolate;padding:clamp(56px,8vh,88px) var(--gut,32px) clamp(28px,4vh,40px)}
+footer.ft.ft2::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(242,241,236,.09) .8px,transparent 1.1px),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.18'/></svg>");background-size:5px 5px,180px 180px;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%);mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%)}
+.ft2 .ft-in{max-width:1240px;margin:0 auto;gap:clamp(36px,6vh,64px)}
+.ft-pills{display:flex;flex-wrap:wrap;gap:6px}
+.ft-pills span{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;color:rgba(242,241,236,.42);padding:7px 9px;border-radius:5px;background:rgba(242,241,236,.06);white-space:nowrap}
+.ft-pills b{font-weight:500;color:rgba(242,241,236,.82)}
+.ft-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,96px);align-items:start;padding-top:clamp(28px,4vh,40px);border-top:1px solid rgba(242,241,236,.12)}
+.ft2 .ft-brand p{margin:0;max-width:40ch;color:rgba(242,241,236,.6);line-height:1.55}
+.ft2 .ft-cols{grid-template-columns:repeat(4,minmax(120px,auto));gap:clamp(24px,3.4vw,52px);padding:0;border:0}
+.ft2 .ft-base{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:18px;padding-right:118px}
+.ft-pres{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:12px;background:rgba(242,241,236,.06);box-shadow:inset 0 0 0 1px rgba(242,241,236,.08);min-width:min(320px,100%)}
+.ft-pres>i{width:7px;height:7px;border-radius:50%;background:#F2F1EC;flex:none}
+.ft-pres>span{display:flex;flex-direction:column;gap:3px}.ft-pres b{font-weight:600;font-size:14px;color:#F2F1EC}.ft-pres small{font:500 11px/1.3 'JetBrains Mono',ui-monospace,monospace;color:rgba(242,241,236,.5)}
+.ft-copy{justify-self:end;font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;color:rgba(242,241,236,.45)}
+@media (max-width:900px){.ft-grid{grid-template-columns:minmax(0,1fr)}.ft2 .ft-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.ft2 .ft-base{grid-template-columns:minmax(0,1fr);padding-right:0}.ft-copy{justify-self:start}}
+/* halftone trail drawn behind the cursor (desktop, fine pointers only) */
+.gy-dots{position:fixed;inset:0;z-index:60;pointer-events:none}
+
 /* effects retired in the cleanup: grain, custom cursors, side rail */
 body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{background-image:none!important;animation:none!important;opacity:0!important}
 .gy-cur,.gms-cur,.gp-rail{display:none!important}
@@ -1584,7 +1666,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
         <button type="button" role="menuitem" onClick="{{ goAdminLogin }}"><i class="gi" data-gi="admin_panel_settings"></i>Admin login</button>
       </span></span>
     <button data-r="admin-btn" class="gms-liquid gms-liquid--clear" onClick="{{ goAdminLogin }}" style="all:unset;cursor:pointer;padding:11px 18px;border-radius:999px;background:var(--d-inv,#0B0B0C);color:var(--d-on-inv,#fff);font-size:14px;font-weight:600">Admin Login</button>
-    <button data-r="login-btn" class="gms-liquid gms-liquid--water" onClick="{{ tabReg }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Register</button>
+    <button data-r="login-btn" class="gms-liquid gms-liquid--water" aria-haspopup="true" aria-expanded="{{ regAria }}" onClick="{{ regToggle }}" style="all:unset;cursor:pointer;padding:11px 20px;border-radius:999px;background:var(--y,var(--acc));color:var(--acc-on);font-size:14px;font-weight:600">Register</button>
   </div>
   <div data-regmenu data-open="{{ regOpen }}" onMouseEnter="{{ regPanelEnter }}" onMouseLeave="{{ regPanelLeave }}" style="position:absolute;left:0;right:0;top:calc(100% + 10px);padding:22px;border-radius:var(--r-l);background:var(--d-glass,rgba(255,255,255,.96));backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid var(--d-line,#E6E9EF);box-shadow:var(--sh-3);box-sizing:border-box;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain">
     <div data-r="regmenu-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px 16px;margin-bottom:16px;flex-wrap:wrap">
@@ -1874,7 +1956,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
     </div>
   </section>
 
-  <section ref="{{ regRef }}" data-r="roles-section" class="pdk">
+  <section ref="{{ regRef }}" data-r="roles-section" class="pdk ly-sec">
     <div class="pd-glow" aria-hidden="true"></div>
     <div class="pd-head">
       <div class="pd-copy">
@@ -1884,36 +1966,36 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
       </div>
       <div class="pd-legend" aria-hidden="true"><sc-for list="{{ passGroups }}" as="g" hint-placeholder-count="3"><span style="--gc:{{ g.color }}"><i></i>{{ g.title }}</span></sc-for></div>
     </div>
-    <div class="pd-track" data-pd-track role="list" aria-label="Accreditation passes" tabindex="0">
-      <sc-for list="{{ passes }}" as="p" hint-placeholder-count="8">
-        <div class="pd-card" role="listitem" data-cart data-pd-card data-k="{{ p.k }}" data-on="{{ p.on }}" style="--gc:{{ p.gc }};--gt:{{ p.gt }}">
-          <span class="pd-lan" aria-hidden="true"><i></i></span>
-          <div class="pd-inner" data-pd-inner>
-            <div class="pd-face pd-front">
-              <div class="pd-top"><span>GMS ACCREDITATION</span><span>AIPT 2026</span></div>
-              <div class="pd-photo">{{ p.art }}</div>
-              <div class="pd-id"><small>{{ p.group }}</small><b>{{ p.name }}</b></div>
-              <div class="pd-foot"><span class="pd-num">{{ p.num }}</span><span class="pd-bc" aria-hidden="true"></span></div>
-              <button type="button" class="pd-more" data-pd-flip aria-label="{{ p.aria }}"><span>Details</span><i class="gi" data-gi="arrow_forward"></i></button>
-            </div>
-            <div class="pd-face pd-back">
-              <div class="pd-top"><span>{{ p.group }}</span><span>{{ p.num }}</span></div>
-              <b class="pd-bn">{{ p.name }}</b>
-              <p class="pd-who">{{ p.who }}</p>
-              <span class="pd-cap">WHAT YOU'LL NEED</span>
-              <ul class="pd-needs"><sc-for list="{{ p.needs }}" as="n" hint-placeholder-count="4"><li>{{ n.t }}</li></sc-for></ul>
-              <button type="button" class="pd-reg" onClick="{{ p.go }}"><span>{{ p.regLabel }}</span><i class="gi" data-gi="arrow_forward"></i></button>
-              <button type="button" class="pd-flipback" data-pd-flip>Back to pass</button>
-            </div>
+    <div class="ly" data-ly>
+      <div class="ly-side">
+        <ol class="ly-list" role="tablist" aria-label="Registration types">
+          <sc-for list="{{ passes }}" as="p" hint-placeholder-count="8"><li><button type="button" class="ly-it" role="tab" data-ly-k="{{ p.k }}" data-on="{{ p.on }}" aria-selected="{{ p.sel }}" onClick="{{ p.pick }}"><span class="ly-n">{{ p.n2 }}</span><span class="ly-t"><b>{{ p.name }}</b><small>{{ p.group }}</small></span><i class="gi" data-gi="arrow_forward"></i></button></li></sc-for>
+        </ol>
+        <div class="ly-info" aria-live="polite">
+          <p class="ly-who">{{ rolePrev.who }}</p>
+          <span class="ly-cap">What you'll need</span>
+          <ul class="ly-needs"><sc-for list="{{ rolePrev.needs }}" as="n" hint-placeholder-count="4"><li>{{ n.t }}</li></sc-for></ul>
+          <button type="button" class="ly-reg" onClick="{{ rolePrev.go }}"><span>{{ rolePrev.regLabel }}</span><i class="gi" data-gi="arrow_forward"></i></button>
+        </div>
+      </div>
+      <div class="ly-stage" data-ly-stage>
+        <canvas class="ly-strap" data-ly-strap aria-hidden="true"></canvas>
+        <div class="ly-badge" data-ly-badge>
+          <span class="ly-clip" aria-hidden="true"></span><span class="ly-ring" aria-hidden="true"></span><span class="ly-hook" aria-hidden="true"><svg viewBox="0 0 30 46" fill="none" stroke="#111113" stroke-width="4.2" stroke-linecap="round"><path d="M15 1v9"/><rect x="10.5" y="9" width="9" height="15" rx="4.5" fill="#111113"/><path d="M15 24v4"/><path d="M15 28c-7 0-10 4.5-10 8.5S8 45 15 45s10-4 10-8.5c0-2.5-1-4.5-3-6"/><path d="M22 30.5l3.5-3"/></svg></span>
+          <div class="ly-holder" role="button" tabindex="0" aria-label="Pass for {{ rolePrev.name }}. Press Enter to register." onClick="{{ rolePrev.go }}">
+            <span class="ly-tab" aria-hidden="true"><i></i></span>
+            <sc-for list="{{ passes }}" as="p" hint-placeholder-count="8">
+              <div class="ly-card" data-on="{{ p.on }}">
+                <div class="ly-ct"><span>GMS PASS</span><span>2026</span></div>
+                <span class="ly-ico"><i class="gi" data-gi="{{ p.icon }}"></i></span>
+                <div class="ly-nm"><b>{{ p.name }}</b><span>{{ p.group }}</span></div>
+                <div class="ly-cf"><span>AIPT 2026</span><span>{{ p.num }}</span></div>
+              </div>
+            </sc-for>
           </div>
         </div>
-      </sc-for>
-    </div>
-    <div class="pd-ctl">
-      <button type="button" class="pd-arrow" data-pd-go="-1" aria-label="Previous pass"><i class="gi" data-gi="arrow_forward" style="transform:scaleX(-1)"></i></button>
-      <div class="pd-dots" aria-hidden="true"><sc-for list="{{ passes }}" as="p" hint-placeholder-count="8"><i data-pd-dot data-k="{{ p.k }}"></i></sc-for></div>
-      <button type="button" class="pd-arrow" data-pd-go="1" aria-label="Next pass"><i class="gi" data-gi="arrow_forward"></i></button>
-      <button type="button" class="pd-all" onClick="{{ heroAllWays }}">Open the registration menu</button>
+        <span class="ly-hint" aria-hidden="true">Grab the pass · click to register</span>
+      </div>
     </div>
   </section>
 
@@ -1952,19 +2034,23 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
     </div>
   </section>
 
-  <footer class="ft">
+  <footer class="ft ft2">
     <div class="ft-in">
-      <div class="ft-top" data-rise>
-        <div class="ft-brand"><span class="ft-logo"><img src="assets/brand/gms-mark-dark.svg" alt="" width="34" height="34" loading="lazy"><b>GMS</b></span><p>{{ footLine }}</p></div>
-        <dl class="ft-stats"><sc-for list="{{ footStats }}" as="x" hint-placeholder-count="5"><div><dd data-count="{{ x.n }}">{{ x.n }}</dd><dt>{{ x.label }}</dt></div></sc-for></dl>
+      <div class="ft-pills" data-ft-pills aria-label="Status"><span>IST::<b data-ftp="clock">--:--:--</b></span><span>STATUS::<b data-ftp="phase">OPENS 19 NOV</b></span><span>DAYS::<b>06</b></span><span>SPORTS::<b>08</b></span><span>EVENTS::<b>28</b></span><span>VENUE::<b>NARANPURA</b></span></div>
+      <div class="ft-grid" data-rise>
+        <div class="ft-brand"><span class="ft-logo"><img src="assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238" loading="lazy" style="width:auto;height:38px"><b>GMS</b></span><p>{{ footLine }}</p></div>
+        <nav class="ft-cols" aria-label="Footer">
+          <div><h3>The Games</h3><button onClick="{{ toSchedule }}">Schedule</button><button onClick="{{ toEvents }}">Programme</button><button data-plus="venues">Venue map</button><button data-plus="medals">Medal table</button><button data-plus="results">Results</button></div>
+          <div><h3>Take part</h3><button onClick="{{ heroAllWays }}">Register</button><button onClick="{{ regAthlete }}">Registration Vault</button><button onClick="{{ goLogin }}">Login</button><button data-plus="mygames">My Games</button></div>
+          <div><h3>Watch</h3><button onClick="{{ goTv }}">Live TV</button><button onClick="{{ goScores }}">Event centre</button></div>
+          <div><h3>Help</h3><button onClick="{{ toContact }}">Help desk</button><button data-plus="search">Search</button><button data-plus="theme"><span data-theme-label>Dark mode</span></button><a href="https://gms.projectcode.dev/" target="_blank" rel="noopener">Live GMS<i class="gi" data-gi="arrow_outward"></i></a></div>
+        </nav>
       </div>
-      <nav class="ft-cols" aria-label="Footer" data-rise>
-        <div><h3>The Games</h3><button onClick="{{ toSchedule }}">Schedule</button><button onClick="{{ toEvents }}">Programme</button><button data-plus="venues">Venue map</button><button data-plus="medals">Medal table</button><button data-plus="results">Results</button></div>
-        <div><h3>Take part</h3><button onClick="{{ heroAllWays }}">Register</button><button onClick="{{ regAthlete }}">Registration Vault</button><button onClick="{{ goLogin }}">Login</button><button data-plus="mygames">My Games</button></div>
-        <div><h3>Watch</h3><button onClick="{{ goTv }}">Live TV</button><button onClick="{{ goScores }}">Event centre</button></div>
-        <div><h3>Help</h3><button onClick="{{ toContact }}">Help desk</button><button data-plus="search">Search</button><button data-plus="theme"><span data-theme-label>Dark mode</span></button><a href="https://gms.projectcode.dev/" target="_blank" rel="noopener">Live GMS<i class="gi" data-gi="arrow_outward"></i></a></div>
-      </nav>
-      <div class="ft-base"><span>© {{ footYear }} GMS</span><span>{{ footWhen }}</span><button type="button" data-top class="ft-up">Back to top<i class="gi" data-gi="arrow_forward"></i></button></div>
+      <div class="ft-base">
+        <div class="ft-pres"><i></i><span><b data-ftp="presence">Registration open</b><small>{{ footWhen }}</small></span></div>
+        <span class="ft-copy">© {{ footYear }} GMS</span>
+        <button type="button" data-top class="ft-up">Back to top<i class="gi" data-gi="arrow_forward"></i></button>
+      </div>
     </div>
   </footer>
 </main>
@@ -2587,7 +2673,7 @@ class Component extends DCLogic {
     const figEl=(k,key)=>h('span',{key,style:{position:'absolute',inset:0,display:'block'},ref:el=>this.figMount(el,k)});
     const info=k=>{const ri=REG_ORDER[k],r=REG[ri],g=REG_GROUP_OF[r.id];return {ri,r,g,gc:REG_GC[g],needs:(DOCS[r.id]||DOCS._)};};
     const cur=info(sel);
-    return {roleHint:'Eight passes, one for every way into the Games. '+(HOVER?'Drag or use the arrows to look through them;':'Swipe through them;')+' '+(HOVER?'click':'tap')+' a pass to register for it, or Details to see who it is for and what you will need.',
+    return {roleHint:'Eight passes, one for every way into the Games. Pick yours from the list, '+(HOVER?'grab the pass and give it a swing, then click it':'then tap the pass')+' to register.',
       roleLeave:()=>{this.roleHovK=-1;},rolePrevEnter:()=>{this.roleOnceK=-1;this.roleHovK=this.state.roleSel??0;},
       roleGroups:REG_GROUPS.map(([title,ids],g)=>({title,color:REG_GC[g][0],count:pad(ids.length)+' ROLES',rows:ids.map(id=>{const k=REG_ORDER.findIndex(ri=>REG[ri].id===id),I=info(k),on=k===sel,op=k===open;
         return {k:String(k),num:pad(k+1),name:I.r.name.split('/').join('/​'),on:on?'1':'0',open:op?'true':'false',aria:I.r.name+'. '+I.r.desc,
@@ -2597,7 +2683,7 @@ class Component extends DCLogic {
           go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};})})),
       passGroups:REG_GROUPS.map(([title],g)=>({title,color:REG_GC[g][0]})),
       passes:REG_ORDER.map((ri,k)=>{const I=info(k);return {k:String(k),num:pad(k+1)+' / '+pad(NR),name:I.r.name,group:REG_GROUPS[I.g][0],gc:I.gc[0],gt:I.gc[1],who:I.r.desc,
-        needs:I.needs.map(t=>({t})),on:k===sel?'1':'0',art:figEl(k,'p'+k),aria:'What '+I.r.name+' need',regLabel:'Register as '+I.r.name,go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};}),
+        needs:I.needs.map(t=>({t})),on:k===sel?'1':'0',sel:k===sel?'true':'false',n2:pad(k+1),icon:I.r.icon,pick:()=>{window.GMSApp&&window.GMSApp.rolePick(k);window.dispatchEvent(new CustomEvent('gms:ly-swap'));},art:figEl(k,'p'+k),aria:'What '+I.r.name+' need',regLabel:'Register as '+I.r.name,go:e=>{if(e&&e.stopPropagation)e.stopPropagation();this.startReg(I.r.id);}};}),
       roleRail:this.roleRailEl(),
       roleArts:REG_ORDER.map((ri,k)=>({on:k===sel?'1':'0',el:figEl(k,'a'+k)})),
       roleLive:(ROLE_VERB[cur.r.id]||'').toUpperCase(),
@@ -3061,7 +3147,7 @@ class Component extends DCLogic {
         go:()=>{clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!s.regOpen});},cw:'18px',rot:s.regOpen?'180deg':'0deg',exp:s.regOpen?'true':'false',
         enter:()=>{if(!HOVER)return;clearTimeout(this.regT);this.regT=setTimeout(()=>this.setState({regOpen:true}),110);},leave:()=>{if(HOVER)this.closeRegSoon();}}
         :{go:(...a)=>{this.setState({menuOpen:false,regOpen:false});return go(...a);},cw:'0px',rot:'0deg',exp:'false',enter:()=>{},leave:()=>{}}),on:k&&screen===k?'1':'0',bg:k&&screen===k?'var(--d-inv,#0B0B0C)':'transparent',fg:k&&screen===k?'var(--d-on-inv,#fff)':'var(--d-ink,#0B0B0C)'})),
-      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/sports/'+t.img+'.webp?v=s1',alt:t.sport,href:SPORT_PAGES.includes(t.img)?'sports/'+t.img+'.html':'#schedule',cta:SPORT_PAGES.includes(t.img)?'Open the '+t.sport.toLowerCase()+' page':'See the schedule'})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
+      goHome:()=>this.go('home'),goBack:()=>this.goBack(),showBack:screen!=='home',goScores:()=>this.openEc(),storiesRef:this.ref('stories'),stories:STORIES.map(t=>({...t,src:'assets/sports/'+t.img+'.webp?v=s1',alt:t.sport,href:SPORT_PAGES.includes(t.img)?'sports/'+t.img+'.html':'#schedule',cta:SPORT_PAGES.includes(t.img)?'Open the '+t.sport.toLowerCase()+' page':'See the schedule'})),storyPrev:()=>this.storyStep(-1),storyNext:()=>this.storyStep(1),dockShow:screen==='home'&&!s.chatOpen?'1':'0',tabHome:()=>this.scrollTo('overview'),tabSchedule:()=>this.scrollTo('schedule'),tabLive:()=>this.scrollTo('tv'),tabReg:()=>this.scrollTo('reg'),regAria:this.state.regOpen?'true':'false',regToggle:e=>{if(e&&e.stopPropagation)e.stopPropagation();clearTimeout(this.regT);this.setState({menuOpen:false,regOpen:!this.state.regOpen});},ecxRef:this.ref('ecx'),ecToggle:()=>this.ecSet(!this.state.ecOpen),ecAria:String(!!this.state.ecOpen),ecOpenAttr:this.state.ecOpen?'1':'0',ecDoneAttr:this.state.ecDone?'1':'0',ecWord:this.state.ecOpen?'Close':'Open',goTv:()=>{this.setState({chan:'stadium'});this.go('tv');},
       goLogin:()=>{this.setState({loginTab:'participant',loginError:''});this.go('login');},
       goAdminLogin:()=>{this.setState({loginTab:'admin',loginError:''});this.go('login');},
       toSchedule:()=>this.scrollTo('schedule'),toEvents:()=>this.scrollTo('events'),

@@ -1344,6 +1344,8 @@
     if (b) { var m = b.parentNode.querySelector('.nv-more'), open = m.getAttribute('data-open') === '1'; closeMore(); if (!open) { m.setAttribute('data-open', '1'); b.setAttribute('aria-expanded', 'true'); } return; }
     if (t.closest('.nv-more button')) { setTimeout(closeMore, 0); return; }
     if (!t.closest('.nv-more')) closeMore();
+    var rm = document.querySelector('nav[data-r=nav] [data-regmenu][data-open=true],nav[data-r=nav] [data-regmenu][data-open="1"]');
+    if (rm && !t.closest('[data-regmenu]') && !t.closest('[data-r=login-btn]')) { var x = rm.querySelector('[data-r=regmenu-close]'); if (x) x.click(); }
   });
 
   var DATES = ['19 Nov · competition opens', '19–24 Nov · six days of finals and knockouts', '24 Nov · last finals and medal ceremonies'];
@@ -1391,5 +1393,62 @@
   }
   function close() { if (!el) return; el.setAttribute('data-open', '0'); document.documentElement.classList.remove('gp-lock'); if (last && last.focus) last.focus(); }
   document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-path]'); if (b) open(b.getAttribute('data-path')); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMore(); if (el && el.getAttribute('data-open') === '1') close(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMore(); var rx = document.querySelector('nav[data-r=nav] [data-regmenu][data-open=true] [data-r=regmenu-close]'); if (rx) rx.click(); if (el && el.getAttribute('data-open') === '1') close(); } });
+})();
+
+/* footer status pills + the halftone dot trail that follows the cursor */
+(function () {
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function tick() {
+    var A = window.GMSApp, now = new Date(Date.now() + (330 + new Date().getTimezoneOffset()) * 60000);
+    document.querySelectorAll('[data-ftp=clock]').forEach(function (e) { e.textContent = p2(now.getHours()) + ':' + p2(now.getMinutes()) + ':' + p2(now.getSeconds()); });
+    if (!A || !A.tour) return;
+    var ph = A.tour.phase(), d = A.tour.dayNow ? A.tour.dayNow() : 0;
+    var st = ph === 'before' ? 'OPENS 19 NOV' : ph === 'after' ? 'RESULTS FINAL' : 'DAY ' + p2((d || 0) + 1) + ' / 06';
+    var pr = ph === 'before' ? 'Registration open' : ph === 'after' ? 'The Games are over' : 'The Games are on';
+    document.querySelectorAll('[data-ftp=phase]').forEach(function (e) { if (e.textContent !== st) e.textContent = st; });
+    document.querySelectorAll('[data-ftp=presence]').forEach(function (e) { if (e.textContent !== pr) e.textContent = pr; });
+  }
+  setInterval(tick, 1000); tick();
+
+  var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduced) return;
+  var cv = document.createElement('canvas'); cv.className = 'gy-dots'; cv.setAttribute('aria-hidden', 'true');
+  var cx = cv.getContext('2d'), CELL = 6, cols = 0, rows = 0, heat = null, raf = 0, lx = -1, ly = -1, live = 0;
+  function size() { cv.width = innerWidth; cv.height = innerHeight; cols = Math.ceil(innerWidth / CELL); rows = Math.ceil(innerHeight / CELL); heat = new Float32Array(cols * rows); }
+  function stamp(x, y, r, k) {
+    var c0 = Math.max(0, ((x - r) / CELL) | 0), c1 = Math.min(cols - 1, ((x + r) / CELL) | 0), r0 = Math.max(0, ((y - r) / CELL) | 0), r1 = Math.min(rows - 1, ((y + r) / CELL) | 0);
+    for (var j = r0; j <= r1; j++) for (var i = c0; i <= c1; i++) {
+      var dx = i * CELL + CELL / 2 - x, dy = j * CELL + CELL / 2 - y, d = Math.sqrt(dx * dx + dy * dy) / r; if (d >= 1) continue;
+      /* ordered dither: a 4x4 Bayer threshold breaks the soft brush into a halftone */
+      var b = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5][(j & 3) * 4 + (i & 3)] / 16;
+      var v = (1 - d) * k; if (v > b * 0.9) { var n = j * cols + i; heat[n] = Math.min(1, heat[n] + v); }
+    }
+  }
+  function frame() {
+    raf = 0; cx.clearRect(0, 0, cv.width, cv.height);
+    var inv = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--inv')) || 0, dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var light = inv > 0.5 && !dark; cx.fillStyle = light ? 'rgba(11,11,12,.55)' : 'rgba(242,241,236,.45)';
+    var any = false;
+    for (var n = 0; n < heat.length; n++) {
+      var h = heat[n]; if (h < 0.02) { heat[n] = 0; continue; } any = true;
+      var i = n % cols, j = (n / cols) | 0, rr = 0.6 + h * 1.4;
+      cx.beginPath(); cx.arc(i * CELL + CELL / 2, j * CELL + CELL / 2, rr, 0, 6.2832); cx.fill();
+      heat[n] = h * 0.93;
+    }
+    if (any) raf = requestAnimationFrame(frame);
+  }
+  window.addEventListener('pointermove', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    if (!heat) { size(); document.body.appendChild(cv); }
+    var x = e.clientX, y = e.clientY;
+    if (lx < 0) { lx = x; ly = y; }
+    var dx = x - lx, dy = y - ly, dist = Math.sqrt(dx * dx + dy * dy), steps = Math.max(1, Math.min(12, (dist / 10) | 0));
+    var k = Math.min(0.55, 0.1 + dist / 120);
+    for (var s = 1; s <= steps; s++) stamp(lx + dx * s / steps, ly + dy * s / steps, 34, k);
+    lx = x; ly = y; if (!raf) raf = requestAnimationFrame(frame);
+  }, { passive: true });
+  window.addEventListener('resize', function () { if (heat) size(); });
+  document.addEventListener('mouseleave', function () { lx = -1; });
 })();
