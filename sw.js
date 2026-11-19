@@ -1,6 +1,6 @@
 /* GMS service worker: the page and its code work offline (schedule, My Games, results), media stays network-only.
    Pages are network-first so a new deploy shows up on the next visit; versioned files are cache-first. */
-const CACHE = 'gms-v43';
+const CACHE = 'gms-v44';
 const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=1', 'assets/js/gms-room.js?v=1', 'assets/js/gms-motion.js?v=25', 'assets/js/gms-plus.js?v=43',
   'assets/fonts/anton-latin.woff2', 'assets/fonts/inter-latin.woff2', 'assets/fonts/jetbrains-mono-latin.woff2',
   'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/venue-poster.webp?v=v2', 'assets/brand/gobananas-full.webp', 'assets/brand/gobananas-mark.webp', 'manifest.webmanifest'];
