@@ -1,5 +1,5 @@
 """Builds sports/<key>.html from one template. Run from the repo root: python3 sports.py badminton [tabletennis ...]"""
-import re, sys, html, os
+import json, re, sys, html, os
 
 SRC = open("GMS v2.dc.html").read()
 
@@ -87,6 +87,7 @@ NAMES = {"badminton": "Badminton", "tabletennis": "Table Tennis", "athletics": "
 CAT_LABEL = {"MEN": "Men", "WOMEN": "Women", "MIXED": "Mixed", "OPEN": "Open"}
 MAPS = "https://www.google.com/maps/search/?api=1&query=Veer+Savarkar+Sports+Complex+Naranpura+Ahmedabad"
 
+ECG = "\n".join(l for l in SRC.split("\n") if l.startswith((".ecg",".ecg-")) and "ecx" not in l)
 CSS = r"""
 .btabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
 .bt-t{all:unset;cursor:pointer;padding:9px 16px;border-radius:999px;border:1px solid rgba(11,11,12,.18);font:500 14px/1 Inter,system-ui,sans-serif}
@@ -100,16 +101,20 @@ CSS = r"""
 .bm span+span{border-top:1px solid rgba(11,11,12,.08)}
 .bm i{width:6px;height:6px;border-radius:50%;border:1px solid rgba(11,11,12,.3)}
 .bsum{border:1px dashed rgba(11,11,12,.2);border-radius:12px;padding:18px 14px;display:flex;flex-direction:column;gap:6px}
-.bsum b{font:400 40px/1 'Instrument Serif',serif}
+.bsum b{font:400 40px/1 'Anton',serif}
 .bsum span{font-size:13px;opacity:.6}
 @media (max-width:640px){.bc{flex-basis:78vw}.btabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-20px;padding-inline:20px}.btabs::-webkit-scrollbar{display:none}.bt-t{flex:none}}
 
-@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'Instrument Serif';src:url(../assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:'Anton';src:url(../assets/fonts/anton-latin.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--f-display:'Anton',Impact,'Arial Narrow',sans-serif}
+:is(h1,h2,h3):not(.ly *){letter-spacing:.004em!important;text-transform:uppercase;line-height:.94!important;font-weight:400!important}
+:is(h1,h2,h3) em{font-style:normal}
+html{font-synthesis:none}
+
 @font-face{font-family:'Inter';src:url(../assets/fonts/inter-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
 @font-face{font-family:'JetBrains Mono';src:url(../assets/fonts/jetbrains-mono-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
 :root{--navy:#0B0B0C;--deep:#070708;--navy-2:#141416;--ivory:#F2F1EC;--paper-2:#E7E5DE;--acc:#0B0B0C;--acc-on:#F2F1EC;--gold:var(--acc);--gold-d:var(--acc);--steel:var(--acc);--ink2:#55555C;
---ease:cubic-bezier(.16,1,.3,1);--wrap:1240px;--gut:clamp(20px,5vw,64px);--h2:400 clamp(44px,5.4vw,86px)/.96 'Instrument Serif',Georgia,serif;--kick:500 11.5px/1.4 'JetBrains Mono',ui-monospace,monospace}
+--ease:cubic-bezier(.16,1,.3,1);--wrap:1240px;--gut:clamp(20px,5vw,64px);--h2:400 clamp(44px,5.4vw,86px)/.96 'Anton',Georgia,serif;--kick:500 11.5px/1.4 'JetBrains Mono',ui-monospace,monospace}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ivory);color:var(--navy);font:16px/1.55 'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}a{color:inherit}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
@@ -120,7 +125,7 @@ h2{font:var(--h2);letter-spacing:-.018em;margin:14px 0 0}
 .hero,.dark,.deep,.top,footer{--acc:#F2F1EC;--acc-on:#0B0B0C}
 h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{color:var(--acc)}
 .top{position:fixed;inset:14px var(--gut) auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(11,11,12,.72);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(244,239,230,.1);color:var(--ivory);max-width:var(--wrap);margin:0 auto}
-.top-l{display:flex;align-items:center;gap:14px;text-decoration:none}.top-l img{height:28px;width:auto}.top-l b{font:800 15px 'Instrument Serif';letter-spacing:-.02em}
+.top-l{display:flex;align-items:center;gap:14px;text-decoration:none}.top-l img{height:28px;width:auto}.top-l b{font:800 15px 'Anton';letter-spacing:-.02em}
 .top-r{display:flex;gap:8px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;font:600 14px 'Inter';text-decoration:none;transition:background .4s var(--ease),color .4s,border-color .4s,transform .4s var(--ease);white-space:nowrap}
 .btn-g{background:#F2F1EC;color:#0B0B0C}.btn-g::after{content:'';width:6px;height:6px;border-radius:50%;background:#0B0B0C;transition:background .35s,transform .35s}.btn-g:hover{background:#fff}.btn-g:hover::after{transform:scale(1.8)}
@@ -133,11 +138,11 @@ h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{col
 @keyframes kb{to{scale:1}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,8,.9) 0%,rgba(7,7,8,.5) 45%,rgba(7,7,8,.12) 100%),linear-gradient(0deg,rgba(7,7,8,.95) 0%,rgba(7,7,8,0) 55%)}
 .hero .wrap{position:relative;z-index:1;width:100%;padding-bottom:clamp(28px,5vh,56px)}
-.hero h1{font:400 clamp(72px,13vw,210px)/.86 'Instrument Serif',Georgia,serif;letter-spacing:-.025em;margin:18px 0 22px}
+.hero h1{font:400 clamp(72px,13vw,210px)/.86 'Anton',Georgia,serif;letter-spacing:-.025em;margin:18px 0 22px}
 .hero p.lead{max-width:560px;font-size:clamp(16px,1.4vw,19px);color:rgba(244,239,230,.82);margin:0 0 28px}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(36px,7vh,72px);border-top:1px solid rgba(244,239,230,.16)}
-.facts div{padding:18px 18px 0 0}.facts b{display:block;font:800 clamp(24px,2.6vw,38px)/1 'Instrument Serif';letter-spacing:-.03em}.facts span{font:var(--kick);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.6)}
+.facts div{padding:18px 18px 0 0}.facts b{display:block;font:800 clamp(24px,2.6vw,38px)/1 'Anton';letter-spacing:-.03em}.facts span{font:var(--kick);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.6)}
 .facts div+div{padding-left:18px;border-left:1px solid rgba(244,239,230,.12)}
 section.s{padding:clamp(80px,12vh,140px) 0}
 .dark{background:#0B0B0C;color:var(--ivory);background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:72px 72px}.deep{background:var(--deep);color:var(--ivory)}
@@ -146,17 +151,17 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .ev a{position:relative;display:flex;flex-direction:column;gap:20px;min-height:250px;padding:22px;border-radius:20px;background:#FBF8F2;border:1px solid rgba(15,27,45,.08);text-decoration:none;transition:transform .6s var(--ease),box-shadow .6s var(--ease),border-color .4s}
 .ev a:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(15,27,45,.12);border-color:var(--acc)}
 .ev code{font:var(--kick);letter-spacing:.12em;color:var(--ink2)}.ev .pill{align-self:flex-start;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--paper-2)}
-.ev h3{font:400 30px/1 'Instrument Serif',serif;letter-spacing:-.01em;margin:auto 0 0}
+.ev h3{font:400 30px/1 'Anton',serif;letter-spacing:-.01em;margin:auto 0 0}
 .ev .md{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--ink2)}.ev .md i{width:12px;height:12px;border-radius:50%}
 .ev .go{font-weight:600;font-size:13.5px;color:var(--acc)}
 .fmt{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,96px);align-items:start}
-.big{font:400 clamp(140px,20vw,300px)/.8 'Instrument Serif',serif;letter-spacing:-.03em;color:var(--acc)}.big+p{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,239,230,.6);margin:16px 0 0}
+.big{font:400 clamp(140px,20vw,300px)/.8 'Anton',serif;letter-spacing:-.03em;color:var(--acc)}.big+p{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,239,230,.6);margin:16px 0 0}
 .rules{list-style:none;margin:0;padding:0}.rules li{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:22px 0;border-top:1px solid rgba(244,239,230,.12)}
 .rules li b{font:var(--kick);color:var(--acc);padding-top:4px}.rules h3{margin:0 0 6px;font:700 18px 'Inter'}.rules p{margin:0;color:rgba(244,239,230,.72)}
 .medals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px}
 .medals div{padding:22px;border-radius:18px;background:rgba(244,239,230,.05);border:1px solid rgba(244,239,230,.1)}
 .medals i{display:block;width:34px;height:34px;border-radius:50%;margin-bottom:16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
-.medals b{display:block;font:800 20px 'Instrument Serif'}.medals span{font-size:13.5px;color:rgba(244,239,230,.65)}
+.medals b{display:block;font:800 20px 'Anton'}.medals span{font-size:13.5px;color:rgba(244,239,230,.65)}
 .mt{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:14px;padding:20px 22px;border-radius:18px;background:var(--acc);color:var(--acc-on)}.mt p{margin:0;font-weight:600}
 .plan{display:grid;grid-template-columns:1.45fr .55fr;gap:20px}
 .vlz{position:relative;overflow:hidden;border-radius:18px;background:#fff;aspect-ratio:1400/989;cursor:grab;touch-action:pan-y;border:1px solid rgba(15,27,45,.08)}
@@ -173,21 +178,21 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .vph{display:grid;grid-template-columns:1.45fr .55fr;gap:20px}.vph figure{margin:0;border-radius:18px;overflow:hidden;position:relative;aspect-ratio:16/10}.vph img{width:100%;height:100%;object-fit:cover}
 .vph figcaption{position:absolute;left:14px;bottom:14px;padding:7px 12px;border-radius:999px;background:rgba(11,11,12,.72);color:#F2F1EC;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.08em}
 .vph-k{padding:22px;border-radius:18px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}.vph-k ul{list-style:none;margin:16px 0;padding:0}.vph-k li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-top:1px solid rgba(11,11,12,.1)}
-.vph-k li b{font:400 30px/1 'Instrument Serif',serif;min-width:84px}.vph-k p{margin:0;font-size:13px;color:var(--ink2)}
+.vph-k li b{font:400 30px/1 'Anton',serif;min-width:84px}.vph-k p{margin:0;font-size:13px;color:var(--ink2)}
 @media (max-width:1000px){.vph{grid-template-columns:1fr}}
 .sub{position:fixed;left:50%;top:78px;z-index:19;display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(242,241,236,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 1px rgba(11,11,12,.1),0 10px 30px rgba(0,0,0,.12);transform:translate(-50%,-14px);opacity:0;pointer-events:none;transition:opacity .45s var(--ease),transform .6s var(--ease);overflow:hidden}
 .sub.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.sub a{padding:8px 14px;border-radius:999px;font:600 13px 'Inter';text-decoration:none;color:#0B0B0C;transition:background .3s,color .3s}.sub a[aria-current]{background:#0B0B0C;color:#F2F1EC}
 .sub .prog{position:absolute;left:0;bottom:0;height:2px;width:100%;background:#0B0B0C;transform-origin:0 50%;transform:scaleX(var(--p,0))}
 .hx2{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:22px}
-.cd{display:inline-flex;align-items:baseline;gap:12px;padding:10px 16px;border-radius:999px;border:1px solid rgba(242,241,236,.25)}.cd-k{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:rgba(242,241,236,.6)}.cd-v{font:400 24px/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums}
+.cd{display:inline-flex;align-items:baseline;gap:12px;padding:10px 16px;border-radius:999px;border:1px solid rgba(242,241,236,.25)}.cd-k{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:rgba(242,241,236,.6)}.cd-v{font:400 24px/1 'Anton',serif;font-variant-numeric:tabular-nums}
 .fol{all:unset;cursor:pointer;padding:12px 18px;border-radius:999px;font:600 13px 'Inter';color:#F2F1EC;border:1px solid rgba(242,241,236,.25);transition:background .3s,color .3s}.fol[aria-pressed=true]{background:#F2F1EC;color:#0B0B0C}
 [data-split] .ch{display:inline-block;transform:translateY(105%);opacity:0;animation:chIn 1.1s var(--ease) forwards;animation-delay:calc(var(--i) * 45ms + .15s)}[data-split]{overflow:hidden;padding-bottom:.06em}
 @keyframes chIn{to{transform:none;opacity:1}}
 .ev .nx{font:500 11.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--ink2)}
 .sch{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.sd{padding:22px;border-radius:20px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}.sd h3{margin:0 0 10px;display:flex;align-items:baseline;gap:12px;font:400 28px/1 'Instrument Serif',serif}.sd h3 span{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.sd{padding:22px;border-radius:20px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}.sd h3{margin:0 0 10px;display:flex;align-items:baseline;gap:12px;font:400 28px/1 'Anton',serif}.sd h3 span{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
 .sd ol{list-style:none;margin:0;padding:0}.sr{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid rgba(11,11,12,.09)}
-.sr time{font:400 26px/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums}.sr b{display:block;font-size:14.5px}.sr span{font-size:12.5px;color:var(--ink2)}
+.sr time{font:400 26px/1 'Anton',serif;font-variant-numeric:tabular-nums}.sr b{display:block;font-size:14.5px}.sr span{font-size:12.5px;color:var(--ink2)}
 .sa{display:flex;gap:6px}.sa button{all:unset;cursor:pointer;height:32px;padding:0 11px;border-radius:999px;border:1px solid rgba(11,11,12,.16);font:600 12px 'Inter';display:grid;place-items:center;transition:background .3s,color .3s}.sa button:hover,.sa .rm[aria-pressed=true]{background:#0B0B0C;color:#F2F1EC}
 .toast{position:fixed;left:50%;bottom:28px;z-index:30;transform:translate(-50%,20px);opacity:0;padding:12px 18px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font:600 13px 'Inter';transition:opacity .4s,transform .5s var(--ease);pointer-events:none}.toast.on{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.sub{top:auto;bottom:16px;transform:translate(-50%,14px)}.sub.on{transform:translate(-50%,0)}.sub a{padding:8px 10px;font-size:12px}.sr{grid-template-columns:54px 1fr}.sa{grid-column:2}}
@@ -195,15 +200,45 @@ section.s{padding:clamp(80px,12vh,140px) 0}
 .arrive{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
 .arrive div{--acc:#F2F1EC;padding:22px;border-radius:18px;background:#0B0B0C;color:#F2F1EC}.arrive h3{margin:0 0 8px;font:700 16px 'Inter';color:var(--acc)}.arrive p{margin:0;font-size:14.5px;color:rgba(244,239,230,.75)}
 .addr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:14px;padding:22px;border-radius:18px;border:1px solid rgba(15,27,45,.12)}
-.addr b{display:block;font:800 18px 'Instrument Serif';letter-spacing:-.02em}.addr span{color:var(--ink2);font-size:14px}
+.addr b{display:block;font:800 18px 'Anton';letter-spacing:-.02em}.addr span{color:var(--ink2);font-size:14px}
 .next{display:flex;justify-content:space-between;align-items:center;gap:20px;text-decoration:none;padding:clamp(48px,8vh,88px) 0}
-.next span{font:var(--kick);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.next b{display:block;font:400 clamp(56px,9vw,150px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;transition:color .5s}
+.next span{font:var(--kick);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.next b{display:block;font:400 clamp(56px,9vw,150px)/.9 'Anton',serif;letter-spacing:-.02em;transition:color .5s}
 .next:hover b{color:var(--acc)}.next i{font-style:normal;font-size:clamp(40px,6vw,90px);transition:transform .6s var(--ease)}.next:hover i{transform:translateX(12px)}
 footer{border-top:1px solid rgba(244,239,230,.1);padding:28px 0;font-size:13px;color:rgba(244,239,230,.55)}footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .rv{opacity:0;translate:0 28px;transition:opacity 1.1s var(--ease),translate 1.1s var(--ease)}.rv.in-v{opacity:1;translate:0 0}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;translate:none}.hero>img{animation:none;scale:1}}
 @media (max-width:1000px){.ev{grid-template-columns:repeat(2,1fr)}.plan,.fmt,.head{grid-template-columns:1fr}.key{max-height:none}}
 @media (max-width:640px){.top{inset:10px 12px auto}.top .back{display:none}.facts{grid-template-columns:repeat(2,1fr)}.facts div:nth-child(3){padding-left:0;border-left:0}.ev{grid-template-columns:1fr}.ev a{min-height:0}.medals,.arrive{grid-template-columns:1fr}.mt{flex-direction:column;align-items:flex-start}.pin{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:10px}.bar{flex-direction:column;align-items:flex-start}}
+
+/* round 6: scroll-scrubbed hero film, court drawing, mini gallery, venue card turn */
+.hs{position:relative;height:190vh}.hs>.hero{position:sticky;top:0}
+.hero>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(.25) contrast(1.05)}
+.hs .hero>img{animation:none;scale:calc(1.06 + var(--hp,0) * .22)}
+.hero .wrap{transition:none}.hs .hero .wrap>*:not(h1){opacity:calc(1 - var(--sp,0) * 1.4);translate:0 calc(var(--sp,0) * -40px)}
+.hs [data-split] .ch{translate:calc((var(--i) - var(--mid,4)) * var(--sp,0) * .5em) calc(var(--sp,0) * (var(--i) - var(--mid,4)) * var(--sp,0) * .12em);filter:blur(calc(var(--sp,0) * 6px))}
+.hs [data-split]{overflow:visible}
+.scrub-k{position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(18px,3vh,32px);z-index:2;font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,241,236,.6);opacity:calc(1 - var(--hp,0) * 3)}
+.court{margin-top:clamp(48px,7vw,96px);padding-top:clamp(28px,4vw,48px);border-top:1px solid rgba(242,241,236,.14)}
+.court .kick{display:block;margin-bottom:18px}
+.court-svg{display:block;width:100%;max-height:72vh;overflow:visible}
+.court-svg .cl :is(rect,line,circle,path){fill:none;stroke:#F2F1EC;stroke-dasharray:1 1;stroke-dashoffset:var(--d,1);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.court-svg .cdim text{fill:#F2F1EC;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;opacity:var(--o,0);transition:opacity .6s ease}
+.sgal{background:#0B0B0C;color:#F2F1EC}.sgal .head p{color:rgba(242,241,236,.66)}
+.sgal-st{position:relative;height:clamp(500px,78vh,760px);max-width:1400px;margin:0 auto}
+.plan figure,.vph figure{position:relative;perspective:2000px}
+.vt{all:unset;box-sizing:border-box;position:absolute;inset:0;z-index:6;cursor:pointer;border-radius:16px;overflow:hidden;transform-origin:0 50%;backface-visibility:hidden;transition:transform 1.1s cubic-bezier(.65,0,.2,1),opacity .5s ease .55s,visibility 0s linear 1.1s;background:#0B0B0C}
+.vt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.3) contrast(1.06)}
+.vt::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,12,.8),rgba(11,11,12,.1))}
+.vt-txt{position:absolute;left:clamp(18px,3vw,36px);bottom:clamp(18px,3vw,36px);z-index:1;display:flex;flex-direction:column;gap:12px;color:#F2F1EC}
+.vt-txt small{font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+.vt-txt b{font:400 clamp(34px,5vw,72px)/.9 'Anton',sans-serif;text-transform:uppercase}
+.vt-cue{align-self:flex-start;padding:10px 16px;border-radius:999px;background:#F2F1EC;color:#0B0B0C;font:600 13px/1 Inter,sans-serif}
+.vt.vt-nudge{animation:vtNudge 1.6s cubic-bezier(.45,0,.2,1)}
+@keyframes vtNudge{0%,100%{transform:none}35%{transform:rotateY(-16deg)}55%{transform:rotateY(-9deg)}70%{transform:rotateY(-13deg)}}
+[data-turn="1"]>.vt{transform:rotateY(-178deg);opacity:0;visibility:hidden;pointer-events:none}
+.vt-back{all:unset;position:absolute;right:14px;top:14px;z-index:5;cursor:pointer;padding:8px 14px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .4s ease .6s}
+[data-turn="1"]>.vt-back{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.hs{height:auto}.hs>.hero{position:relative}.vt{transition:opacity .3s}[data-turn="1"]>.vt{transform:none}.vt.vt-nudge{animation:none}.court-svg .cl *{stroke-dashoffset:0}.court-svg .cdim text{opacity:1}}
 """
 
 JS = r"""
@@ -247,6 +282,87 @@ var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=
  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(paint);},{passive:true});paint();}
 })();
 """
+
+
+
+JS3 = r"""
+(function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
+/* hero film scrubbed by the scroll; the title flies apart as the hero ends */
+var hs=D.querySelector('.hs'),hero=hs&&hs.querySelector('.hero'),vid=hero&&hero.querySelector('video'),h1=hero&&hero.querySelector('[data-split]'),cur=0,goal=0,raf=0;
+if(hs&&!R){if(h1)h1.style.setProperty('--mid',((h1.textContent.length-1)/2).toFixed(1));
+ function hp(){var r=hs.getBoundingClientRect();return Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)));}
+ function frame(){raf=0;var p=hp();cur+=(p-cur)*.18;if(Math.abs(p-cur)<.0005)cur=p;hero.style.setProperty('--hp',cur.toFixed(4));hero.style.setProperty('--sp',Math.max(0,(cur-.55)/.45).toFixed(4));
+  if(vid&&vid.readyState>=1&&vid.duration){var t=cur*(vid.duration-.05);if(Math.abs(vid.currentTime-t)>.03&&!vid.seeking)vid.currentTime=t;}
+  if(cur!==p)raf=requestAnimationFrame(frame);}
+ addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(frame);},{passive:true});if(vid){vid.pause();vid.addEventListener('loadedmetadata',frame);}frame();}
+else if(vid){vid.remove();}
+/* the field of play draws itself as it scrolls into view */
+var cs=D.querySelector('.court-svg');if(cs){var ps=[].slice.call(cs.querySelectorAll('.cl>*')),tx=[].slice.call(cs.querySelectorAll('.cdim text')),cr=0;
+ function cd(){cr=0;var r=cs.getBoundingClientRect(),vh=innerHeight,p=Math.max(0,Math.min(1,(vh*.95-r.top)/(vh*.75)));
+  ps.forEach(function(e,i){var k=Math.max(0,Math.min(1,p*(ps.length+2)/1.4-i*.55));e.style.setProperty('--d',(1-k).toFixed(3));});
+  tx.forEach(function(e,i){e.style.setProperty('--o',p>.55+i*.1?'1':'0');});}
+ if(R){ps.forEach(function(e){e.style.setProperty('--d','0');});tx.forEach(function(e){e.style.setProperty('--o','1');});}else{addEventListener('scroll',function(){if(!cr)cr=requestAnimationFrame(cd);},{passive:true});cd();}}
+/* a small curved gallery of this sport's events */
+var gs=D.querySelector('[data-sgal]');if(gs&&window.gmsRoom){var sec=gs.closest('section'),imgs=JSON.parse(gs.getAttribute('data-imgs')||'[]');
+ var items=[].slice.call(D.querySelectorAll('.ev>a')).map(function(a,i){var t=(a.querySelector('h3')||{}).textContent||'',code=(a.querySelector('code')||{}).textContent||'',pl=(a.querySelector('.pill')||{}).textContent||'',nx=(a.querySelector('.nx')||{}).textContent||'';
+  return {sig:code,img:imgs[i%imgs.length],title:t,round:pl,small:nx||code,plate:code,code:code,aria:t};});
+ var g=gmsRoom(gs,{items:function(){return items;},capLead:'You are looking at',openLabel:'See its draw →',active:function(){var r=sec.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;},
+  walk:function(){var r=sec.getBoundingClientRect(),vh=innerHeight;return Math.max(0,Math.min(1,(vh*.6-r.top)/Math.max(1,r.height)));},
+  open:function(it){var b=D.querySelector('[data-bt="'+it.code+'"]');if(b)b.click();var rs=D.getElementById('results');if(rs)rs.scrollIntoView({behavior:R?'auto':'smooth'});}});
+ g.build();}
+/* venue: a photo card over the layout; a nudge invites the visitor to turn it */
+D.querySelectorAll('[data-cover]').forEach(function(f){var c=D.createElement('button');c.type='button';c.className='vt';c.setAttribute('aria-label','Turn the card to see the venue');
+ c.innerHTML='<img alt="" loading="lazy" decoding="async"><span class="vt-txt"><small>'+(f.getAttribute('data-cover-k')||'')+'</small><b>'+(f.getAttribute('data-cover-t')||'')+'</b><span class="vt-cue">↻ Turn to see the venue</span></span>';
+ var im=c.querySelector('img');im.src=f.getAttribute('data-cover');im.onerror=function(){im.onerror=null;im.src=f.getAttribute('data-cover-fb');};
+ f.appendChild(c);f.setAttribute('data-turn','0');var bk=D.createElement('button');bk.type='button';bk.className='vt-back';bk.textContent='↺ Turn back';f.appendChild(bk);
+ var nt=0;function nudge(){clearTimeout(nt);if(R||f.getAttribute('data-turn')==='1')return;c.classList.remove('vt-nudge');void c.offsetWidth;c.classList.add('vt-nudge');nt=setTimeout(nudge,5200);}
+ c.addEventListener('click',function(){f.setAttribute('data-turn','1');});bk.addEventListener('click',function(){f.setAttribute('data-turn','0');nudge();});
+ new IntersectionObserver(function(es){if(es[0].isIntersecting)setTimeout(nudge,700);else clearTimeout(nt);},{threshold:.4}).observe(f);});
+})();
+"""
+
+def court_svg(key):
+    """A simple line drawing of the field of play, drawn on scroll. Units are metres scaled by K."""
+    L=[]; T=[]
+    def r(x,y,w,h): L.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" pathLength="1"/>')
+    def l(x1,y1,x2,y2): L.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" pathLength="1"/>')
+    def c(cx,cy,rr): L.append(f'<circle cx="{cx}" cy="{cy}" r="{rr}" pathLength="1"/>')
+    def a(d): L.append(f'<path d="{d}" pathLength="1"/>')
+    def t(x,y,s,anchor="middle"): T.append(f'<text x="{x}" y="{y}" text-anchor="{anchor}">{s}</text>')
+    if key=="badminton":
+        W,H=13.4,6.1; r(0,0,W,H); l(0,.46,W,.46); l(0,H-.46,W,H-.46); l(W/2,0,W/2,H); l(W/2-1.98,0,W/2-1.98,H); l(W/2+1.98,0,W/2+1.98,H); l(.76,0,.76,H); l(W-.76,0,W-.76,H); l(0,H/2,W/2-1.98,H/2); l(W/2+1.98,H/2,W,H/2)
+        t(W/2,-.5,"13.40 m"); t(-.5,H/2,"6.10 m","end"); t(W/2,H+.9,"Net 1.55 m · short service 1.98 m")
+    elif key=="tabletennis":
+        W,H=2.74,1.525; r(0,0,W,H); l(0,H/2,W,H/2); l(W/2,-.12,W/2,H+.12); l(0,.02,W,.02)
+        t(W/2,-.22,"2.74 m"); t(-.12,H/2,"1.525 m","end"); t(W/2,H+.3,"Net 15.25 cm high")
+    elif key=="tennis":
+        W,H=23.77,10.97; r(0,0,W,H); l(0,1.37,W,1.37); l(0,H-1.37,W,H-1.37); l(W/2,-.5,W/2,H+.5); l(W/2-6.4,1.37,W/2-6.4,H-1.37); l(W/2+6.4,1.37,W/2+6.4,H-1.37); l(W/2-6.4,H/2,W/2+6.4,H/2); l(0,H/2,.2,H/2); l(W-.2,H/2,W,H/2)
+        t(W/2,-1.1,"23.77 m"); t(-.8,H/2,"10.97 m","end"); t(W/2,H+1.9,"Service box 6.40 m · net 0.914 m")
+    elif key=="basketball":
+        W,H=28,15; r(0,0,W,H); l(W/2,0,W/2,H); c(W/2,H/2,1.8); r(0,H/2-2.45,5.8,4.9); r(W-5.8,H/2-2.45,5.8,4.9); c(5.8,H/2,1.8); c(W-5.8,H/2,1.8)
+        a(f"M0 .9 H2.99 A6.75 6.75 0 0 1 2.99 {H-.9} H0"); a(f"M{W} .9 H{W-2.99} A6.75 6.75 0 0 0 {W-2.99} {H-.9} H{W}")
+        t(W/2,-1,"28 m"); t(-.8,H/2,"15 m","end"); t(W/2,H+1.8,"Three-point line 6.75 m · key 4.90 m")
+    elif key=="volleyball":
+        W,H=18,9; r(0,0,W,H); l(W/2,-.6,W/2,H+.6); l(W/2-3,0,W/2-3,H); l(W/2+3,0,W/2+3,H)
+        t(W/2,-1,"18 m"); t(-.6,H/2,"9 m","end"); t(W/2,H+1.6,"Attack line 3 m · net 2.43 m (men)")
+    elif key=="football":
+        W,H=105,68; r(0,0,W,H); l(W/2,0,W/2,H); c(W/2,H/2,9.15); r(0,H/2-20.15,16.5,40.3); r(W-16.5,H/2-20.15,16.5,40.3); r(0,H/2-9.16,5.5,18.32); r(W-5.5,H/2-9.16,5.5,18.32); c(11,H/2,.4); c(W-11,H/2,.4)
+        t(W/2,-3.5,"105 m"); t(-3,H/2,"68 m","end"); t(W/2,H+7,"Penalty area 16.5 m · centre circle 9.15 m")
+    elif key=="swimming":
+        W,H=50,25; r(0,0,W,H)
+        for i in range(1,10): l(0,i*2.5,W,i*2.5)
+        l(5,0,5,H); l(W-5,0,W-5,H); l(15,0,15,H); l(W-15,0,W-15,H)
+        t(W/2,-2,"50 m"); t(-1.5,H/2,"25 m","end"); t(W/2,H+4,"10 lanes × 2.5 m · 15 m marks")
+    else:
+        R0,S=36.5,84.39; W=S+2*(R0+9.76); H=2*(R0+9.76); ox=R0+9.76
+        for k in range(0,9):
+            rr=R0+k*1.22; y0=ox-rr; y1=ox+rr
+            a(f"M{ox} {y0} H{ox+S} A{rr} {rr} 0 0 1 {ox+S} {y1} H{ox} A{rr} {rr} 0 0 1 {ox} {y0}")
+        l(ox+S,ox+R0,ox+S,ox+R0+9.76)
+        t(W/2,-4,"400 m"); t(W/2,ox+4,"Straight 84.39 m"); t(W/2,H+8,"8 lanes × 1.22 m · bend radius 36.5 m")
+    pad=max(W,H)*.14
+    return (f'<svg viewBox="{-pad*1.6:.2f} {-pad:.2f} {W+pad*2.6:.2f} {H+pad*2.2:.2f}" class="court-svg" role="img" aria-label="{NAMES[key]} field of play with dimensions">'
+            f'<g class="cl" style="stroke-width:{max(W,H)*.0042:.4f}px">{"".join(L)}</g><g class="cdim" style="font-size:{max(W,H)*.032:.3f}px">{"".join(T)}</g></svg>')
 
 def page(key):
     d = SPORTS[key]; c = cats()[d["sport"]]; e = html.escape
@@ -293,7 +409,7 @@ def page(key):
     if d.get("plan"):
         pins = "".join(f'<button type="button" class="pin" data-pin="{n}" style="left:{x}%;top:{y}%" aria-label="Point {n}">{n}</button>' for n, x, y in plan_pins(d["plan"]))
         keyl = "".join(f'<li><button type="button" data-item="{n}"><b>{n}</b><span><strong>{t}</strong><small>{s}</small></span></button></li>' for n, t, s in plan_key(d["plan"]))
-        plan = (f'<div class="plan rv"><figure style="margin:0"><div class="vlz" data-vlz tabindex="0" aria-label="{d["plan_label"]}. Pinch or Ctrl+scroll to zoom, drag to move.">'
+        plan = (f'<div class="plan rv"><figure style="margin:0" data-cover="../assets/venues/cover-{d["plan"]}.webp" data-cover-fb="../assets/venues/{d["plan"]}.webp" data-cover-t="{e(c["venue"])}" data-cover-k="{e(d["plan_label"])}"><div class="vlz" data-vlz tabindex="0" aria-label="{d["plan_label"]}. Pinch or Ctrl+scroll to zoom, drag to move.">'
                 f'<div class="in"><img src="../assets/plans/{d["plan"]}-sm.webp" data-hi="../assets/plans/{d["plan"]}-xl.webp" alt="{d["plan_label"]}" width="1400" height="989">{pins}</div></div>'
                 f'<figcaption class="bar"><span>{d["plan_label"]} · from the organising team</span><span class="ctl"><button type="button" data-act="out" aria-label="Zoom out">−</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="fit">Fit</button><a href="../assets/plans/{d["plan"]}.pdf" download>Download PDF</a></span></figcaption></figure>'
                 f'<ol class="key">{keyl}</ol></div>')
@@ -301,42 +417,47 @@ def page(key):
         v = c["venue"]; ph = VENUE_PHOTO.get(v, "ground")
         near = sorted([(m, b if a_ == v else a_) for a_, b, m in TRAVEL if v in (a_, b)])
         nl = "".join(f'<li><b>{m} min</b><span>to the {e(o)}</span></li>' for m, o in near)
-        plan = (f'<div class="vph rv"><figure><img src="../assets/venues/{ph}.webp" alt="{e(v)}" loading="lazy"><figcaption>{e(v)} · Veer Savarkar Sports Complex</figcaption></figure>'
+        plan = (f'<div class="vph rv"><figure data-cover="../assets/sportfilm/{key}.webp" data-cover-fb="../assets/sports/{d["photo"]}.webp" data-cover-t="{e(v)}" data-cover-k="Veer Savarkar Sports Complex"><img src="../assets/venues/{ph}.webp" alt="{e(v)}" loading="lazy"><figcaption>{e(v)} · Veer Savarkar Sports Complex</figcaption></figure>'
                 f'<div class="vph-k"><span class="kick">On foot from here</span><ul>{nl}</ul><p>Walking times inside the complex, from the organising team’s venue guide.</p></div></div>')
     arr = d["arrive"] or GEN_ARRIVE(c["venue"])
     arrive = "".join(f'<div class="rv"><h3>{e(t)}</h3><p>{e(p)}</p></div>' for t, p in arr)
     nx = d["next_"]
+    film = f'<video muted playsinline preload="auto" src="../assets/sportfilm/{key}.mp4" poster="../assets/sportfilm/{key}.webp" aria-hidden="true"></video>' if os.path.exists(f"assets/sportfilm/{key}.mp4") else ""
+    vp = VENUE_PHOTO.get(c["venue"], "ground")
+    gimgs = json.dumps([f"../assets/sports/{d['photo']}.webp", f"../assets/sportfilm/{key}.webp", f"../assets/venues/{'badminton' if c['venue']=='Badminton Hall' else vp}.webp", "../assets/podium/competition.webp", "../assets/podium/finals.webp"])
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{d['name']} · All India Police Tournament 2026 · Veer Savarkar Sports Complex</title>
 <meta name="description" content="{e(d['lead'])}">
-<meta name="theme-color" content="#0B0B0C"><link rel="icon" href="../assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B0B0C"><link rel="icon" type="image/png" href="../assets/brand/favicon-64.png"><meta property="og:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=2"><meta property="og:title" content="{d['name']} · AIPT 2026"><meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="../assets/sports/{d['photo']}.webp">
-<style>{CSS}</style></head><body>
+<style>{CSS}{ECG}</style></head><body>
 <header class="top"><a class="top-l" href="../index.html"><img src="../assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238"><b>GMS</b></a>
 <nav class="top-r"><a class="back" href="../index.html#sports">← All sports</a><a class="btn btn-g sm" href="../index.html#register">Register</a></nav></header>
 <main>
-<section class="hero"><img src="../assets/sports/{d['photo']}.webp" alt="" fetchpriority="high"><div class="wrap">
+<div class="hs"><section class="hero"><img src="../assets/sports/{d['photo']}.webp" alt="" fetchpriority="high">{film}<span class="scrub-k" aria-hidden="true">Scroll to play</span><div class="wrap">
 <span class="kick">{d['kicker']} · {c['venue']}</span><h1 data-split>{d['name']}</h1><p class="lead">{e(d['lead'])}</p>
 <div class="cta"><a class="btn btn-g" href="../index.html#register">Register to compete →</a><a class="btn btn-o" href="#venue">{"See the hall plan" if d.get("plan") else "Find the venue"}</a></div>
 <div class="hx2"><div class="cd" data-first="{first}" data-last="{last}" aria-live="polite"><span class="cd-k">First session in</span><span class="cd-v">—</span></div><button type="button" class="fol" data-sport="{key}" aria-pressed="false">☆ Follow {d['name']}</button></div>
-<div class="facts">{facts}</div></div></section>
+<div class="facts">{facts}</div></div></section></div>
 <nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
 <section class="s" id="events"><div class="wrap"><div class="head"><div><span class="kick">01 · Medal events</span><h2>{len(c['events'])} events, <em>one</em> venue</h2></div>
 <p>Every event is open to accredited police athletes from each unit. Pick an event to start your registration.</p></div><div class="ev">{evs}</div></div></section>
+<section class="s sgal" id="gallery"><div class="wrap"><div class="head"><div><span class="kick">The gallery</span><h2>Walk the <em>events</em></h2></div><p>Every {e(d['name'].lower())} event hangs in one room. Scroll or drag to walk round, click a frame to look closer, and again to see its draw.</p></div></div><div class="sgal-st" data-sgal data-imgs='{gimgs}'></div></section>
 <section class="s" id="schedule"><div class="wrap"><div class="head"><div><span class="kick">02 · Schedule</span><h2>Every <em>session</em>, day by day</h2></div><p>All times IST. Add a session to your calendar, or star it to keep it on this device.</p></div><div class="sch">{sched}</div></div></section>
 <section class="s" id="results"><div class="wrap"><div class="head"><div><span class="kick">03 · Results &amp; brackets</span><h2>The <em>draw</em>, round by round</h2></div><p>Names go in when the draw is made and each result fills in as the match ends. Nothing here is decided yet: competition opens on 19 November.</p></div><div class="brk rv">{bracket}</div></div></section>
 <section class="s dark" id="format"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">04 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
 <ol class="rules">{rules}</ol></div>
 <div class="medals"><div class="rv"><i style="background:#D4A63A"></i><b>Gold</b><span>Winner of the final</span></div><div class="rv" style="transition-delay:90ms"><i style="background:#B9BEC7"></i><b>Silver</b><span>Runner-up in the final</span></div><div class="rv" style="transition-delay:180ms"><i style="background:#B07A4A"></i><b>Bronze</b><span>Awarded from the semi-finals</span></div></div>
-<div class="mt rv"><p>The live medal table opens with the first {d['name'].lower()} final on 24 November.</p><a class="btn btn-n sm" href="../index.html#medals">Open the medal table</a></div></div></section>
+<div class="mt rv"><p>The live medal table opens with the first {d['name'].lower()} final on 24 November.</p><a class="btn btn-n sm" href="../index.html#medals">Open the medal table</a></div>
+<div class="court"><span class="kick">The field of play</span>{court_svg(key)}</div></div></section>
 <section class="s" id="venue"><div class="wrap"><div class="head"><div><span class="kick">05 · The venue</span><h2>{('Inside the <em>'+c['venue'].split()[0].lower()+'</em> hall') if d.get('plan') else ('Find the <em>'+c['venue'].lower()+'</em>')}</h2></div>
 <p>{'The real layout from the organising team. Tap a number to zoom to it, pinch or Ctrl+scroll to zoom, and drag to look around.' if d.get('plan') else 'Where the '+e(d['name'].lower())+' is played inside the complex, and how far it is from the other venues.'}</p></div>{plan}
 <div class="arrive">{arrive}</div>
 <div class="addr rv"><div><b>Veer Savarkar Sports Complex</b><span>Naranpura, Ahmedabad, Gujarat · Accreditation card required at every entry</span></div><a class="btn btn-n" href="{MAPS}" target="_blank" rel="noopener">Directions in Google Maps ↗</a></div></div></section>
 <section class="deep"><div class="wrap"><a class="next" href="{nx}.html"><span style="display:block">Next sport<b>{NAMES[nx]}</b></span><i>→</i></a></div>
 <footer><div class="wrap"><span>All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster · 19–24 Nov 2026</span><a href="../index.html">Back to the Games</a></div></footer></section>
-</main><script>{JS}</script><script>{JS2}</script></body></html>"""
+</main><script>{JS}</script><script>{JS2}</script><script src="../assets/js/gms-room.js?v=1"></script><script>{JS3}</script></body></html>"""
 
 os.makedirs("sports", exist_ok=True)
 for k in sys.argv[1:]:
