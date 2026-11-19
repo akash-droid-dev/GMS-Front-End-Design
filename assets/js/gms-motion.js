@@ -308,19 +308,22 @@
   /* ---------------- sideways card rows never stall the page: mostly vertical gestures scroll the page on ---------------- */
   function rowsPass() { doc.querySelectorAll('.st-track').forEach(function (t) { if (t.__wp) return; t.__wp = 1; t.addEventListener('wheel', function (e) { if (e.ctrlKey) return; if (Math.abs(e.deltaY) > Math.abs(e.deltaX) * 1.2) { e.preventDefault(); window.scrollBy(0, e.deltaY * (e.deltaMode === 1 ? 40 : 1)); } }, { passive: false }); }); }
 
-  /* ---------------- the bot says hello once per visit ---------------- */
+  /* ---------------- the bot's greeting comes and goes every 6 seconds until it is dismissed or the chat is opened ---------------- */
   function botHello() {
     if (root.__hello) return; root.__hello = 1; try { if (sessionStorage.getItem('gms-hello') === '1') return; } catch (e) {}
-    function show() {
-      if (doc.querySelector('.gyh')) return; var b = doc.createElement('div'); b.className = 'gyh'; b.setAttribute('role', 'status');
+    var b = null, stop = false, tm = 0;
+    function chatOpen() { return !!doc.querySelector('[data-r=bot] [role=dialog], [data-r=bot][data-open="1"], [data-r=bot] [data-open="1"]'); }
+    function build() {
+      b = doc.createElement('div'); b.className = 'gyh'; b.setAttribute('role', 'status');
       b.innerHTML = '<button type="button" class="gyh-x" aria-label="Dismiss">×</button><button type="button" class="gyh-b"><span class="gyh-w" aria-hidden="true">👋</span><span class="gyh-t"><b>Hey!</b>How can I help?</span><span class="gyh-go">Ask Vision</span></button>';
-      doc.body.appendChild(b); requestAnimationFrame(function () { b.setAttribute('data-on', ''); });
-      function bye() { b.removeAttribute('data-on'); b.setAttribute('data-off', ''); try { sessionStorage.setItem('gms-hello', '1'); } catch (e) {} setTimeout(function () { b.remove(); }, 600); }
-      b.querySelector('.gyh-x').addEventListener('click', bye);
-      b.querySelector('.gyh-b').addEventListener('click', function () { var t = doc.querySelector('[data-r=bot] button[aria-label="Chat with Vision"]'); if (t) t.click(); bye(); });
-      setTimeout(function () { if (b.isConnected) bye(); }, 12000);
+      doc.body.appendChild(b);
+      b.querySelector('.gyh-x').addEventListener('click', function () { end(true); });
+      b.querySelector('.gyh-b').addEventListener('click', function () { var t = doc.querySelector('[data-r=bot] button[aria-label="Chat with Vision"]'); if (t) t.click(); end(true); });
     }
-    var go = function () { setTimeout(show, 1100); };
+    function show() { if (stop) return; if (doc.hidden || chatOpen()) { tm = setTimeout(show, 6000); return; } if (!b) build(); b.removeAttribute('data-off'); requestAnimationFrame(function () { b.setAttribute('data-on', ''); }); tm = setTimeout(hide, 6000); }
+    function hide() { if (!b) return; b.removeAttribute('data-on'); b.setAttribute('data-off', ''); if (!stop) tm = setTimeout(show, 6000); }
+    function end(forVisit) { stop = true; clearTimeout(tm); hide(); if (forVisit) try { sessionStorage.setItem('gms-hello', '1'); } catch (e) {} setTimeout(function () { if (b) { b.remove(); b = null; } }, 700); }
+    var go = function () { tm = setTimeout(show, 1100); };
     if (doc.getElementById('gms-ldr')) window.addEventListener('gms:entered', go, { once: true }); else go();
   }
 
