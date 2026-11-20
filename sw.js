@@ -1,7 +1,7 @@
 /* GMS service worker: the page and its code work offline (schedule, My Games, results), media stays network-only.
    Pages are network-first so a new deploy shows up on the next visit; versioned files are cache-first. */
-const CACHE = 'gms-b017922385';
-const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=4c79e934', 'assets/js/gms-room.js?v=da564714', 'assets/js/gms-motion.js?v=45793ea1', 'assets/js/gms-plus.js?v=93dc868f',
+const CACHE = 'gms-d348d5f5d2';
+const SHELL = ['./', 'index.html', 'support.js', 'vendor/react.production.min.js', 'vendor/react-dom.production.min.js', 'assets/js/gms-sound.js?v=4c79e934', 'assets/js/gms-room.js?v=da564714', 'assets/js/gms-motion.js?v=d5456536', 'assets/js/gms-plus.js?v=93dc868f',
   'assets/fonts/anton-latin.woff2', 'assets/fonts/inter-latin.woff2', 'assets/fonts/jetbrains-mono-latin.woff2',
   'assets/brand/gms-mark.svg', 'assets/brand/gms-mark-dark.svg', 'assets/brand/icon-192.png', 'assets/venue-poster.webp?v=0d1f11f4', 'assets/brand/gobananas-full.webp', 'assets/brand/gobananas-mark.webp', 'manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting())); });

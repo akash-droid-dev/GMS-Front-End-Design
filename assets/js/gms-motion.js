@@ -278,6 +278,40 @@
     var inner = sec.querySelector('.ecx-inner'); if (inner) inner.insertBefore(x, inner.firstChild);
   }
 
+  /* header: the day of the Games in a gold tile */
+  function dayTile() {
+    var nav = doc.querySelector('[data-r=nav]'), cta = nav && nav.querySelector('[data-r=navcta]'); if (!cta || cta.querySelector('.gy-day')) return;
+    var t = window.GMSApp && window.GMSApp.tour; if (!t) return;
+    var a = doc.createElement('a'); a.className = 'gy-day'; a.href = '#schedule';
+    function upd() { var ph = t.phase(), total = Math.floor((t.end - t.start) / 864e5) + 1, txt, lab;
+      if (ph === 'before') { var d = Math.ceil((t.start - Date.now()) / 864e5); lab = 'The Games'; txt = 'In ' + d + (d === 1 ? ' day' : ' days'); }
+      else if (ph === 'after') { lab = 'The Games'; txt = 'Complete'; }
+      else { lab = 'The Games'; txt = 'Day ' + (t.dayNow() + 1) + ' <i>/ ' + total + '</i>'; }
+      a.innerHTML = '<small>' + lab + '</small><b>' + txt + '</b>'; a.setAttribute('aria-label', lab + ': ' + txt.replace(/<[^>]+>/g, '')); }
+    a.addEventListener('click', function (e) { var s = doc.querySelector('[data-r=sch-section]'); if (s) { e.preventDefault(); window.scrollTo({ top: s.getBoundingClientRect().top + window.scrollY - 70, behavior: REDUCED ? 'auto' : 'smooth' }); } });
+    cta.insertBefore(a, cta.firstChild); upd(); setInterval(upd, 60000);
+  }
+
+  /* chapter openers: two graded photo cards, one under and one over the heading, drifting at different speeds */
+  function overlapCards() {
+    [['.vl-h', 'assets/venues/cover-badminton.webp', 'assets/venues/cover-tabletennis.webp'], ['.st-h', 'assets/sports/athletics.webp', 'assets/sports/swimming.webp']].forEach(function (c) {
+      var h = doc.querySelector(c[0]); if (!h || h.__ov) return; h.__ov = 1; h.classList.add('ovh');
+      h.insertAdjacentHTML('beforeend', '<span class="ovc-c a" aria-hidden="true"><img src="' + c[1] + '" alt="" loading="lazy" decoding="async"></span><span class="ovc-c b" aria-hidden="true"><img src="' + c[2] + '" alt="" loading="lazy" decoding="async"></span>');
+      if (REDUCED) return; var raf = 0;
+      function paint() { raf = 0; var r = h.getBoundingClientRect(), vh = window.innerHeight; if (r.bottom < -200 || r.top > vh + 200) return; var p = (r.top + r.height / 2) / vh - 0.5; h.style.setProperty('--oa', (p * 70).toFixed(1) + 'px'); h.style.setProperty('--ob', (p * -50).toFixed(1) + 'px'); }
+      window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true }); paint();
+    });
+  }
+
+  /* gold marks medals and finals wherever they are named in small text */
+  function goldTags() {
+    var re = /(^|[\s·|(])(finals?|medal(s| events?| table| ceremon(y|ies))?|podium|gold)\b/i, no = /semi|quarter|pre-?final/i;
+    doc.querySelectorAll('main small, main .pill, main .ec-ev span, [data-r=sch-section] small, .sc2-m, .ps figcaption, [data-r=steps-section] h3, [data-r=steps-section] b, .gyk-d, .ecg-lab small').forEach(function (el) {
+      if (el.hasAttribute('data-gold') || el.children.length > 2 || el.closest('.vl-key,.vl-list,p')) return; var t = (el.textContent || '').trim(); if (!t || t.length > 40) return;
+      if (re.test(t) && !no.test(t)) el.setAttribute('data-gold', '');
+    });
+  }
+
   /* ---------------- cursor field: small shuttles turn to the pointer (gev.design) ---------------- */
   function field() {
     var sec = doc.querySelector('.gyf'); if (!sec || sec.__f) return; sec.__f = 1; var cv = sec.querySelector('canvas'), cx = cv.getContext('2d'), pts = [], W = 0, H = 0, dpr = 1, tx = 0, ty = 0, ax = 0, ay = 0, raf = 0, on = false;
@@ -490,7 +524,7 @@
     if (REDUCED) { for (var i = 0; i < 400; i++) step(1 / 120); vis = true; draw(); vis = false; io.disconnect(); }
   }
 
-  function scan() { t = 0; flaps(); masks(); parScan(); sportGallery(); ecCloud(); venueTurn(); field(); badge(); inverter(); rowsPass(); glance(); lanyard(); }
+  function scan() { t = 0; flaps(); masks(); parScan(); sportGallery(); ecCloud(); venueTurn(); dayTile(); overlapCards(); goldTags(); field(); badge(); inverter(); rowsPass(); glance(); lanyard(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
   scan(); botHello();
