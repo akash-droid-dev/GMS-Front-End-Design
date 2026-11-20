@@ -1316,7 +1316,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=4c79e934"></script>
 <script defer src="./assets/js/gms-room.js?v=da564714"></script>
-<script defer src="./assets/js/gms-motion.js?v=d5456536"></script>
+<script defer src="./assets/js/gms-motion.js?v=45793ea1"></script>
 <script defer src="./assets/js/gms-plus.js?v=93dc868f"></script>
 </head>
 <body>
@@ -1963,37 +1963,6 @@ section.cr .cr-p{color:rgba(242,241,236,.62)}
 html #gms-shell nav[data-r=nav],html[data-theme=dark] #gms-shell nav[data-r=nav],nav[data-r=nav]{background:rgba(11,11,12,.95)!important;-webkit-backdrop-filter:blur(18px) saturate(1.3)!important;backdrop-filter:blur(18px) saturate(1.3)!important}
 html::before{content:"";position:fixed;left:0;right:0;top:0;height:78px;z-index:49;pointer-events:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);-webkit-mask:linear-gradient(180deg,#000 55%,transparent);mask:linear-gradient(180deg,#000 55%,transparent);opacity:var(--topblur,1);transition:opacity .4s}
 html.gy-top::before{opacity:0}
-/* ===== round 7: one film grade, a tiled header with the day of the Games, photo cards over chapter headings, gold for medals ===== */
-:root{--gold:#D9A93E;--gold-ink:#0B0B0C;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");--grain-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* one grade for every photo and film, whatever its source */
-:is(video,img[src*="/sports/"],img[src*="sportfilm"],img[src*="/venues/"],img[src*="/podium/"],img[src*="/stories/"],img[src*="ytimg"],img[src*="/tv/"],img[src*="/roles/"]){filter:saturate(.84) contrast(1.08) sepia(.1) brightness(.98)!important}
-.ps::after{background:var(--grain-l),linear-gradient(180deg,rgba(7,7,8,0) 55%,rgba(7,7,8,.6))!important;background-size:160px 160px,auto!important;mix-blend-mode:normal}
-.ecg-art::after{background:var(--grain-l),linear-gradient(180deg,rgba(11,11,12,0) 45%,rgba(11,11,12,.82) 100%)!important;background-size:160px 160px,auto!important}
-:is(.sc2,.sg-art,.ovc-c){position:relative}
-:is(.sc2,.ovc-c)::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:var(--grain);background-size:160px 160px;opacity:.55;mix-blend-mode:overlay;z-index:2}
-/* header: tiles divided by hairlines, with the day of the Games in gold */
-[data-r=nav]{--tl:rgba(242,241,236,.12);border-radius:16px!important;padding:0!important;gap:0!important;min-height:56px;align-items:stretch!important;overflow:hidden;border:1px solid var(--tl)!important}
-[data-r=nav]>button:first-child{display:flex!important;align-items:center;padding:0 20px!important;border-radius:0!important}
-[data-r=nav] [data-r=navlinks]{align-self:stretch;display:flex!important;align-items:stretch!important;gap:0!important;margin-left:0!important;border-left:1px solid var(--tl)}
-[data-r=nav] [data-r=navlinks]>button:not(.nv-mi):not([data-r=menu-admin]){border-radius:0!important;padding:0 22px!important;border-right:1px solid var(--tl)!important;display:flex!important;align-items:center;font-weight:600!important;letter-spacing:.01em}
-[data-r=nav] [data-r=navlinks]>button:not(.nv-mi):hover{background:rgba(242,241,236,.06)!important}
-[data-r=nav] [data-r=navcta]{align-self:stretch;display:flex!important;align-items:center;gap:10px!important;padding:0 8px 0 0!important}
-.gy-day{align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 20px;background:var(--gold);color:var(--gold-ink);white-space:nowrap;text-decoration:none}
-.gy-day small{font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
-.gy-day b{font:400 21px/1 var(--f-display);letter-spacing:.02em;text-transform:uppercase}
-.gy-day b i{font-style:normal;opacity:.55}
-@media (max-width:900px){.gy-day{padding:0 12px}.gy-day small{display:none}.gy-day b{font-size:16px}[data-r=nav]>button:first-child{padding:0 12px!important}}
-/* photo cards slide over and under two chapter headings */
-.ovh{position:relative;isolation:isolate;width:fit-content;max-width:100%}
-.ovc-c{position:absolute;display:block;border-radius:14px;overflow:hidden;box-shadow:0 24px 50px -16px rgba(0,0,0,.55);pointer-events:none;will-change:transform}
-.ovc-c img{display:block;width:100%;height:100%;object-fit:cover}
-.ovc-c.a{z-index:-1;width:clamp(100px,10vw,160px);aspect-ratio:4/5;right:-5%;top:-50%;transform:translateY(var(--oa,0px)) rotate(4deg)}
-.ovc-c.b{z-index:2;width:clamp(80px,7.5vw,120px);aspect-ratio:1/1;right:24%;top:30%;transform:translateY(var(--ob,0px)) rotate(-6deg)}
-@media (max-width:760px){.ovc-c.a{right:-2%;top:-70%;width:92px}.ovc-c.b{right:6%;top:58%;width:76px}}
-@media (prefers-reduced-motion:reduce){.ovc-c{transform:none!important}}
-/* gold marks medals and finals */
-[data-gold]{color:var(--gold)!important}
-[data-gold].gold-chip{background:var(--gold)!important;color:var(--gold-ink)!important}
 /* effects retired in the cleanup: grain, custom cursors, side rail */
 body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,[data-r=bt-sticky]::after,footer::after{background-image:none!important;animation:none!important;opacity:0!important}
 .gy-cur,.gms-cur,.gp-rail{display:none!important}
