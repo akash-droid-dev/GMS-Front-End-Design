@@ -10,20 +10,20 @@
 
   /* ---------------- split-flap: the key word of each heading rolls into yellow scoreboard tiles ---------------- */
   var flapIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting) { e.target.setAttribute('data-flap-on', ''); flapIO.unobserve(e.target); } });
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.style.setProperty('--sfl-bg', bgOf(e.target)); e.target.setAttribute('data-flap-on', ''); flapIO.unobserve(e.target); } });
   }, { threshold: 0.55 }) : null;
   function lastTextNode(el) {
     var w = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return n.nodeValue.trim() && !(n.parentNode.closest && n.parentNode.closest('.hero-dot,.sfl,.sx')) ? 1 : 3; } }), n, last = null;
     while ((n = w.nextNode())) last = n; return last;
   }
+  function bgOf(el) { var m = (getComputedStyle(el).color || '').match(/\d+(\.\d+)?/g) || [0, 0, 0], l = (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; return l < 0.5 ? '#F2F1EC' : '#0B0B0C'; }
   function flapWord(tn) {
     var txt = tn.nodeValue, m = txt.match(/^(.*?)([A-Za-z][A-Za-z'’\-]{2,})([^A-Za-z]*)$/); if (!m) return false;
     var word = m[2], wrap = doc.createElement('span'); wrap.className = 'sfl';
     var sr = doc.createElement('span'); sr.className = 'sfl-sr'; sr.textContent = word; wrap.appendChild(sr);
     for (var i = 0; i < word.length; i++) {
       var c = doc.createElement('span'); c.className = 'sfl-c'; c.setAttribute('aria-hidden', 'true');
-      c.innerHTML = '<span class="sfl-s" style="--i:' + i + '"><span class="sfl-a"></span><span class="sfl-b"></span></span>';
-      c.querySelector('.sfl-a').textContent = word[i]; c.querySelector('.sfl-b').textContent = word[i]; wrap.appendChild(c);
+      var s = doc.createElement('span'); s.className = 'sfl-s'; s.style.setProperty('--i', i); s.textContent = word[i]; c.appendChild(s); wrap.appendChild(c);
     }
     var frag = doc.createDocumentFragment(); if (m[1]) frag.appendChild(doc.createTextNode(m[1])); frag.appendChild(wrap); if (m[3]) frag.appendChild(doc.createTextNode(m[3]));
     tn.parentNode.replaceChild(frag, tn); return true;
@@ -33,7 +33,7 @@
       if (h.__flap || h.closest('[data-r=ecx],[data-r=tv-section]')) return; // live headings are redrawn by the page; leave them alone
       if (h.matches('main h2') && !h.querySelector('.gms-w') && !h.closest('.pdk,.vl')) return; // wait until the line reveal has split it
       var em = h.querySelector('em'), tn = lastTextNode(em || h); if (!tn) return;
-      h.__flap = 1; if (flapWord(tn)) { h.classList.add('has-flap'); if (flapIO && !REDUCED) flapIO.observe(h); else h.setAttribute('data-flap-on', ''); }
+      h.__flap = 1; if (flapWord(tn)) { h.classList.add('has-flap'); h.style.setProperty('--sfl-bg', bgOf(h)); if (flapIO && !REDUCED) flapIO.observe(h); else h.setAttribute('data-flap-on', ''); }
     });
   }
 
@@ -114,149 +114,43 @@
      The camera walks round as you scroll or drag; click a frame to walk up to it, click again to open the match. */
   function galleryRoom(stage, o) { return window.gmsRoom(stage, o); }
 
-  /* section 07: the entrance to the gallery: same wall, ceiling and floor as the room, an arched doorway onto it, spotlit prints and a velvet rope */
-  function sgEsc(t) { return String(t || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function sgScene(cards) {
-    var im = function (i) { var c = cards[i % Math.max(1, cards.length)] || {}; return '<img src="' + sgEsc(c.img) + '" alt="" loading="lazy" decoding="async" draggable="false">'; },
-      lab = function (i) { var c = cards[i] || {}; return '<span class="sg-lab"><i>' + sgEsc(c.name) + '</i><small>' + sgEsc(c.meta || 'In the gallery') + '</small></span>'; };
-    return '<span class="sg-hall" aria-hidden="true">' +
-      '<span class="sg-ceil"><span class="sg-rail"></span><span class="sg-spot" style="left:15%;--r:18deg"></span><span class="sg-spot" style="left:38%"></span><span class="sg-spot" style="left:60%"></span><span class="sg-spot" style="right:15%;--r:-18deg"></span></span>' +
-      '<span class="sg-wall"><span class="sg-sign"><small>Veer Savarkar Sports Complex</small><b>The Sports Gallery</b></span>' +
-        '<span class="sg-pf l"><span class="sg-art">' + im(0) + '</span>' + lab(0) + '</span><span class="sg-pf r"><span class="sg-art">' + im(1) + '</span>' + lab(1) + '</span>' +
-        '<span class="sg-portal"><span class="sg-in"><span class="sg-mini a">' + im(2) + '</span><span class="sg-mini b">' + im(3) + '</span><span class="sg-mini c">' + im(4) + '</span></span></span></span>' +
-      '<span class="sg-floor"></span><span class="sg-cone l"></span><span class="sg-cone r"></span>' +
-      '<span class="sg-rope"><svg viewBox="0 0 460 120"><defs><linearGradient id="sgBrass" x1="0" x2="1"><stop offset="0" stop-color="#6B5320"/><stop offset=".45" stop-color="#E9C979"/><stop offset=".6" stop-color="#B8913E"/><stop offset="1" stop-color="#5A4519"/></linearGradient></defs>' +
-        '<rect class="post" x="26" y="20" width="16" height="92" rx="4"/><circle class="post" cx="34" cy="16" r="12"/><ellipse class="post" cx="34" cy="114" rx="30" ry="7"/>' +
-        '<rect class="post" x="418" y="20" width="16" height="92" rx="4"/><circle class="post" cx="426" cy="16" r="12"/><ellipse class="post" cx="426" cy="114" rx="30" ry="7"/>' +
-        '<g class="swing"><path class="cord" d="M34 26C140 96 320 96 426 26"/><path class="cordhi" d="M40 28C140 90 320 90 420 28"/></g></svg></span>' +
-      '</span><span class="sg-cta">Step inside the gallery <span aria-hidden="true">→</span></span><span class="sg-hint" aria-hidden="true">' + cards.length + ' sports · one room</span>';
-  }
+  /* section 07: the real gallery waits behind heavy velvet curtains; they sway when you come near and draw open when you step in */
   function sportGallery() {
     var sec = doc.querySelector('[data-r=stories]'); if (!sec || sec.__g) return; var track = sec.querySelector('.st-track'); if (!track || !track.querySelector('.sc2')) return; sec.__g = 1;
-    var cards = Array.prototype.map.call(track.querySelectorAll('.sc2'), function (c) { var i = c.querySelector('img'); return { img: i ? i.getAttribute('src') : '', name: ((c.querySelector('.sc2-n') || {}).textContent || '').trim(), meta: ((c.querySelector('.sc2-m') || {}).textContent || '').trim() }; });
+    var n = track.querySelectorAll('.sc2').length;
     var gate = doc.createElement('div'); gate.className = 'sg-gate';
-    gate.innerHTML = '<button type="button" class="sg-door" data-sg-enter aria-label="Step inside the sports gallery">' + sgScene(cards) + '</button>';
+    gate.innerHTML = '<div class="sg-box"><div class="sg-behind" aria-hidden="true"></div><div class="sg-light" aria-hidden="true"></div>' +
+      '<div class="sg-curt" aria-hidden="true"><div class="sg-c l"></div><div class="sg-c r"></div><div class="sg-pel"><span>The Sports Gallery</span></div></div>' +
+      '<button type="button" class="sg-door" data-sg-enter aria-label="Open the curtain and enter the sports gallery"><span class="sg-cta">Open the curtain <span aria-hidden="true">→</span></span><small>' + n + ' sports · one room</small></button></div>';
     var wrap = doc.createElement('div'); wrap.className = 'sg-wrap'; wrap.innerHTML = '<div class="sg-pin"><div class="sg-stage"></div><button type="button" class="sg-exit" data-sg-exit>Leave the gallery</button></div>';
     track.parentNode.insertBefore(gate, track); track.parentNode.insertBefore(wrap, track);
-    var door = gate.querySelector('.sg-door'), raf = 0, tx = 0, ty = 0;
+    var box = gate.querySelector('.sg-box'), stage = wrap.querySelector('.sg-stage');
+    function items() { return Array.prototype.map.call(track.querySelectorAll('.sc2'), function (c) { var im = c.querySelector('img'), nm = (c.querySelector('.sc2-n') || {}).textContent || '', m = (c.querySelector('.sc2-m') || {}).textContent || '', a = c.querySelector('.sc2-a');
+      return { sig: nm + m, img: im ? im.getAttribute('src') : '', title: nm.trim(), round: '', small: m.trim(), plate: nm.trim(), href: a ? a.getAttribute('href') : '#', aria: nm.trim() + ', ' + m.trim() }; }); }
+    /* the room behind the curtain is the same gallery, standing still at the entrance */
+    var behind = galleryRoom(gate.querySelector('.sg-behind'), { items: items, active: function () { return !sec.hasAttribute('data-in'); }, walk: function () { return 0.08; }, open: function () {} });
+    var seen = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { if (es[0].isIntersecting) { behind.build(); seen.disconnect(); } }, { rootMargin: '60% 0px' }) : null; if (seen) seen.observe(gate); else behind.build();
+    /* the fabric leans towards the visitor's pointer */
     if (window.matchMedia && matchMedia('(hover:hover)').matches && !REDUCED) {
-      door.addEventListener('pointermove', function (e) { var r = door.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width; ty = (e.clientY - r.top) / r.height; if (raf) return; raf = requestAnimationFrame(function () { raf = 0; var cx = 0.5, cy = 0.55; door.style.setProperty('--mx', Math.max(-1, Math.min(1, (tx - cx) * 2)).toFixed(3)); door.style.setProperty('--my', Math.max(-1, Math.min(1, (ty - cy) * 2)).toFixed(3)); door.style.setProperty('--px', (tx * 100).toFixed(1) + '%'); door.style.setProperty('--py', (ty * 100).toFixed(1) + '%'); }); });
-      door.addEventListener('pointerleave', function () { door.style.setProperty('--mx', 0); door.style.setProperty('--my', 0); });
+      var raf = 0, px = 0.5; box.addEventListener('pointermove', function (e) { var r = box.getBoundingClientRect(); px = (e.clientX - r.left) / r.width; if (raf) return; raf = requestAnimationFrame(function () { raf = 0; box.style.setProperty('--px', px.toFixed(3)); }); });
+      box.addEventListener('pointerleave', function () { box.style.setProperty('--px', 0.5); });
     }
-    if ('IntersectionObserver' in window) { var seen = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { gate.setAttribute('data-seen', ''); seen.disconnect(); } }, { threshold: 0.3 }); seen.observe(gate); } else gate.setAttribute('data-seen', '');
-    var stage = wrap.querySelector('.sg-stage');
-    function items() { return Array.prototype.map.call(track.querySelectorAll('.sc2'), function (c) { var im = c.querySelector('img'), n = (c.querySelector('.sc2-n') || {}).textContent || '', m = (c.querySelector('.sc2-m') || {}).textContent || '', a = c.querySelector('.sc2-a');
-      return { sig: n + m, img: im ? im.getAttribute('src') : '', title: n.trim(), round: '', small: m.trim(), plate: n.trim(), href: a ? a.getAttribute('href') : '#', aria: n.trim() + ', ' + m.trim() }; }); }
     var g = galleryRoom(stage, { items: items, capLead: 'You are standing at', openLabel: 'Open the sport page →', active: function () { return sec.hasAttribute('data-in'); },
       walk: function () { var r = wrap.getBoundingClientRect(), vh = window.innerHeight; return Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh))); },
       open: function (it) { if (it.href && it.href !== '#') location.href = it.href; } });
-    function enter() { if (sec.hasAttribute('data-in') || sec.hasAttribute('data-going')) return; gate.setAttribute('data-seen', ''); sec.setAttribute('data-going', ''); setTimeout(function () { sec.removeAttribute('data-going'); sec.setAttribute('data-in', ''); g.build(); var t = wrap.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: t, behavior: REDUCED ? 'auto' : 'smooth' }); }, REDUCED ? 0 : 1800); }
-    function leave() { sec.removeAttribute('data-in'); door.style.setProperty('--mx', 0); door.style.setProperty('--my', 0); var t = sec.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: t, behavior: 'auto' }); }
+    function enter() { if (sec.hasAttribute('data-in') || sec.hasAttribute('data-going')) return; behind.build(); sec.setAttribute('data-going', ''); setTimeout(function () { sec.removeAttribute('data-going'); sec.setAttribute('data-in', ''); g.build(); var t = wrap.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: t, behavior: REDUCED ? 'auto' : 'smooth' }); }, REDUCED ? 0 : 1700); }
+    function leave() { sec.removeAttribute('data-in'); var t = sec.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: t, behavior: 'auto' }); }
     sec.addEventListener('click', function (e) { if (e.target.closest('[data-sg-enter]')) enter(); else if (e.target.closest('[data-sg-exit]')) leave(); });
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sec.hasAttribute('data-in') && !stage.hasAttribute('data-focus')) leave(); });
-    var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (sec.hasAttribute('data-in')) g.build(); }, 300); }).observe(track, { childList: true, subtree: true });
+    var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (sec.hasAttribute('data-in')) g.build(); else behind.build(); }, 300); }).observe(track, { childList: true, subtree: true });
   }
 
-  /* section 01: the chosen photo with a live line drawing of the hall; the card curls at the corner and turns like a heavy page */
-  /* the venue drawings are laid out on the official plans' own coordinates (percent of the sheet), so every room and pin sits where the plan puts it */
-  function vtPlan(k) {
-    var o = [], q = 0, f = function (n) { return (+n).toFixed(1); }, X = function (p) { return p * 10; }, Y = function (p) { return p * 7.07; };
-    function pop(svg) { o.push('<g class="pf" style="--d:' + (0.15 + (q++) * 0.03).toFixed(2) + '">' + svg + '</g>'); }
-    function R(x0, y0, x1, y1, fill, st, rx) { return '<rect x="' + f(X(x0)) + '" y="' + f(Y(y0)) + '" width="' + f(X(x1 - x0)) + '" height="' + f(Y(y1 - y0)) + '" rx="' + (rx || 0) + '" fill="' + fill + '"' + (st ? ' stroke="' + st + '" stroke-width="1.2"' : '') + '/>'; }
-    function L(d, st, w) { return '<path d="' + d + '" fill="none" stroke="' + (st || '#F2F1EC') + '" stroke-width="' + (w || 1) + '"/>'; }
-    function T(x, y, s) { return '<text x="' + f(X(x)) + '" y="' + f(Y(y) + 4) + '" text-anchor="middle" class="lb">' + s + '</text>'; }
-    function pin(n, x, y) { o.push('<g class="pin" style="--d:' + (1.5 + n * 0.06).toFixed(2) + '"><g class="pi"><circle cx="' + f(X(x)) + '" cy="' + f(Y(y)) + '" r="13"/><text x="' + f(X(x)) + '" y="' + f(Y(y) + 4.5) + '">' + n + '</text></g></g>'); }
-    function arrow(x, y, dir) { var cx = X(x), cy = Y(y), p = dir === 'l' ? [[cx + 7, cy - 8], [cx - 7, cy], [cx + 7, cy + 8]] : dir === 'r' ? [[cx - 7, cy - 8], [cx + 7, cy], [cx - 7, cy + 8]] : dir === 'u' ? [[cx - 8, cy + 7], [cx, cy - 7], [cx + 8, cy + 7]] : [[cx - 8, cy - 7], [cx, cy + 7], [cx + 8, cy - 7]]; return '<path d="M' + p.map(function (a) { return f(a[0]) + ' ' + f(a[1]); }).join('L') + 'Z" fill="#E5484D"/>'; }
-    function seatsP(x0, y0, x1, y1, col, gap) { var s = '', g = gap || 9; for (var y = Y(y0) + 2; y < Y(y1) - 2; y += g) for (var x = X(x0) + 2; x < X(x1) - 2; x += g) s += '<rect x="' + f(x) + '" y="' + f(y) + '" width="' + (g * 0.66).toFixed(1) + '" height="' + (g * 0.66).toFixed(1) + '" rx="1" fill="' + col + '"/>'; return s; }
-    function podium(x0, y0, x1, y1) { var w = (x1 - x0) / 3; return R(x0, y0 + (y1 - y0) * .35, x0 + w, y1, '#B8BCC6') + R(x0 + w, y0, x0 + 2 * w, y1, '#D4AF37') + R(x0 + 2 * w, y0 + (y1 - y0) * .5, x1, y1, '#B0784A'); }
-    function court(x0, y0, x1, y1, op) { var x = X(x0), y = Y(y0), w = X(x1 - x0), h = Y(y1 - y0), cx = x + w / 2, my = y + h / 2, ss = h * 0.15, lb = h * 0.055, si = w * 0.075;
-      return '<g' + (op ? ' opacity="' + op + '"' : '') + '><rect x="' + f(x) + '" y="' + f(y) + '" width="' + f(w) + '" height="' + f(h) + '" fill="#2AA58C"/>' + L('M' + f(x) + ' ' + f(y) + 'h' + f(w) + 'v' + f(h) + 'h' + f(-w) + 'Z') + L('M' + f(x + si) + ' ' + f(y) + 'v' + f(h) + 'M' + f(x + w - si) + ' ' + f(y) + 'v' + f(h) + 'M' + f(x) + ' ' + f(my - ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(my + ss) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + lb) + 'h' + f(w) + 'M' + f(x) + ' ' + f(y + h - lb) + 'h' + f(w) + 'M' + f(cx) + ' ' + f(y) + 'V' + f(my - ss) + 'M' + f(cx) + ' ' + f(my + ss) + 'V' + f(y + h), '#F2F1EC', 0.6) + L('M' + f(x - 3) + ' ' + f(my) + 'h' + f(w + 6), '#0B0B0C', 1.8) + '</g>'; }
-    function hall(x0, y0, x1, y1) { return '<rect x="' + f(X(x0)) + '" y="' + f(Y(y0)) + '" width="' + f(X(x1 - x0)) + '" height="' + f(Y(y1 - y0)) + '" rx="46" fill="#1A1B20" stroke="#3A3B42" stroke-width="2"/>'; }
-    var live = '', vb;
-    if (k === 'tabletennis') {
-      vb = '70 40 860 640';
-      o.push(R(44.5, 3.5, 70, 23, '#202128', '#34353D', 4) + T(57, 13, 'PLAZA · DRIVEWAY')); o.push(hall(9.5, 25.5, 91.5, 92));
-      pop(R(27, 38.5, 74, 75, '#5E6068') + T(50.5, 37.2, 'FIELD OF PLAY 39.4 × 34.2 M'));
-      pop(R(39, 43, 62.5, 70, '#BBD8EE'));
-      pop(R(38.8, 57.3, 62.5, 61.8, '#1F4E7F') + T(50.5, 59.6, 'CENTRAL AISLE · 5.5 M'));
-      [46.7, 52.6, 65.6].forEach(function (ty) { [42.8, 48.2, 53.6, 59.0].forEach(function (tx) { pop(R(tx - 2.6, ty - 3.3, tx + 2.6, ty + 3.3, 'none', '#6B3A8A') + R(tx - 0.9, ty - 1.6, tx + 0.9, ty + 1.6, '#1D4FA3', '#F2F1EC') + L('M' + f(X(tx - 0.9)) + ' ' + f(Y(ty)) + 'h' + f(X(1.8)), '#0B0B0C', 1.6) + R(tx - 2.2, ty - 0.6, tx - 1.4, ty + 0.6, '#C9A57A')); }); });
-      pop(R(43.5, 71.3, 57.5, 73, '#C9A57A', null, 2) + R(49.5, 71, 51.5, 73.4, '#E5A3A3'));
-      pop(podium(45.5, 38.7, 49.5, 40.3));
-      pop(R(62, 34.5, 68, 38.5, '#E8C64A', '#B89A2A', 3));
-      pop(arrow(25.3, 55.2, 'r') + L('M' + f(X(10.5)) + ' ' + f(Y(56.5)) + 'H' + f(X(24)), '#E5484D', 1.5));
-      pop(R(15.6, 51.5, 21.6, 61.9, '#E8C64A', '#B89A2A', 3) + T(18.6, 57, 'REG'));
-      pop(R(42, 78, 50.5, 86, '#E8C64A', '#B89A2A', 3) + T(46.3, 82.4, 'MEETING'));
-      pop(R(56, 78, 62.5, 86, '#E8C64A', '#B89A2A', 3) + T(59.3, 82, 'CAFÉ'));
-      pop(R(21, 28, 33, 30.2, '#3E8E6A') + T(27, 29.3, 'MERCHANDISE') + arrow(52, 26.5, 'd'));
-      live = '<circle r="2.4" fill="#FFF7E0" cx="' + f(X(48.2)) + '"><animate attributeName="cy" values="' + f(Y(51.2)) + ';' + f(Y(54)) + ';' + f(Y(51.2)) + '" dur="1s" repeatCount="indefinite"/></circle>';
-      pin(1, 45, 49.5); pin(2, 50.5, 59.4); pin(3, 50.5, 72.3); pin(4, 65, 36); pin(5, 24.5, 55.2); pin(6, 18.3, 60.1); pin(7, 46.3, 82.4); pin(8, 59.3, 82); pin(9, 47.8, 39.8);
-    } else if (k === 'ceremony') {
-      vb = '50 90 900 560';
-      o.push(hall(5, 13, 95, 87));
-      pop(R(24.6, 29.5, 75.5, 64, '#55575F'));
-      for (var c = 0; c < 9; c++) pop(court(26 + c * 5.28, 34, 26 + c * 5.28 + 3.9, 46.5, 0.85));
-      [26.5, 31.6, 63, 68.2].forEach(function (cx) { pop(court(cx, 49, cx + 3.9, 61.5, 0.85)); });
-      pop(R(35.2, 45.5, 62.6, 64, '#4FD1A5') + T(49, 47.5, 'CEREMONY FLOOR'));
-      pop(R(46.2, 55.7, 51.6, 62.6, '#3A3326', '#D4AF37', 3) + R(46.2, 54.7, 51.6, 55.7, 'url(#led)', null, 1) + T(48.9, 59.3, 'STAGE'));
-      pop(seatsP(36.5, 56.5, 45, 58.3, '#E8D9A8', 8) + seatsP(53.5, 56.5, 61, 58.3, '#E8D9A8', 8));
-      pop(seatsP(36, 59.8, 45, 61.5, '#C9A14A', 8) + seatsP(53.5, 59.8, 62, 61.5, '#C9A14A', 8));
-      var arc = ''; for (var a = 0; a < 3; a++) { var rx = 230 - a * 16, ry = 152 - a * 14; for (var t = 0; t <= 34; t++) { var th = Math.PI * (0.05 + 0.9 * t / 34), x = X(49) - Math.cos(th) * rx, y = Y(50.5) - Math.sin(th) * ry; arc += '<rect x="' + f(x - 3) + '" y="' + f(y - 3) + '" width="6" height="6" rx="1" fill="#E8D44A"/>'; } } pop(arc);
-      pop(R(23, 18, 77, 27.5, '#2A2B33') + seatsP(23.5, 18.5, 28, 25, '#D65BC8', 8) + seatsP(28.5, 18.5, 40, 25, '#B2454E', 8) + seatsP(40.5, 18.5, 59, 25, '#3B57D6', 8) + seatsP(59.5, 18.5, 71.5, 25, '#B2454E', 8) + seatsP(72, 18.5, 77, 25, '#D65BC8', 8) + seatsP(41, 25.6, 59, 27.4, '#E5484D', 8));
-      pop(R(23, 66, 77, 78.5, '#2A2B33') + seatsP(23.5, 66.5, 77, 76, '#4A6AC8', 8));
-      pop(R(15.3, 34, 21.3, 64, '#2A2B33') + seatsP(15.6, 34.5, 21, 63.5, '#C9A14A', 8) + R(77.3, 34, 83.3, 64, '#2A2B33') + seatsP(77.6, 34.5, 83, 63.5, '#C9A14A', 8));
-      pop(podium(74.1, 51.5, 75.4, 59));
-      live = '<path d="M' + f(X(44)) + ' ' + f(Y(14)) + 'L' + f(X(46.5)) + ' ' + f(Y(55)) + 'H' + f(X(49.5)) + 'Z" fill="url(#beam)" class="beam"/><path d="M' + f(X(54)) + ' ' + f(Y(14)) + 'L' + f(X(48.5)) + ' ' + f(Y(55)) + 'H' + f(X(51.5)) + 'Z" fill="url(#beam)" class="beam b2"/>';
-      pin(1, 48.9, 60.1); pin(2, 40.8, 57.6); pin(3, 57.3, 61.5); pin(4, 48.5, 35.4); pin(5, 50, 23.3); pin(6, 74.8, 55.2); pin(7, 69.5, 39.6);
-    } else {
-      vb = '70 40 860 620';
-      o.push(R(44, 6.5, 68, 23.5, '#202128', '#34353D', 4) + T(56, 15, 'BLOCK E · PLAZA')); o.push(hall(8, 25.5, 92, 91));
-      pop(R(26, 41.5, 74, 74, '#5E6068'));
-      for (var j = 0; j < 18; j++) { var cc = j % 9, rw = (j / 9) | 0, x0 = 27.3 + cc * 4.94; pop(court(x0, rw ? 59.3 : 45.5, x0 + 3.75, rw ? 71.2 : 57.4)); }
-      pop(seatsP(26.5, 40, 73.5, 41.4, '#3B57D6', 7) + seatsP(36, 72, 70, 73.4, '#C9A57A', 7));
-      pop(R(71.3, 55, 73.3, 61.2, '#3A3326', '#D4AF37', 2) + podium(72.6, 62, 74.1, 69));
-      pop(arrow(75, 58, 'l'));
-      pop(arrow(77.4, 44.5, 'l') + arrow(77, 72.5, 'l'));
-      pop(R(85, 53, 92, 63.5, '#E8A443', '#B87A22', 3) + T(88.5, 58.4, 'VVIP LUNCH'));
-      pop(R(79, 61, 82.6, 74, '#3E8E6A', '#2C6B4E', 3) + T(80.8, 67.5, 'GREEN'));
-      pop(R(79, 44, 82.6, 55, '#8E8D88', '#6B6A66', 3));
-      pop(arrow(23.5, 57.6, 'r') + arrow(23, 73, 'r'));
-      pop(R(8, 53, 14.6, 63.5, '#6F9BD8', '#4A72AC', 3) + T(11.3, 58.4, 'HYDRATION'));
-      pop(R(8, 36, 14.6, 52, '#D86B6B', '#A84848', 3) + T(11.3, 44, 'LOCKERS') + R(8, 64, 14.6, 80, '#3B57D6', '#2A3F9E', 3) + T(11.3, 72, 'LOCKERS'));
-      pop(R(18, 74.5, 24.3, 80, '#E8C64A', '#B89A2A', 3) + T(21.2, 77.4, 'KIT'));
-      pop(R(17.2, 44, 21, 54, '#B48AC8', '#8A62A0', 3) + R(17.2, 61, 21, 71, '#B48AC8', '#8A62A0', 3));
-      pop(R(20.5, 26.5, 44, 29, '#54D6E8') + R(56, 26.5, 79.5, 29, '#54D6E8') + R(26.5, 86.5, 79, 89, '#54D6E8') + T(52.8, 87.9, 'LUNCH & REFRESHMENT'));
-      pop(arrow(50, 30, 'd'));
-      live = '<circle r="2.6" fill="#FFF7E0" cx="' + f(X(27.3 + 4 * 4.94 + 1.9)) + '"><animate attributeName="cy" values="' + f(Y(47)) + ';' + f(Y(56)) + ';' + f(Y(47)) + '" dur="1.4s" repeatCount="indefinite" calcMode="spline" keySplines=".3 0 .7 1;.3 0 .7 1"/></circle>';
-      pin(1, 50, 56.6); pin(2, 73.2, 66); pin(3, 75, 55); pin(4, 77.4, 42.5); pin(5, 88.4, 58); pin(6, 81.1, 65.7); pin(7, 23, 57.6); pin(8, 11.4, 56.6); pin(9, 11.4, 43.5); pin(10, 21.4, 77); pin(11, 32.5, 27.4); pin(12, 49.8, 31.3); pin(13, 81.4, 46.5);
-    }
-    return '<svg class="vt-vec" viewBox="' + vb + '" aria-hidden="true"><defs><linearGradient id="led" x1="0" x2="1"><stop offset="0" stop-color="#E5484D"/><stop offset=".5" stop-color="#F2F1EC"/><stop offset="1" stop-color="#3B82F6"/><animate attributeName="x1" values="0;-1;0" dur="6s" repeatCount="indefinite"/><animate attributeName="x2" values="1;2;1" dur="6s" repeatCount="indefinite"/></linearGradient><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".5"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></linearGradient></defs>' + o.join('') + '<g class="lv">' + live + '</g></svg>';
-  }
+  /* section 01: each layout arrives as a rolled paper map that unrolls with the scroll; switching layouts rolls the next one out */
   function venueTurn() {
-    var sec = doc.querySelector('section.vl'); if (!sec || sec.__vt) return; var plan = sec.querySelector('.vl-plan'); if (!plan) return; sec.__vt = 1;
-    var C = { badminton: ['assets/venues/cover-badminton.webp?v=2', 'Badminton hall', 'Block C · first floor · 18 courts'], ceremony: ['assets/venues/cover-ceremony.webp?v=2', 'Opening ceremony', 'Block C · second floor · seating'], tabletennis: ['assets/venues/cover-tabletennis.webp?v=2', 'Table tennis hall', 'Block C · ground floor · 12 tables'] };
-    var shade = doc.createElement('span'); shade.className = 'vt-shadow'; plan.appendChild(shade);
-    var cv = doc.createElement('button'); cv.type = 'button'; cv.className = 'vt'; cv.setAttribute('aria-label', 'Turn the card to see the layout');
-    cv.innerHTML = '<span class="vt-bg"></span><span data-vt-vec></span><span class="vt-shade"></span><span class="vt-txt"><small data-vt-k></small><b data-vt-t></b><span class="vt-cue"><i class="vt-hand" aria-hidden="true"></i>Turn to see the layout</span></span><span class="vt-sheen" aria-hidden="true"></span>';
-    plan.appendChild(cv); var flap = doc.createElement('span'); flap.className = 'vt-flap'; flap.setAttribute('aria-hidden', 'true'); plan.appendChild(flap); plan.setAttribute('data-turn', '0');
-    var nudgeT = 0, dx0 = null, k0 = 'badminton';
-    function set(k) { var c = C[k] || C.badminton; k0 = k; cv.querySelector('[data-vt-vec]').innerHTML = vtPlan(k); cv.querySelector('[data-vt-t]').textContent = c[1]; cv.querySelector('[data-vt-k]').textContent = c[2]; if (cv.hasAttribute('data-live')) { cv.removeAttribute('data-live'); void cv.offsetWidth; cv.setAttribute('data-live', ''); } }
-    function turn(open) { plan.setAttribute('data-turn', open ? '1' : '0'); cv.tabIndex = open ? -1 : 0; cv.setAttribute('aria-hidden', open ? 'true' : 'false'); if (open) { plan.classList.remove('vt-nudge'); clearTimeout(nudgeT); } }
-    function nudge() { clearTimeout(nudgeT); if (plan.getAttribute('data-turn') === '1' || REDUCED) return; plan.classList.remove('vt-nudge'); void plan.offsetWidth; plan.classList.add('vt-nudge'); nudgeT = setTimeout(nudge, 6000); }
-    cv.addEventListener('click', function () { if (cv.__drag) { cv.__drag = 0; return; } turn(true); });
-    cv.addEventListener('pointerdown', function (e) { dx0 = e.clientX; });
-    window.addEventListener('pointerup', function (e) { if (dx0 === null) return; var d = e.clientX - dx0; dx0 = null; if (d < -40) { cv.__drag = 1; turn(true); } });
-    var zb = doc.createElement('span'); zb.className = 'vt-zoom'; zb.setAttribute('role', 'button'); zb.tabIndex = 0; zb.setAttribute('aria-label', 'Zoom the drawing'); zb.innerHTML = '<i aria-hidden="true">⤢</i>Zoom'; cv.appendChild(zb);
-    function zoom(e) { e.stopPropagation(); e.preventDefault(); var lb = doc.createElement('div'); lb.className = 'vt-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', (C[k0] || C.badminton)[1] + ' drawing');
-      lb.innerHTML = '<div class="vt-lb-top"><b>' + (C[k0] || C.badminton)[1] + '</b><span>Pinch or drag to look around</span><button type="button" class="vt-lb-x" aria-label="Close">×</button></div><div class="vt-lb-sc">' + vtPlan(k0) + '</div>';
-      doc.body.appendChild(lb); doc.documentElement.style.overflow = 'hidden'; requestAnimationFrame(function () { lb.setAttribute('data-on', ''); var sc = lb.querySelector('.vt-lb-sc'); sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2; sc.scrollTop = (sc.scrollHeight - sc.clientHeight) / 2; });
-      function shut() { lb.removeAttribute('data-on'); doc.documentElement.style.overflow = ''; doc.removeEventListener('keydown', esc); setTimeout(function () { lb.remove(); }, 350); zb.focus(); }
-      function esc(ev) { if (ev.key === 'Escape') shut(); }
-      lb.querySelector('.vt-lb-x').addEventListener('click', shut); lb.addEventListener('click', function (ev) { if (ev.target === lb) shut(); }); doc.addEventListener('keydown', esc); lb.querySelector('.vt-lb-x').focus(); }
-    zb.addEventListener('click', zoom); zb.addEventListener('pointerdown', function (e) { e.stopPropagation(); }); zb.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') zoom(e); });
-    var close = doc.createElement('button'); close.type = 'button'; close.className = 'vt-back'; close.innerHTML = '↺ Turn back'; close.addEventListener('click', function () { turn(false); setTimeout(nudge, 1400); }); plan.appendChild(close);
-    sec.addEventListener('click', function (e) { var tb = e.target.closest('[data-vl-tab]'); if (tb) { var k = tb.getAttribute('data-vl-tab'); if (k !== k0) { set(k); turn(false); nudge(); } } });
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cv.setAttribute('data-live', ''); setTimeout(nudge, 1800); } else { clearTimeout(nudgeT); } }, { threshold: 0.35 }).observe(plan); else cv.setAttribute('data-live', '');
-    set('badminton');
+    var sec = doc.querySelector('section.vl'); if (!sec || sec.__vt || !window.gmsRoll) return; var plan = sec.querySelector('.vl-plan'); if (!plan) return;
+    var figs = plan.querySelectorAll('figure'); if (!figs.length) return; sec.__vt = 1;
+    figs.forEach(function (fig) { var z = fig.querySelector('.vlz'), im = z && z.querySelector('img'); if (z && im) window.gmsRoll.attach(z, { src: im.getAttribute('src') }); });
+    sec.addEventListener('click', function (e) { if (!e.target.closest('[data-vl-tab]')) return; setTimeout(function () { var f = plan.querySelector('figure[data-off="0"]') || plan.querySelector('figure'), z = f && f.querySelector('.vlz'); if (z && z.__rm) z.__rm.replay(); }, 40); });
   }
 
   /* the event centre: a small glass orb that morphs into a dark glass panel; rows rise in one by one, scores count up */

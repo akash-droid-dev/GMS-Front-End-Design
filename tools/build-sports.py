@@ -124,7 +124,7 @@ img{max-width:100%;display:block}a{color:inherit}
 h2{font:var(--h2);letter-spacing:-.018em;margin:14px 0 0}
 .hero,.dark,.deep,.top,footer{--acc:#F2F1EC;--acc-on:#0B0B0C}
 h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{color:var(--acc)}
-.top{position:fixed;inset:14px var(--gut) auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(11,11,12,.72);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(244,239,230,.1);color:var(--ivory);max-width:var(--wrap);margin:0 auto}
+.top{position:fixed;inset:14px var(--gut) auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(0,0,0,.94);border:1px solid rgba(242,241,236,.1);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(244,239,230,.1);color:var(--ivory);max-width:var(--wrap);margin:0 auto}
 .top-l{display:flex;align-items:center;gap:14px;text-decoration:none}.top-l img{height:28px;width:auto}.top-l b{font:800 15px 'Anton';letter-spacing:-.02em}
 .top-r{display:flex;gap:8px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;font:600 14px 'Inter';text-decoration:none;transition:background .4s var(--ease),color .4s,border-color .4s,transform .4s var(--ease);white-space:nowrap}
@@ -138,7 +138,8 @@ h2 em{font-style:italic}h2 em{font-style:normal;color:var(--acc)}.dark h2 em{col
 @keyframes kb{to{scale:1}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,8,.9) 0%,rgba(7,7,8,.5) 45%,rgba(7,7,8,.12) 100%),linear-gradient(0deg,rgba(7,7,8,.95) 0%,rgba(7,7,8,0) 55%)}
 .hero .wrap{position:relative;z-index:1;width:100%;padding-bottom:clamp(28px,5vh,56px)}
-.hero h1{font:400 clamp(72px,13vw,210px)/.86 'Anton',Georgia,serif;letter-spacing:-.025em;margin:18px 0 22px}
+.hero h1{font:400 clamp(56px,13vw,210px)/.86 'Anton',Georgia,serif;letter-spacing:-.025em;margin:18px 0 22px;overflow-wrap:normal;word-break:keep-all;hyphens:none}
+@media (max-width:640px){.hero h1{font-size:clamp(52px,17vw,96px)}}
 .hero p.lead{max-width:560px;font-size:clamp(16px,1.4vw,19px);color:rgba(244,239,230,.82);margin:0 0 28px}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(36px,7vh,72px);border-top:1px solid rgba(244,239,230,.16)}
@@ -285,6 +286,38 @@ var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=
 
 
 
+FXCSS = r"""
+.fx{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.fx-d{padding:22px;border-radius:20px;background:#F7F6F2;border:1px solid rgba(11,11,12,.08)}
+.fx-d h3{margin:0 0 10px;display:flex;align-items:baseline;gap:12px;font:400 28px/1 'Anton',serif}.fx-d h3 span{font:var(--kick);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.fx-d ol{list-style:none;margin:0;padding:0}
+.fx-m{padding:14px 0;border-top:1px solid rgba(11,11,12,.09);display:grid;gap:8px}
+.fx-h{display:grid;grid-template-columns:58px 1fr auto;gap:10px;align-items:center}
+.fx-h time{font:400 22px/1 'Anton',serif;font-variant-numeric:tabular-nums}.fx-h b{display:block;font-size:14px}.fx-h span{font-size:12px;color:var(--ink2)}
+.fx-st{font:600 10px/1 'JetBrains Mono',monospace;font-style:normal;letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:var(--paper-2);color:var(--ink2);white-space:nowrap}
+.fx-m[data-state=live] .fx-st{background:#E5484D;color:#fff}.fx-m[data-state=final] .fx-st{background:#0B0B0C;color:#F2F1EC}
+.fx-tm{display:grid;grid-template-columns:58px 1fr auto;gap:10px;align-items:center;font-size:14px}
+.fx-tm code{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--ink2)}
+.fx-s{font:400 22px/1 'Anton',serif;font-variant-numeric:tabular-nums;min-width:28px;text-align:right}
+.fx-tm[data-won] span,.fx-tm[data-won] .fx-s{font-weight:700}.fx-m[data-state=final] .fx-tm:not([data-won]){opacity:.55}
+.fx-sets{padding-left:68px;font:500 11px/1.3 'JetBrains Mono',monospace;color:var(--ink2);letter-spacing:.04em}
+.fx-lanes{list-style:none;margin:0;padding:0 0 0 68px;display:grid;gap:4px;font-size:13.5px}
+.fx-lanes li{display:grid;grid-template-columns:20px 44px 1fr;gap:6px;align-items:center}.fx-lanes i{font:400 15px/1 'Anton',serif;font-style:normal}.fx-lanes code{font:600 11px/1 'JetBrains Mono',monospace;color:var(--ink2)}
+.fx-lanes .fx-more{display:block;font-size:12px;color:var(--ink2)}
+@media (max-width:640px){.fx{grid-template-columns:1fr}.fx-h,.fx-tm{grid-template-columns:50px 1fr auto}.fx-sets,.fx-lanes{padding-left:60px}}
+"""
+FXJS = r"""
+(function(){
+  function upd(){var now=Date.now();document.querySelectorAll('.fx-m').forEach(function(m){var at=Date.parse(m.getAttribute('data-at')),st=m.querySelector('.fx-st'),race=m.classList.contains('fx-race');
+    var state=now<at?'up':now<at+75*60000?'live':'final';if(m.getAttribute('data-state')===state)return;m.setAttribute('data-state',state);
+    st.textContent=state==='up'?'Sample · upcoming':state==='live'?'Sample · live':'Sample · final';
+    if(race)return;var sa=m.getAttribute('data-sa'),sb=m.getAttribute('data-sb'),s=m.querySelectorAll('.fx-s'),sets=m.querySelector('.fx-sets');
+    if(state==='final'){s[0].textContent=sa;s[1].textContent=sb;m.querySelector('[data-w='+(+sa>=+sb?'a':'b')+']').setAttribute('data-won','');if(sets)sets.textContent=(m.getAttribute('data-sets')||'').split(',').filter(Boolean).join('  ·  ');}
+    else{s[0].textContent='–';s[1].textContent='–';}});}
+  upd();setInterval(upd,60000);
+})();
+"""
+
 JS3 = r"""
 (function(){var R=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
 /* hero film scrubbed by the scroll; the title flies apart as the hero ends */
@@ -310,14 +343,8 @@ var gs=D.querySelector('[data-sgal]');if(gs&&window.gmsRoom){var sec=gs.closest(
   walk:function(){var r=sec.getBoundingClientRect(),vh=innerHeight;return Math.max(0,Math.min(1,(vh*.6-r.top)/Math.max(1,r.height)));},
   open:function(it){var b=D.querySelector('[data-bt="'+it.code+'"]');if(b)b.click();var rs=D.getElementById('results');if(rs)rs.scrollIntoView({behavior:R?'auto':'smooth'});}});
  g.build();}
-/* venue: a photo card over the layout; a nudge invites the visitor to turn it */
-D.querySelectorAll('[data-cover]').forEach(function(f){var c=D.createElement('button');c.type='button';c.className='vt';c.setAttribute('aria-label','Turn the card to see the venue');
- c.innerHTML='<img alt="" loading="lazy" decoding="async"><span class="vt-txt"><small>'+(f.getAttribute('data-cover-k')||'')+'</small><b>'+(f.getAttribute('data-cover-t')||'')+'</b><span class="vt-cue">↻ Turn to see the venue</span></span>';
- var im=c.querySelector('img');im.src=f.getAttribute('data-cover');im.onerror=function(){im.onerror=null;im.src=f.getAttribute('data-cover-fb');};
- f.appendChild(c);f.setAttribute('data-turn','0');var bk=D.createElement('button');bk.type='button';bk.className='vt-back';bk.textContent='↺ Turn back';f.appendChild(bk);
- var nt=0;function nudge(){clearTimeout(nt);if(R||f.getAttribute('data-turn')==='1')return;c.classList.remove('vt-nudge');void c.offsetWidth;c.classList.add('vt-nudge');nt=setTimeout(nudge,5200);}
- c.addEventListener('click',function(){f.setAttribute('data-turn','1');});bk.addEventListener('click',function(){f.setAttribute('data-turn','0');nudge();});
- new IntersectionObserver(function(es){if(es[0].isIntersecting)setTimeout(nudge,700);else clearTimeout(nt);},{threshold:.4}).observe(f);});
+/* venue: the plan (or venue photo) arrives as a rolled paper map that unrolls with the scroll */
+if(window.gmsRoll)D.querySelectorAll('[data-cover]').forEach(function(f){var host=f.querySelector('.vlz')||f,im=host.querySelector('img');if(im)window.gmsRoll.attach(host,{src:im.getAttribute('src')});});
 })();
 """
 
@@ -364,6 +391,56 @@ def court_svg(key):
     return (f'<svg viewBox="{-pad*1.6:.2f} {-pad:.2f} {W+pad*2.6:.2f} {H+pad*2.2:.2f}" class="court-svg" role="img" aria-label="{NAMES[key]} field of play with dimensions">'
             f'<g class="cl" style="stroke-width:{max(W,H)*.0042:.4f}px">{"".join(L)}</g><g class="cdim" style="font-size:{max(W,H)*.032:.3f}px">{"".join(T)}</g></svg>')
 
+def teams():
+    i = SRC.find("teams:{"); j = SRC.find("}", i)
+    return re.findall(r"(\w+):'([^']+)'", SRC[i+7:j])
+
+def fixtures(key, d, c, codes, ses, iso):
+    """Sample fixtures, one card per day: deterministic pairings and scores so the page reads like the real draw."""
+    import hashlib
+    T = teams(); e = html.escape; out = ""
+    style = d["sport"]
+    def rnd(seed, n): return int(hashlib.md5(seed.encode()).hexdigest()[:8], 16) % n
+    def score(seed):
+        s = style.lower()
+        if "badminton" in s:
+            g = [(21, 12 + rnd(seed+"a", 8)), (19 + rnd(seed+"b", 4), 21), (21, 14 + rnd(seed+"c", 6))] if rnd(seed, 3) == 0 else [(21, 13 + rnd(seed+"a", 7)), (21, 15 + rnd(seed+"b", 5))]
+            return ",".join(f"{a}-{b}" for a, b in g), sum(a > b for a, b in g), sum(b > a for a, b in g)
+        if "table" in s:
+            g = [(11, 5 + rnd(seed+str(k), 6)) for k in range(3)]
+            if rnd(seed, 2): g.insert(1, (8 + rnd(seed+"x", 2), 11))
+            return ",".join(f"{a}-{b}" for a, b in g), sum(a > b for a, b in g), sum(b > a for a, b in g)
+        if "tennis" in s:
+            g = [(6, 2 + rnd(seed+"a", 4)), (6, 3 + rnd(seed+"b", 3))]
+            return ",".join(f"{a}-{b}" for a, b in g), 2, 0
+        if "volley" in s:
+            g = [(25, 17 + rnd(seed+"a", 6)), (22 + rnd(seed+"b", 2), 25), (25, 19 + rnd(seed+"c", 4)), (25, 20 + rnd(seed+"d", 3))]
+            return ",".join(f"{a}-{b}" for a, b in g), 3, 1
+        if "basket" in s:
+            a = 62 + rnd(seed+"a", 20); b = a - 3 - rnd(seed+"b", 12); return "", a, b
+        if "foot" in s:
+            a = 1 + rnd(seed+"a", 3); b = rnd(seed+"b", a); return "", a, b
+        return "", 0, 0
+    race = d["sport"] in ("Athletics", "Swimming")
+    for di in sorted(set(x[0] for x in ses)):
+        rows = ""
+        for k, (d_, t, code, rd) in enumerate([x for x in ses if x[0] == di]):
+            seed = f"{key}{di}{code}{rd}{k}"
+            if race:
+                st0 = rnd(seed, len(T)); lanes = [T[(st0 + n * 5) % len(T)] for n in range(4)]
+                ln = "".join(f'<li><i>{n+1}</i><code>{a}</code>{e(b) if b != a else ""}</li>' for n, (a, b) in enumerate(lanes))
+                rows += (f'<li class="fx-m fx-race" data-at="{iso(di, t)}"><div class="fx-h"><time>{t}</time><div><b>{e(codes[code])}</b><span>{e(rd)}{'' if 'Final' in rd else ' · Heat ' + str(1 + rnd(seed, 3))}</span></div><em class="fx-st">Sample</em></div>'
+                         f'<ol class="fx-lanes">{ln}<li class="fx-more">+ {4 + rnd(seed+"m", 4)} more lanes</li></ol></li>')
+                continue
+            a = rnd(seed+"A", len(T)); b = (a + 1 + rnd(seed+"B", len(T) - 1)) % len(T)
+            sets, sa, sb = score(seed)
+            court = ("Court " + str(1 + rnd(seed+"c", 9))) if c["venue"] == "Badminton Hall" else ("Table " + str(1 + rnd(seed+"c", 12))) if "Table" in c["venue"] else c["venue"]
+            rows += (f'<li class="fx-m" data-at="{iso(di, t)}" data-sa="{sa}" data-sb="{sb}" data-sets="{sets}"><div class="fx-h"><time>{t}</time><div><b>{e(codes[code])}</b><span>{e(rd)} · {e(court)}</span></div><em class="fx-st">Sample</em></div>'
+                     f'<div class="fx-tm" data-w="a"><code>{T[a][0]}</code><span>{e(T[a][1]) if T[a][1] != T[a][0] else ""}</span><b class="fx-s">–</b></div>'
+                     f'<div class="fx-tm" data-w="b"><code>{T[b][0]}</code><span>{e(T[b][1]) if T[b][1] != T[b][0] else ""}</span><b class="fx-s">–</b></div><small class="fx-sets"></small></li>')
+        out += f'<div class="fx-d rv"><h3><span>Day {di+1:02d}</span>{DAYS[di][0]} {DAYS[di][1]}</h3><ol>{rows}</ol></div>'
+    return out
+
 def page(key):
     d = SPORTS[key]; c = cats()[d["sport"]]; e = html.escape
     codes = {code: title for title, cat, code in c["events"]}
@@ -402,6 +479,7 @@ def page(key):
         if not cols: cols = '<div class="bc bc-sum"><h4>Draw</h4><div class="bsum"><b>—</b><span>Published with the draw</span></div></div>'
         tabs += f'<button type="button" class="bt-t" data-bt="{code}" aria-pressed="{"true" if i == 0 else "false"}">{e(title)}</button>'
         panes += f'<div class="bp" data-bp="{code}"{"" if i == 0 else " hidden"}><div class="br">{cols}</div></div>'
+    fx = fixtures(key, d, c, codes, ses, iso)
     bracket = f'<div class="btabs" role="group" aria-label="Event">{tabs}</div>{panes}'
     rules = "".join(f'<li class="rv"><b>{i+1:02d}</b><div><h3>{e(t)}</h3><p>{e(p)}</p></div></li>' for i, (t, p) in enumerate(d["rules"]))
     facts = "".join(f'<div><b>{a}</b><span>{b}</span></div>' for a, b in d["facts"])
@@ -431,7 +509,7 @@ def page(key):
 <meta name="description" content="{e(d['lead'])}">
 <meta name="theme-color" content="#0B0B0C"><link rel="icon" type="image/png" href="../assets/brand/favicon-64.png"><meta property="og:image" content="https://akash-droid-dev.github.io/GMS-Front-End-Design/assets/og-card.jpg?v=2"><meta property="og:title" content="{d['name']} · AIPT 2026"><meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="../assets/sports/{d['photo']}.webp">
-<style>{CSS}{ECG}</style></head><body>
+<style>{CSS}{FXCSS}{ECG}</style></head><body>
 <header class="top"><a class="top-l" href="../index.html"><img src="../assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238"><b>GMS</b></a>
 <nav class="top-r"><a class="back" href="../index.html#sports">← All sports</a><a class="btn btn-g sm" href="../index.html#register">Register</a></nav></header>
 <main>
@@ -440,12 +518,13 @@ def page(key):
 <div class="cta"><a class="btn btn-g" href="../index.html#register">Register to compete →</a><a class="btn btn-o" href="#venue">{"See the hall plan" if d.get("plan") else "Find the venue"}</a></div>
 <div class="hx2"><div class="cd" data-first="{first}" data-last="{last}" aria-live="polite"><span class="cd-k">First session in</span><span class="cd-v">—</span></div><button type="button" class="fol" data-sport="{key}" aria-pressed="false">☆ Follow {d['name']}</button></div>
 <div class="facts">{facts}</div></div></section></div>
-<nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
+<nav class="sub" aria-label="On this page"><a href="#events">Events</a><a href="#schedule">Schedule</a><a href="#fixtures">Fixtures</a><a href="#results">Results</a><a href="#format">Format</a><a href="#venue">Venue</a><i class="prog"></i></nav>
 <section class="s" id="events"><div class="wrap"><div class="head"><div><span class="kick">01 · Medal events</span><h2>{len(c['events'])} events, <em>one</em> venue</h2></div>
 <p>Every event is open to accredited police athletes from each unit. Pick an event to start your registration.</p></div><div class="ev">{evs}</div></div></section>
 <section class="s sgal" id="gallery"><div class="wrap"><div class="head"><div><span class="kick">The gallery</span><h2>Walk the <em>events</em></h2></div><p>Every {e(d['name'].lower())} event hangs in one room. Scroll or drag to walk round, click a frame to look closer, and again to see its draw.</p></div></div><div class="sgal-st" data-sgal data-imgs='{gimgs}'></div></section>
 <section class="s" id="schedule"><div class="wrap"><div class="head"><div><span class="kick">02 · Schedule</span><h2>Every <em>session</em>, day by day</h2></div><p>All times IST. Add a session to your calendar, or star it to keep it on this device.</p></div><div class="sch">{sched}</div></div></section>
-<section class="s" id="results"><div class="wrap"><div class="head"><div><span class="kick">03 · Results &amp; brackets</span><h2>The <em>draw</em>, round by round</h2></div><p>Names go in when the draw is made and each result fills in as the match ends. Nothing here is decided yet: competition opens on 19 November.</p></div><div class="brk rv">{bracket}</div></div></section>
+<section class="s" id="fixtures"><div class="wrap"><div class="head"><div><span class="kick">Fixtures · sample</span><h2>Who plays <em>whom</em></h2></div><p>Sample fixtures that show how the draw will read, with scores filling in as each match ends. The published draw replaces them.</p></div><div class="fx">{fx}</div></div></section>
+<section class="s" id="results"><div class="wrap"><div class="head"><div><span class="kick">03 · Results &amp; brackets</span><h2>The <em>draw</em>, round by round</h2></div><p>Names go in when the draw is made and each result fills in as the match ends.</p></div><div class="brk rv">{bracket}</div></div></section>
 <section class="s dark" id="format"><div class="wrap"><div class="fmt"><div class="rv"><span class="kick">04 · Format &amp; rules</span><h2>How a match is <em>won</em></h2><div class="big" style="margin-top:40px">{d['big']}</div><p>{d['big_label']}</p></div>
 <ol class="rules">{rules}</ol></div>
 <div class="medals"><div class="rv"><i style="background:#D4A63A"></i><b>Gold</b><span>Winner of the final</span></div><div class="rv" style="transition-delay:90ms"><i style="background:#B9BEC7"></i><b>Silver</b><span>Runner-up in the final</span></div><div class="rv" style="transition-delay:180ms"><i style="background:#B07A4A"></i><b>Bronze</b><span>Awarded from the semi-finals</span></div></div>
@@ -457,7 +536,7 @@ def page(key):
 <div class="addr rv"><div><b>Veer Savarkar Sports Complex</b><span>Naranpura, Ahmedabad, Gujarat · Accreditation card required at every entry</span></div><a class="btn btn-n" href="{MAPS}" target="_blank" rel="noopener">Directions in Google Maps ↗</a></div></div></section>
 <section class="deep"><div class="wrap"><a class="next" href="{nx}.html"><span style="display:block">Next sport<b>{NAMES[nx]}</b></span><i>→</i></a></div>
 <footer><div class="wrap"><span>All India Police Tournament 2026 · Badminton &amp; Table Tennis Cluster · 19–24 Nov 2026</span><a href="../index.html">Back to the Games</a></div></footer></section>
-</main><script>{JS}</script><script>{JS2}</script><script src="../assets/js/gms-room.js?v=1"></script><script>{JS3}</script></body></html>"""
+</main><script>{JS}</script><script>{JS2}</script><script src="../assets/js/gms-room.js?v=1"></script><script src="../assets/js/gms-roll.js?v=1"></script><script>{FXJS}</script><script>{JS3}</script></body></html>"""
 
 os.makedirs("sports", exist_ok=True)
 for k in sys.argv[1:]:
