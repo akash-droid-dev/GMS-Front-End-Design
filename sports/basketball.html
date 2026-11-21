@@ -211,6 +211,12 @@ footer{border-top:1px solid rgba(244,239,230,.1);padding:28px 0;font-size:13px;c
 .ecg-sw{display:inline-flex;padding:4px;border-radius:999px;background:#0B0B0C;box-shadow:inset 0 0 0 1px rgba(242,241,236,.18)}
 .ecg-sw button{all:unset;cursor:pointer;padding:7px 14px;border-radius:999px;font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,241,236,.55)}
 .ecg-sw button[aria-pressed=true]{background:#F2F1EC;color:#0B0B0C}
+.ecg[data-lights] .ecg-wall{filter:brightness(calc((1 - var(--fog,0) * .78) * (.14 + .86 * var(--lit,1))))!important;transition:filter .5s}
+.ecg[data-lights]::before{opacity:calc(.4 + .6 * var(--lit,1))}
+.ecg[data-lights] .ecg-f{filter:brightness(.1)!important;transition:filter .6s ease}
+.ecg[data-lights] .ecg-f .ecg-glow{opacity:0;transition:opacity .7s ease}
+.ecg[data-lights] .ecg-f[data-lit]{filter:brightness(calc(1 - var(--fog,0) * .8))!important;animation:ecgOn .7s steps(1,end) 1}
+.ecg[data-lights] .ecg-f[data-lit] .ecg-glow{opacity:1}
 .ecg-pl{position:absolute;left:18px;bottom:14px;z-index:2;color:#F2F1EC;font:400 calc(var(--fw) * .12)/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}</style></head><body>
 <header class="top"><a class="top-l" href="../index.html"><img src="../assets/brand/gobananas-mark.webp" alt="Gobananas" width="520" height="238"><b>GMS</b></a>
 <nav class="top-r"><a class="back" href="../index.html#sports">← All sports</a><a class="btn btn-g sm" href="../index.html#register">Register</a></nav></header>
@@ -276,7 +282,7 @@ var sub=D.querySelector('.sub'),hero=D.querySelector('.hero');if(sub){var links=
  function paint(){raf=0;var y=scrollY,vh=innerHeight;sub.classList.toggle('on',hero.getBoundingClientRect().bottom<vh*0.35);sub.style.setProperty('--p',(y/Math.max(1,D.documentElement.scrollHeight-vh)).toFixed(4));var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.4)cur=i;});links.forEach(function(a,i){a.toggleAttribute('aria-current',i===cur);});}
  addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(paint);},{passive:true});paint();}
 })();
-</script><script src="../assets/js/gms-room.js?v=da564714"></script><script src="../assets/js/gms-roll.js?v=113d42c9"></script><script>
+</script><script src="../assets/js/gms-room.js?v=7c2f0357"></script><script src="../assets/js/gms-roll.js?v=113d42c9"></script><script>
 (function(){
   function upd(){var now=Date.now();document.querySelectorAll('.fx-m').forEach(function(m){var at=Date.parse(m.getAttribute('data-at')),st=m.querySelector('.fx-st'),race=m.classList.contains('fx-race');
     var state=now<at?'up':now<at+75*60000?'live':'final';if(m.getAttribute('data-state')===state)return;m.setAttribute('data-state',state);

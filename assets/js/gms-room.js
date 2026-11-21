@@ -47,8 +47,9 @@
         el.style.setProperty('--fog', Math.min(1, Math.max(0, (-zc - 900) / 4200)).toFixed(3)); return { xc: xc, zc: zc };
       }
       var yw = -H * 0.1, yf = -H * 0.17; walls.forEach(function (w) { put(w, w.__a, w.__in ? R * 0.5 : R, !w.__in, yw); });
-      frames.forEach(function (f, i) { var q2 = put(f, f.__a, R - 2, true, yf); if (q2) { var d = Math.abs(q2.xc) + Math.abs(q2.zc + 1200) * 0.4; if (d < best) { best = d; near = i; } } });
+      frames.forEach(function (f, i) { var q2 = put(f, f.__a, R - 2, true, yf); if (q2) { var sx = q2.xc * P / Math.max(1, -q2.zc), d = Math.abs(q2.zc) + (Math.abs(sx) > W * 0.42 ? 1e6 : 0); if (d < best) { best = d; near = i; } } });
       frames.forEach(function (f, i) { f.toggleAttribute('data-near', i === near); f.toggleAttribute('data-focus', i === focus); });
+      if (o.lights) { var L = Math.max(0, Math.min(1, o.lights())); stage.setAttribute('data-lights', ''); stage.style.setProperty('--lit', L.toFixed(3)); frames.forEach(function (f, i) { f.toggleAttribute('data-lit', L >= (i + 0.6) / frames.length); }); }
       var cur = frames[focus >= 0 ? focus : near]; if (cur) { var tt = stage.querySelector('[data-ecg-t]'); if (tt.textContent !== cur.__t) tt.textContent = cur.__t; stage.__cur = cur.__i; }
       stage.toggleAttribute('data-focus', focus >= 0);
       if (!REDUCED && (Math.abs(camNow.x - t.x) > 0.5 || Math.abs(camNow.z - t.z) > 0.5 || Math.abs(camNow.yaw - t.yaw) > 0.001)) q();

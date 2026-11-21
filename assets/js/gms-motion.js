@@ -114,35 +114,25 @@
      The camera walks round as you scroll or drag; click a frame to walk up to it, click again to open the match. */
   function galleryRoom(stage, o) { return window.gmsRoom(stage, o); }
 
-  /* section 07: the real gallery waits behind heavy velvet curtains; they sway when you come near and draw open when you step in */
+  /* section 07: the gallery sits in the dark; as the visitor scrolls its spotlights come on one by one, then the scroll walks the room, pausing at every print */
   function sportGallery() {
     var sec = doc.querySelector('[data-r=stories]'); if (!sec || sec.__g) return; var track = sec.querySelector('.st-track'); if (!track || !track.querySelector('.sc2')) return; sec.__g = 1;
-    var n = track.querySelectorAll('.sc2').length;
-    var gate = doc.createElement('div'); gate.className = 'sg-gate';
-    gate.innerHTML = '<div class="sg-box"><div class="sg-behind" aria-hidden="true"></div><div class="sg-light" aria-hidden="true"></div>' +
-      '<div class="sg-curt" aria-hidden="true"><div class="sg-c l"></div><div class="sg-c r"></div><div class="sg-pel"><span>The Sports Gallery</span></div></div>' +
-      '<button type="button" class="sg-door" data-sg-enter aria-label="Open the curtain and enter the sports gallery"><span class="sg-cta">Open the curtain <span aria-hidden="true">→</span></span><small>' + n + ' sports · one room</small></button></div>';
-    var wrap = doc.createElement('div'); wrap.className = 'sg-wrap'; wrap.innerHTML = '<div class="sg-pin"><div class="sg-stage"></div><button type="button" class="sg-exit" data-sg-exit>Leave the gallery</button></div>';
-    track.parentNode.insertBefore(gate, track); track.parentNode.insertBefore(wrap, track);
-    var box = gate.querySelector('.sg-box'), stage = wrap.querySelector('.sg-stage');
+    var wrap = doc.createElement('div'); wrap.className = 'sg-wrap'; wrap.innerHTML = '<div class="sg-pin"><div class="sg-stage"></div><div class="sg-meter" aria-hidden="true"><i></i></div></div>';
+    track.parentNode.insertBefore(wrap, track); sec.setAttribute('data-in', '');
+    var stage = wrap.querySelector('.sg-stage'), meter = wrap.querySelector('.sg-meter i'), LIGHTS = 0.2;
     function items() { return Array.prototype.map.call(track.querySelectorAll('.sc2'), function (c) { var im = c.querySelector('img'), nm = (c.querySelector('.sc2-n') || {}).textContent || '', m = (c.querySelector('.sc2-m') || {}).textContent || '', a = c.querySelector('.sc2-a');
       return { sig: nm + m, img: im ? im.getAttribute('src') : '', title: nm.trim(), round: '', small: m.trim(), plate: nm.trim(), href: a ? a.getAttribute('href') : '#', aria: nm.trim() + ', ' + m.trim() }; }); }
-    /* the room behind the curtain is the same gallery, standing still at the entrance */
-    var behind = galleryRoom(gate.querySelector('.sg-behind'), { items: items, active: function () { return !sec.hasAttribute('data-in'); }, walk: function () { return 0.08; }, open: function () {} });
-    var seen = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { if (es[0].isIntersecting) { behind.build(); seen.disconnect(); } }, { rootMargin: '60% 0px' }) : null; if (seen) seen.observe(gate); else behind.build();
-    /* the fabric leans towards the visitor's pointer */
-    if (window.matchMedia && matchMedia('(hover:hover)').matches && !REDUCED) {
-      var raf = 0, px = 0.5; box.addEventListener('pointermove', function (e) { var r = box.getBoundingClientRect(); px = (e.clientX - r.left) / r.width; if (raf) return; raf = requestAnimationFrame(function () { raf = 0; box.style.setProperty('--px', px.toFixed(3)); }); });
-      box.addEventListener('pointerleave', function () { box.style.setProperty('--px', 0.5); });
-    }
-    var g = galleryRoom(stage, { items: items, capLead: 'You are standing at', openLabel: 'Open the sport page →', active: function () { return sec.hasAttribute('data-in'); },
-      walk: function () { var r = wrap.getBoundingClientRect(), vh = window.innerHeight; return Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh))); },
+    function size() { var n = track.querySelectorAll('.sc2').length; wrap.style.height = (100 + 70 + n * 60) + 'vh'; }
+    function prog() { var r = wrap.getBoundingClientRect(), vh = window.innerHeight; return Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - vh))); }
+    function sm(x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
+    var g = galleryRoom(stage, { items: items, capLead: 'You are standing at', openLabel: 'Open the sport page →',
+      active: function () { var r = wrap.getBoundingClientRect(); return r.bottom > -200 && r.top < window.innerHeight + 200; },
+      lights: function () { return REDUCED ? 1 : prog() / LIGHTS; },
+      /* each print gets a dwell: the walk eases between prints and holds at each one */
+      walk: function () { var p = prog(), n = Math.max(1, track.querySelectorAll('.sc2').length - 1), w = Math.max(0, (p - LIGHTS) / (1 - LIGHTS)) * n, i = Math.floor(w), f = w - i; if (meter) meter.style.transform = 'scaleX(' + p.toFixed(3) + ')'; return Math.min(n, i + sm((f - 0.2) / 0.6)) * (n + 0.55) / n / n; },
       open: function (it) { if (it.href && it.href !== '#') location.href = it.href; } });
-    function enter() { if (sec.hasAttribute('data-in') || sec.hasAttribute('data-going')) return; behind.build(); sec.setAttribute('data-going', ''); setTimeout(function () { sec.removeAttribute('data-going'); sec.setAttribute('data-in', ''); g.build(); var t = wrap.getBoundingClientRect().top + window.scrollY - 70; window.scrollTo({ top: t, behavior: REDUCED ? 'auto' : 'smooth' }); }, REDUCED ? 0 : 1700); }
-    function leave() { sec.removeAttribute('data-in'); var t = sec.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: t, behavior: 'auto' }); }
-    sec.addEventListener('click', function (e) { if (e.target.closest('[data-sg-enter]')) enter(); else if (e.target.closest('[data-sg-exit]')) leave(); });
-    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sec.hasAttribute('data-in') && !stage.hasAttribute('data-focus')) leave(); });
-    var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; if (sec.hasAttribute('data-in')) g.build(); else behind.build(); }, 300); }).observe(track, { childList: true, subtree: true });
+    size(); g.build(); window.addEventListener('resize', size);
+    var mt = 0; new MutationObserver(function () { if (mt) return; mt = setTimeout(function () { mt = 0; size(); g.build(); }, 300); }).observe(track, { childList: true, subtree: true });
   }
 
   /* section 01: each layout arrives as a rolled paper map that unrolls with the scroll; switching layouts rolls the next one out */
@@ -159,6 +149,7 @@
     var orb = doc.createElement('span'); orb.className = 'ecx-orb'; orb.setAttribute('aria-hidden', 'true'); orb.innerHTML = '<i></i><b>0</b><small>LIVE</small>'; tog.appendChild(orb);
     var tip = doc.createElement('span'); tip.className = 'ecx-tip'; tip.setAttribute('aria-hidden', 'true'); tog.parentNode.insertBefore(tip, tog.nextSibling);
     tog.setAttribute('aria-label', 'Open the event centre');
+    tog.addEventListener('pointerdown', function () { tog.removeAttribute('data-tap'); void tog.offsetWidth; tog.setAttribute('data-tap', ''); setTimeout(function () { tog.removeAttribute('data-tap'); }, 900); });
     var lastN = -1; function count() { var now = sec.querySelector('.ecx-now'), t = now ? now.textContent : '', m = t.match(/(\d+)\s*match/), n = m ? +m[1] : sec.querySelectorAll('[data-r=ec-row]').length; if (n === lastN) return; lastN = n; orb.querySelector('b').textContent = n; tip.textContent = 'Event centre · ' + n + ' live'; }
     function isOpen() { return panel.getAttribute('data-open') === '1'; }
     function stagger() { var k = 0; sec.querySelectorAll('.ecx-panel :is(.ec-card>h2,.ec-card>h3,.ec-card>header),.ecx-panel [data-r=ec-row]').forEach(function (el) { el.style.setProperty('--ri', k++); });
@@ -171,6 +162,9 @@
     var x = doc.createElement('button'); x.type = 'button'; x.className = 'ecx-x'; x.setAttribute('aria-label', 'Close the event centre'); x.textContent = '×'; x.addEventListener('click', function () { if (isOpen()) tog.click(); });
     var inner = sec.querySelector('.ecx-inner'); if (inner) inner.insertBefore(x, inner.firstChild);
   }
+
+  /* the orb and greeting step aside over the footer */
+  function footWatch() { var ft = doc.querySelector('footer.ft'); if (!ft || ft.__fw || !('IntersectionObserver' in window)) return; ft.__fw = 1; new IntersectionObserver(function (es) { root.classList.toggle('gy-foot', es[0].isIntersecting); }, { rootMargin: '0px 0px -30% 0px' }).observe(ft); }
 
   /* ---------------- cursor field: small shuttles turn to the pointer (gev.design) ---------------- */
   function field() {
@@ -384,7 +378,7 @@
     if (REDUCED) { for (var i = 0; i < 400; i++) step(1 / 120); vis = true; draw(); vis = false; io.disconnect(); }
   }
 
-  function scan() { t = 0; flaps(); masks(); parScan(); sportGallery(); ecCloud(); venueTurn(); field(); badge(); inverter(); rowsPass(); glance(); lanyard(); }
+  function scan() { t = 0; flaps(); masks(); parScan(); sportGallery(); ecCloud(); venueTurn(); footWatch(); field(); badge(); inverter(); rowsPass(); glance(); lanyard(); }
   new MutationObserver(function () { if (!t) t = setTimeout(scan, 160); }).observe(doc.body || root, { childList: true, subtree: true });
   window.addEventListener('gms:entered', scan);
   scan(); botHello();
