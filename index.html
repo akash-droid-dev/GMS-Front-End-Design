@@ -1281,7 +1281,7 @@ img[data-broken]{background:repeating-linear-gradient(135deg,var(--d-s1,#EEF1F5)
 .tv-play .gi{width:36px;height:36px;border-radius:50%;background:#E5484D;color:#fff;-webkit-mask:none;mask:none;display:grid;place-items:center}
 .tv-play .gi::before{content:'';width:0;height:0;margin-left:3px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
 /* pinned sections are about a third shorter on phones: fewer swipes for the same animation */
-@media (max-width:760px){[data-r=steps-section]{height:140vh!important}[data-r=tv-section]{height:118vh!important}[data-r=ev-section]{height:165vh!important}[data-r=fn-section]{height:125vh!important}}
+@media (max-width:760px){[data-r=steps-section]{height:140vh!important}[data-r=tv-section]{height:118vh!important}[data-r=ev-section]{height:320vh!important}[data-r=fn-section]{height:125vh!important}}
 /* Low mode */
 .gms-low *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .gms-low [data-r=hero-media]{transform:none!important;width:100%!important}
@@ -2288,7 +2288,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
   </section>
 
   <div class="seam seam-dl" aria-hidden="true"></div>
-  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:215vh;background:var(--d-s1,#F6F7F9)">
+  <section ref="{{ eventsRef }}" data-r="ev-section" style="position:relative;height:400vh;background:var(--d-s1,#F6F7F9)">
     <div data-ev-sticky style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(70% 60% at 70% 40%,#FFFFFF 0%,rgba(255,255,255,0) 70%)">
       <div data-kick aria-hidden="true" style="position:absolute;inset:0"></div>
       <div data-r="ev-head" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:78px 32px 0;box-sizing:border-box;pointer-events:none">
@@ -3429,7 +3429,7 @@ class Component extends DCLogic {
       createImageBitmap(kv.blobs[i]).then(b=>{pend.delete(i);if(Math.abs(i-kv.cur)>st*7){b.close&&b.close();return;}bm.set(i,b);if(Math.abs(i-kv.cur)<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}
         while(bm.size>10){let far=-1,fd=-1;for(const k of bm.keys()){const d=Math.abs(k-kv.cur);if(d>fd){fd=d;far=k;}}const v=bm.get(far);v&&v.close&&v.close();bm.delete(far);}}).catch(()=>pend.delete(i));};
     want(fi);for(let k=1;k<=6;k++)want(fi+dir*k*st);for(let k=1;k<=2;k++)want(fi-dir*k*st);
-    if(bm.has(fi))return {img:bm.get(fi)};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a)};if(bm.has(b2))return {img:bm.get(b2)};}return null;}
+    if(bm.has(fi))return {img:bm.get(fi),i:fi};for(let k=1;k<=4;k++){const a=fi-dir*k*st,b2=fi+dir*k*st;if(bm.has(a))return {img:bm.get(a),i:a};if(bm.has(b2))return {img:bm.get(b2),i:b2};}return null;}
   kvPreload(){if(this.kv)return;const dir='assets/montage/'+(window.innerWidth<=760?'m':'d')+'/',st=LOW?4:LITE?2:1,kv=this.kv={n:KV.n,step:st,blobs:new Array(KV.n),bm:new Map(),pend:new Set()};
     const order=[0,KV.idx(2),KV.idx(4),KV.idx(6)].map(i=>Math.floor(i/st)*st);for(let i=0;i<KV.n;i+=st)if(!order.includes(i))order.push(i);let q=0;
     const next=()=>{if(q>=order.length)return;const i=order[q++];fetch(dir+String(i+1).padStart(3,'0')+'.webp?v=m8').then(r=>r.ok?r.blob():null).then(b=>{if(b){kv.blobs[i]=b;if(Math.abs(i-(kv.cur??0))<=st*2){this.kickLast=-1;this.awake=Math.max(this.awake||0,12);}}next();}).catch(next);};
