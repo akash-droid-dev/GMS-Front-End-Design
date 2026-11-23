@@ -13,8 +13,8 @@
       var its = o.items(), sig = its.map(function (x) { return x.sig; }).join('|'); if (sig === built) return; built = sig;
       room.innerHTML = ''; walls = []; frames = [];
       var n = its.length, span = Math.max(80, (n + 2) * GAP);
-      for (var a = -GAP * 2; a <= span; a += 4) { var w = doc.createElement('i'); w.className = 'ecg-wall'; w.__a = a; room.appendChild(w); walls.push(w); }
-      for (var a2 = -GAP * 2; a2 <= span; a2 += 6) { var w2 = doc.createElement('i'); w2.className = 'ecg-wall ecg-in'; w2.__a = a2; w2.__in = 1; room.appendChild(w2); walls.push(w2); }
+      for (var a = -GAP * 2; a <= span; a += 5) { var w = doc.createElement('i'); w.className = 'ecg-wall'; w.__a = a; w.__w = 1; room.appendChild(w); walls.push(w); }
+      for (var a2 = -GAP * 2; a2 <= span; a2 += 8) { var w2 = doc.createElement('i'); w2.className = 'ecg-wall ecg-in'; w2.__a = a2; w2.__w = 1; w2.__in = 1; room.appendChild(w2); walls.push(w2); }
       its.forEach(function (it, i) {
         var f = doc.createElement('button'); f.type = 'button'; f.className = 'ecg-f'; f.__a = i * GAP; f.__i = i; f.__it = it; f.__t = it.title + (it.round ? ' · ' + it.round : '');
         if (it.live) f.setAttribute('data-live', ''); f.setAttribute('aria-label', (it.aria || it.title) + '. Click to look closer.');
@@ -34,24 +34,26 @@
     function lerp(a, b, k) { return a + (b - a) * k; }
     function place() {
       raf = 0; if (!frames.length || !stage.clientWidth) return;
-      var W = stage.clientWidth, H = stage.clientHeight; R = Math.max(1150, Math.min(2400, W * 1.7)); P = Math.max(520, W * 0.62); room.style.perspective = P + 'px';
-      FW = Math.max(200, Math.min(360, W * 0.24)); WH = Math.max(380, H * 0.82); stage.style.setProperty('--fw', FW + 'px'); stage.style.setProperty('--wh', WH + 'px');
-      var t = cam(); if (!camNow || REDUCED) camNow = t; else { var k = 0.12; camNow = { x: lerp(camNow.x, t.x, k), z: lerp(camNow.z, t.z, k), yaw: lerp(camNow.yaw, t.yaw, k), y: lerp(camNow.y, t.y, k) }; }
+      var W = stage.clientWidth, H = stage.clientHeight; R = Math.max(1150, Math.min(2400, W * 1.7)); P = Math.max(520, W * 0.62);
+      FW = Math.max(200, Math.min(360, W * 0.24)); WH = Math.max(380, H * 0.82);
+      var t = cam(), L = o.lights ? Math.max(0, Math.min(1, o.lights())) : 1;
+      var sz = P + '|' + FW + '|' + WH; if (stage.__sz !== sz) { stage.__sz = sz; room.style.perspective = P + 'px'; stage.style.setProperty('--fw', FW + 'px'); stage.style.setProperty('--wh', WH + 'px'); } if (!camNow || REDUCED) camNow = t; else { var k = 0.12; camNow = { x: lerp(camNow.x, t.x, k), z: lerp(camNow.z, t.z, k), yaw: lerp(camNow.yaw, t.yaw, k), y: lerp(camNow.y, t.y, k) }; }
       var c = camNow, fx = -Math.sin(c.yaw), fz = -Math.cos(c.yaw), rx = -fz, rz = fx, near = -1, best = 1e9;
       function put(el, a, r, inward, yo) {
         var ar = a * Math.PI / 180, px = -r * Math.sin(ar), pz = -r * Math.cos(ar), dx = px - c.x, dz = pz - c.z;
         var xc = dx * rx + dz * rz, zc = -(dx * fx + dz * fz);
-        if (zc > -160 || zc < -9000) { el.style.visibility = 'hidden'; return null; }
+        if (zc > -160 || zc < -9000) { if (!el.__hid) { el.__hid = 1; el.style.visibility = 'hidden'; } return null; }
         var nx = inward ? Math.sin(ar) : -Math.sin(ar), nz = inward ? Math.cos(ar) : -Math.cos(ar), nxc = nx * rx + nz * rz, nzc = -(nx * fx + nz * fz);
-        el.style.visibility = ''; el.style.transform = 'translate(-50%,-50%) translate3d(' + xc.toFixed(1) + 'px,' + ((yo || 0) - c.y).toFixed(1) + 'px,' + (zc + P).toFixed(1) + 'px) rotateY(' + (Math.atan2(nxc, nzc) * 180 / Math.PI).toFixed(2) + 'deg)';
-        el.style.setProperty('--fog', Math.min(1, Math.max(0, (-zc - 900) / 4200)).toFixed(3)); return { xc: xc, zc: zc };
+        if (el.__hid) { el.__hid = 0; el.style.visibility = ''; } el.style.transform = 'translate(-50%,-50%) translate3d(' + xc.toFixed(1) + 'px,' + ((yo || 0) - c.y).toFixed(1) + 'px,' + (zc + P).toFixed(1) + 'px) rotateY(' + (Math.atan2(nxc, nzc) * 180 / Math.PI).toFixed(2) + 'deg)';
+        var fg = Math.round(Math.min(1, Math.max(0, (-zc - 900) / 4200)) * 25) / 25; if (el.__fg !== fg) { el.__fg = fg; if (el.__w) { var dk = String(Math.round((1 - (1 - fg * 0.78) * (0.14 + 0.86 * L)) / 0.9 * 24)); if (el.__dk !== dk) { el.__dk = dk; el.setAttribute('data-d', dk); } } else el.style.setProperty('--fog', fg); } return { xc: xc, zc: zc };
       }
+      var Lq = Math.round(L * 50) / 50; if (stage.__L !== Lq) { stage.__L = Lq; walls.forEach(function (w) { w.__fg = -1; }); }
       var yw = -H * 0.1, yf = -H * 0.17; walls.forEach(function (w) { put(w, w.__a, w.__in ? R * 0.5 : R, !w.__in, yw); });
       frames.forEach(function (f, i) { var q2 = put(f, f.__a, R - 2, true, yf); if (q2) { var sx = q2.xc * P / Math.max(1, -q2.zc), d = Math.abs(q2.zc) + (Math.abs(sx) > W * 0.42 ? 1e6 : 0); if (d < best) { best = d; near = i; } } });
-      frames.forEach(function (f, i) { f.toggleAttribute('data-near', i === near); f.toggleAttribute('data-focus', i === focus); });
-      if (o.lights) { var L = Math.max(0, Math.min(1, o.lights())); stage.setAttribute('data-lights', ''); stage.style.setProperty('--lit', L.toFixed(3)); frames.forEach(function (f, i) { f.toggleAttribute('data-lit', L >= (i + 0.6) / frames.length); }); }
+      frames.forEach(function (f, i) { if (f.hasAttribute('data-near') !== (i === near)) f.toggleAttribute('data-near', i === near); if (f.hasAttribute('data-focus') !== (i === focus)) f.toggleAttribute('data-focus', i === focus); });
+      if (o.lights) { if (!stage.hasAttribute('data-lights')) stage.setAttribute('data-lights', ''); frames.forEach(function (f, i) { var on = L >= (i + 0.6) / frames.length; if (f.hasAttribute('data-lit') !== on) f.toggleAttribute('data-lit', on); }); }
       var cur = frames[focus >= 0 ? focus : near]; if (cur) { var tt = stage.querySelector('[data-ecg-t]'); if (tt.textContent !== cur.__t) tt.textContent = cur.__t; stage.__cur = cur.__i; }
-      stage.toggleAttribute('data-focus', focus >= 0);
+      if (stage.hasAttribute('data-focus') !== (focus >= 0)) stage.toggleAttribute('data-focus', focus >= 0);
       if (!REDUCED && (Math.abs(camNow.x - t.x) > 0.5 || Math.abs(camNow.z - t.z) > 0.5 || Math.abs(camNow.yaw - t.yaw) > 0.001)) q();
     }
     function q() { if (!raf) raf = requestAnimationFrame(place); }

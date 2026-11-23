@@ -7,3 +7,5 @@ role-photos/*.png
 role-photos/*.mp4
 role-photos/kick/
 review/
+export/
+.qa/

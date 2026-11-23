@@ -1316,7 +1316,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./vendor/react-dom.production.min.js"></script>
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=4c79e934"></script>
-<script defer src="./assets/js/gms-room.js?v=7c2f0357"></script><script defer src="./assets/js/gms-roll.js?v=113d42c9"></script>
+<script defer src="./assets/js/gms-room.js?v=895329f0"></script><script defer src="./assets/js/gms-roll.js?v=113d42c9"></script>
 <script defer src="./assets/js/gms-motion.js?v=1cb5d0e3"></script>
 <script defer src="./assets/js/gms-plus.js?v=93dc868f"></script>
 </head>
@@ -1616,9 +1616,35 @@ footer.ft.ft2::before{content:"";position:absolute;inset:0;z-index:-1;pointer-ev
 .ecg[data-drag]{cursor:grabbing}
 .ecg-room{position:absolute;inset:0;z-index:1;overflow:hidden}
 .ecg-room>*{position:absolute;left:50%;top:50%;backface-visibility:hidden}
-.ecg-wall{width:176px;height:var(--wh,560px);background:linear-gradient(180deg,#7E7D79 0%,#C9C8C2 12%,#D6D5CF 50%,#CBCAC4 86%,#8A8985 100%);filter:brightness(calc(1 - var(--fog,0) * .78));pointer-events:none}
-.ecg-wall.ecg-in{width:136px;background:linear-gradient(180deg,#8E8D88 0%,#DCDBD5 18%,#E6E5DF 50%,#D6D5CF 82%,#807F7A 100%)}
-.ecg-f{all:unset;position:absolute;left:50%;top:50%;backface-visibility:hidden;box-sizing:border-box;cursor:pointer;width:var(--fw,300px);display:block;filter:brightness(calc(1 - var(--fog,0) * .8));transition:filter .4s}
+.ecg-wall{width:220px;height:var(--wh,560px);background:linear-gradient(180deg,#7E7D79 0%,#C9C8C2 12%,#D6D5CF 50%,#CBCAC4 86%,#8A8985 100%);pointer-events:none;will-change:transform}
+.ecg-wall.ecg-in{width:178px;background:linear-gradient(180deg,#8E8D88 0%,#DCDBD5 18%,#E6E5DF 50%,#D6D5CF 82%,#807F7A 100%)}
+/* gallery walls darken in fixed steps (no filters, no stacked transparency) */
+.ecg-wall[data-d="0"]{background:linear-gradient(180deg,#7E7D79 0%,#C9C8C2 12%,#D6D5CF 50%,#CBCAC4 86%,#8A8985 100%)}.ecg-wall.ecg-in[data-d="0"]{background:linear-gradient(180deg,#8E8D88 0%,#DCDBD5 18%,#E6E5DF 50%,#D6D5CF 82%,#807F7A 100%)}
+.ecg-wall[data-d="1"]{background:linear-gradient(180deg,#797874 0%,#C1C0BB 12%,#CECDC7 50%,#C3C2BD 86%,#858480 100%)}.ecg-wall.ecg-in[data-d="1"]{background:linear-gradient(180deg,#898883 0%,#D4D3CD 18%,#DDDCD7 50%,#CECDC7 82%,#7B7A75 100%)}
+.ecg-wall[data-d="2"]{background:linear-gradient(180deg,#757470 0%,#BAB9B3 12%,#C6C5BF 50%,#BCBBB5 86%,#807F7B 100%)}.ecg-wall.ecg-in[data-d="2"]{background:linear-gradient(180deg,#83827E 0%,#CCCBC5 18%,#D5D4CE 50%,#C6C5BF 82%,#767571 100%)}
+.ecg-wall[data-d="3"]{background:linear-gradient(180deg,#706F6B 0%,#B2B2AC 12%,#BEBDB8 50%,#B4B3AE 86%,#7A7A76 100%)}.ecg-wall.ecg-in[data-d="3"]{background:linear-gradient(180deg,#7E7D79 0%,#C3C2BD 18%,#CCCBC6 50%,#BEBDB8 82%,#72716C 100%)}
+.ecg-wall[data-d="4"]{background:linear-gradient(180deg,#6B6A67 0%,#ABAAA5 12%,#B6B5B0 50%,#ADACA7 86%,#757471 100%)}.ecg-wall.ecg-in[data-d="4"]{background:linear-gradient(180deg,#797874 0%,#BBBAB5 18%,#C4C3BE 50%,#B6B5B0 82%,#6D6C68 100%)}
+.ecg-wall[data-d="5"]{background:linear-gradient(180deg,#666662 0%,#A3A29E 12%,#AEADA8 50%,#A5A49F 86%,#706F6C 100%)}.ecg-wall.ecg-in[data-d="5"]{background:linear-gradient(180deg,#73736E 0%,#B3B2AD 18%,#BBBAB5 50%,#AEADA8 82%,#686763 100%)}
+.ecg-wall[data-d="6"]{background:linear-gradient(180deg,#62615E 0%,#9C9B96 12%,#A6A5A0 50%,#9D9D98 86%,#6B6A67 100%)}.ecg-wall.ecg-in[data-d="6"]{background:linear-gradient(180deg,#6E6D69 0%,#AAAAA5 18%,#B2B1AD 50%,#A6A5A0 82%,#63625F 100%)}
+.ecg-wall[data-d="7"]{background:linear-gradient(180deg,#5D5C59 0%,#94948F 12%,#9E9D99 50%,#969591 86%,#666562 100%)}.ecg-wall.ecg-in[data-d="7"]{background:linear-gradient(180deg,#696864 0%,#A2A29D 18%,#AAA9A4 50%,#9E9D99 82%,#5E5E5A 100%)}
+.ecg-wall[data-d="8"]{background:linear-gradient(180deg,#585855 0%,#8D8C88 12%,#969591 50%,#8E8D89 86%,#61605D 100%)}.ecg-wall.ecg-in[data-d="8"]{background:linear-gradient(180deg,#63635F 0%,#9A9995 18%,#A1A09C 50%,#969591 82%,#5A5955 100%)}
+.ecg-wall[data-d="9"]{background:linear-gradient(180deg,#535350 0%,#858481 12%,#8E8D89 50%,#868682 86%,#5B5B58 100%)}.ecg-wall.ecg-in[data-d="9"]{background:linear-gradient(180deg,#5E5D5A 0%,#92918D 18%,#989894 50%,#8E8D89 82%,#555451 100%)}
+.ecg-wall[data-d="10"]{background:linear-gradient(180deg,#4F4E4C 0%,#7E7D79 12%,#868581 50%,#7F7E7A 86%,#565653 100%)}.ecg-wall.ecg-in[data-d="10"]{background:linear-gradient(180deg,#595855 0%,#8A8985 18%,#908F8B 50%,#868581 82%,#504F4C 100%)}
+.ecg-wall[data-d="11"]{background:linear-gradient(180deg,#4A4947 0%,#767672 12%,#7E7D7A 50%,#777773 86%,#51504E 100%)}.ecg-wall.ecg-in[data-d="11"]{background:linear-gradient(180deg,#535350 0%,#81817D 18%,#878783 50%,#7E7D7A 82%,#4B4B48 100%)}
+.ecg-wall[data-d="12"]{background:linear-gradient(180deg,#454543 0%,#6F6E6B 12%,#767572 50%,#706F6C 86%,#4C4B49 100%)}.ecg-wall.ecg-in[data-d="12"]{background:linear-gradient(180deg,#4E4E4B 0%,#797875 18%,#7F7E7B 50%,#767572 82%,#464643 100%)}
+.ecg-wall[data-d="13"]{background:linear-gradient(180deg,#41403E 0%,#676663 12%,#6E6D6A 50%,#686864 86%,#474644 100%)}.ecg-wall.ecg-in[data-d="13"]{background:linear-gradient(180deg,#494846 0%,#71706D 18%,#767572 50%,#6E6D6A 82%,#42413F 100%)}
+.ecg-wall[data-d="14"]{background:linear-gradient(180deg,#3C3B39 0%,#5F5F5C 12%,#666562 50%,#60605D 86%,#42413F 100%)}.ecg-wall.ecg-in[data-d="14"]{background:linear-gradient(180deg,#434341 0%,#686865 18%,#6D6D6A 50%,#666562 82%,#3D3C3A 100%)}
+.ecg-wall[data-d="15"]{background:linear-gradient(180deg,#373735 0%,#585855 12%,#5E5D5B 50%,#595856 86%,#3C3C3A 100%)}.ecg-wall.ecg-in[data-d="15"]{background:linear-gradient(180deg,#3E3E3C 0%,#60605D 18%,#656462 50%,#5E5D5B 82%,#383835 100%)}
+.ecg-wall[data-d="16"]{background:linear-gradient(180deg,#323230 0%,#50504E 12%,#565553 50%,#51514E 86%,#373735 100%)}.ecg-wall.ecg-in[data-d="16"]{background:linear-gradient(180deg,#393836 0%,#585855 18%,#5C5C59 50%,#565553 82%,#333331 100%)}
+.ecg-wall[data-d="17"]{background:linear-gradient(180deg,#2E2D2C 0%,#494846 12%,#4E4D4B 50%,#4A4947 86%,#323230 100%)}.ecg-wall.ecg-in[data-d="17"]{background:linear-gradient(180deg,#333331 0%,#504F4D 18%,#535351 50%,#4E4D4B 82%,#2E2E2C 100%)}
+.ecg-wall[data-d="18"]{background:linear-gradient(180deg,#292927 0%,#41413F 12%,#464543 50%,#424240 86%,#2D2D2B 100%)}.ecg-wall.ecg-in[data-d="18"]{background:linear-gradient(180deg,#2E2E2C 0%,#474745 18%,#4B4A48 50%,#464543 82%,#2A2928 100%)}
+.ecg-wall[data-d="19"]{background:linear-gradient(180deg,#242423 0%,#3A3938 12%,#3E3D3C 50%,#3A3A38 86%,#282726 100%)}.ecg-wall.ecg-in[data-d="19"]{background:linear-gradient(180deg,#292927 0%,#3F3F3D 18%,#424240 50%,#3E3D3C 82%,#252523 100%)}
+.ecg-wall[data-d="20"]{background:linear-gradient(180deg,#201F1E 0%,#323230 12%,#363534 50%,#333231 86%,#222221 100%)}.ecg-wall.ecg-in[data-d="20"]{background:linear-gradient(180deg,#242322 0%,#373735 18%,#3A3938 50%,#363534 82%,#20201E 100%)}
+.ecg-wall[data-d="21"]{background:linear-gradient(180deg,#1B1B1A 0%,#2B2B29 12%,#2D2D2C 50%,#2B2B2A 86%,#1D1D1C 100%)}.ecg-wall.ecg-in[data-d="21"]{background:linear-gradient(180deg,#1E1E1D 0%,#2F2F2D 18%,#31312F 50%,#2D2D2C 82%,#1B1B1A 100%)}
+.ecg-wall[data-d="22"]{background:linear-gradient(180deg,#161615 0%,#232322 12%,#252524 50%,#242322 86%,#181817 100%)}.ecg-wall.ecg-in[data-d="22"]{background:linear-gradient(180deg,#191918 0%,#272625 18%,#282827 50%,#252524 82%,#161615 100%)}
+.ecg-wall[data-d="23"]{background:linear-gradient(180deg,#111111 0%,#1C1B1B 12%,#1D1D1C 50%,#1C1C1B 86%,#131312 100%)}.ecg-wall.ecg-in[data-d="23"]{background:linear-gradient(180deg,#141313 0%,#1E1E1D 18%,#201F1F 50%,#1D1D1C 82%,#121111 100%)}
+.ecg-wall[data-d="24"]{background:linear-gradient(180deg,#0D0C0C 0%,#141413 12%,#151515 50%,#141414 86%,#0E0E0D 100%)}.ecg-wall.ecg-in[data-d="24"]{background:linear-gradient(180deg,#0E0E0E 0%,#161615 18%,#171716 50%,#151515 82%,#0D0D0C 100%)}
+.ecg-f{all:unset;position:absolute;left:50%;top:50%;backface-visibility:hidden;box-sizing:border-box;cursor:pointer;width:var(--fw,300px);display:block;filter:brightness(calc(1 - var(--fog,0) * .8));will-change:transform}
 .ecg-glow{position:absolute;left:50%;top:30%;width:150%;height:230%;transform:translate(-50%,-50%);border-radius:50% 50% 46% 46%;background:radial-gradient(60% 55% at 50% 42%,rgba(255,253,246,.98),rgba(255,253,246,.6) 50%,rgba(255,253,246,0) 100%);pointer-events:none}
 .ecg-art{position:relative;display:block;aspect-ratio:4/3;background:#0B0B0C;padding:7px;box-sizing:border-box;box-shadow:0 18px 30px -12px rgba(0,0,0,.55),0 2px 4px rgba(0,0,0,.25)}
 .ecg-art img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.05)}
@@ -1793,9 +1819,7 @@ section[data-r=ecx] .ecx-tip{left:78px}
 /* section 07: the gallery sits in the dark; its spotlights come on one by one as you scroll, then the scroll walks the room */
 [data-r=stories] :is(.st-track,.st-prog,.st-nav){display:none!important}
 [data-r=stories] .st-p{display:none}
-.ecg[data-lights] .ecg-wall{filter:brightness(calc((1 - var(--fog,0) * .78) * (.14 + .86 * var(--lit,1))))!important;transition:filter .5s}
-.ecg[data-lights]::before{opacity:calc(.4 + .6 * var(--lit,1))}
-.ecg[data-lights] .ecg-f{filter:brightness(.1)!important;transition:filter .6s ease}
+.ecg[data-lights] .ecg-f{filter:brightness(.1)!important}
 .ecg[data-lights] .ecg-f .ecg-glow{opacity:0;transition:opacity .7s ease}
 .ecg[data-lights] .ecg-f[data-lit]{filter:brightness(calc(1 - var(--fog,0) * .8))!important;animation:ecgOn .7s steps(1,end) 1}
 .ecg[data-lights] .ecg-f[data-lit] .ecg-glow{opacity:1}
