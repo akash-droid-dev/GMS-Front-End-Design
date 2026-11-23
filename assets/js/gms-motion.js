@@ -235,7 +235,7 @@
     function show() { if (stop) return; if (doc.hidden || chatOpen() || doc.querySelector('.ecx-panel[data-open="1"]')) { tm = setTimeout(show, 6000); return; } if (!b) build(); b.removeAttribute('data-off'); requestAnimationFrame(function () { b.setAttribute('data-on', ''); }); tm = setTimeout(hide, 6000); }
     function hide() { if (!b) return; b.removeAttribute('data-on'); b.setAttribute('data-off', ''); if (!stop) tm = setTimeout(show, 6000); }
     function end(forVisit) { stop = true; clearTimeout(tm); hide(); if (forVisit) try { sessionStorage.setItem('gms-hello', '1'); } catch (e) {} setTimeout(function () { if (b) { b.remove(); b = null; } }, 700); }
-    var go = function () { tm = setTimeout(show, window.innerWidth <= 760 ? 12000 : 1100); };
+    var go = function () { tm = setTimeout(show, window.innerWidth <= 760 ? 3500 : 1100); };
     if (doc.getElementById('gms-ldr')) window.addEventListener('gms:entered', go, { once: true }); else go();
   }
 

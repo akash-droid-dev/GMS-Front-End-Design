@@ -1223,7 +1223,7 @@ section:is(.vl,[data-r=ev-section],[data-r=sch-section]) .sx{color:#5B6270}
 html[data-theme=dark] section[data-r=sch-section] .sx{color:inherit}
 /* ---- Ask Vision on phones: small, above the bar, out of the way while scrolling down ---- */
 @media (max-width:760px){[data-r=bot]{transform:scale(.56)!important;transform-origin:100% 100%;bottom:calc(84px + env(safe-area-inset-bottom))!important;right:4px!important;transition:opacity .5s var(--gms-ease),translate .6s var(--gms-ease)!important}
-html:is(.gy-down,.gy-top) [data-r=bot]{opacity:0!important;pointer-events:none!important;translate:0 24px}}
+html.gy-foot [data-r=bot]{opacity:0!important;pointer-events:none!important;translate:0 24px}}
 /* ---- batch 5 ---- */
 /* TSR: a timing tag beside the figure */
 .rl-tag{position:absolute;left:54%;top:34%;z-index:2;display:flex;align-items:center;gap:7px;padding:7px 11px 7px 9px;border-radius:10px;background:#0B0B0C;color:#fff;font:600 14px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;box-shadow:0 10px 24px rgba(8,10,16,.18)}.rl-tag svg{width:17px;height:17px;color:var(--acc)}
@@ -1317,7 +1317,7 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=4c79e934"></script>
 <script defer src="./assets/js/gms-room.js?v=895329f0"></script><script defer src="./assets/js/gms-roll.js?v=113d42c9"></script>
-<script defer src="./assets/js/gms-motion.js?v=1cb5d0e3"></script>
+<script defer src="./assets/js/gms-motion.js?v=33e9ea6f"></script>
 <script defer src="./assets/js/gms-plus.js?v=93dc868f"></script>
 </head>
 <body>
@@ -1442,9 +1442,9 @@ html.gy-top .gyb{opacity:0;pointer-events:none}
 .gyh-x{width:18px!important;height:18px!important;top:-7px!important;left:-7px!important;font-size:12px!important}
 .gyh[data-on] .gyh-w{animation:gyhWave 1.6s ease-in-out .3s 1}
 @media (max-width:760px){
-.gyh{right:14px!important;bottom:calc(178px + env(safe-area-inset-bottom))!important}
+.gyh{right:20px!important;bottom:calc(158px + env(safe-area-inset-bottom))!important}
 .gyh-b{gap:5px!important;padding:5px 9px 5px 7px!important;border-radius:12px 12px 4px 12px!important}
-.gyh-b::after{width:8px!important;height:8px!important;right:12px!important;bottom:-4px!important}
+.gyh-b::after{width:8px!important;height:8px!important;right:13px!important;bottom:-4px!important}
 .gyh-w{font-size:12px!important}
 .gyh-t{flex-direction:row!important;align-items:baseline;gap:4px;font-size:10.5px!important;white-space:nowrap}
 .gyh-t b{font-size:11px!important}
