@@ -198,7 +198,7 @@
     function scanSecs() {
       secs = Array.prototype.slice.call(main.querySelectorAll(':scope > section')).filter(function (s) { return !s.matches('[data-hero-sec],[data-r=hero]') && s.offsetHeight > 120; });
       secs.forEach(function (s) {
-        if (s.__tone === undefined) { var l = lum(getComputedStyle(s).backgroundColor); s.__tone = l === null ? null : (l < 0.5 ? 0 : 1); if (s.__tone !== null) { s.setAttribute('data-tone', s.__tone ? 'light' : 'dark'); s.style.setProperty('background-color', 'transparent', 'important'); } }
+        if (s.__tone === undefined) { var l = lum(getComputedStyle(s).backgroundColor); s.__tone = l === null ? null : (l < 0.5 ? 0 : 1); if (s.__tone !== null) { s.setAttribute('data-tone', s.__tone ? 'light' : 'dark'); if (!s.matches('[data-r=sch-section]')) s.style.setProperty('background-color', 'transparent', 'important'); } }
       });
       secs = secs.filter(function (s) { return s.__tone !== null; }); q();
     }
@@ -209,11 +209,11 @@
         var r = secs[i].getBoundingClientRect(); if (r.top <= mid) t = secs[i].__tone;
         var nx = secs[i + 1]; if (nx && nx.__tone !== secs[i].__tone) { var edge = nx.getBoundingClientRect().top; if (Math.abs(edge - mid) < band) { var k = (mid - edge + band) / (2 * band), e = k * k * (3 - 2 * k); t = secs[i].__tone + (nx.__tone - secs[i].__tone) * e; break; } }
       }
-      var c = mix(t); if (c !== last) { last = c; root.style.setProperty('background-color', c, 'important'); doc.body.style.setProperty('background-color', c, 'important'); root.style.setProperty('--inv', t.toFixed(3)); }
+      var c = mix(t); if (c !== last) { last = c; root.style.setProperty('background-color', c, 'important'); doc.body.style.setProperty('background-color', c, 'important'); }
     }
     function q() { if (!raf) raf = requestAnimationFrame(paint); }
     window.addEventListener('scroll', q, { passive: true }); window.addEventListener('resize', q);
-    new MutationObserver(function () { setTimeout(scanSecs, 200); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    new MutationObserver(function () { main.querySelectorAll(':scope > section').forEach(function (s) { if (s.__tone !== undefined) { s.style.removeProperty('background-color'); s.__tone = undefined; } }); setTimeout(scanSecs, 200); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     setTimeout(scanSecs, 600); window.addEventListener('gms:entered', function () { setTimeout(scanSecs, 400); });
   }
 

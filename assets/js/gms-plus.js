@@ -182,6 +182,15 @@
     '.gp-inst{position:fixed;left:12px;right:12px;bottom:104px;z-index:125;display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:18px;background:var(--d-s0,#fff);color:var(--d-ink,#0B0B0C);box-shadow:0 18px 50px rgba(8,10,16,.25),0 0 0 1px var(--d-line,rgba(11,11,12,.06));transform:translateY(20px);opacity:0;transition:transform .45s var(--gms-ease,ease),opacity .3s}',
     '.gp-inst[data-on]{transform:none;opacity:1}.gp-inst img{width:40px;height:40px;border-radius:11px}.gp-inst p{margin:0;flex:1;font-size:13px;line-height:1.35;color:var(--d-ink2,#4A505C)}.gp-inst p b{display:block;font-size:14.5px;color:var(--d-ink,#0B0B0C)}',
     '@media (min-width:761px){.gp-inst{left:auto;right:24px;bottom:24px;width:380px}}',
+    '.gp-app{position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:16px;background:rgba(5,5,6,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .3s}',
+    '.gp-app[data-on]{opacity:1}.gp-app-c{position:relative;width:min(420px,100%);max-height:calc(100vh - 32px);overflow:auto;box-sizing:border-box;padding:28px 24px 22px;border-radius:24px;background:#F2F1EC;color:#0B0B0C;box-shadow:0 40px 90px rgba(0,0,0,.45);transform:translateY(14px) scale(.98);transition:transform .45s cubic-bezier(.16,1,.3,1)}',
+    '.gp-app[data-on] .gp-app-c{transform:none}.gp-app-c img{display:block;width:64px;height:64px;border-radius:16px;margin-bottom:16px}.gp-app-c h2{margin:0 0 8px;font:400 30px/1 Anton,Impact,sans-serif;text-transform:uppercase}',
+    '.gp-app-c p{margin:0 0 18px;font:400 14.5px/1.5 Inter,system-ui,sans-serif;color:#4A4A50}.gp-app-c small{display:block;margin-bottom:10px;font:600 10.5px/1 "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B6B72}',
+    '.gp-app-c ol{margin:0 0 20px;padding:0;list-style:none;counter-reset:s;display:grid;gap:10px}.gp-app-c li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font:400 14.5px/1.45 Inter,system-ui,sans-serif}',
+    '.gp-app-c li::before{content:counter(s);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0B0B0C;color:#F2F1EC;font:600 12px/1 Inter,sans-serif}',
+    '.gp-app-ok{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:14px;border-radius:999px;background:#0B0B0C;color:#F2F1EC;text-align:center;font:600 14px/1 Inter,sans-serif}.gp-app-ok:focus-visible,.gp-app-x:focus-visible{outline:2px solid #0B0B0C;outline-offset:3px}',
+    '.gp-app-x{all:unset;cursor:pointer;position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(11,11,12,.07);font-size:22px;line-height:1}',
+
     '@media (prefers-reduced-motion:reduce){.gp-sheet,.gp-pal,.gp-toast,.gp-rail,.gp-inst{transition:none}}'
   ].join('\n');
   var st = doc.createElement('style'); st.id = 'gp-css'; st.textContent = CSS; doc.head.appendChild(st);
@@ -779,6 +788,35 @@
     }, 25000);
   });
   window.addEventListener('appinstalled', function () { deferred = null; toast('GMS is installed', { icon: 'check' }); });
+  /* "Get the app": the browser's own install prompt where there is one; otherwise the steps for this device */
+  function appSteps() {
+    var ua = navigator.userAgent, iPad = /iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1), iOS = /iPhone|iPod/.test(ua) || iPad,
+      android = /Android/.test(ua), samsung = /SamsungBrowser/.test(ua), mac = /Macintosh/.test(ua) && !iPad, safari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|Edg\//.test(ua), firefox = /Firefox|FxiOS/.test(ua), edge = /Edg\//.test(ua);
+    var share = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M8 7l4-4 4 4M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+    if (iOS) return { dev: iPad ? 'iPad' : 'iPhone', steps: ['Tap the Share button ' + share + (iPad ? ' at the top of the screen.' : ' at the bottom of the screen.'), 'Scroll down and tap <b>Add to Home Screen</b>.', 'Tap <b>Add</b>. GMS opens from your Home Screen, full screen.'] };
+    if (android && samsung) return { dev: 'Android', steps: ['Tap the menu <b>≡</b> at the bottom.', 'Tap <b>Add page to</b>, then <b>Home screen</b>.', 'Tap <b>Add</b>.'] };
+    if (android && firefox) return { dev: 'Android', steps: ['Tap the menu <b>⋮</b>.', 'Tap <b>Install</b> (or <b>Add to Home screen</b>).', 'Tap <b>Add</b>.'] };
+    if (android) return { dev: 'Android', steps: ['Tap the menu <b>⋮</b> at the top right.', 'Tap <b>Install app</b> (or <b>Add to Home screen</b>).', 'Tap <b>Install</b>. GMS appears with your apps.'] };
+    if (mac && safari) return { dev: 'Mac', steps: ['In the menu bar, choose <b>File</b>.', 'Choose <b>Add to Dock</b>.', 'Click <b>Add</b>. GMS opens from your Dock.'] };
+    if (firefox) return { dev: 'this browser', steps: ['Firefox on computers cannot install web apps.', 'Open this page in <b>Chrome</b>, <b>Edge</b> or <b>Safari</b>.', 'Then choose <b>Get the app</b> again.'] };
+    return { dev: 'computer', steps: ['Click the install icon at the right of the address bar.', 'Or open the menu <b>⋮</b>, then ' + (edge ? '<b>Apps</b> → <b>Install this site as an app</b>.' : '<b>Cast, save and share</b> → <b>Install page as app</b>.'), 'Click <b>Install</b>. GMS opens in its own window.'] };
+  }
+  function getApp() {
+    if (window.matchMedia && (matchMedia('(display-mode: standalone)').matches || navigator.standalone)) { toast('You are already using the GMS app', { icon: 'check' }); return; }
+    if (deferred) { var d = deferred, pr; try { pr = d.prompt(); } catch (err) { pr = Promise.reject(err); } Promise.resolve(pr).then(function () { return d.userChoice; }).then(function () { deferred = null; }).catch(function () { appSheet(); }); return; }
+    appSheet();
+  }
+  function appSheet() {
+    var a = appSteps(), old = doc.querySelector('.gp-app'); if (old) old.remove();
+    var b = doc.createElement('div'); b.className = 'gp-app'; b.setAttribute('role', 'dialog'); b.setAttribute('aria-modal', 'true'); b.setAttribute('aria-label', 'Get the GMS app');
+    b.innerHTML = '<div class="gp-app-c"><button type="button" class="gp-app-x" aria-label="Close">×</button><img src="assets/brand/icon-192.png" alt="" width="64" height="64"><h2>Get the GMS app</h2><p>Schedule, live scores and your pass, full screen and working with no signal at the venues. Free, no store needed.</p><small>On your ' + a.dev + '</small><ol>' + a.steps.map(function (s) { return '<li><span>' + s + '</span></li>'; }).join('') + '</ol><button type="button" class="gp-app-ok">Got it</button></div>';
+    doc.body.appendChild(b); requestAnimationFrame(function () { b.setAttribute('data-on', ''); });
+    function close() { b.removeAttribute('data-on'); setTimeout(function () { b.remove(); }, 350); doc.removeEventListener('keydown', esc); }
+    function esc(e) { if (e.key === 'Escape') close(); }
+    b.addEventListener('click', function (e) { if (e.target === b || e.target.closest('.gp-app-x,.gp-app-ok')) close(); }); doc.addEventListener('keydown', esc);
+    b.querySelector('.gp-app-ok').focus();
+  }
+  window.GMSGetApp = getApp;
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', function () { setTimeout(function () { navigator.serviceWorker.register('sw.js').catch(function () {}); }, 3000); });
   }
@@ -802,7 +840,7 @@
     var sh = e.target.closest('[data-share]');
     if (sh) { e.preventDefault(); if (A) shareSpec(sh.getAttribute('data-share')); return; }
     var p = e.target.closest('[data-plus]');
-    if (p) { var k = p.getAttribute('data-plus'); e.preventDefault(); if (A && A.closeMenus) A.closeMenus(); if (k === 'theme') Theme.toggle(); else Plus.open(k); }
+    if (p) { var k = p.getAttribute('data-plus'); e.preventDefault(); if (A && A.closeMenus) A.closeMenus(); if (k === 'theme') Theme.toggle(); else if (k === 'install') getApp(); else Plus.open(k); }
   });
   doc.addEventListener('keydown', function (e) {
     var tag = (e.target && e.target.tagName) || '', typing = /INPUT|TEXTAREA|SELECT/.test(tag) || (e.target && e.target.isContentEditable);

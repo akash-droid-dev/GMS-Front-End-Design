@@ -1317,8 +1317,8 @@ section[data-r=hero] .hero-dot{color:var(--hc,#3A3A3F);transition:color .5s ease
 <script defer src="./support.js"></script>
 <script defer src="./assets/js/gms-sound.js?v=4c79e934"></script>
 <script defer src="./assets/js/gms-room.js?v=895329f0"></script><script defer src="./assets/js/gms-roll.js?v=113d42c9"></script>
-<script defer src="./assets/js/gms-motion.js?v=33e9ea6f"></script>
-<script defer src="./assets/js/gms-plus.js?v=93dc868f"></script>
+<script defer src="./assets/js/gms-motion.js?v=2a741cc1"></script>
+<script defer src="./assets/js/gms-plus.js?v=c87c3204"></script>
 </head>
 <body>
 <!-- Opening: a golden light reveals the Gobananas logo on an ink stage while the page, fonts and film load; then the visitor enters with or without sound -->
@@ -1459,7 +1459,7 @@ html[data-theme=dark] .gyk{background:#0B0B0C;color:#F2F1EC}
 .gyk-rows{display:grid;grid-template-rows:repeat(3,auto)}
 .gyk-row{position:relative;display:grid;grid-template-columns:minmax(120px,.7fr) 1.6fr 1fr;align-items:end;gap:24px;padding:clamp(10px,1.8vh,20px) 0 clamp(12px,2vh,22px);overflow:visible}
 .gyk-l{position:absolute;left:0;top:0;height:1px;width:100%;background:currentColor;opacity:.22;transform-origin:0 50%;transform:scaleX(var(--ln,0))}
-.gyk-n,.gyk-w{font:400 clamp(72px,13vh,168px)/.86 'Anton',Georgia,serif;letter-spacing:-.03em;display:block;opacity:var(--in,0);transform:translateY(calc((1 - var(--in,0)) * .3em));filter:blur(calc((1 - var(--in,0)) * 9px))}
+.gyk-n,.gyk-w{font:400 clamp(72px,13vh,168px)/.86 'Anton',Georgia,serif;letter-spacing:-.03em;display:block;opacity:var(--in,0);transform:translateY(calc((1 - var(--in,0)) * .3em));will-change:transform,opacity}
 .gyk-w{font-style:italic;transition-delay:.05s}
 .gyk-d{font:500 12px/1.4 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;text-align:right;padding-bottom:1.1em;opacity:calc(var(--in,0) * .7);transform:translateY(calc((1 - var(--in,0)) * 12px))}
 .gyk-row{opacity:var(--op,1)}
@@ -1953,6 +1953,9 @@ section[data-r=ev-section] :is(.sx,[data-r=ev-p],[data-ev-head]>span:last-child)
 section[data-r=ev-section] .sx i{color:#F2F1EC!important}
 section[data-r=ev-section] [data-ev-head]>span:last-child>span:first-child{background:#F2F1EC!important}
 section[data-r=ev-section]{box-shadow:none!important}
+/* the schedule carries its own background, so it never sits on a half-blended page colour */
+html:not([data-theme=dark]) section[data-r=sch-section]{background:#F2F1EC!important;color:#0B0B0C}
+html[data-theme=dark] section[data-r=sch-section]{background:#0B0B0C!important;color:#F2F1EC}
 /* the control room is always a dark room */
 section.cr,html[data-theme=dark] section.cr{background:#0B0B0C!important;color:#F2F1EC}
 section.cr :is(.cr-h,.cr-p,.sx){color:#F2F1EC}
@@ -2051,6 +2054,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
     <button type="button" class="nv-mi" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
     <button type="button" class="nv-mi" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
     <button type="button" class="nv-mi" data-snd aria-pressed="false"><i class="gi" data-gi="volume_off"></i>Sound</button>
+    <button type="button" class="nv-mi" data-plus="install"><i class="gi" data-gi="download"></i>Get the app</button>
     <button type="button" class="nv-mi" onClick="{{ goLogin }}"><i class="gi" data-gi="login"></i>Log in</button>
     <button data-r="menu-admin" onClick="{{ goAdminLogin }}">Admin login</button>
   </div>
@@ -2062,6 +2066,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
         <button type="button" role="menuitem" data-plus="mygames"><i class="gi" data-gi="star"></i>My Games<b class="nv-badge" data-my-count></b></button>
         <button type="button" role="menuitem" data-plus="theme"><i class="gi" data-gi="dark_mode"></i><span data-theme-label>Dark mode</span></button>
         <button type="button" role="menuitem" class="nv-ic--snd" data-snd aria-pressed="false"><i class="gi" data-gi="volume_off"></i><span>Sound</span><span class="snd-eq" aria-hidden="true"><i></i><i></i><i></i></span></button>
+        <button type="button" role="menuitem" data-plus="install"><i class="gi" data-gi="download"></i>Get the app</button>
         <hr>
         <button type="button" role="menuitem" onClick="{{ goLogin }}"><i class="gi" data-gi="login"></i>Log in</button>
         <button type="button" role="menuitem" onClick="{{ goAdminLogin }}"><i class="gi" data-gi="admin_panel_settings"></i>Admin login</button>
@@ -2454,7 +2459,7 @@ body::after,[data-r=hero]::after,[data-r=tv-cinema]::after,[data-r=ecx]::before,
           <div><h3>The Games</h3><button onClick="{{ toSchedule }}">Schedule</button><button onClick="{{ toEvents }}">Programme</button><button data-plus="venues">Venue map</button><button data-plus="medals">Medal table</button><button data-plus="results">Results</button></div>
           <div><h3>Take part</h3><button onClick="{{ heroAllWays }}">Register</button><button onClick="{{ regAthlete }}">Registration Vault</button><button onClick="{{ goLogin }}">Login</button><button data-plus="mygames">My Games</button></div>
           <div><h3>Watch</h3><button onClick="{{ goTv }}">Live TV</button><button onClick="{{ goScores }}">Event centre</button></div>
-          <div><h3>Help</h3><button onClick="{{ toContact }}">Help desk</button><button data-plus="search">Search</button><button data-plus="theme"><span data-theme-label>Dark mode</span></button><a href="https://gms.projectcode.dev/" target="_blank" rel="noopener">Live GMS<i class="gi" data-gi="arrow_outward"></i></a></div>
+          <div><h3>Help</h3><button onClick="{{ toContact }}">Help desk</button><button data-plus="search">Search</button><button data-plus="install">Get the app</button><button data-plus="theme"><span data-theme-label>Dark mode</span></button><a href="https://gms.projectcode.dev/" target="_blank" rel="noopener">Live GMS<i class="gi" data-gi="arrow_outward"></i></a></div>
         </nav>
       </div>
       <div class="ft-base">
@@ -3463,10 +3468,10 @@ class Component extends DCLogic {
     if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<2;
     // the picture: redrawn only when the scroll (and so the frame) changes
     const key=fi+'|'+p.toFixed(4);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
-      if(L.port){const bg=x.createLinearGradient(0,0,0,L.H);bg.addColorStop(0,'#DCE4EE');bg.addColorStop(1,'#EDF0F4');x.fillStyle=bg;x.fillRect(0,0,L.W,L.H);}
+      if(L.port){x.fillStyle='#0B0B0C';x.fillRect(0,0,L.W,L.H);}
       x.drawImage(src.img,V.ox,V.oy,KV.w*V.s,dh);
-      if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#DCE4EE');f1.addColorStop(1,'rgba(220,228,238,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
-        const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(237,240,244,0)');f2.addColorStop(1,'#EDF0F4');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
+      if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#0B0B0C');f1.addColorStop(1,'rgba(11,11,12,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
+        const f2=x.createLinearGradient(0,V.oy+dh-70,0,V.oy+dh);f2.addColorStop(0,'rgba(11,11,12,0)');f2.addColorStop(1,'#0B0B0C');x.fillStyle=f2;x.fillRect(0,V.oy+dh-70,L.W,71);}}}
     // stage caption, written straight to the page
     const mk=montK(t),mv=montV(mk);
     const stg=p<KICK.run0+0.01?'Scroll to play':p<KICK.board0?'Badminton, the featured sport':(HOVER?'Hover an event, click to register':'Tap an event to register');
