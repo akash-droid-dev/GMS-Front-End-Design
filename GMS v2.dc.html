@@ -1947,7 +1947,7 @@ section[data-r=ev-section] h2{color:#F2F1EC!important}
 section[data-r=ev-section] [data-goal-ch]{width:max-content;padding:4px 14px 4px 4px;border-radius:999px;background:rgba(11,11,12,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px rgba(0,0,0,.35),inset 0 0 0 1px rgba(242,241,236,.12);color:#F2F1EC!important;text-shadow:none!important}
 section[data-r=ev-section] [data-goal-ch] [data-goal-ic]{background:#F2F1EC!important;color:#0B0B0C!important}
 section[data-r=ev-section] [data-goal-nm] [data-goal-sub],section[data-r=ev-section] [data-goal-g]{color:rgba(242,241,236,.65)!important}
-section[data-r=ev-section] [data-kv-veil]{background:none!important;-webkit-backdrop-filter:blur(5px)!important;backdrop-filter:blur(5px)!important}
+section[data-r=ev-section] [data-kv-veil]{background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 section[data-r=ev-section] :is(h2,[data-ev-head],[data-r=ev-p],.sx){text-shadow:0 2px 18px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.4)}
 section[data-r=ev-section] :is(.sx,[data-r=ev-p],[data-ev-head]>span:last-child){color:rgba(242,241,236,.88)!important}
 section[data-r=ev-section] .sx i{color:#F2F1EC!important}
@@ -3027,7 +3027,7 @@ class Component extends DCLogic {
         if(b!==mag){rel(mag);mag=null;}if(!b||b.disabled)return;const r=b.getBoundingClientRect();if(r.width>280||r.height>72)return;
         mag=b;b.setAttribute('data-mag','');const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;b.style.translate=(dx*7).toFixed(1)+'px '+(dy*5-2).toFixed(1)+'px';});};
       this.onMagOut=()=>{rel(mag);mag=null;};window.addEventListener('pointermove',this.onMag,{passive:true});document.addEventListener('pointerleave',this.onMagOut);window.addEventListener('blur',this.onMagOut);}
-    this.onScroll=()=>{this.lastScrollT=performance.now();this.measure();this.awake=240;};this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;this.awake=Math.max(this.awake||0,90);};
+    this.onScroll=()=>{this.lastScrollT=performance.now();this.mDirty=true;this.awake=240;};this.onMove=e=>{this.mx=(e.clientX/window.innerWidth)*2-1;this.awake=Math.max(this.awake||0,90);};
     window.addEventListener('scroll',this.onScroll,{passive:true});this.onTouch=()=>{this.lastScrollT=performance.now();};window.addEventListener('touchstart',this.onTouch,{passive:true});window.addEventListener('pointerdown',this.onTouch,{passive:true});window.addEventListener('resize',this.onScroll);window.addEventListener('mousemove',this.onMove,{passive:true});
     this.fxForce=true;this.fxDirty=true;this.shellHandoff();
     this.measure();
@@ -3357,8 +3357,12 @@ class Component extends DCLogic {
   // (GPU-friendly transforms/opacity); the page only re-renders when something discrete changes
   // (a step number, the programme caption, the ticket counter, the closing video mounting...).
   frame(){
+    if(this.mDirty){this.mDirty=false;this.measure();}
+    const now0=performance.now(),dt0=this.fPrev?Math.min(64,now0-this.fPrev):16.7;this.fPrev=now0;
+    // follow the scroll closely: settles in a few frames instead of trailing behind the finger (time-based, so 60 and 120 Hz screens match)
+    const kf=1-Math.pow(1-(this.smOn?0.38:0.55),dt0/16.7);
     const P=this.P||(this.P={...this.state.p}),t=this.target||P;let moved=false;
-    for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*(LITE?0.32:this.smOn?0.24:0.12),nv=Math.abs(t[k]-v)<0.001?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
+    for(const k in t){const cur=P[k]??0,v=cur+(t[k]-cur)*kf,nv=Math.abs(t[k]-v)<0.0005?t[k]:v;if(nv!==cur){P[k]=nv;moved=true;}}
     if(moved||this.fxDirty){this.fxDirty=false;this.scrollFx(P);const sig=this.fxSig(P);if(sig!==this.fxLast){this.fxLast=sig;this.soft({p:{...P}});}}
     if(moved||this.fxDirty)this.awake=240;
     if(this.awake>0){this.awake--;if(!LOW){this.heroParallax();this.mediaDolly();}this.kickAnim();this.rolesGlide();
@@ -3434,7 +3438,7 @@ class Component extends DCLogic {
   kvView(L,t){const s=(L.port?Math.max(L.W/KV.w,L.H*0.5/KV.h):Math.max(L.W/KV.w,L.H/KV.h))*(1.02+0.025*clamp(t/KV.dur)),dw=KV.w*s,dh=KV.h*s,fx=L.port?0.42:0.5;
     const ox=Math.min(0,Math.max(L.W-dw,L.W/2-fx*dw)),oy=L.port?L.H*0.17:(L.H-dh)*0.5;return {s,ox,oy,pt:(u,v)=>[ox+u*dw,oy+v*dh]};}
   kvBuild(host,box){const W=host.clientWidth,H=host.clientHeight,L=this.kickL={W,H,port:W/H<1.1};box.innerHTML='';
-    const c=document.createElement('canvas'),dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
+    const c=document.createElement('canvas'),dpr=Math.min(window.devicePixelRatio||1,Math.max(1,(window.innerWidth<=760?854:1152)/Math.max(1,W)));c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);Object.assign(c.style,{position:'absolute',inset:'0',width:'100%',height:'100%',display:'block',background:'#E3EAF3'});box.appendChild(c);
     // soft white wash behind the heading, the frosted veil that dissolves the net, and a clean goal frame that stays as the menu's frame
     const wash=document.createElement('div');wash.setAttribute('data-kv-wash','');box.appendChild(wash);
     const veil=document.createElement('div');veil.setAttribute('data-kv-veil','');box.appendChild(veil);
@@ -3467,7 +3471,7 @@ class Component extends DCLogic {
     const t=p<KICK.run0?0:p<KICK.board0?KV.dur*seg(p,KICK.run0,KICK.board0):KV.dur,fi=KV.idx(t);this.kvT=t;
     if(p>=KICK.board0&&!this.kvRevealT)this.kvRevealT=now;if(p<KICK.board0-0.01)this.kvRevealT=0;const rt=this.kvRevealT?(now-this.kvRevealT)/1000:0,live=!REDUCED&&this.kvRevealT&&rt<2;
     // the picture: redrawn only when the scroll (and so the frame) changes
-    const key=fi+'|'+p.toFixed(4);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
+    const key=fi+'|'+t.toFixed(2)+'|'+(p>=KICK.board0?1:0);if(key!==this.kickLast){const src=this.kvSource(fi);if(src){this.kickLast=key;const V=this.kvView(L,t),d=K.dpr;const x=K.ctx,dh=KV.h*V.s;x.setTransform(d,0,0,d,0,0);
       if(L.port){x.fillStyle='#0B0B0C';x.fillRect(0,0,L.W,L.H);}
       x.drawImage(src.img,V.ox,V.oy,KV.w*V.s,dh);
       if(L.port){const f1=x.createLinearGradient(0,V.oy,0,V.oy+60);f1.addColorStop(0,'#0B0B0C');f1.addColorStop(1,'rgba(11,11,12,0)');x.fillStyle=f1;x.fillRect(0,V.oy-1,L.W,61);
